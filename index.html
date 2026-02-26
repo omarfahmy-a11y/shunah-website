@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shunah | Next Generation Platfrom Tech Platfrom for Dry Crops</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    /* Optional: makes scrolling snap section-by-section */
+    html { scroll-behavior: smooth; }
+section { scroll-snap-align: start; }
+  </style>
+</head>
+
+<!-- Make page snap to each full-screen section -->
+<body class="bg-gray-900 text-white min-h-screen overflow-y-auto snap-y snap-mandatory">
+
+  <!-- HERO SECTION (fills screen) -->
+  <section
+    id="home"
+    class="relative min-h-screen snap-start bg-cover bg-center"
+    style="background-image: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=2400&q=70');"
+  >
+    <!-- Dark Overlay -->
+    <div class="absolute inset-0 bg-black/50"></div>
+
+    <!-- NAVIGATION -->
+    <nav class="relative z-10 flex items-center justify-between px-6 md:px-10 py-6">
+      <!-- Logo -->
+   <div class="flex items-center space-x-3">
+  <img 
+    src="images/shunah-logo.png" 
+    alt="Shunah Logo" 
+    class="h-10 w-auto"
+  />
+  <span class="text-2xl font-semibold tracking-wide text-white">
+    SHUNAH
+  </span>
+</div>
+
+      <!-- Menu -->
+      <div class="hidden md:flex space-x-8 text-gray-200">
+        <a href="#home" class="hover:text-green-400">Home</a>
+        <a href="#about" class="hover:text-green-400">About Us</a>
+        <a href="#technology" class="hover:text-green-400">Technology</a>
+        <a href="#products" class="hover:text-green-400">Products</a>
+        <a href="#infrastructure-iot" class="hover:text-green-400">Infrastructure IoT</a>
+        <a href="#rfq" class="hover:text-green-400">RFQ</a>
+      </div>
+
+      <!-- Contact Button -->
+     <a href="#contact"
+   class="bg-[#0b1a2d] hover:bg-[#142a4a] text-white font-semibold px-6 py-2 rounded-full transition">
+  Contact Us
+</a>
+    </nav>
+
+    <!-- HERO CONTENT (centered vertically within the screen) -->
+    <div class="relative z-10 min-h-[calc(100vh-88px)] flex items-center px-6 md:px-10">
+      <div class="max-w-2xl">
+        <div class="inline-block bg-white/10 backdrop-blur-md px-4 py-1 rounded-full text-sm mb-6">
+          Starting with Egypt then Africa
+        </div>
+
+        <h1 class="text-5xl md:text-6xl font-semibold leading-tight mb-6">
+          Next Generation <br />
+          Tech Platfrom for Dry Crops
+        </h1>
+
+        <p class="text-lg text-gray-200 mb-8">
+          Using Satelite Technology, Computer Aided Vision, Dynamic Market Intelligence Engine, and Social Infrastructure IoT, we aggregate, process, and export high-quality cerelas, pulses, and grasinn with precision and consistency.
+        </p>
+
+        <a href="#technology"
+           class="inline-flex items-center bg-[#0b1a2d] hover:bg-[#0f2540] text-white font-semibold px-8 py-3 rounded-full transition">
+          Understand Our Technology
+          <span class="ml-3">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+<!-- =========================
+SECTION 2 (INNOVATION + 2 IMAGES + METRICS)
+Responsive: stacks cleanly, no overlap
+========================= -->
+<!-- =========================
+SECTION 2 (INNOVATION + 2 IMAGES + METRICS)
+Fix B — Bulletproof responsive (no forced heights, no overflow)
+Desktop: 2 images with fixed aspect + metrics card
+Mobile: stacks cleanly
+========================= -->
+<section class="bg-[#0b1a2d] text-white min-h-[100dvh] snap-start flex items-center">
+ <div class="max-w-7xl mx-auto w-full px-6 py-6 lg:py-8">
+
+    <!-- Title -->
+    <div class="mb-6 lg:mb-8">
+      <h2 class="text-3xl md:text-4xl font-semibold leading-tight">
+        Innovating the Future<br />
+        of Dry Crops
+      </h2>
+    </div>
+
+    <!-- Content Row (NO fixed height => no overflow surprises) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
+
+      <!-- Images -->
+      <div class="lg:col-span-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+
+          <!-- Image 1 -->
+          <div class="rounded-3xl overflow-hidden ring-1 ring-white/10 bg-white/5 aspect-[4/5] sm:aspect-[3/4] lg:aspect-[4/5]">
+            <img
+              src="images/egypt-farmer.jpg"
+              alt="Egyptian farmer"
+              class="w-full h-full object-cover"
+            />
+          </div>
+
+          <!-- Image 2 -->
+          <div class="rounded-3xl overflow-hidden ring-1 ring-white/10 bg-white/5 aspect-[4/5] sm:aspect-[3/4] lg:aspect-[4/5]">
+            <img
+              src="images/egypt-fields.jpg"
+              alt="Egyptian fields"
+              class="w-full h-full object-cover"
+            />
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Metrics Card -->
+      <div class="lg:col-span-4">
+        <div class="bg-[#111f36] rounded-2xl p-6 md:p-8 lg:p-10 space-y-6 md:space-y-7 shadow-xl ring-1 ring-white/10">
+
+          <div>
+            <div class="text-4xl md:text-5xl font-semibold tabular-nums" data-counter data-target="37000">0</div>
+            <div class="text-white/80 text-sm mt-2">Farmer Interactions</div>
+            <div class="text-white/50 text-xs mt-1">Across 6 Governorates</div>
+          </div>
+
+          <div class="h-px bg-white/10"></div>
+
+          <div>
+            <div class="text-4xl md:text-5xl font-semibold tabular-nums" data-counter data-target="150000">0</div>
+            <div class="text-white/80 text-sm mt-2">Tons Assessed</div>
+            <div class="text-white/50 text-xs mt-1">Across 12 Crop Varieties</div>
+          </div>
+
+          <div class="h-px bg-white/10"></div>
+
+          <div>
+            <div class="text-4xl md:text-5xl font-semibold tabular-nums" data-counter data-target="80" data-percent="true">0%</div>
+            <div class="text-white/80 text-sm mt-2">DAS</div>
+            <div class="text-white/50 text-xs mt-1">Digital Aggregation Share</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Counter Script (plays when visible) -->
+  <script>
+    (function () {
+      const counters = document.querySelectorAll("[data-counter]");
+      if (!counters.length) return;
+
+      const animate = (el) => {
+        const target = Number(el.getAttribute("data-target") || "0");
+        const isPercent = el.getAttribute("data-percent") === "true";
+        const duration = 2600;
+        const start = performance.now();
+
+        const step = (now) => {
+          const t = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - t, 3);
+          const value = Math.floor(eased * target);
+
+          el.textContent = isPercent ? `${value}%` : value.toLocaleString("en-US");
+          if (t < 1) requestAnimationFrame(step);
+        };
+
+        el.dataset.played = "1";
+        el.textContent = isPercent ? "0%" : "0";
+        requestAnimationFrame(step);
+      };
+
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const el = entry.target;
+          if (el.dataset.played === "1") return;
+          animate(el);
+        });
+      }, { threshold: 0.45 });
+
+      counters.forEach((c) => io.observe(c));
+    })();
+  </script>
+</section>
+
+<!-- =========================
+TECHNOLOGY SECTION
+Responsive: desktop = 3 vertical slices + 3 stacked cards
+Mobile = image (single) on top + cards stacked
+No overlap, fits small screens.
+========================= -->
+<!-- =========================
+TECHNOLOGY SECTION
+Aspect-ratio safe version
+No forced heights
+Images scale properly on any monitor
+========================= -->
+<!-- =========================
+SECTION 3 — TECHNOLOGY (BULLETPROOF)
+- Always fits inside the viewport
+- Left images never overflow (they crop nicely)
+- Right cards shrink with monitor; if too short -> internal scroll (not page overflow)
+========================= -->
+<section id="technology" class="bg-[#0b1220] text-white h-screen snap-start overflow-hidden">
+  <div class="max-w-7xl mx-auto px-6 h-full flex flex-col">
+
+    <!-- Title (fixed height area) -->
+    <div class="pt-10 pb-6 shrink-0">
+      <h2 class="text-3xl md:text-4xl font-semibold leading-tight">
+        Technology
+      </h2>
+      <p class="mt-2 text-white/60 max-w-2xl">
+        Built to identify crops remotely, assess quality at scale,
+        and manage flow from origin to export.
+      </p>
+    </div>
+
+    <!-- Content area takes the remaining height -->
+    <div class="flex-1 min-h-0 pb-10">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 h-full min-h-0">
+
+        <!-- LEFT: Images (forced to fit the available height) -->
+        <div class="lg:col-span-7 min-h-0">
+          <!-- Mobile/Tablet: one image that fits remaining height -->
+          <div class="lg:hidden h-full min-h-0 rounded-3xl overflow-hidden ring-1 ring-white/10 bg-white/5">
+            <img
+              src="images/RCI-Crop.jpg"
+              class="w-full h-full object-cover"
+              alt="Egyptian field"
+            />
+          </div>
+
+          <!-- Desktop: 3 slices that ALWAYS fit height -->
+          <div class="hidden lg:grid grid-cols-3 gap-4 h-full min-h-0">
+            <div class="rounded-3xl overflow-hidden ring-1 ring-white/10 bg-white/5 h-full min-h-0">
+              <img
+                src="images/RCI-Crop.jpg"
+                class="w-full h-full object-cover object-left"
+                alt="Slice 1"
+              />
+            </div>
+
+            <div class="rounded-3xl overflow-hidden ring-1 ring-white/10 bg-white/5 h-full min-h-0">
+              <img
+                src="images/CAD-Crop.jpg"
+                class="w-full h-full object-cover object-center"
+                alt="Slice 2"
+              />
+            </div>
+
+            <div class="rounded-3xl overflow-hidden ring-1 ring-white/10 bg-white/5 h-full min-h-0">
+              <img
+                src="images/IOT-Crop.jpg"
+                class="w-full h-full object-cover object-right"
+                alt="Slice 3"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: Cards (shrink with monitor; scroll inside if needed) -->
+        <div class="lg:col-span-5 min-h-0">
+          <div class="h-full min-h-0 overflow-auto pr-1">
+            <div class="grid gap-4 md:gap-6">
+
+              <!-- Card 1 -->
+              <div class="rounded-2xl bg-[#111f36] ring-1 ring-white/10 p-6 md:p-7 flex">
+                <div class="w-12 h-12 rounded-xl bg-white/10 ring-1 ring-white/10 flex items-center justify-center shrink-0 mt-0.5">
+                  <span class="text-white/70 text-xs">ICON</span>
+                </div>
+                <div class="ml-4 min-w-0">
+                  <div class="text-lg md:text-xl font-semibold leading-snug">
+                    Remote Crop Identification
+                  </div>
+                  <div class="mt-2 text-white/60 text-sm md:text-[15px] leading-relaxed">
+                    Trained AI algorithms to identify and locate dry crops to facilitate aggregation.
+                  </div>
+                  <div class="mt-3 text-white/55 text-sm leading-relaxed space-y-1">
+                    <div>Accuracy: <span class="text-white/70">80%</span></div>
+                    <div>Cost Efficient: <span class="text-white/70">4×</span></div>
+                    <div>Time Efficiency: <span class="text-white/70">6×</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card 2 -->
+              <div class="rounded-2xl bg-[#111f36] ring-1 ring-white/10 p-6 md:p-7 flex">
+                <div class="w-12 h-12 rounded-xl bg-white/10 ring-1 ring-white/10 flex items-center justify-center shrink-0 mt-0.5">
+                  <span class="text-white/70 text-xs">ICON</span>
+                </div>
+                <div class="ml-4 min-w-0">
+                  <div class="text-lg md:text-xl font-semibold leading-snug">
+                    Quality Assessment &amp; Grading
+                  </div>
+                  <div class="mt-2 text-white/60 text-sm md:text-[15px] leading-relaxed">
+                    Computer-vision grading and lot-level sampling to standardize export specifications.
+                  </div>
+                  <div class="mt-3 text-white/55 text-sm leading-relaxed space-y-1">
+                    <div>Coverage: <span class="text-white/70">150K tons</span></div>
+                    <div>Defect Detection: <span class="text-white/70">95%+</span></div>
+                    <div>Grade Consistency: <span class="text-white/70">3×</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card 3 -->
+              <div class="rounded-2xl bg-[#111f36] ring-1 ring-white/10 p-6 md:p-7 flex">
+                <div class="w-12 h-12 rounded-xl bg-white/10 ring-1 ring-white/10 flex items-center justify-center shrink-0 mt-0.5">
+                  <span class="text-white/70 text-xs">ICON</span>
+                </div>
+                <div class="ml-4 min-w-0">
+                  <div class="text-lg md:text-xl font-semibold leading-snug">
+                    Crop Flow Management
+                  </div>
+                  <div class="mt-2 text-white/60 text-sm md:text-[15px] leading-relaxed">
+                    End-to-end lot tracking across aggregation, processing, and shipment readiness.
+                  </div>
+                  <div class="mt-3 text-white/55 text-sm leading-relaxed space-y-1">
+                    <div>Farmer Interactions: <span class="text-white/70">37K</span></div>
+                    <div>DAS: <span class="text-white/70">80%</span></div>
+                    <div>Turnaround: <span class="text-white/70">2×</span></div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- =========================
+SECTION 4 — PRODUCTS (BULLETPROOF)
+- Always fits inside viewport
+- Products automatically pack tighter / looser based on available height
+- If height is too small: internal scroll in the right panel (not page overflow)
+========================= -->
+<section id="products" class="h-screen snap-start overflow-hidden bg-white">
+  <div class="h-full grid grid-cols-1 lg:grid-cols-12 min-h-0">
+
+    <!-- LEFT (Field background + 17 SKUs) -->
+    <div class="relative lg:col-span-4 min-h-[34vh] lg:min-h-0 bg-cover bg-center"
+         style="background-image:url('images/field-bg.jpg');">
+      <div class="absolute inset-0 bg-black/20"></div>
+
+      <div class="relative h-full flex items-center justify-center px-8">
+        <div class="text-center">
+          <div class="text-white font-semibold leading-none tracking-tight tabular-nums
+                      text-[88px] sm:text-[110px] md:text-[130px] lg:text-[150px]">
+            17
+          </div>
+          <div class="text-white/95 font-medium tracking-[0.25em] uppercase
+                      text-[18px] sm:text-[22px] md:text-[24px] lg:text-[28px]">
+            SKUs
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT (White panel with products grid) -->
+    <div class="lg:col-span-8 bg-white min-h-0">
+      <div class="h-full max-w-5xl mx-auto px-6 sm:px-8 py-8 lg:py-10 flex flex-col min-h-0">
+
+        <!-- Title + description (fixed block) -->
+        <div class="shrink-0">
+          <h2 class="text-5xl sm:text-6xl font-semibold tracking-tight text-[#0b1a2d]">
+            Products
+          </h2>
+          <p class="mt-4 text-gray-600 text-lg max-w-2xl leading-relaxed">
+            Our offering includes a diverse range of premium dry crops sourced from leading farms,
+            catering to global and local markets.
+          </p>
+        </div>
+
+        <!-- Products area (fills the remaining height) -->
+        <div class="flex-1 min-h-0 mt-8">
+
+          <!-- This wrapper becomes scrollable only if needed -->
+          <div class="h-full min-h-0 overflow-auto pr-1">
+
+            <!-- ✅ Auto-fitting grid:
+                 - gap shrinks on small heights and grows on large screens
+                 - items are centered and stay readable
+            -->
+            <div class="grid grid-cols-2 md:grid-cols-3
+                        gap-x-8 md:gap-x-10
+                        gap-y-6 sm:gap-y-8 lg:gap-y-10
+                        place-items-center">
+
+              <!-- Item -->
+              <div class="text-center">
+                <div class="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36
+                            rounded-full overflow-hidden ring-2 ring-[#2a4a37]/30 shadow-sm">
+                  <img src="images/crops/white-beans.jpg" class="w-full h-full object-cover" alt="White Beans">
+                </div>
+                <div class="mt-3 sm:mt-4 text-lg sm:text-xl font-medium text-[#0b1a2d]">White Beans</div>
+              </div>
+
+              <div class="text-center">
+                <div class="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36
+                            rounded-full overflow-hidden ring-2 ring-[#2a4a37]/30 shadow-sm">
+                  <img src="images/crops/sesame.jpg" class="w-full h-full object-cover" alt="Sesame">
+                </div>
+                <div class="mt-3 sm:mt-4 text-lg sm:text-xl font-medium text-[#0b1a2d]">Sesame</div>
+              </div>
+
+              <div class="text-center">
+                <div class="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36
+                            rounded-full overflow-hidden ring-2 ring-[#2a4a37]/30 shadow-sm">
+                  <img src="images/crops/fava-beans.jpg" class="w-full h-full object-cover" alt="Fava Beans">
+                </div>
+                <div class="mt-3 sm:mt-4 text-lg sm:text-xl font-medium text-[#0b1a2d]">Fava Beans</div>
+              </div>
+
+              <div class="text-center">
+                <div class="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36
+                            rounded-full overflow-hidden ring-2 ring-[#2a4a37]/30 shadow-sm">
+                  <img src="images/crops/rice.jpg" class="w-full h-full object-cover" alt="Rice">
+                </div>
+                <div class="mt-3 sm:mt-4 text-lg sm:text-xl font-medium text-[#0b1a2d]">Rice</div>
+              </div>
+
+              <div class="text-center">
+                <div class="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36
+                            rounded-full overflow-hidden ring-2 ring-[#2a4a37]/30 shadow-sm">
+                  <img src="images/crops/caraway.jpg" class="w-full h-full object-cover" alt="Caraway">
+                </div>
+                <div class="mt-3 sm:mt-4 text-lg sm:text-xl font-medium text-[#0b1a2d]">Caraway</div>
+              </div>
+
+              <div class="text-center">
+                <div class="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36
+                            rounded-full overflow-hidden ring-2 ring-[#2a4a37]/30 shadow-sm">
+                  <img src="images/crops/fennel.jpg" class="w-full h-full object-cover" alt="Fennel">
+                </div>
+                <div class="mt-3 sm:mt-4 text-lg sm:text-xl font-medium text-[#0b1a2d]">Fennel</div>
+              </div>
+
+              <!-- Add more items freely (grid will pack / scroll safely) -->
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+<!-- INFRASTRUCTURE IoT — HALO ARC (higher + star-trail draw + background ramps up during halo) -->
+<section id="infrastructure-iot" class="h-screen snap-start bg-[#0b1220] text-white overflow-hidden relative">
+
+  <!-- Background image (fades in progressively during halo draw) -->
+  <div id="iotBg"
+       class="absolute inset-0 opacity-0 scale-[1.06] transition-transform duration-[1600ms] ease-out"
+       style="background-image:url('images/iot-bg.jpg'); background-size:cover; background-position:center;">
+    <!-- overlay opacity is also animated -->
+    <div id="iotOverlay" class="absolute inset-0 bg-[#0b1220]/85 transition-opacity duration-300"></div>
+  </div>
+
+  <!-- Halo SVG -->
+  <svg id="iotHalo" class="absolute inset-0 w-full h-full pointer-events-none" aria-hidden="true"></svg>
+
+  <div class="relative max-w-7xl mx-auto px-6 h-full flex items-center justify-center">
+    <div class="w-full">
+
+      <!-- Title -->
+      <div id="iotHeadline"
+           class="text-center opacity-0 translate-y-8 blur-[6px] transition-all duration-[1200ms] ease-out">
+        <h2 id="iotTitle" class="text-4xl md:text-5xl font-semibold tracking-tight">
+          IoT Orchestrating Crop Flow
+        </h2>
+        <p class="mt-3 text-white/60 text-lg max-w-3xl mx-auto">
+          Processing, storage, transport, scales, and freight — all connected as one network.
+        </p>
+      </div>
+
+      <!-- BOX GRID -->
+      <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+
+        <div class="iot-box opacity-0 -translate-y-10">
+          <div class="rounded-2xl bg-[#111f36] ring-1 ring-white/10 p-6 text-center">
+            <div class="text-sm text-white/40">Node</div>
+            <div class="text-lg font-semibold mt-2">Processing Station</div>
+            <div class="text-4xl font-semibold mt-4 tabular-nums">
+              <span class="iot-counter" data-target="12">0</span>
+            </div>
+            <div class="mt-1 text-white/55 text-sm">Stations connected</div>
+          </div>
+        </div>
+
+        <div class="iot-box opacity-0 -translate-y-10">
+          <div class="rounded-2xl bg-[#111f36] ring-1 ring-white/10 p-6 text-center">
+            <div class="text-sm text-white/40">Node</div>
+            <div class="text-lg font-semibold mt-2">Storage Space</div>
+            <div class="text-4xl font-semibold mt-4 tabular-nums">
+              <span class="iot-counter" data-target="28">0</span>
+            </div>
+            <div class="mt-1 text-white/55 text-sm">Warehouses / hubs</div>
+          </div>
+        </div>
+
+        <div class="iot-box opacity-0 -translate-y-10">
+          <div class="rounded-2xl bg-[#111f36] ring-1 ring-white/10 p-6 text-center">
+            <div class="text-sm text-white/40">Node</div>
+            <div class="text-lg font-semibold mt-2">Trucks</div>
+            <div class="text-4xl font-semibold mt-4 tabular-nums">
+              <span class="iot-counter" data-target="64">0</span>
+            </div>
+            <div class="mt-1 text-white/55 text-sm">Active fleet access</div>
+          </div>
+        </div>
+
+        <div class="iot-box opacity-0 -translate-y-10">
+          <div class="rounded-2xl bg-[#111f36] ring-1 ring-white/10 p-6 text-center">
+            <div class="text-sm text-white/40">Node</div>
+            <div class="text-lg font-semibold mt-2">Truck Scales</div>
+            <div class="text-4xl font-semibold mt-4 tabular-nums">
+              <span class="iot-counter" data-target="19">0</span>
+            </div>
+            <div class="mt-1 text-white/55 text-sm">Digital weigh points</div>
+          </div>
+        </div>
+
+        <div class="iot-box opacity-0 -translate-y-10">
+          <div class="rounded-2xl bg-[#111f36] ring-1 ring-white/10 p-6 text-center">
+            <div class="text-sm text-white/40">Node</div>
+            <div class="text-lg font-semibold mt-2">Freight Forwarder</div>
+            <div class="text-4xl font-semibold mt-4 tabular-nums">
+              <span class="iot-counter" data-target="7">0</span>
+            </div>
+            <div class="mt-1 text-white/55 text-sm">Partners integrated</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <style>
+    .iot-box {
+      transition: transform 1200ms cubic-bezier(.19,1,.22,1), opacity 1200ms cubic-bezier(.19,1,.22,1);
+      will-change: transform, opacity;
+    }
+    .iot-box.is-in { opacity: 1 !important; transform: translateY(0) !important; }
+
+    /* Halo styles: glow + crisp line + star head */
+    .haloGlow {
+      stroke: rgba(255,255,255,0.10);
+      stroke-width: 26;
+      fill: none;
+      filter: blur(2px);
+      stroke-linecap: round;
+    }
+    .haloLine {
+      stroke: rgba(255,255,255,0.88);
+      stroke-width: 3;
+      fill: none;
+      filter: drop-shadow(0 0 18px rgba(255,255,255,0.30));
+      stroke-linecap: round; /* makes "star trail" nicer */
+    }
+    .haloHead {
+      fill: rgba(255,255,255,0.95);
+      filter: drop-shadow(0 0 22px rgba(255,255,255,0.55));
+    }
+  </style>
+
+  <script>
+    (function () {
+      const section   = document.getElementById("infrastructure-iot");
+      const boxes     = Array.from(section.querySelectorAll(".iot-box"));
+      const counters  = Array.from(section.querySelectorAll(".iot-counter"));
+      const headline  = document.getElementById("iotHeadline");
+
+      const bg        = document.getElementById("iotBg");
+      const overlay   = document.getElementById("iotOverlay");
+
+      const svg       = document.getElementById("iotHalo");
+      const title     = document.getElementById("iotTitle");
+
+      let hasRun = false;
+
+      const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+
+      function animateCounter(el, to, durationMs) {
+        return new Promise((resolve) => {
+          const start = performance.now();
+          function tick(now) {
+            const t = Math.min((now - start) / durationMs, 1);
+            const eased = 1 - Math.pow(1 - t, 3); // easeOutCubic
+            const val = Math.round(to * eased);
+            el.textContent = val.toLocaleString();
+            if (t < 1) requestAnimationFrame(tick);
+            else resolve();
+          }
+          requestAnimationFrame(tick);
+        });
+      }
+
+      function clearSvg() { while (svg.firstChild) svg.removeChild(svg.firstChild); }
+
+      function centerTop(rect) {
+        return { x: rect.left + rect.width / 2, y: rect.top };
+      }
+
+      function buildHaloPath() {
+        const sRect = section.getBoundingClientRect();
+        const first = boxes[0].getBoundingClientRect();
+        const last  = boxes[4].getBoundingClientRect();
+        const tRect = title.getBoundingClientRect();
+
+        const a = centerTop(first);
+        const b = centerTop(last);
+
+        const x1 = a.x - sRect.left;
+        const y1 = a.y - sRect.top - 10;
+
+        const x2 = b.x - sRect.left;
+        const y2 = b.y - sRect.top - 10;
+
+        // ✅ Higher halo: use a point above the title and lift it a lot
+        const mx = (x1 + x2) / 2;
+        const my = (tRect.top - sRect.top) - 170; // higher than title
+        // Also push up more to feel grand
+        const extraLift = 180;
+        const apexY = my - extraLift;
+
+        return { d: `M ${x1} ${y1} Q ${mx} ${apexY} ${x2} ${y2}`, sRect };
+      }
+
+      function pointOnQuadratic(p0, p1, p2, t) {
+        const x = (1-t)*(1-t)*p0.x + 2*(1-t)*t*p1.x + t*t*p2.x;
+        const y = (1-t)*(1-t)*p0.y + 2*(1-t)*t*p1.y + t*t*p2.y;
+        return {x,y};
+      }
+
+      function parseQuadratic(d) {
+        // d = "M x1 y1 Q cx cy x2 y2"
+        const parts = d.replace(/[MQ]/g, "").trim().split(/\s+/).map(Number);
+        return {
+          p0: {x: parts[0], y: parts[1]},
+          p1: {x: parts[2], y: parts[3]},
+          p2: {x: parts[4], y: parts[5]},
+        };
+      }
+
+      async function animateHaloWithStarTrail() {
+        clearSvg();
+
+        const { d } = buildHaloPath();
+        const { p0, p1, p2 } = parseQuadratic(d);
+
+        // glow underlay
+        const glow = document.createElementNS("http://www.w3.org/2000/svg","path");
+        glow.setAttribute("d", d);
+        glow.setAttribute("class","haloGlow");
+
+        // main line
+        const line = document.createElementNS("http://www.w3.org/2000/svg","path");
+        line.setAttribute("d", d);
+        line.setAttribute("class","haloLine");
+
+        // star head (small circle that moves along the arc)
+        const head = document.createElementNS("http://www.w3.org/2000/svg","circle");
+        head.setAttribute("r", "3.6");
+        head.setAttribute("class","haloHead");
+
+        svg.appendChild(glow);
+        svg.appendChild(line);
+        svg.appendChild(head);
+
+        // make line "grow" from a tiny segment to full length
+        const len = line.getTotalLength();
+        [glow, line].forEach(p => {
+          p.style.strokeDasharray = len;
+          p.style.strokeDashoffset = len;
+        });
+
+        // Ensure background is ready to fade (we’ll control opacity via JS)
+        bg.classList.remove("opacity-0");
+        bg.style.opacity = "0";
+        bg.classList.add("scale-100"); // settle scale during reveal
+        overlay.style.opacity = "0.88"; // strong at start
+
+        const duration = 2200; // slower, more premium
+        const start = performance.now();
+
+        function frame(now) {
+          const t = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - t, 3);
+
+          // stroke draw (grows from start to end)
+          const dash = len * (1 - eased);
+          line.style.strokeDashoffset = dash;
+          glow.style.strokeDashoffset = dash;
+
+          // star head position along the curve
+          const pt = pointOnQuadratic(p0, p1, p2, eased);
+          head.setAttribute("cx", pt.x);
+          head.setAttribute("cy", pt.y);
+
+          // head grows slightly then settles (cinema feel)
+          const r = 3.2 + (eased < 0.15 ? eased * 10 : 1.5);
+          head.setAttribute("r", String(r));
+
+          // ✅ background becomes more apparent as halo completes
+          // 0 -> 1 opacity ramp, but slower at first
+          const bgOpacity = Math.min(0.85, eased * 0.95);
+          bg.style.opacity = String(bgOpacity);
+
+          // overlay reduces to show more image near the end
+          const overlayOpacity = 0.88 - (eased * 0.45); // 0.88 -> 0.43
+          overlay.style.opacity = String(Math.max(0.40, overlayOpacity));
+
+          if (t < 1) requestAnimationFrame(frame);
+          else {
+            // final polish: soften head after completion
+            head.style.transition = "opacity 900ms ease";
+            head.style.opacity = "0.65";
+          }
+        }
+        requestAnimationFrame(frame);
+
+        // also add a slight settle zoom to background
+        bg.classList.remove("scale-[1.06]");
+        bg.classList.add("scale-100");
+      }
+
+      async function runSequence() {
+        if (hasRun) return;
+        hasRun = true;
+
+        // sequential: box -> count -> next box
+        for (let i = 0; i < boxes.length; i++) {
+          boxes[i].classList.add("is-in");
+          await sleep(420);
+          await animateCounter(counters[i], Number(counters[i].dataset.target || 0), 1700);
+          await sleep(260);
+        }
+
+        // title reveal
+        headline.classList.remove("opacity-0","translate-y-8","blur-[6px]");
+        headline.classList.add("opacity-100","translate-y-0","blur-0");
+
+        // halo starts after title appears
+        await sleep(520);
+        await animateHaloWithStarTrail();
+      }
+
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) runSequence(); });
+      }, { threshold: 0.6 });
+
+      io.observe(section);
+
+      // keep halo aligned on resize (only after run)
+      window.addEventListener("resize", () => {
+        if (!hasRun) return;
+        // re-run halo positioning instantly (no re-count sequence)
+        animateHaloWithStarTrail();
+      });
+
+    })();
+  </script>
+</section>
+
+<!-- ✅ RFQ SECTION — UPDATED PER YOUR LAST MESSAGE
+What changed:
+1) Step 0 added FIRST: "Request RFQ" (Name, Email, Number)
+2) After Step 0 is completed → tracker + remaining steps appear
+3) Bottom of the form shows: "a few more questions" (near the end of the section)
+4) Order Review includes Name / Email / Number as well
+5) Final Submit button centered across the order review (full width + centered)
+6) Removed "In Progress / Finalize Order" label (no status text)
+7) Step 0 has NO "Complete" text; Next stays Next →
+8) On Order Review: hide the “complete the steps / tracker” guidance text
+-->
+
+<section id="rfq" class="min-h-screen snap-start bg-white overflow-hidden">
+  <div class="max-w-7xl mx-auto px-6 py-16 lg:py-0 min-h-screen flex items-center">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center w-full">
+
+      <!-- LEFT: Half-circle image -->
+      <div class="lg:col-span-5 relative flex justify-center lg:justify-start">
+        <div class="relative w-[320px] h-[320px] sm:w-[420px] sm:h-[420px] lg:w-[520px] lg:h-[520px]">
+          <div class="absolute inset-0 overflow-hidden rounded-r-[999px] rounded-l-none">
+            <img src="images/rfq.jpg" alt="RFQ visual" class="w-full h-full object-cover" />
+            <div class="absolute inset-0 bg-black/10"></div>
+          </div>
+          <div class="absolute inset-0 rounded-r-[999px] rounded-l-none ring-1 ring-black/10"></div>
+        </div>
+      </div>
+
+      <!-- RIGHT -->
+      <div class="lg:col-span-7">
+        <div class="max-w-xl ml-auto">
+
+          <h2 class="text-4xl sm:text-5xl font-semibold tracking-tight text-[#0b1a2d]">
+            Request RFQ
+          </h2>
+
+          <!-- STEP 0 CARD (only name/email/number) -->
+          <div id="rfqStep0Card" class="mt-6 rounded-2xl border border-black/10 bg-white p-6 sm:p-7">
+            <div class="text-lg font-semibold text-[#0b1a2d]">Basic Details</div>
+            <div class="mt-1 text-sm text-[#0b1a2d]/55">Please enter your contact information.</div>
+
+            <div class="mt-5 space-y-5">
+              <div>
+                <label class="block text-sm font-medium text-[#0b1a2d] mb-2">Name</label>
+                <input id="rfqName" class="rfqField" type="text" placeholder="Your name" />
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-[#0b1a2d] mb-2">Email</label>
+                <input id="rfqEmail" class="rfqField" type="email" placeholder="Your email" />
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-[#0b1a2d] mb-2">Number</label>
+                <input id="rfqPhone" class="rfqField" type="tel" placeholder="+20 ..." />
+              </div>
+            </div>
+
+            <div class="mt-6 flex justify-end">
+              <button id="rfqStart"
+                class="rounded-full bg-[#0b1a2d] text-white px-6 py-2.5 text-sm font-semibold hover:bg-[#142a4a] transition">
+                Next →
+              </button>
+            </div>
+          </div>
+
+          <!-- TRACKER + WIZARD (hidden until step 0 completed) -->
+          <div id="rfqWizardWrap" class="hidden">
+
+            <!-- TRACKER -->
+            <div id="rfqTrackerWrap" class="mt-8">
+              <div class="relative">
+                <!-- line THROUGH circles, behind them -->
+                <div id="rfqLine" class="absolute left-0 right-0 top-[28px] h-px bg-black/10 z-0"></div>
+                <div id="rfqTracker" class="grid grid-cols-9 gap-3 relative z-10"></div>
+              </div>
+            </div>
+
+            <!-- WIZARD CARD -->
+            <div id="rfqWizardCard" class="mt-6 rounded-2xl border border-black/10 bg-white p-6 sm:p-7">
+              <div id="rfqStepTitle" class="text-lg font-semibold text-[#0b1a2d]"></div>
+              <div id="rfqStepSubtitle" class="mt-1 text-sm text-[#0b1a2d]/55"></div>
+
+              <div class="mt-5" id="rfqStepBody"></div>
+
+              <!-- Nav -->
+              <div class="mt-6 flex items-center justify-between gap-3">
+                <button id="rfqBack"
+                  class="rounded-full bg-[#0b1a2d] text-white px-6 py-2.5 text-sm font-semibold hover:bg-[#142a4a] transition disabled:opacity-30 disabled:cursor-not-allowed">
+                  ← Back
+                </button>
+
+                <button id="rfqNext"
+                  class="rounded-full bg-[#0b1a2d] text-white px-6 py-2.5 text-sm font-semibold hover:bg-[#142a4a] transition">
+                  Next →
+                </button>
+              </div>
+
+              <!-- Submit appears when all steps done -->
+              <div id="rfqSubmitWrap" class="mt-6 hidden">
+                <button id="rfqSubmit"
+                  class="w-full rounded-full bg-[#22c55e] text-white px-6 py-3 font-semibold hover:bg-[#16a34a] transition">
+                  Submit Order
+                </button>
+              </div>
+
+              <!-- bottom line -->
+              <div class="mt-6 text-center text-sm text-[#0b1a2d]/55">
+                a few more questions
+              </div>
+            </div>
+          </div>
+
+          <!-- ORDER REVIEW (appears after Submit Order, tracker removed) -->
+          <div id="rfqReviewWrap" class="mt-10 hidden">
+            <div class="rounded-2xl border border-black/10 bg-white p-6 sm:p-7">
+
+              <h3 class="text-2xl font-semibold text-[#0b1a2d]">Order Review</h3>
+              <p class="mt-1 text-sm text-[#0b1a2d]/55">Review your request details.</p>
+
+              <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                <!-- include basic details -->
+                <div class="rounded-xl border border-black/10 p-4">
+                  <div class="text-[#0b1a2d]/55">Name</div>
+                  <div id="rvName" class="mt-1 font-semibold text-[#0b1a2d]">—</div>
+                </div>
+                <div class="rounded-xl border border-black/10 p-4">
+                  <div class="text-[#0b1a2d]/55">Email</div>
+                  <div id="rvEmail" class="mt-1 font-semibold text-[#0b1a2d]">—</div>
+                </div>
+                <div class="rounded-xl border border-black/10 p-4">
+                  <div class="text-[#0b1a2d]/55">Number</div>
+                  <div id="rvPhone" class="mt-1 font-semibold text-[#0b1a2d]">—</div>
+                </div>
+
+                <!-- order details -->
+                <div class="rounded-xl border border-black/10 p-4">
+                  <div class="text-[#0b1a2d]/55">Crop</div>
+                  <div id="rvCrop" class="mt-1 font-semibold text-[#0b1a2d]">—</div>
+                </div>
+                <div class="rounded-xl border border-black/10 p-4">
+                  <div class="text-[#0b1a2d]/55">SKU</div>
+                  <div id="rvSku" class="mt-1 font-semibold text-[#0b1a2d]">—</div>
+                </div>
+                <div class="rounded-xl border border-black/10 p-4">
+                  <div class="text-[#0b1a2d]/55">Containers</div>
+                  <div id="rvContainers" class="mt-1 font-semibold text-[#0b1a2d]">—</div>
+                </div>
+                <div class="rounded-xl border border-black/10 p-4">
+                  <div class="text-[#0b1a2d]/55">Destination</div>
+                  <div id="rvDestination" class="mt-1 font-semibold text-[#0b1a2d]">—</div>
+                </div>
+                <div class="rounded-xl border border-black/10 p-4">
+                  <div class="text-[#0b1a2d]/55">Expected Delivery Date</div>
+                  <div id="rvDelivery" class="mt-1 font-semibold text-[#0b1a2d]">—</div>
+                </div>
+                <div class="rounded-xl border border-black/10 p-4">
+                  <div class="text-[#0b1a2d]/55">Quality Inspection</div>
+                  <div id="rvQuality" class="mt-1 font-semibold text-[#0b1a2d]">—</div>
+                </div>
+                <div class="rounded-xl border border-black/10 p-4">
+                  <div class="text-[#0b1a2d]/55">Insurance</div>
+                  <div id="rvInsurance" class="mt-1 font-semibold text-[#0b1a2d]">—</div>
+                </div>
+                <div class="rounded-xl border border-black/10 p-4">
+                  <div class="text-[#0b1a2d]/55">Payment Method</div>
+                  <div id="rvPayment" class="mt-1 font-semibold text-[#0b1a2d]">—</div>
+                </div>
+              </div>
+
+              <!-- ✅ final submit centered across review -->
+              <div class="mt-8 flex justify-center">
+                <button id="rfqFinalSubmit"
+                  class="w-full sm:w-[360px] rounded-full bg-[#22c55e] text-white px-6 py-3 font-semibold hover:bg-[#16a34a] transition">
+                  Final Submit
+                </button>
+              </div>
+
+              <!-- only after final submit -->
+              <div id="rfqFinalMsg"
+                   class="mt-5 hidden rounded-xl border border-[#22c55e]/25 bg-[#22c55e]/10 p-4 text-[#0b1a2d]">
+                <div class="flex items-start gap-3">
+                  <div class="shrink-0 mt-0.5">
+                    <svg class="w-6 h-6 text-[#16a34a]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M20 6L9 17l-5-5" />
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="font-semibold">You will be contacted shortly</div>
+                    <div class="text-sm text-[#0b1a2d]/60 mt-1">
+                      Your request has been submitted successfully.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <style>
+    .tCircleWrap{display:flex;flex-direction:column;align-items:center;gap:8px;position:relative;z-index:2;user-select:none;}
+    .tCircle{width:56px;height:56px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;background:rgba(59,130,246,0.18);border:1px solid rgba(59,130,246,0.30);color:rgba(11,26,45,.9);cursor:pointer;transition:transform 750ms cubic-bezier(.19,1,.22,1),background 250ms ease,border-color 250ms ease;will-change:transform;}
+    .tCircle.done{background:rgba(34,197,94,0.16);border-color:rgba(34,197,94,0.34);}
+    .tCircle.active{border-color:rgba(11,26,45,.45);box-shadow:0 10px 24px rgba(11,26,45,.10);}
+    .tLabel{font-size:11px;letter-spacing:.10em;text-transform:uppercase;color:rgba(11,26,45,.55);transition:opacity 350ms ease,transform 350ms ease;text-align:center;line-height:1.1;min-height:22px;}
+    .tLabel.hiddenLabel{opacity:0;transform:translateY(-4px);pointer-events:none;}
+
+    /* 50% overlap: 56px / 2 = 28px */
+    .stack-1{ transform: translateX(-28px); }
+    .stack-2{ transform: translateX(-56px); }
+    .stack-3{ transform: translateX(-84px); }
+    .stack-4{ transform: translateX(-112px); }
+    .stack-5{ transform: translateX(-140px); }
+    .stack-6{ transform: translateX(-168px); }
+    .stack-7{ transform: translateX(-196px); }
+    .stack-8{ transform: translateX(-224px); }
+
+    .rfqField{width:100%;border-bottom:1px solid rgba(0,0,0,.10);padding:12px 0;outline:none;background:transparent;color:#0b1a2d;}
+  </style>
+
+  <script>
+    (function(){
+      const steps = [
+        { key:"crop",   label:"Crop",       title:"Buyer Choose Crop", subtitle:"Select the crop you want to purchase.", type:"select", options:["White Beans","Sesame","Fava Beans","Rice","Caraway","Fennel"]},
+        { key:"spec",   label:"Spec",       title:"SKU / Specification", subtitle:"Choose the SKU specification.", type:"select", options:["WKB-001 (Standard)","WKB-002 (Premium)","SSM-001 (Standard)","SSM-002 (Premium)","RCE-001 (Standard)"]},
+        { key:"containers", label:"Tons",   title:"Number of Containers", subtitle:"Enter the number of containers.", type:"number", placeholder:"e.g. 4" },
+        { key:"packing", label:"Packing",   title:"Packing", subtitle:"Choose packing format.", type:"select", options:["25kg PP Bags","50kg PP Bags","Jumbo Bags","Bulk"]},
+        { key:"destination", label:"Destination", title:"Destination", subtitle:"Where should the shipment be delivered?", type:"text", placeholder:"Country / City" },
+        { key:"delivery", label:"Delivery", title:"Expected Delivery Date", subtitle:"Choose your expected delivery date.", type:"date" },
+        { key:"quality", label:"Quality",   title:"Quality Inspection", subtitle:"Select inspection method.", type:"select", options:["Shunah QC","Third-Party Inspection","Buyer Inspection"]},
+        { key:"insurance", label:"Insurance", title:"Insurance", subtitle:"Select insurance option.", type:"select", options:["Included","Optional","Not Required"]},
+        { key:"payment", label:"Payment",   title:"Payment Method", subtitle:"Select payment method.", type:"select", options:["LC","TT","Cash Against Documents"]}
+      ];
+
+      const state = {};
+      let current = 0;
+      const completed = new Set();
+      let finalSubmitted = false;
+
+      const step0Card = document.getElementById("rfqStep0Card");
+      const wizardWrap = document.getElementById("rfqWizardWrap");
+
+      const nameEl = document.getElementById("rfqName");
+      const emailEl = document.getElementById("rfqEmail");
+      const phoneEl = document.getElementById("rfqPhone");
+      const startBtn = document.getElementById("rfqStart");
+
+      const trackerWrap = document.getElementById("rfqTrackerWrap");
+      const tracker = document.getElementById("rfqTracker");
+      const wizardCard = document.getElementById("rfqWizardCard");
+      const reviewWrap = document.getElementById("rfqReviewWrap");
+
+      const stepTitle = document.getElementById("rfqStepTitle");
+      const stepSubtitle = document.getElementById("rfqStepSubtitle");
+      const stepBody = document.getElementById("rfqStepBody");
+
+      const backBtn = document.getElementById("rfqBack");
+      const nextBtn = document.getElementById("rfqNext");
+      const submitWrap = document.getElementById("rfqSubmitWrap");
+      const submitBtn = document.getElementById("rfqSubmit");
+
+      const finalBtn = document.getElementById("rfqFinalSubmit");
+      const finalMsg = document.getElementById("rfqFinalMsg");
+
+      const rv = {
+        name: document.getElementById("rvName"),
+        email: document.getElementById("rvEmail"),
+        phone: document.getElementById("rvPhone"),
+        crop: document.getElementById("rvCrop"),
+        sku: document.getElementById("rvSku"),
+        containers: document.getElementById("rvContainers"),
+        destination: document.getElementById("rvDestination"),
+        delivery: document.getElementById("rvDelivery"),
+        quality: document.getElementById("rvQuality"),
+        insurance: document.getElementById("rvInsurance"),
+        payment: document.getElementById("rvPayment"),
+      };
+
+      function makeField(step){
+        const wrap = document.createElement("div");
+        if(step.type === "select"){
+          const sel = document.createElement("select");
+          sel.className = "rfqField";
+          sel.innerHTML = `<option value="">Select...</option>` +
+            (step.options||[]).map(o=>`<option value="${o}">${o}</option>`).join("");
+          sel.value = state[step.key] || "";
+          sel.addEventListener("change", ()=> state[step.key]=sel.value);
+          wrap.appendChild(sel);
+        } else {
+          const input = document.createElement("input");
+          input.type = step.type || "text";
+          input.placeholder = step.placeholder || "";
+          input.className = "rfqField";
+          input.value = state[step.key] || "";
+          input.addEventListener("input", ()=> state[step.key]=input.value);
+          wrap.appendChild(input);
+
+          if(step.key === "containers"){
+            const note = document.createElement("div");
+            note.className = "mt-2 text-xs text-[#0b1a2d]/55";
+            note.textContent = "* A container is typically between 24–25 tons.";
+            wrap.appendChild(note);
+          }
+        }
+        return wrap;
+      }
+
+      function isFilled(i){
+        const k = steps[i].key;
+        return state[k] && String(state[k]).trim().length > 0;
+      }
+
+      function buildTracker(){
+        tracker.innerHTML = "";
+        steps.forEach((s, idx) => {
+          const cell = document.createElement("div");
+          cell.className = "tCircleWrap";
+
+          const c = document.createElement("div");
+          c.className = "tCircle";
+          c.textContent = String(idx + 1);
+          c.dataset.idx = String(idx);
+
+          const label = document.createElement("div");
+          label.className = "tLabel";
+          label.textContent = s.label;
+          label.dataset.idx = String(idx);
+
+          c.addEventListener("click", () => {
+            current = idx;
+            for(let j = steps.length - 1; j > idx; j--){
+              completed.delete(j);
+            }
+            render();
+          });
+
+          cell.appendChild(c);
+          cell.appendChild(label);
+          tracker.appendChild(cell);
+        });
+      }
+
+      function updateTrackerUI(){
+        const circles = tracker.querySelectorAll(".tCircle");
+        const labels  = tracker.querySelectorAll(".tLabel");
+        const done = Array.from(completed).filter(i=>i!==0).sort((a,b)=>a-b);
+
+        circles.forEach((c) => {
+          const idx = Number(c.dataset.idx);
+          c.classList.toggle("active", idx === current);
+          c.classList.toggle("done", completed.has(idx));
+
+          c.classList.remove("stack-1","stack-2","stack-3","stack-4","stack-5","stack-6","stack-7","stack-8");
+
+          if(idx !== 0 && completed.has(idx)){
+            const rank = done.indexOf(idx) + 1; // 1..8
+            if(rank > 0) c.classList.add("stack-" + Math.min(rank, 8));
+          }
+        });
+
+        labels.forEach((l) => {
+          const idx = Number(l.dataset.idx);
+          const hide = (idx !== 0 && completed.has(idx));
+          l.classList.toggle("hiddenLabel", hide);
+        });
+      }
+
+      function renderStep(){
+        const s = steps[current];
+        stepTitle.textContent = s.title;
+        stepSubtitle.textContent = s.subtitle;
+
+        stepBody.innerHTML = "";
+        stepBody.appendChild(makeField(s));
+
+        backBtn.disabled = current === 0;
+
+        // ✅ no "Complete" label ever
+        nextBtn.textContent = "Next →";
+
+        submitWrap.classList.toggle("hidden", completed.size !== steps.length);
+      }
+
+      function fillReview(){
+        rv.name.textContent = state.__name || "—";
+        rv.email.textContent = state.__email || "—";
+        rv.phone.textContent = state.__phone || "—";
+
+        rv.crop.textContent = state.crop || "—";
+        rv.sku.textContent = state.spec || "—";
+        rv.containers.textContent = state.containers || "—";
+        rv.destination.textContent = state.destination || "—";
+        rv.delivery.textContent = state.delivery || "—";
+        rv.quality.textContent = state.quality || "—";
+        rv.insurance.textContent = state.insurance || "—";
+        rv.payment.textContent = state.payment || "—";
+      }
+
+      function showReview(){
+        fillReview();
+        // remove tracker after Submit Order
+        trackerWrap.classList.add("hidden");
+        wizardCard.classList.add("hidden");
+        reviewWrap.classList.remove("hidden");
+        finalMsg.classList.toggle("hidden", !finalSubmitted);
+      }
+
+      startBtn.addEventListener("click", () => {
+        const n = (nameEl.value||"").trim();
+        const e = (emailEl.value||"").trim();
+        const p = (phoneEl.value||"").trim();
+        if(!n || !e || !p) return;
+
+        state.__name = n;
+        state.__email = e;
+        state.__phone = p;
+
+        step0Card.classList.add("hidden");
+        wizardWrap.classList.remove("hidden");
+        render();
+      });
+
+      nextBtn.addEventListener("click", () => {
+        if(!isFilled(current)) return;
+        completed.add(current);
+        if(current < steps.length - 1) current++;
+        render();
+      });
+
+      backBtn.addEventListener("click", () => {
+        if(current === 0) return;
+        current--;
+        render();
+      });
+
+      submitBtn.addEventListener("click", () => {
+        showReview();
+      });
+
+      finalBtn.addEventListener("click", () => {
+        finalSubmitted = true;
+        finalMsg.classList.remove("hidden");
+      });
+
+      function render(){
+        if(!reviewWrap.classList.contains("hidden")) return;
+        renderStep();
+        updateTrackerUI();
+      }
+
+      buildTracker();
+    })();
+  </script>
+</section>
+
+<!-- CONTACT SECTION (matches the visual: simple, 2 columns, soft green pattern) -->
+<section id="contact"
+  class="min-h-screen snap-start bg-gradient-to-br from-[#eef3f9] via-[#dbe5f2] to-[#c9d8ea]">
+
+  <div class="max-w-7xl mx-auto px-6 py-20">
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-14">
+
+      <!-- LEFT COLUMN: FORM -->
+      <div class="lg:col-span-7">
+
+        <h2 class="text-5xl sm:text-6xl font-semibold tracking-tight text-[#0b1a2d]">
+          Contact Us
+        </h2>
+
+        <p class="mt-4 text-[#0b1a2d]/70 text-lg max-w-xl">
+          Fill out the form below and we’ll get back to you as soon as possible.
+        </p>
+
+        <form class="mt-10 space-y-6">
+
+          <!-- Name -->
+          <div>
+            <label class="block text-[#0b1a2d] font-medium mb-2">
+              Your Name <span class="text-red-500">*</span>
+            </label>
+            <input
+              type="text"
+              required
+              placeholder="Enter your name"
+              class="w-full rounded-xl bg-white border border-[#0b1a2d]/10 px-4 py-3 text-[#0b1a2d] placeholder-[#0b1a2d]/40 focus:outline-none focus:ring-2 focus:ring-[#0b1a2d]/20"
+            />
+          </div>
+
+          <!-- Email -->
+          <div>
+            <label class="block text-[#0b1a2d] font-medium mb-2">
+              Your Email <span class="text-red-500">*</span>
+            </label>
+            <input
+              type="email"
+              required
+              placeholder="Enter your email"
+              class="w-full rounded-xl bg-white border border-[#0b1a2d]/10 px-4 py-3 text-[#0b1a2d] placeholder-[#0b1a2d]/40 focus:outline-none focus:ring-2 focus:ring-[#0b1a2d]/20"
+            />
+          </div>
+
+          <!-- Subject -->
+          <div>
+            <label class="block text-[#0b1a2d] font-medium mb-2">
+              Subject
+            </label>
+            <input
+              type="text"
+              placeholder="Enter the subject"
+              class="w-full rounded-xl bg-white border border-[#0b1a2d]/10 px-4 py-3 text-[#0b1a2d] placeholder-[#0b1a2d]/40 focus:outline-none focus:ring-2 focus:ring-[#0b1a2d]/20"
+            />
+          </div>
+
+          <!-- Message -->
+          <div>
+            <label class="block text-[#0b1a2d] font-medium mb-2">
+              Message
+            </label>
+            <textarea
+              rows="6"
+              placeholder="Type your message..."
+              class="w-full rounded-xl bg-white border border-[#0b1a2d]/10 px-4 py-3 text-[#0b1a2d] placeholder-[#0b1a2d]/40 focus:outline-none focus:ring-2 focus:ring-[#0b1a2d]/20 resize-none"
+            ></textarea>
+          </div>
+
+ <!-- Centered Button -->
+          <div class="flex justify-center pt-4">
+            <button
+              type="submit"
+              class="rounded-xl bg-[#0b1a2d] text-white px-12 py-4 font-semibold hover:bg-[#142a4a] transition"
+            >
+              Send Message
+            </button>
+          </div>
+
+        </form>
+      </div>
+
+
+      <!-- RIGHT COLUMN: CONTACT INFORMATION -->
+      <div class="lg:col-span-5 flex">
+
+        <div class="w-full rounded-2xl bg-white/80 backdrop-blur-sm p-10 border border-[#0b1a2d]/10 flex flex-col">
+
+          <h3 class="text-4xl font-semibold tracking-tight text-[#0b1a2d] mb-10">
+            Contact Information
+          </h3>
+
+          <!-- HQ -->
+          <div>
+            <div class="text-xl font-semibold text-[#0b1a2d]">
+              Headquarters
+            </div>
+            <div class="text-[#0b1a2d]/70 mt-1">
+              41A , Street 18, Maadi, Egypt
+            </div>
+            <div class="text-[#0b1a2d]/70 mt-2">
+              +20 2 1234 5678
+            </div>
+          </div>
+
+          <hr class="border-[#0b1a2d]/10 my-8">
+
+          <!-- Production -->
+          <div>
+            <div class="text-xl font-semibold text-[#0b1a2d]">
+              Production Site
+            </div>
+            <div class="text-[#0b1a2d]/70 mt-1">
+              Hosh Eissa, Behira, Egypt
+            </div>
+            <div class="text-[#0b1a2d]/70 mt-2">
+              +20 109 876 5432
+            </div>
+          </div>
+
+          <hr class="border-[#0b1a2d]/10 my-8">
+
+          <!-- Emails -->
+          <div class="space-y-2 text-[#0b1a2d]/80">
+            <div>info@shunah.net</div>
+            <div>inquiries@shunah.net</div>
+          </div>
+
+          <!-- Space Before Social -->
+          <div class="mt-10"></div>
+
+          <!-- Social Icons -->
+          <div class="flex justify-center gap-8 mt-4 text-[#0b1a2d]">
+
+            <!-- LinkedIn -->
+            <a href="#" class="hover:opacity-70 transition">
+              <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M4.98 3.5C4.98 4.88 3.87 6 2.49 6S0 4.88 0 3.5 1.11 1 2.49 1s2.49 1.12 2.49 2.5zM.23 8h4.52v14H.23V8zM8.56 8h4.33v1.92h.06c.6-1.14 2.06-2.34 4.25-2.34 4.54 0 5.38 2.99 5.38 6.88V22h-4.52v-6.8c0-1.62-.03-3.7-2.25-3.7-2.25 0-2.59 1.75-2.59 3.58V22H8.56V8z"/>
+              </svg>
+            </a>
+
+            <!-- Facebook -->
+            <a href="#" class="hover:opacity-70 transition">
+              <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M22 12a10 10 0 10-11.5 9.88v-6.99H8v-2.89h2.5V9.41c0-2.47 1.47-3.83 3.73-3.83 1.08 0 2.2.19 2.2.19v2.42h-1.24c-1.22 0-1.6.76-1.6 1.54v1.85H16.5l-.4 2.89h-2.51v6.99A10 10 0 0022 12z"/>
+              </svg>
+            </a>
+
+            <!-- WhatsApp -->
+            <a href="#" class="hover:opacity-70 transition">
+              <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2a10 10 0 00-8.94 14.42L2 22l5.73-1.5A10 10 0 1012 2z"/>
+              </svg>
+            </a>
+
+            <!-- Instagram -->
+            <a href="#" class="hover:opacity-70 transition">
+              <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M7 2C4.24 2 2 4.24 2 7v10c0 2.76 2.24 5 5 5h10c2.76 0 5-2.24 5-5V7c0-2.76-2.24-5-5-5H7z"/>
+              </svg>
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
