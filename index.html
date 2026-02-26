@@ -3,19 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Shunah | Next Generation Platfrom Tech Platfrom for Dry Crops</title>
+  <title>Shunah | Next-Generation Platform Tech Platform for Dry Crops</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Inter', sans-serif; }
-    /* Optional: makes scrolling snap section-by-section */
-    html { scroll-behavior: smooth; }
-section { scroll-snap-align: start; }
-  </style>
+  body { font-family: 'Inter', sans-serif; }
+  html { scroll-behavior: smooth; }
+  section { scroll-snap-align: start; }
+
+  /* ✅ Mobile-safe viewport height (fixes iOS/Chrome UI shrinking) */
+  .vh-safe { min-height: 100dvh; }
+</style>
 </head>
 
 <!-- Make page snap to each full-screen section -->
-<body class="bg-gray-900 text-white min-h-screen overflow-y-auto snap-y snap-mandatory">
+<body class="bg-gray-900 text-white overflow-y-auto snap-y snap-mandatory">
 
   <!-- HERO SECTION (fills screen) -->
   <section
@@ -66,11 +68,11 @@ section { scroll-snap-align: start; }
 
         <h1 class="text-5xl md:text-6xl font-semibold leading-tight mb-6">
           Next Generation <br />
-          Tech Platfrom for Dry Crops
+          Tech Platform for Dry Crops
         </h1>
 
         <p class="text-lg text-gray-200 mb-8">
-          Using Satelite Technology, Computer Aided Vision, Dynamic Market Intelligence Engine, and Social Infrastructure IoT, we aggregate, process, and export high-quality cereal, pulses, and grains with precision and consistency.
+          Using Satellite Technology, Computer Aided Vision, Dynamic Market Intelligence Engine, and Social Infrastructure IoT, we aggregate, process, and export high-quality cereals, pulses, and grains with precision and consistency.
         </p>
 
         <a href="#technology"
@@ -221,7 +223,9 @@ SECTION 3 — TECHNOLOGY (BULLETPROOF)
 - Left images never overflow (they crop nicely)
 - Right cards shrink with monitor; if too short -> internal scroll (not page overflow)
 ========================= -->
-<section id="technology" class="bg-[#0b1220] text-white h-screen snap-start overflow-hidden">
+<section id="technology" class="bg-[#0b1220] text-white min-h-[100dvh] snap-start overflow-hidden">
+  <div class="max-w-7xl mx-auto px-6 min-h-[100dvh] flex flex-col">
+
   <div class="max-w-7xl mx-auto px-6 h-full flex flex-col">
 
     <!-- Title (fixed height area) -->
@@ -359,7 +363,7 @@ SECTION 4 — PRODUCTS (BULLETPROOF)
 - Products automatically pack tighter / looser based on available height
 - If height is too small: internal scroll in the right panel (not page overflow)
 ========================= -->
-<section id="products" class="h-screen snap-start overflow-hidden bg-white">
+<section id="products" class="min-h-[100dvh] snap-start overflow-hidden bg-white">
   <div class="h-full grid grid-cols-1 lg:grid-cols-12 min-h-0">
 
     <!-- LEFT (Field background + 17 SKUs) -->
@@ -406,14 +410,14 @@ SECTION 4 — PRODUCTS (BULLETPROOF)
                  - gap shrinks on small heights and grows on large screens
                  - items are centered and stay readable
             -->
-            <div class="grid grid-cols-2 md:grid-cols-3
-                        gap-x-8 md:gap-x-10
-                        gap-y-6 sm:gap-y-8 lg:gap-y-10
-                        place-items-center">
+           <div class="grid grid-cols-2 md:grid-cols-3
+            gap-x-6 md:gap-x-10
+            gap-y-4 sm:gap-y-6 lg:gap-y-10
+            place-items-center">
 
               <!-- Item -->
               <div class="text-center">
-                <div class="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36
+                <div class="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-36 lg:h-36
                             rounded-full overflow-hidden ring-2 ring-[#2a4a37]/30 shadow-sm">
                   <img src="images/White-beans.jpg" class="w-full h-full object-cover" alt="White Beans">
                 </div>
@@ -421,7 +425,7 @@ SECTION 4 — PRODUCTS (BULLETPROOF)
               </div>
 
               <div class="text-center">
-                <div class="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36
+                <div class="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-36 lg:h-36
                             rounded-full overflow-hidden ring-2 ring-[#2a4a37]/30 shadow-sm">
                   <img src="images/sesame.jpg" class="w-full h-full object-cover" alt="Sesame">
                 </div>
@@ -429,15 +433,15 @@ SECTION 4 — PRODUCTS (BULLETPROOF)
               </div>
 
               <div class="text-center">
-                <div class="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36
+                <div class="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-36 lg:h-36
                             rounded-full overflow-hidden ring-2 ring-[#2a4a37]/30 shadow-sm">
-                  <img src="images/Fava-beans.jpg" class="w-full h-full object-cover" alt="Fava Beans">
+                  <img src="images/fava-beans.jpg" class="w-full h-full object-cover" alt="Fava Beans">
                 </div>
                 <div class="mt-3 sm:mt-4 text-lg sm:text-xl font-medium text-[#0b1a2d]">Fava Beans</div>
               </div>
 
               <div class="text-center">
-                <div class="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36
+               <div class="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-36 lg:h-36
                             rounded-full overflow-hidden ring-2 ring-[#2a4a37]/30 shadow-sm">
                   <img src="images/rice.jpg" class="w-full h-full object-cover" alt="Rice">
                 </div>
@@ -445,7 +449,7 @@ SECTION 4 — PRODUCTS (BULLETPROOF)
               </div>
 
               <div class="text-center">
-                <div class="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36
+               <div class="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-36 lg:h-36
                             rounded-full overflow-hidden ring-2 ring-[#2a4a37]/30 shadow-sm">
                   <img src="images/Caraway.jpg" class="w-full h-full object-cover" alt="Caraway">
                 </div>
@@ -453,7 +457,7 @@ SECTION 4 — PRODUCTS (BULLETPROOF)
               </div>
 
               <div class="text-center">
-                <div class="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36
+                <div class="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-36 lg:h-36
                             rounded-full overflow-hidden ring-2 ring-[#2a4a37]/30 shadow-sm">
                   <img src="images/Fennel.jpg" class="w-full h-full object-cover" alt="Fennel">
                 </div>
@@ -1249,183 +1253,181 @@ What changed:
   </script>
 </section>
 
-<!-- CONTACT SECTION (matches the visual: simple, 2 columns, soft green pattern) -->
-<section id="contact"
-  class="min-h-screen snap-start bg-gradient-to-br from-[#eef3f9] via-[#dbe5f2] to-[#c9d8ea]">
+<!-- CONTACT SECTION (snap-fit, always exactly 100dvh, no distortion) -->
+<section
+  id="contact"
+  class="h-[100dvh] snap-start overflow-hidden
+         bg-gradient-to-br from-[#eef3f9] via-[#dbe5f2] to-[#c9d8ea]"
+>
+  <div class="max-w-7xl mx-auto h-full px-6 py-10 lg:py-12">
+    <!-- This wrapper guarantees the grid has a real height to fill -->
+    <div class="h-full min-h-0">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 h-full min-h-0 items-stretch">
 
-  <div class="max-w-7xl mx-auto px-6 py-20">
+        <!-- LEFT: FORM (becomes scrollable if content > available height) -->
+        <div class="lg:col-span-7 h-full min-h-0">
+          <div class="h-full min-h-0 overflow-auto pr-2">
 
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-14">
+            <h2 class="text-4xl sm:text-5xl font-semibold tracking-tight text-[#0b1a2d]">
+              Contact Us
+            </h2>
 
-      <!-- LEFT COLUMN: FORM -->
-      <div class="lg:col-span-7">
+            <p class="mt-3 text-[#0b1a2d]/70 text-lg max-w-xl">
+              Fill out the form below and we’ll get back to you as soon as possible.
+            </p>
 
-        <h2 class="text-5xl sm:text-6xl font-semibold tracking-tight text-[#0b1a2d]">
-          Contact Us
-        </h2>
+            <form class="mt-7 space-y-5">
 
-        <p class="mt-4 text-[#0b1a2d]/70 text-lg max-w-xl">
-          Fill out the form below and we’ll get back to you as soon as possible.
-        </p>
+              <!-- Name -->
+              <div>
+                <label class="block text-[#0b1a2d] font-medium mb-2">
+                  Your Name <span class="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder="Enter your name"
+                  class="w-full rounded-xl bg-white border border-[#0b1a2d]/10 px-4 py-3 text-[#0b1a2d] placeholder-[#0b1a2d]/40
+                         focus:outline-none focus:ring-2 focus:ring-[#0b1a2d]/20"
+                />
+              </div>
 
-        <form class="mt-10 space-y-6">
+              <!-- Email -->
+              <div>
+                <label class="block text-[#0b1a2d] font-medium mb-2">
+                  Your Email <span class="text-red-500">*</span>
+                </label>
+                <input
+                  type="email"
+                  required
+                  placeholder="Enter your email"
+                  class="w-full rounded-xl bg-white border border-[#0b1a2d]/10 px-4 py-3 text-[#0b1a2d] placeholder-[#0b1a2d]/40
+                         focus:outline-none focus:ring-2 focus:ring-[#0b1a2d]/20"
+                />
+              </div>
 
-          <!-- Name -->
-          <div>
-            <label class="block text-[#0b1a2d] font-medium mb-2">
-              Your Name <span class="text-red-500">*</span>
-            </label>
-            <input
-              type="text"
-              required
-              placeholder="Enter your name"
-              class="w-full rounded-xl bg-white border border-[#0b1a2d]/10 px-4 py-3 text-[#0b1a2d] placeholder-[#0b1a2d]/40 focus:outline-none focus:ring-2 focus:ring-[#0b1a2d]/20"
-            />
+              <!-- Subject -->
+              <div>
+                <label class="block text-[#0b1a2d] font-medium mb-2">
+                  Subject
+                </label>
+                <input
+                  type="text"
+                  placeholder="Enter the subject"
+                  class="w-full rounded-xl bg-white border border-[#0b1a2d]/10 px-4 py-3 text-[#0b1a2d] placeholder-[#0b1a2d]/40
+                         focus:outline-none focus:ring-2 focus:ring-[#0b1a2d]/20"
+                />
+              </div>
+
+              <!-- Message -->
+              <div>
+                <label class="block text-[#0b1a2d] font-medium mb-2">
+                  Message
+                </label>
+                <textarea
+                  rows="6"
+                  placeholder="Type your message..."
+                  class="w-full rounded-xl bg-white border border-[#0b1a2d]/10 px-4 py-3 text-[#0b1a2d] placeholder-[#0b1a2d]/40
+                         focus:outline-none focus:ring-2 focus:ring-[#0b1a2d]/20 resize-none"
+                ></textarea>
+              </div>
+
+              <!-- Button -->
+              <div class="flex justify-center pt-2">
+                <button
+                  type="submit"
+                  class="rounded-xl bg-[#0b1a2d] text-white px-10 py-4 font-semibold hover:bg-[#142a4a] transition"
+                >
+                  Send Message
+                </button>
+              </div>
+
+            </form>
           </div>
+        </div>
 
-          <!-- Email -->
-          <div>
-            <label class="block text-[#0b1a2d] font-medium mb-2">
-              Your Email <span class="text-red-500">*</span>
-            </label>
-            <input
-              type="email"
-              required
-              placeholder="Enter your email"
-              class="w-full rounded-xl bg-white border border-[#0b1a2d]/10 px-4 py-3 text-[#0b1a2d] placeholder-[#0b1a2d]/40 focus:outline-none focus:ring-2 focus:ring-[#0b1a2d]/20"
-            />
-          </div>
+        <!-- RIGHT: CONTACT INFO (stretches to match height, no distortion) -->
+        <div class="lg:col-span-5 h-full min-h-0">
+          <div class="h-full min-h-0 rounded-2xl bg-white/80 backdrop-blur-sm
+                      p-8 lg:p-10 border border-[#0b1a2d]/10 flex flex-col">
 
-          <!-- Subject -->
-          <div>
-            <label class="block text-[#0b1a2d] font-medium mb-2">
-              Subject
-            </label>
-            <input
-              type="text"
-              placeholder="Enter the subject"
-              class="w-full rounded-xl bg-white border border-[#0b1a2d]/10 px-4 py-3 text-[#0b1a2d] placeholder-[#0b1a2d]/40 focus:outline-none focus:ring-2 focus:ring-[#0b1a2d]/20"
-            />
-          </div>
+            <h3 class="text-3xl sm:text-4xl font-semibold tracking-tight text-[#0b1a2d] mb-8">
+              Contact Information
+            </h3>
 
-          <!-- Message -->
-          <div>
-            <label class="block text-[#0b1a2d] font-medium mb-2">
-              Message
-            </label>
-            <textarea
-              rows="6"
-              placeholder="Type your message..."
-              class="w-full rounded-xl bg-white border border-[#0b1a2d]/10 px-4 py-3 text-[#0b1a2d] placeholder-[#0b1a2d]/40 focus:outline-none focus:ring-2 focus:ring-[#0b1a2d]/20 resize-none"
-            ></textarea>
-          </div>
-
- <!-- Centered Button -->
-          <div class="flex justify-center pt-4">
-            <button
-              type="submit"
-              class="rounded-xl bg-[#0b1a2d] text-white px-12 py-4 font-semibold hover:bg-[#142a4a] transition"
-            >
-              Send Message
-            </button>
-          </div>
-
-        </form>
-      </div>
-
-
-      <!-- RIGHT COLUMN: CONTACT INFORMATION -->
-      <div class="lg:col-span-5 flex">
-
-        <div class="w-full rounded-2xl bg-white/80 backdrop-blur-sm p-10 border border-[#0b1a2d]/10 flex flex-col">
-
-          <h3 class="text-4xl font-semibold tracking-tight text-[#0b1a2d] mb-10">
-            Contact Information
-          </h3>
-
-          <!-- HQ -->
-          <div>
-            <div class="text-xl font-semibold text-[#0b1a2d]">
-              Headquarters
+            <!-- HQ -->
+            <div>
+              <div class="text-lg font-semibold text-[#0b1a2d]">
+                Headquarters
+              </div>
+              <div class="text-[#0b1a2d]/70 mt-1">
+                41A , Street 18, Maadi, Egypt
+              </div>
+              <div class="text-[#0b1a2d]/70 mt-2">
+                +20 2 1234 5678
+              </div>
             </div>
-            <div class="text-[#0b1a2d]/70 mt-1">
-              41A , Street 18, Maadi, Egypt
+
+            <hr class="border-[#0b1a2d]/10 my-7">
+
+            <!-- Production -->
+            <div>
+              <div class="text-lg font-semibold text-[#0b1a2d]">
+                Production Site
+              </div>
+              <div class="text-[#0b1a2d]/70 mt-1">
+                Hosh Eissa, Behira, Egypt
+              </div>
+              <div class="text-[#0b1a2d]/70 mt-2">
+                +20 109 876 5432
+              </div>
             </div>
-            <div class="text-[#0b1a2d]/70 mt-2">
-              +20 2 1234 5678
+
+            <hr class="border-[#0b1a2d]/10 my-7">
+
+            <!-- Emails -->
+            <div class="space-y-2 text-[#0b1a2d]/80">
+              <div>info@shunah.net</div>
+              <div>inquiries@shunah.net</div>
             </div>
-          </div>
 
-          <hr class="border-[#0b1a2d]/10 my-8">
+            <!-- Spacer -->
+            <div class="flex-1"></div>
 
-          <!-- Production -->
-          <div>
-            <div class="text-xl font-semibold text-[#0b1a2d]">
-              Production Site
+            <!-- Social Icons -->
+            <div class="flex justify-center gap-8 mt-8 text-[#0b1a2d]">
+              <a href="#" class="hover:opacity-70 transition" aria-label="LinkedIn">
+                <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M4.98 3.5C4.98 4.88 3.87 6 2.49 6S0 4.88 0 3.5 1.11 1 2.49 1s2.49 1.12 2.49 2.5zM.23 8h4.52v14H.23V8zM8.56 8h4.33v1.92h.06c.6-1.14 2.06-2.34 4.25-2.34 4.54 0 5.38 2.99 5.38 6.88V22h-4.52v-6.8c0-1.62-.03-3.7-2.25-3.7-2.25 0-2.59 1.75-2.59 3.58V22H8.56V8z"/>
+                </svg>
+              </a>
+
+              <a href="#" class="hover:opacity-70 transition" aria-label="Facebook">
+                <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M22 12a10 10 0 10-11.5 9.88v-6.99H8v-2.89h2.5V9.41c0-2.47 1.47-3.83 3.73-3.83 1.08 0 2.2.19 2.2.19v2.42h-1.24c-1.22 0-1.6.76-1.6 1.54v1.85H16.5l-.4 2.89h-2.51v6.99A10 10 0 0022 12z"/>
+                </svg>
+              </a>
+
+              <a href="#" class="hover:opacity-70 transition" aria-label="WhatsApp">
+                <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2a10 10 0 00-8.94 14.42L2 22l5.73-1.5A10 10 0 1012 2z"/>
+                </svg>
+              </a>
+
+              <a href="#" class="hover:opacity-70 transition" aria-label="Instagram">
+                <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M7 2C4.24 2 2 4.24 2 7v10c0 2.76 2.24 5 5 5h10c2.76 0 5-2.24 5-5V7c0-2.76-2.24-5-5-5H7z"/>
+                </svg>
+              </a>
             </div>
-            <div class="text-[#0b1a2d]/70 mt-1">
-              Hosh Eissa, Behira, Egypt
-            </div>
-            <div class="text-[#0b1a2d]/70 mt-2">
-              +20 109 876 5432
-            </div>
-          </div>
-
-          <hr class="border-[#0b1a2d]/10 my-8">
-
-          <!-- Emails -->
-          <div class="space-y-2 text-[#0b1a2d]/80">
-            <div>info@shunah.net</div>
-            <div>inquiries@shunah.net</div>
-          </div>
-
-          <!-- Space Before Social -->
-          <div class="mt-10"></div>
-
-          <!-- Social Icons -->
-          <div class="flex justify-center gap-8 mt-4 text-[#0b1a2d]">
-
-            <!-- LinkedIn -->
-            <a href="#" class="hover:opacity-70 transition">
-              <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M4.98 3.5C4.98 4.88 3.87 6 2.49 6S0 4.88 0 3.5 1.11 1 2.49 1s2.49 1.12 2.49 2.5zM.23 8h4.52v14H.23V8zM8.56 8h4.33v1.92h.06c.6-1.14 2.06-2.34 4.25-2.34 4.54 0 5.38 2.99 5.38 6.88V22h-4.52v-6.8c0-1.62-.03-3.7-2.25-3.7-2.25 0-2.59 1.75-2.59 3.58V22H8.56V8z"/>
-              </svg>
-            </a>
-
-            <!-- Facebook -->
-            <a href="#" class="hover:opacity-70 transition">
-              <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M22 12a10 10 0 10-11.5 9.88v-6.99H8v-2.89h2.5V9.41c0-2.47 1.47-3.83 3.73-3.83 1.08 0 2.2.19 2.2.19v2.42h-1.24c-1.22 0-1.6.76-1.6 1.54v1.85H16.5l-.4 2.89h-2.51v6.99A10 10 0 0022 12z"/>
-              </svg>
-            </a>
-
-            <!-- WhatsApp -->
-            <a href="#" class="hover:opacity-70 transition">
-              <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2a10 10 0 00-8.94 14.42L2 22l5.73-1.5A10 10 0 1012 2z"/>
-              </svg>
-            </a>
-
-            <!-- Instagram -->
-            <a href="#" class="hover:opacity-70 transition">
-              <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M7 2C4.24 2 2 4.24 2 7v10c0 2.76 2.24 5 5 5h10c2.76 0 5-2.24 5-5V7c0-2.76-2.24-5-5-5H7z"/>
-              </svg>
-            </a>
 
           </div>
-
         </div>
 
       </div>
-
     </div>
   </div>
 </section>
 
 </body>
-
 </html>
-
-
-
