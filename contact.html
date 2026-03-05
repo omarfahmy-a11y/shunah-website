@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shunah | Contact Us</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    html { scroll-behavior: smooth; }
+
+    /* ✅ No scrollbar anywhere */
+    html, body { height: 100%; overflow: hidden; }
+    body::-webkit-scrollbar { display: none; }
+    body { scrollbar-width: none; }
+
+    /* Inputs (tight) */
+    .field-dark{
+      width:100%;
+      border-bottom: 1px solid rgba(255,255,255,.22);
+      padding: 7px 0;
+      outline:none;
+      background:transparent;
+      color: rgba(255,255,255,.92);
+    }
+    .field-dark::placeholder{ color: rgba(255,255,255,.35); }
+    .field-dark:focus{ border-bottom-color: rgba(111,208,74,.75); }
+
+    .ta-dark{
+      width:100%;
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 14px;
+      padding: 10px 12px;
+      outline:none;
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.92);
+      box-shadow: 0 10px 30px rgba(0,0,0,.10);
+    }
+    .ta-dark::placeholder{ color: rgba(255,255,255,.35); }
+    .ta-dark:focus{
+      border-color: rgba(111,208,74,.55);
+      box-shadow: 0 0 0 6px rgba(111,208,74,.10), 0 12px 32px rgba(0,0,0,.14);
+    }
+
+    /* Fog fade from left into the image (white -> transparent) */
+    .fog-fade{
+      background: linear-gradient(90deg,
+        rgba(255,255,255,1) 0%,
+        rgba(255,255,255,.96) 18%,
+        rgba(255,255,255,.86) 34%,
+        rgba(255,255,255,.55) 52%,
+        rgba(255,255,255,0) 70%
+      );
+    }
+  </style>
+</head>
+
+<body class="bg-white text-[#0b1a2d]">
+
+  <!-- NAV — keep as-is -->
+  <nav class="sticky top-0 z-50 bg-white border-b border-black/10 shadow-sm h-12">
+    <div class="relative max-w-7xl mx-auto h-12 px-6 md:px-10 flex items-center">
+      <a href="index.html" class="absolute left-6 md:left-10 flex items-center">
+        <img src="images/shunah-logo.png" alt="Shunah Logo" class="h-7 w-auto" />
+      </a>
+
+      <div class="mx-auto hidden md:flex items-center gap-6 text-[12.5px] font-medium text-[#0b1a2d]/80 whitespace-nowrap">
+        <a href="index.html#home" class="hover:text-[#0b1a2d] transition">Home</a>
+        <a href="index.html#about" class="hover:text-[#0b1a2d] transition">About Us</a>
+        <a href="technology.html" class="hover:text-[#0b1a2d] transition">Product Suite</a>
+        <a href="focus.html" class="hover:text-[#0b1a2d] transition">Our Focus</a>
+        <a href="index.html#our-story" class="hover:text-[#0b1a2d] transition">Our Story</a>
+        <a href="rfq.html" class="hover:text-[#0b1a2d] transition">RFQ</a>
+
+        <a href="contact.html"
+           class="text-[#0b1a2d] font-semibold rounded-full px-4 py-1 bg-[#0b1a2d]/6 ring-1 ring-[#0b1a2d]/15">
+          Contact Us
+        </a>
+      </div>
+
+      <div class="md:hidden ml-auto">
+        <a href="rfq.html" class="text-xs font-semibold px-4 py-2 rounded-full bg-[#0b1a2d] text-white">
+          RFQ
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- CONTACT (full screen under nav) -->
+  <section id="contact" class="relative bg-white h-[calc(100dvh-48px)]">
+
+    <!-- ✅ FULL-BLEED RIGHT HALF IMAGE (NO BOX / NO ROUNDING) -->
+    <div class="hidden lg:block absolute inset-y-0 right-0 left-1/3">
+      <img
+        src="images/contact-agri-network.jpg"
+        alt="Agricultural network"
+        class="absolute inset-0 h-full w-full object-cover"
+      />
+      <div class="absolute inset-0 bg-[#0b1a2d]/10"></div>
+
+      <!-- subtle tech glow (no blur) -->
+      <div class="absolute inset-0 opacity-90
+                  bg-[radial-gradient(circle_at_20%_22%,rgba(111,208,74,.16),transparent_45%),
+                      radial-gradient(circle_at_78%_14%,rgba(255,255,255,.10),transparent_55%)]"></div>
+
+      <!-- fog fade so the image “appears” -->
+      <div class="absolute inset-y-0 left-0 w-[46%] fog-fade"></div>
+    </div>
+
+    <!-- Content container -->
+    <div class="relative max-w-7xl mx-auto px-6 md:px-10 h-full py-5">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 h-full items-start">
+
+        <!-- LEFT -->
+        <div class="lg:col-span-6 h-full flex flex-col justify-start">
+          <h1 class="text-[42px] sm:text-[48px] font-semibold tracking-tight text-[#0b1a2d] leading-tight">
+            Contact Shunah
+          </h1>
+
+          <p class="mt-3 text-[14px] text-[#0b1a2d]/70 leading-relaxed max-w-lg">
+            For sourcing, partnerships, or infrastructure access, reach our team directly.
+          </p>
+
+          <div class="mt-6 space-y-4 max-w-xl">
+            <div class="rounded-2xl border border-[#6fd04a]/30 bg-[#f3f5f7] shadow-sm p-5">
+              <div class="flex items-start gap-4">
+                <div class="shrink-0 mt-0.5">
+                  <div class="h-10 w-10 rounded-xl bg-white border border-black/10 flex items-center justify-center">
+                    <svg class="h-5 w-5 text-[#0b1a2d]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M4 7l8 6 8-6"></path>
+                      <path d="M4 7v10h16V7"></path>
+                    </svg>
+                  </div>
+                </div>
+                <div class="min-w-0">
+                  <div class="text-xs tracking-widest uppercase text-[#0b1a2d]/55">Email</div>
+                  <div class="mt-1 font-semibold text-[#0b1a2d]">info@shunah.net</div>
+                  <div class="mt-1 text-sm text-[#0b1a2d]/65">rfq@shunah.net</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="rounded-2xl border border-black/15 bg-[#f3f5f7] shadow-sm p-5">
+              <div class="flex items-start gap-4">
+                <div class="shrink-0 mt-0.5">
+                  <div class="h-10 w-10 rounded-xl bg-white border border-black/10 flex items-center justify-center">
+                    <svg class="h-5 w-5 text-[#0b1a2d]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M21 16v3a2 2 0 0 1-2 2 18 18 0 0 1-8-3 18 18 0 0 1-6-6 18 18 0 0 1-3-8 2 2 0 0 1 2-2h3"></path>
+                      <path d="M7 5a12 12 0 0 0 2 5l-2 2"></path>
+                    </svg>
+                  </div>
+                </div>
+                <div class="min-w-0">
+                  <div class="text-xs tracking-widest uppercase text-[#0b1a2d]/55">Phone</div>
+                  <div class="mt-1 font-semibold text-[#0b1a2d]">+20 …</div>
+                  <div class="mt-1 text-sm text-[#0b1a2d]/65">Business hours: Sun–Thu</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="rounded-2xl border border-black/15 bg-[#f3f5f7] shadow-sm p-5">
+              <div class="flex items-start gap-4">
+                <div class="shrink-0 mt-0.5">
+                  <div class="h-10 w-10 rounded-xl bg-white border border-black/10 flex items-center justify-center">
+                    <svg class="h-5 w-5 text-[#ef4444]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M12 21s7-4.44 7-11a7 7 0 0 0-14 0c0 6.56 7 11 7 11Z"></path>
+                      <path d="M12 10.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"></path>
+                    </svg>
+                  </div>
+                </div>
+                <div class="min-w-0">
+                  <div class="text-xs tracking-widest uppercase text-[#0b1a2d]/55">Location</div>
+                  <div class="mt-1 font-semibold text-[#0b1a2d]">Cairo, Egypt</div>
+                  <div class="mt-1 text-sm text-[#0b1a2d]/65">Operations across Egypt</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- RIGHT FORM (sits on top of the image; no extra background box now) -->
+        <div class="lg:col-span-6 h-full flex items-start">
+          <div class="w-full max-w-md ml-auto rounded-[26px] border border-white/14 bg-[#0b1a2d]/55 shadow-[0_18px_60px_rgba(0,0,0,.22)] px-7 py-6 text-white">
+
+            <div class="text-[18px] font-semibold text-white">Send a message</div>
+
+            <div class="mt-2 text-[13px] text-white/70">
+              Looking for supply?
+              <a href="rfq.html" class="text-[#6fd04a] font-semibold hover:opacity-90 transition">
+                Submit an RFQ →
+              </a>
+            </div>
+
+            <div class="mt-5 space-y-3">
+              <div>
+                <label class="block text-[13px] font-medium text-white/90 mb-1">Name</label>
+                <input id="cName" class="field-dark" type="text" placeholder="your name" />
+              </div>
+
+              <div>
+                <label class="block text-[13px] font-medium text-white/90 mb-1">Email</label>
+                <input id="cEmail" class="field-dark" type="email" placeholder="you@company.com" />
+              </div>
+
+              <div>
+                <label class="block text-[13px] font-medium text-white/90 mb-1">Phone</label>
+                <input id="cPhone" class="field-dark" type="tel" placeholder="+20 ..." />
+              </div>
+
+              <div>
+                <label class="block text-[13px] font-medium text-white/90 mb-1">Message</label>
+                <textarea id="cMsg" rows="3" class="ta-dark" placeholder="Tell us what you need..."></textarea>
+              </div>
+            </div>
+
+            <div class="mt-5 flex items-center justify-between gap-3">
+              <a href="rfq.html"
+                 class="rounded-full px-5 py-2 text-[13px] font-semibold ring-1 ring-white/25 hover:bg-white/10 transition">
+                Go to RFQ
+              </a>
+
+              <button id="cSend"
+                class="rounded-full bg-[#0b1a2d] text-white px-6 py-2 text-[13px] font-semibold hover:bg-[#142a4a] transition shadow-sm ring-1 ring-white/10">
+                Send →
+              </button>
+            </div>
+
+            <div id="cSuccess"
+                 class="mt-4 hidden rounded-xl border border-[#22c55e]/25 bg-[#22c55e]/10 p-4 text-white">
+              <div class="flex items-start gap-3">
+                <div class="shrink-0 mt-0.5">
+                  <svg class="w-6 h-6 text-[#6fd04a]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 6L9 17l-5-5" />
+                  </svg>
+                </div>
+                <div>
+                  <div class="font-semibold">Message sent</div>
+                  <div class="text-sm text-white/70 mt-1">We’ll get back to you shortly.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-4 text-center text-[12.5px] text-white/75 leading-snug">
+              We usually respond within 24 hours.
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <script>
+    (function(){
+      const btn = document.getElementById("cSend");
+      const ok  = document.getElementById("cSuccess");
+      const name = document.getElementById("cName");
+      const email = document.getElementById("cEmail");
+      const msg = document.getElementById("cMsg");
+
+      btn.addEventListener("click", () => {
+        const n = (name.value || "").trim();
+        const e = (email.value || "").trim();
+        const m = (msg.value || "").trim();
+        if(!n || !e || !m) return;
+        ok.classList.remove("hidden");
+      });
+    })();
+  </script>
+
+</body>
+</html>

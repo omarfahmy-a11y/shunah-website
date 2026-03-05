@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shunah | Our Focus</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+
+    /* ===== Marquee (FIXED: true seamless infinite loop) =====
+       The old -50% approach jumps when widths change (images/fonts/rounding).
+       This version animates by an exact pixel distance we set via JS: --marquee-distance
+    */
+    .marquee-track{
+      animation: marqueeX linear infinite;
+      /* duration is set dynamically in JS for perfect looping */
+      will-change: transform;
+    }
+    #cropsMarquee:hover .marquee-track{ animation-play-state: paused; }
+
+    @keyframes marqueeX{
+      from{ transform: translateX(0); }
+      to  { transform: translateX(calc(-1 * var(--marquee-distance, 0px))); }
+    }
+
+    /* ===== Chip footprint in ribbon (does NOT push layout when expanding) ===== */
+    .chip{
+      width: 108px;
+      flex: 0 0 auto;
+      position: relative;
+      text-align: center;
+      overflow: visible;
+      z-index: 1;
+    }
+    .chip:hover{ z-index: 50; }
+
+    .chip-label{
+      margin-top: 8px;
+      font-size: 11px;
+      font-weight: 600;
+      color: rgba(11,26,45,.75);
+      white-space: nowrap;
+    }
+
+    /* ===== SIMPLE: circle image -> pill on hover (NO SPLIT) ===== */
+    .pillWrap{
+      width: 72px;
+      height: 72px;
+      margin: 0 auto;
+      border-radius: 9999px;
+      background: rgba(255,255,255,.90);
+      border: 1px solid rgba(11,26,45,.12);
+      box-shadow: 0 8px 22px rgba(11,26,45,.10);
+      transition: width 260ms cubic-bezier(.2,.9,.2,1);
+      display: flex;
+      align-items: center;
+      padding: 6px;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    .chip:hover .pillWrap{ width: 320px; }
+
+    .circleImage{
+      width: 60px;
+      height: 60px;
+      border-radius: 9999px;
+      background-size: cover;
+      background-position: center;
+      flex: 0 0 auto;
+      border: 1px solid rgba(11,26,45,.10);
+      background-color: rgba(11,26,45,.04);
+    }
+
+    .pillContent{
+      opacity: 0;
+      transform: translateX(-10px);
+      transition: opacity 200ms ease, transform 220ms ease;
+      margin-left: 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+      width: calc(100% - 60px - 14px);
+    }
+    .chip:hover .pillContent{
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .meta{
+      display: grid;
+      gap: 2px;
+      text-align: left;
+      min-width: 0;
+      flex: 1 1 auto;
+    }
+    .meta .name{
+      font-size: 12px;
+      font-weight: 800;
+      color: rgba(11,26,45,.95);
+      line-height: 1.1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 180px;
+    }
+    .meta .skus{
+      font-size: 11px;
+      color: rgba(11,26,45,.62);
+      line-height: 1.1;
+      white-space: nowrap;
+    }
+
+    .knowMore{
+      margin-left: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 800;
+      color: #fff;
+      background: #0b1a2d;
+      border-radius: 9999px;
+      padding: 7px 10px;
+      transition: opacity 150ms ease;
+      white-space: nowrap;
+      flex: 0 0 auto;
+    }
+    .knowMore:hover{ opacity: .9; }
+
+    @media (max-width: 640px){
+      .chip{ width: 96px; }
+      .chip:hover .pillWrap{ width: 280px; }
+      .meta .name{ max-width: 140px; }
+    }
+  </style>
+</head>
+
+<body class="bg-[#f7f9fc] text-[#0b1a2d]">
+
+<!-- NAV -->
+<nav class="sticky top-0 z-50 bg-white border-b border-black/10 shadow-sm h-12">
+  <div class="relative max-w-7xl mx-auto h-12 px-6 md:px-10 flex items-center">
+
+    <a href="index.html" class="absolute left-6 md:left-10 flex items-center">
+      <img src="images/shunah-logo.png" alt="Shunah Logo" class="h-7 w-auto" />
+    </a>
+
+    <div class="mx-auto hidden md:flex items-center gap-6 text-[12.5px] font-medium text-[#0b1a2d]/80 whitespace-nowrap">
+      <a href="index.html#home" class="hover:text-[#0b1a2d] transition">Home</a>
+      <a href="index.html#about" class="hover:text-[#0b1a2d] transition">About Us</a>
+      <a href="technology.html" class="hover:text-[#0b1a2d] transition">Product Suite</a>
+
+      <a href="focus.html"
+         class="text-[#0b1a2d] font-semibold rounded-full px-4 py-1 bg-[#0b1a2d]/6 ring-1 ring-[#0b1a2d]/15">
+        Our Focus
+      </a>
+
+      <a href="index.html#our-story" class="hover:text-[#0b1a2d] transition">Our Story</a>
+      <a href="rfq.html" class="hover:text-[#0b1a2d] transition">RFQ</a>
+      <a href="contact.html" class="hover:text-[#0b1a2d] transition">Contact Us</a>
+    </div>
+
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="focus" class="relative overflow-hidden min-h-[calc(100dvh-3rem)] bg-[#0b1a2d]">
+  <div class="absolute inset-0">
+    <img src="images/small-farmers.jpg" alt="Small-scale farmers" class="h-full w-full object-cover" />
+    <div class="absolute inset-0 bg-[#0b1a2d]/55"></div>
+    <div class="absolute inset-0 bg-gradient-to-br from-[#18a34a]/20 via-transparent to-transparent"></div>
+  </div>
+
+  <div class="relative mx-auto max-w-7xl px-6 h-full min-h-[calc(100dvh-3rem)] flex items-center">
+    <div class="w-full">
+
+      <!-- ✅ MOVED UP (only change: added a little more bottom spacing after it) -->
+      <div class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 shadow-sm backdrop-blur mb-4">
+        <span class="h-2 w-2 rounded-full bg-[#6fd04a]"></span>
+        <span class="text-sm font-medium text-white">Our Focus</span>
+        <span class="text-sm text-white/70">Dry crops • Small-scale farmers</span>
+      </div>
+
+      <div class="max-w-3xl">
+        <h2 class="text-4xl sm:text-5xl font-semibold tracking-tight text-white leading-tight">
+          Dry crops are the <span class="text-[#6fd04a]">small-scale farmer’s</span> game.
+        </h2>
+
+        <p class="mt-5 text-lg leading-relaxed text-white/80">
+          Shunah is built around dry crops grown by small-scale farmers — resilient, storable, tradable,
+          and rooted in fragmented farm supply. We organize it end-to-end: aggregation, quality assessment, and delivery.
+        </p>
+
+        <!-- ✅ NEW: 4 boxes (2x2), constrained to NOT exceed title width -->
+        <div class="mt-7 max-w-3xl">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- Box 1 -->
+            <div class="rounded-2xl border border-[#6fd04a]/60 bg-white/10 backdrop-blur px-4 py-4">
+              <div class="flex items-start gap-3">
+                <div class="shrink-0 mt-0.5">
+                  <!-- icon -->
+                  <svg class="h-5 w-5 text-[#6fd04a]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 7h18M6 7v12m12-12v12M3 19h18" />
+                  </svg>
+                </div>
+                <div class="min-w-0">
+                  <div class="font-semibold text-white">Structured Aggregation</div>
+                  <div class="mt-1 text-sm text-white/75">
+                    Organizing fragmented supply through hubs and repeatable processes.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Box 2 -->
+            <div class="rounded-2xl border border-[#6fd04a]/60 bg-white/10 backdrop-blur px-4 py-4">
+              <div class="flex items-start gap-3">
+                <div class="shrink-0 mt-0.5">
+                  <svg class="h-5 w-5 text-[#6fd04a]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2l3 4 5 .8-3.6 3.4.9 5.2L12 13.9 6.7 15.4l.9-5.2L4 6.8 9 6l3-4Z" />
+                  </svg>
+                </div>
+                <div class="min-w-0">
+                  <div class="font-semibold text-white">Farm-Gate Quality</div>
+                  <div class="mt-1 text-sm text-white/75">
+                    Fast, consistent grading using computer-aided vision.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Box 3 -->
+            <div class="rounded-2xl border border-[#6fd04a]/60 bg-white/10 backdrop-blur px-4 py-4">
+              <div class="flex items-start gap-3">
+                <div class="shrink-0 mt-0.5">
+                  <svg class="h-5 w-5 text-[#6fd04a]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 12h6m4 0h6M12 4v6m0 4v6" />
+                  </svg>
+                </div>
+                <div class="min-w-0">
+                  <div class="font-semibold text-white">Market Connectivity</div>
+                  <div class="mt-1 text-sm text-white/75">
+                    Connecting verified supply to structured local and export demand.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Box 4 -->
+            <div class="rounded-2xl border border-[#6fd04a]/60 bg-white/10 backdrop-blur px-4 py-4">
+              <div class="flex items-start gap-3">
+                <div class="shrink-0 mt-0.5">
+                  <svg class="h-5 w-5 text-[#6fd04a]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 3v18M5 12h14" />
+                    <path d="M12 12l-4-4m4 4l4-4m-4 4l-4 4m4-4l4 4" />
+                  </svg>
+                </div>
+                <div class="min-w-0">
+                  <div class="font-semibold text-white">Infrastructure Layer</div>
+                  <div class="mt-1 text-sm text-white/75">
+                    Building satellite + IoT visibility across the crop flow.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!-- /4 boxes -->
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- CROPS RIBBON -->
+<section class="relative bg-white border-y border-[#0b1a2d]/10">
+  <div class="mx-auto max-w-7xl px-6 py-6">
+    <div class="flex items-center justify-between gap-6 flex-wrap">
+      <div>
+        <h4 class="text-sm font-semibold tracking-tight text-[#0b1a2d]">Our Crops</h4>
+        <p class="text-xs text-[#0b1a2d]/60 mt-1">Hover a crop — it opens and pins that SKU section below.</p>
+      </div>
+    </div>
+
+    <div class="mt-5 relative overflow-hidden">
+      <div id="cropsMarquee" class="relative" aria-label="Crops ribbon">
+        <div id="cropsTrack" class="flex items-stretch gap-7 marquee-track"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN SKUs -->
+<section id="skus" class="relative overflow-hidden bg-[#f6f9ff]">
+  <div class="relative mx-auto max-w-7xl px-6 py-14 lg:py-18">
+
+    <div class="mt-2">
+      <div class="flex items-end justify-between gap-6 flex-wrap">
+        <div>
+          <h3 class="text-3xl sm:text-4xl font-semibold tracking-tight text-[#0b1a2d]">Main SKUs</h3>
+          <p class="mt-2 text-[#0b1a2d]/70 max-w-2xl">
+            Standardized lines with clear specs and packaging options.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-8 space-y-6" id="skuCards">
+
+        <!-- ✅ Your 14 SKU cards are unchanged below (keeps the green table format). -->
+
+        <!-- 1) White Beans -->
+        <div class="rounded-3xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="white-beans">
+          <div class="p-5 sm:p-6">
+            <div class="flex items-start gap-4">
+              <div class="shrink-0">
+                <div class="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden">
+                  <img src="images/sku-white-beans.jpg" alt="White Beans" class="h-full w-full object-cover"
+                       onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=&quot;text-xs font-semibold text-[#0b1a2d]/60&quot;>IMG</span>'; ">
+                </div>
+              </div>
+
+              <div class="min-w-0 flex-1">
+                <div class="flex items-center justify-between gap-4 flex-wrap">
+                  <div>
+                    <p class="text-lg font-semibold text-[#0b1a2d]">White Beans</p>
+                    <p class="text-sm text-[#0b1a2d]/60">Premium pulses for local and export markets</p>
+                  </div>
+                  <span class="text-xs rounded-full bg-[#18a34a]/10 text-[#18a34a] px-3 py-1 font-semibold">Core SKU</span>
+                </div>
+
+                <div class="mt-4 overflow-hidden rounded-2xl border border-[#0b1a2d]/10">
+                  <div class="bg-[#6fd04a] text-[#0b1a2d]">
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-xs font-semibold uppercase tracking-wide">
+                      <div class="col-span-4">SKU</div>
+                      <div class="col-span-2">Variety</div>
+                      <div class="col-span-2">Packaging</div>
+                      <div class="col-span-2">Spec</div>
+                      <div class="col-span-2 text-right">MOQ</div>
+                    </div>
+                  </div>
+
+                  <div class="divide-y divide-[#0b1a2d]/10 bg-white">
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
+                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Egyptian White Beans</div>
+                      <div class="col-span-2">Navy / Kidney</div>
+                      <div class="col-span-2">25kg / 50kg</div>
+                      <div class="col-span-2">Cleaned</div>
+                      <div class="col-span-2 text-right font-semibold">1 x 20’</div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
+                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Sorted White Beans</div>
+                      <div class="col-span-2">Kidney</div>
+                      <div class="col-span-2">25kg</div>
+                      <div class="col-span-2">Export</div>
+                      <div class="col-span-2 text-right font-semibold">1 x 40’</div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2) Sesame -->
+        <div class="rounded-3xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="sesame">
+          <div class="p-5 sm:p-6">
+            <div class="flex items-start gap-4">
+              <div class="shrink-0">
+                <div class="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden">
+                  <img src="images/sku-sesame.jpg" alt="Sesame" class="h-full w-full object-cover"
+                       onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=&quot;text-xs font-semibold text-[#0b1a2d]/60&quot;>IMG</span>'; ">
+                </div>
+              </div>
+
+              <div class="min-w-0 flex-1">
+                <div class="flex items-center justify-between gap-4 flex-wrap">
+                  <div>
+                    <p class="text-lg font-semibold text-[#0b1a2d]">Sesame</p>
+                    <p class="text-sm text-[#0b1a2d]/60">White & golden grades</p>
+                  </div>
+                </div>
+
+                <div class="mt-4 overflow-hidden rounded-2xl border border-[#0b1a2d]/10">
+                  <div class="bg-[#6fd04a] text-[#0b1a2d]">
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-xs font-semibold uppercase tracking-wide">
+                      <div class="col-span-4">SKU</div>
+                      <div class="col-span-2">Color</div>
+                      <div class="col-span-2">Packaging</div>
+                      <div class="col-span-2">Spec</div>
+                      <div class="col-span-2 text-right">MOQ</div>
+                    </div>
+                  </div>
+
+                  <div class="divide-y divide-[#0b1a2d]/10 bg-white">
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
+                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Sesame Seeds</div>
+                      <div class="col-span-2">White</div>
+                      <div class="col-span-2">25kg</div>
+                      <div class="col-span-2">Cleaned</div>
+                      <div class="col-span-2 text-right font-semibold">1 x 20’</div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
+                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Sesame Seeds</div>
+                      <div class="col-span-2">Golden</div>
+                      <div class="col-span-2">25kg</div>
+                      <div class="col-span-2">Export</div>
+                      <div class="col-span-2 text-right font-semibold">1 x 40’</div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3) Fava -->
+        <div class="rounded-3xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="fava">
+          <div class="p-5 sm:p-6">
+            <div class="flex items-start gap-4">
+              <div class="shrink-0">
+                <div class="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden">
+                  <img src="images/sku-fava.jpg" alt="Fava Beans" class="h-full w-full object-cover"
+                       onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=&quot;text-xs font-semibold text-[#0b1a2d]/60&quot;>IMG</span>'; ">
+                </div>
+              </div>
+
+              <div class="min-w-0 flex-1">
+                <div class="flex items-center justify-between gap-4 flex-wrap">
+                  <div>
+                    <p class="text-lg font-semibold text-[#0b1a2d]">Fava Beans</p>
+                    <p class="text-sm text-[#0b1a2d]/60">Whole & split options</p>
+                  </div>
+                </div>
+
+                <div class="mt-4 overflow-hidden rounded-2xl border border-[#0b1a2d]/10">
+                  <div class="bg-[#6fd04a] text-[#0b1a2d]">
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-xs font-semibold uppercase tracking-wide">
+                      <div class="col-span-4">SKU</div>
+                      <div class="col-span-2">Type</div>
+                      <div class="col-span-2">Packaging</div>
+                      <div class="col-span-2">Spec</div>
+                      <div class="col-span-2 text-right">MOQ</div>
+                    </div>
+                  </div>
+
+                  <div class="divide-y divide-[#0b1a2d]/10 bg-white">
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
+                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Fava Beans</div>
+                      <div class="col-span-2">Whole</div>
+                      <div class="col-span-2">25kg / 50kg</div>
+                      <div class="col-span-2">Cleaned</div>
+                      <div class="col-span-2 text-right font-semibold">1 x 20’</div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
+                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Split Fava</div>
+                      <div class="col-span-2">Split</div>
+                      <div class="col-span-2">25kg</div>
+                      <div class="col-span-2">Standard</div>
+                      <div class="col-span-2 text-right font-semibold">1 x 40’</div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4) Corn -->
+        <div class="rounded-3xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="corn">
+          <div class="p-5 sm:p-6">
+            <div class="flex items-start gap-4">
+              <div class="shrink-0">
+                <div class="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden">
+                  <img src="images/sku-corn.jpg" alt="Corn" class="h-full w-full object-cover"
+                       onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=&quot;text-xs font-semibold text-[#0b1a2d]/60&quot;>IMG</span>'; ">
+                </div>
+              </div>
+
+              <div class="min-w-0 flex-1">
+                <div class="flex items-center justify-between gap-4 flex-wrap">
+                  <div>
+                    <p class="text-lg font-semibold text-[#0b1a2d]">Corn</p>
+                    <p class="text-sm text-[#0b1a2d]/60">Trade & feed grades</p>
+                  </div>
+                </div>
+
+                <div class="mt-4 overflow-hidden rounded-2xl border border-[#0b1a2d]/10">
+                  <div class="bg-[#6fd04a] text-[#0b1a2d]">
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-xs font-semibold uppercase tracking-wide">
+                      <div class="col-span-4">SKU</div>
+                      <div class="col-span-2">Type</div>
+                      <div class="col-span-2">Packaging</div>
+                      <div class="col-span-2">Spec</div>
+                      <div class="col-span-2 text-right">MOQ</div>
+                    </div>
+                  </div>
+
+                  <div class="divide-y divide-[#0b1a2d]/10 bg-white">
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
+                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Yellow Corn</div>
+                      <div class="col-span-2">Grain</div>
+                      <div class="col-span-2">25kg / 50kg</div>
+                      <div class="col-span-2">Cleaned</div>
+                      <div class="col-span-2 text-right font-semibold">1 x 20’</div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
+                      <div class="col-span-4 font-semibold text-[#0b1a2d]">White Corn</div>
+                      <div class="col-span-2">Grain</div>
+                      <div class="col-span-2">25kg / 50kg</div>
+                      <div class="col-span-2">Standard</div>
+                      <div class="col-span-2 text-right font-semibold">1 x 40’</div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5) Rice -->
+        <div class="rounded-3xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="rice">
+          <div class="p-5 sm:p-6">
+            <div class="flex items-start gap-4">
+              <div class="shrink-0">
+                <div class="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden">
+                  <img src="images/sku-rice.jpg" alt="Rice" class="h-full w-full object-cover"
+                       onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=&quot;text-xs font-semibold text-[#0b1a2d]/60&quot;>IMG</span>'; ">
+                </div>
+              </div>
+
+              <div class="min-w-0 flex-1">
+                <div class="flex items-center justify-between gap-4 flex-wrap">
+                  <div>
+                    <p class="text-lg font-semibold text-[#0b1a2d]">Rice</p>
+                    <p class="text-sm text-[#0b1a2d]/60">Milled rice options for trade & distribution</p>
+                  </div>
+                </div>
+
+                <div class="mt-4 overflow-hidden rounded-2xl border border-[#0b1a2d]/10">
+                  <div class="bg-[#6fd04a] text-[#0b1a2d]">
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-xs font-semibold uppercase tracking-wide">
+                      <div class="col-span-4">SKU</div>
+                      <div class="col-span-2">Type</div>
+                      <div class="col-span-2">Packaging</div>
+                      <div class="col-span-2">Spec</div>
+                      <div class="col-span-2 text-right">MOQ</div>
+                    </div>
+                  </div>
+
+                  <div class="divide-y divide-[#0b1a2d]/10 bg-white">
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
+                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Egyptian Rice</div>
+                      <div class="col-span-2">Milled</div>
+                      <div class="col-span-2">25kg / 50kg</div>
+                      <div class="col-span-2">Standard</div>
+                      <div class="col-span-2 text-right font-semibold">1 x 20’</div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6) Lentils -->
+        <div class="rounded-3xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="lentils">
+          <div class="p-5 sm:p-6">
+            <div class="flex items-start gap-4">
+              <div class="shrink-0">
+                <div class="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden">
+                  <img src="images/sku-lentils.jpg" alt="Lentils" class="h-full w-full object-cover"
+                       onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=&quot;text-xs font-semibold text-[#0b1a2d]/60&quot;>IMG</span>'; ">
+                </div>
+              </div>
+
+              <div class="min-w-0 flex-1">
+                <div class="flex items-center justify-between gap-4 flex-wrap">
+                  <div>
+                    <p class="text-lg font-semibold text-[#0b1a2d]">Lentils</p>
+                    <p class="text-sm text-[#0b1a2d]/60">Red & brown options</p>
+                  </div>
+                </div>
+
+                <div class="mt-4 overflow-hidden rounded-2xl border border-[#0b1a2d]/10">
+                  <div class="bg-[#6fd04a] text-[#0b1a2d]">
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-xs font-semibold uppercase tracking-wide">
+                      <div class="col-span-4">SKU</div>
+                      <div class="col-span-2">Type</div>
+                      <div class="col-span-2">Packaging</div>
+                      <div class="col-span-2">Spec</div>
+                      <div class="col-span-2 text-right">MOQ</div>
+                    </div>
+                  </div>
+
+                  <div class="divide-y divide-[#0b1a2d]/10 bg-white">
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
+                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Red Lentils</div>
+                      <div class="col-span-2">Split</div>
+                      <div class="col-span-2">25kg</div>
+                      <div class="col-span-2">Cleaned</div>
+                      <div class="col-span-2 text-right font-semibold">1 x 20’</div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
+                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Brown Lentils</div>
+                      <div class="col-span-2">Whole</div>
+                      <div class="col-span-2">25kg / 50kg</div>
+                      <div class="col-span-2">Standard</div>
+                      <div class="col-span-2 text-right font-semibold">1 x 40’</div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 7) Caraway -->
+        <div class="rounded-3xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="caraway">
+          <div class="p-5 sm:p-6">
+            <div class="flex items-start gap-4">
+              <div class="shrink-0">
+                <div class="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden">
+                  <img src="images/sku-caraway.jpg" alt="Caraway" class="h-full w-full object-cover"
+                       onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=&quot;text-xs font-semibold text-[#0b1a2d]/60&quot;>IMG</span>'; ">
+                </div>
+              </div>
+
+              <div class="min-w-0 flex-1">
+                <div class="flex items-center justify-between gap-4 flex-wrap">
+                  <div>
+                    <p class="text-lg font-semibold text-[#0b1a2d]">Caraway</p>
+                    <p class="text-sm text-[#0b1a2d]/60">Whole seed options</p>
+                  </div>
+                </div>
+
+                <div class="mt-4 overflow-hidden rounded-2xl border border-[#0b1a2d]/10">
+                  <div class="bg-[#6fd04a] text-[#0b1a2d]">
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-xs font-semibold uppercase tracking-wide">
+                      <div class="col-span-4">SKU</div>
+                      <div class="col-span-2">Type</div>
+                      <div class="col-span-2">Packaging</div>
+                      <div class="col-span-2">Spec</div>
+                      <div class="col-span-2 text-right">MOQ</div>
+                    </div>
+                  </div>
+
+                  <div class="divide-y divide-[#0b1a2d]/10 bg-white">
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
+                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Caraway Seeds</div>
+                      <div class="col-span-2">Whole</div>
+                      <div class="col-span-2">25kg</div>
+                      <div class="col-span-2">Cleaned</div>
+                      <div class="col-span-2 text-right font-semibold">1 x 20’</div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 8) Fennel -->
+        <div class="rounded-3xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="fennel">
+          <div class="p-5 sm:p-6">
+            <div class="flex items-start gap-4">
+              <div class="shrink-0">
+                <div class="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden">
+                  <img src="images/sku-fennel.jpg" alt="Fennel" class="h-full w-full object-cover"
+                       onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=&quot;text-xs font-semibold text-[#0b1a2d]/60&quot;>IMG</span>'; ">
+                </div>
+              </div>
+
+              <div class="min-w-0 flex-1">
+                <div class="flex items-center justify-between gap-4 flex-wrap">
+                  <div>
+                    <p class="text-lg font-semibold text-[#0b1a2d]">Fennel</p>
+                    <p class="text-sm text-[#0b1a2d]/60">Whole seed options</p>
+                  </div>
+                </div>
+
+                <div class="mt-4 overflow-hidden rounded-2xl border border-[#0b1a2d]/10">
+                  <div class="bg-[#6fd04a] text-[#0b1a2d]">
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-xs font-semibold uppercase tracking-wide">
+                      <div class="col-span-4">SKU</div>
+                      <div class="col-span-2">Type</div>
+                      <div class="col-span-2">Packaging</div>
+                      <div class="col-span-2">Spec</div>
+                      <div class="col-span-2 text-right">MOQ</div>
+                    </div>
+                  </div>
+
+                  <div class="divide-y divide-[#0b1a2d]/10 bg-white">
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
+                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Fennel Seeds</div>
+                      <div class="col-span-2">Whole</div>
+                      <div class="col-span-2">25kg</div>
+                      <div class="col-span-2">Cleaned</div>
+                      <div class="col-span-2 text-right font-semibold">1 x 20’</div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 9) Sunflower Seeds -->
+        <div class="rounded-3xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="sunflower">
+          <div class="p-5 sm:p-6">
+            <div class="flex items-start gap-4">
+              <div class="shrink-0">
+                <div class="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden">
+                  <img src="images/sku-sunflower.jpg" alt="Sunflower Seeds" class="h-full w-full object-cover"
+                       onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=&quot;text-xs font-semibold text-[#0b1a2d]/60&quot;>IMG</span>'; ">
+                </div>
+              </div>
+
+              <div class="min-w-0 flex-1">
+                <div class="flex items-center justify-between gap-4 flex-wrap">
+                  <div>
+                    <p class="text-lg font-semibold text-[#0b1a2d]">Sunflower Seeds</p>
+                    <p class="text-sm text-[#0b1a2d]/60">Confectionery & oil grades</p>
+                  </div>
+                </div>
+
+                <div class="mt-4 overflow-hidden rounded-2xl border border-[#0b1a2d]/10">
+                  <div class="bg-[#6fd04a] text-[#0b1a2d]">
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-xs font-semibold uppercase tracking-wide">
+                      <div class="col-span-4">SKU</div>
+                      <div class="col-span-2">Type</div>
+                      <div class="col-span-2">Packaging</div>
+                      <div class="col-span-2">Spec</div>
+                      <div class="col-span-2 text-right">MOQ</div>
+                    </div>
+                  </div>
+
+                  <div class="divide-y divide-[#0b1a2d]/10 bg-white">
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
+                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Sunflower Seeds</div>
+                      <div class="col-span-2">Raw</div>
+                      <div class="col-span-2">25kg</div>
+                      <div class="col-span-2">Standard</div>
+                      <div class="col-span-2 text-right font-semibold">1 x 20’</div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 10) Soybeans -->
+        <div class="rounded-3xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="soybean">
+          <div class="p-5 sm:p-6">
+            <div class="flex items-start gap-4">
+              <div class="shrink-0">
+                <div class="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden">
+                  <img src="images/sku-soybean.jpg" alt="Soybeans" class="h-full w-full object-cover"
+                       onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=&quot;text-xs font-semibold text-[#0b1a2d]/60&quot;>IMG</span>'; ">
+                </div>
+              </div>
+
+              <div class="min-w-0 flex-1">
+                <div class="flex items-center justify-between gap-4 flex-wrap">
+                  <div>
+                    <p class="text-lg font-semibold text-[#0b1a2d]">Soybeans</p>
+                    <p class="text-sm text-[#0b1a2d]/60">Feed & crushing grades</p>
+                  </div>
+                </div>
+
+                <div class="mt-4 overflow-hidden rounded-2xl border border-[#0b1a2d]/10">
+                  <div class="bg-[#6fd04a] text-[#0b1a2d]">
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-xs font-semibold uppercase tracking-wide">
+                      <div class="col-span-4">SKU</div>
+                      <div class="col-span-2">Type</div>
+                      <div class="col-span-2">Packaging</div>
+                      <div class="col-span-2">Spec</div>
+                      <div class="col-span-2 text-right">MOQ</div>
+                    </div>
+                  </div>
+
+                  <div class="divide-y divide-[#0b1a2d]/10 bg-white">
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
+                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Soybeans</div>
+                      <div class="col-span-2">Whole</div>
+                      <div class="col-span-2">50kg</div>
+                      <div class="col-span-2">Standard</div>
+                      <div class="col-span-2 text-right font-semibold">1 x 20’</div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 11) Chickpeas -->
+        <div class="rounded-3xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="chickpeas">
+          <div class="p-5 sm:p-6">
+            <div class="flex items-start gap-4">
+              <div class="shrink-0">
+                <div class="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden">
+                  <img src="images/sku-chickpeas.jpg" alt="Chickpeas" class="h-full w-full object-cover"
+                       onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=&quot;text-xs font-semibold text-[#0b1a2d]/60&quot;>IMG</span>'; ">
+                </div>
+              </div>
+
+              <div class="min-w-0 flex-1">
+                <div class="flex items-center justify-between gap-4 flex-wrap">
+                  <div>
+                    <p class="text-lg font-semibold text-[#0b1a2d]">Chickpeas</p>
+                    <p class="text-sm text-[#0b1a2d]/60">Kabuli grades</p>
+                  </div>
+                </div>
+
+                <div class="mt-4 overflow-hidden rounded-2xl border border-[#0b1a2d]/10">
+                  <div class="bg-[#6fd04a] text-[#0b1a2d]">
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-xs font-semibold uppercase tracking-wide">
+                      <div class="col-span-4">SKU</div>
+                      <div class="col-span-2">Grade</div>
+                      <div class="col-span-2">Packaging</div>
+                      <div class="col-span-2">Spec</div>
+                      <div class="col-span-2 text-right">MOQ</div>
+                    </div>
+                  </div>
+
+                  <div class="divide-y divide-[#0b1a2d]/10 bg-white">
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
+                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Chickpeas</div>
+                      <div class="col-span-2">Kabuli</div>
+                      <div class="col-span-2">25kg</div>
+                      <div class="col-span-2">Cleaned</div>
+                      <div class="col-span-2 text-right font-semibold">1 x 20’</div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 12) Kidney Beans -->
+        <div class="rounded-3xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="kidney-beans">
+          <div class="p-5 sm:p-6">
+            <div class="flex items-start gap-4">
+              <div class="shrink-0">
+                <div class="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden">
+                  <img src="images/sku-kidney.jpg" alt="Kidney Beans" class="h-full w-full object-cover"
+                       onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=&quot;text-xs font-semibold text-[#0b1a2d]/60&quot;>IMG</span>'; ">
+                </div>
+              </div>
+
+              <div class="min-w-0 flex-1">
+                <div class="flex items-center justify-between gap-4 flex-wrap">
+                  <div>
+                    <p class="text-lg font-semibold text-[#0b1a2d]">Kidney Beans</p>
+                    <p class="text-sm text-[#0b1a2d]/60">Premium pulses options</p>
+                  </div>
+                </div>
+
+                <div class="mt-4 overflow-hidden rounded-2xl border border-[#0b1a2d]/10">
+                  <div class="bg-[#6fd04a] text-[#0b1a2d]">
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-xs font-semibold uppercase tracking-wide">
+                      <div class="col-span-4">SKU</div>
+                      <div class="col-span-2">Variety</div>
+                      <div class="col-span-2">Packaging</div>
+                      <div class="col-span-2">Spec</div>
+                      <div class="col-span-2 text-right">MOQ</div>
+                    </div>
+                  </div>
+
+                  <div class="divide-y divide-[#0b1a2d]/10 bg-white">
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
+                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Kidney Beans</div>
+                      <div class="col-span-2">Kidney</div>
+                      <div class="col-span-2">25kg / 50kg</div>
+                      <div class="col-span-2">Standard</div>
+                      <div class="col-span-2 text-right font-semibold">1 x 20’</div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 13) Black-Eyed Peas -->
+        <div class="rounded-3xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="black-eyed-peas">
+          <div class="p-5 sm:p-6">
+            <div class="flex items-start gap-4">
+              <div class="shrink-0">
+                <div class="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden">
+                  <img src="images/sku-blackeyed.jpg" alt="Black-Eyed Peas" class="h-full w-full object-cover"
+                       onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=&quot;text-xs font-semibold text-[#0b1a2d]/60&quot;>IMG</span>'; ">
+                </div>
+              </div>
+
+              <div class="min-w-0 flex-1">
+                <div class="flex items-center justify-between gap-4 flex-wrap">
+                  <div>
+                    <p class="text-lg font-semibold text-[#0b1a2d]">Black-Eyed Peas</p>
+                    <p class="text-sm text-[#0b1a2d]/60">Whole seed options</p>
+                  </div>
+                </div>
+
+                <div class="mt-4 overflow-hidden rounded-2xl border border-[#0b1a2d]/10">
+                  <div class="bg-[#6fd04a] text-[#0b1a2d]">
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-xs font-semibold uppercase tracking-wide">
+                      <div class="col-span-4">SKU</div>
+                      <div class="col-span-2">Type</div>
+                      <div class="col-span-2">Packaging</div>
+                      <div class="col-span-2">Spec</div>
+                      <div class="col-span-2 text-right">MOQ</div>
+                    </div>
+                  </div>
+
+                  <div class="divide-y divide-[#0b1a2d]/10 bg-white">
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
+                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Black-Eyed Peas</div>
+                      <div class="col-span-2">Whole</div>
+                      <div class="col-span-2">25kg</div>
+                      <div class="col-span-2">Standard</div>
+                      <div class="col-span-2 text-right font-semibold">1 x 20’</div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 14) Wheat -->
+        <div class="rounded-3xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="wheat">
+          <div class="p-5 sm:p-6">
+            <div class="flex items-start gap-4">
+              <div class="shrink-0">
+                <div class="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden">
+                  <img src="images/sku-wheat.jpg" alt="Wheat" class="h-full w-full object-cover"
+                       onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=&quot;text-xs font-semibold text-[#0b1a2d]/60&quot;>IMG</span>'; ">
+                </div>
+              </div>
+
+              <div class="min-w-0 flex-1">
+                <div class="flex items-center justify-between gap-4 flex-wrap">
+                  <div>
+                    <p class="text-lg font-semibold text-[#0b1a2d]">Wheat</p>
+                    <p class="text-sm text-[#0b1a2d]/60">Milling grades</p>
+                  </div>
+                </div>
+
+                <div class="mt-4 overflow-hidden rounded-2xl border border-[#0b1a2d]/10">
+                  <div class="bg-[#6fd04a] text-[#0b1a2d]">
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-xs font-semibold uppercase tracking-wide">
+                      <div class="col-span-4">SKU</div>
+                      <div class="col-span-2">Grade</div>
+                      <div class="col-span-2">Packaging</div>
+                      <div class="col-span-2">Spec</div>
+                      <div class="col-span-2 text-right">MOQ</div>
+                    </div>
+                  </div>
+
+                  <div class="divide-y divide-[#0b1a2d]/10 bg-white">
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
+                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Wheat</div>
+                      <div class="col-span-2">Milling</div>
+                      <div class="col-span-2">50kg</div>
+                      <div class="col-span-2">Standard</div>
+                      <div class="col-span-2 text-right font-semibold">1 x 20’</div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- (I’m not repeating them here to avoid altering anything in your tables.) -->
+
+      </div><!-- /#skuCards -->
+    </div>
+
+  </div>
+</section>
+
+<script>
+  // 14 circles + 14 SKU blocks below
+  const CROPS = [
+    { key:"white-beans",      name:"White Beans",       skus:2, img:"images/sku-white-beans.jpg" },
+    { key:"sesame",          name:"Sesame",            skus:2, img:"images/sku-sesame.jpg" },
+    { key:"fava",            name:"Fava Beans",        skus:2, img:"images/sku-fava.jpg" },
+    { key:"corn",            name:"Corn",              skus:2, img:"images/sku-corn.jpg" },
+    { key:"rice",            name:"Rice",              skus:1, img:"images/sku-rice.jpg" },
+    { key:"carawy",          name:"Caraway",           skus:1, img:"images/sku-caraway.jpg" },
+    { key:"fennel",          name:"Fennel",            skus:1, img:"images/sku-fennel.jpg" },
+    { key:"sunflower",       name:"Sunflower Seeds",   skus:1, img:"images/sku-sunflower.jpg" },
+    { key:"lentils",         name:"Lentils",           skus:2, img:"images/sku-lentils.jpg" },
+    { key:"soybean",         name:"Soybeans",          skus:1, img:"images/sku-soybean.jpg" },
+    { key:"chickpeas",       name:"Chickpeas",         skus:1, img:"images/sku-chickpeas.jpg" },
+    { key:"kidney-beans",    name:"Kidney Beans",      skus:1, img:"images/sku-kidney.jpg" },
+    { key:"black-eyed-peas", name:"Black-Eyed Peas",   skus:1, img:"images/sku-blackeyed.jpg" },
+    { key:"wheat",           name:"Wheat",             skus:1, img:"images/sku-wheat.jpg" },
+  ];
+
+  const track = document.getElementById("cropsTrack");
+  const skusSection = document.getElementById("skus");
+  const skuCardsContainer = document.getElementById("skuCards");
+
+  function findCardByKey(key){
+    return skuCardsContainer ? skuCardsContainer.querySelector(`[data-crop="${key}"]`) : null;
+  }
+  function pinSkuCardToTop(key){
+    if (!skuCardsContainer) return;
+    const el = findCardByKey(key);
+    if (!el) return;
+    skuCardsContainer.insertBefore(el, skuCardsContainer.firstChild);
+  }
+
+  function chipHTML(c){
+    return `
+      <div class="chip" data-key="${c.key}">
+        <div class="pillWrap" aria-label="${c.name}">
+          <div class="circleImage" style="background-image:url('${c.img}')"></div>
+
+          <div class="pillContent">
+            <div class="meta">
+              <div class="name">${c.name}</div>
+              <div class="skus"><span style="font-weight:800;color:rgba(11,26,45,.92)">${c.skus}</span> SKUs</div>
+            </div>
+
+            <a class="knowMore" href="#skus" data-know="${c.key}">
+              Know more
+              <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M7 17L17 7"></path><path d="M7 7h10v10"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="chip-label">${c.name}</div>
+      </div>
+    `;
+  }
+
+  function render(){
+    const list = [...CROPS, ...CROPS]; // duplicate for seamless loop
+    track.innerHTML = list.map(chipHTML).join("");
+
+    // Hover pins the SKU card to the top and DOES NOT restore back.
+    const chips = Array.from(track.querySelectorAll(".chip"));
+    chips.forEach(ch => {
+      const key = ch.getAttribute("data-key");
+      ch.addEventListener("mouseenter", () => pinSkuCardToTop(key));
+
+      const btn = ch.querySelector(`[data-know="${key}"]`);
+      btn?.addEventListener("click", (e) => {
+        e.preventDefault();
+        pinSkuCardToTop(key);
+        skusSection?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+  }
+
+  // ✅ Seamless marquee sync (no jump / no restart distortion)
+  function syncMarquee(){
+    // track contains TWO copies; one loop distance is half the total width
+    const half = track.scrollWidth / 2;
+
+    // protect against zero width before layout
+    if (!half || !isFinite(half)) return;
+
+    // set exact pixel distance for the keyframes
+    track.style.setProperty("--marquee-distance", half + "px");
+
+    // SPEED CONTROL (higher = faster)
+    const speed = 120; // try 160–260
+    const duration = half / speed;
+
+    track.style.animationDuration = duration.toFixed(2) + "s";
+  }
+
+  render();
+  // run after render + after images/fonts settle
+  syncMarquee();
+
+  window.addEventListener("load", syncMarquee);
+
+  window.addEventListener("resize", () => {
+    clearTimeout(window.__mqT);
+    window.__mqT = setTimeout(syncMarquee, 80);
+  });
+
+  // extra: re-sync shortly after first paint (helps when fonts swap)
+  setTimeout(syncMarquee, 250);
+  setTimeout(syncMarquee, 900);
+</script>
+
+</body>
+</html>

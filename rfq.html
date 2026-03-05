@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shunah | Request RFQ</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    html { scroll-behavior: smooth; }
+    .rfqField{
+      width:100%;
+      border-bottom:1px solid rgba(0,0,0,.10);
+      padding:12px 0;
+      outline:none;
+      background:transparent;
+      color:#0b1a2d;
+    }
+
+    .tCircleWrap{display:flex;flex-direction:column;align-items:center;gap:8px;position:relative;z-index:2;user-select:none;}
+    .tCircle{
+      width:56px;height:56px;border-radius:999px;
+      display:flex;align-items:center;justify-content:center;
+      font-weight:800;font-size:15px;
+      background:rgba(59,130,246,0.18);
+      border:1px solid rgba(59,130,246,0.30);
+      color:rgba(11,26,45,.9);
+      cursor:pointer;
+      transition:transform 750ms cubic-bezier(.19,1,.22,1),background 250ms ease,border-color 250ms ease;
+      will-change:transform;
+    }
+    .tCircle.done{background:rgba(34,197,94,0.16);border-color:rgba(34,197,94,0.34);}
+    .tCircle.active{border-color:rgba(11,26,45,.45);box-shadow:0 10px 24px rgba(11,26,45,.10);}
+    .tLabel{
+      font-size:11px;letter-spacing:.10em;text-transform:uppercase;
+      color:rgba(11,26,45,.55);
+      transition:opacity 350ms ease,transform 350ms ease;
+      text-align:center;line-height:1.1;min-height:22px;
+    }
+    .tLabel.hiddenLabel{opacity:0;transform:translateY(-4px);pointer-events:none;}
+
+    /* 50% overlap: 56px / 2 = 28px */
+    .stack-1{ transform: translateX(-28px); }
+    .stack-2{ transform: translateX(-56px); }
+    .stack-3{ transform: translateX(-84px); }
+    .stack-4{ transform: translateX(-112px); }
+    .stack-5{ transform: translateX(-140px); }
+    .stack-6{ transform: translateX(-168px); }
+    .stack-7{ transform: translateX(-196px); }
+    .stack-8{ transform: translateX(-224px); }
+  </style>
+</head>
+
+<body class="bg-white text-[#0b1a2d] min-h-screen overflow-y-auto">
+
+  <!-- NAV (thinner + RFQ highlighted) -->
+<!-- NAV (smaller + shadow + centered menu) -->
+<nav class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-black/10 h-12 shadow-[0_4px_14px_rgba(0,0,0,0.06)]">
+  
+  <div class="relative max-w-7xl mx-auto h-12 px-6 md:px-10 flex items-center">
+
+    <!-- LEFT: Logo -->
+    <a href="index.html" class="absolute left-6 md:left-10 flex items-center">
+      <img src="images/shunah-logo.png" alt="Shunah Logo" class="h-7 w-auto" />
+    </a>
+
+    <!-- CENTER: Menu -->
+    <div class="mx-auto hidden md:flex items-center gap-7 text-[12.5px] font-medium text-[#0b1a2d]/80">
+
+      <a href="index.html#home" class="hover:text-[#0b1a2d] transition">Home</a>
+      <a href="index.html#about" class="hover:text-[#0b1a2d] transition">About Us</a>
+      <a href="technology.html" class="hover:text-[#0b1a2d] transition">Product Suite</a>
+      <a href="focus.html" class="hover:text-[#0b1a2d] transition">Our Focus</a>
+      <a href="index.html#our-story" class="hover:text-[#0b1a2d] transition">Our Story</a>
+
+      <!-- ACTIVE -->
+      <a href="rfq.html"
+         class="text-[#0b1a2d] font-semibold rounded-full px-4 py-1 bg-[#0b1a2d]/6 ring-1 ring-[#0b1a2d]/15">
+        RFQ
+      </a>
+
+      <a href="contact.html" class="hover:text-[#0b1a2d] transition">Contact Us</a>
+    </div>
+
+  </div>
+</nav>
+
+  <!-- RFQ SECTION (fits under 56px nav) -->
+  <section id="rfq" class="bg-white">
+    <div class="max-w-7xl mx-auto px-6 min-h-[calc(100dvh-56px)] py-10 lg:py-6 flex items-start lg:items-center">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center w-full">
+
+        <!-- LEFT IMAGE -->
+        <div class="lg:col-span-5 relative flex justify-center lg:justify-start">
+          <div class="relative w-[320px] h-[320px] sm:w-[420px] sm:h-[420px] lg:w-[520px] lg:h-[520px]">
+            <div class="absolute inset-0 overflow-hidden rounded-r-[999px]">
+              <img src="images/rfq.jpg" alt="RFQ visual" class="w-full h-full object-cover" />
+              <div class="absolute inset-0 bg-black/10"></div>
+            </div>
+            <div class="absolute inset-0 rounded-r-[999px] ring-1 ring-black/10"></div>
+          </div>
+        </div>
+
+        <!-- RIGHT CONTENT -->
+        <div class="lg:col-span-7">
+          <div class="max-w-xl ml-auto">
+
+            <h2 class="text-4xl sm:text-5xl font-semibold tracking-tight text-[#0b1a2d]">
+              Request RFQ
+            </h2>
+
+            <!-- STEP 0 -->
+            <div id="rfqStep0Card" class="mt-6 rounded-2xl border border-black/10 bg-white p-6 sm:p-7">
+              <div class="text-lg font-semibold text-[#0b1a2d]">Basic Details</div>
+              <div class="mt-1 text-sm text-[#0b1a2d]/55">Please enter your contact information.</div>
+
+              <div class="mt-5 space-y-5">
+                <div>
+                  <label class="block text-sm font-medium mb-2">Name</label>
+                  <input id="rfqName" class="rfqField" type="text" placeholder="Your name" />
+                </div>
+
+                <div>
+                  <label class="block text-sm font-medium mb-2">Email</label>
+                  <input id="rfqEmail" class="rfqField" type="email" placeholder="Your email" />
+                </div>
+
+                <div>
+                  <label class="block text-sm font-medium mb-2">Number</label>
+                  <input id="rfqPhone" class="rfqField" type="tel" placeholder="+20 ..." />
+                </div>
+              </div>
+
+              <div class="mt-6 flex justify-end">
+                <button id="rfqStart"
+                  class="rounded-full bg-[#0b1a2d] text-white px-6 py-2.5 text-sm font-semibold hover:bg-[#142a4a] transition">
+                  Next →
+                </button>
+              </div>
+            </div>
+
+            <!-- WIZARD -->
+            <div id="rfqWizardWrap" class="hidden">
+
+              <!-- TRACKER -->
+              <div id="rfqTrackerWrap" class="mt-8">
+                <div class="relative">
+                  <div id="rfqLine" class="absolute left-0 right-0 top-[28px] h-px bg-black/10"></div>
+                  <div id="rfqTracker" class="grid grid-cols-9 gap-3 relative z-10"></div>
+                </div>
+              </div>
+
+              <!-- STEP CARD -->
+              <div id="rfqWizardCard" class="mt-6 rounded-2xl border border-black/10 bg-white p-6 sm:p-7">
+                <div id="rfqStepTitle" class="text-lg font-semibold"></div>
+                <div id="rfqStepSubtitle" class="mt-1 text-sm text-[#0b1a2d]/55"></div>
+
+                <div class="mt-5" id="rfqStepBody"></div>
+
+                <div class="mt-6 flex justify-between gap-3">
+                  <button id="rfqBack"
+                    class="rounded-full bg-[#0b1a2d] text-white px-6 py-2.5 text-sm font-semibold hover:bg-[#142a4a] transition disabled:opacity-30 disabled:cursor-not-allowed">
+                    ← Back
+                  </button>
+
+                  <button id="rfqNext"
+                    class="rounded-full bg-[#0b1a2d] text-white px-6 py-2.5 text-sm font-semibold hover:bg-[#142a4a] transition">
+                    Next →
+                  </button>
+                </div>
+
+                <div id="rfqSubmitWrap" class="mt-6 hidden">
+                  <button id="rfqSubmit"
+                    class="w-full rounded-full bg-[#22c55e] text-white px-6 py-3 font-semibold hover:bg-[#16a34a] transition">
+                    Submit Order
+                  </button>
+                </div>
+
+                <div class="mt-6 text-center text-sm text-[#0b1a2d]/55">
+                  a few more questions
+                </div>
+              </div>
+            </div>
+
+            <!-- REVIEW -->
+            <div id="rfqReviewWrap" class="mt-10 hidden">
+              <div class="rounded-2xl border border-black/10 bg-white p-6 sm:p-7">
+
+                <h3 class="text-2xl font-semibold">Order Review</h3>
+                <p class="mt-1 text-sm text-[#0b1a2d]/55">Review your request details.</p>
+
+                <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+
+                  <div class="rounded-xl border border-black/10 p-4">
+                    <div class="text-[#0b1a2d]/55">Name</div>
+                    <div id="rvName" class="mt-1 font-semibold">—</div>
+                  </div>
+
+                  <div class="rounded-xl border border-black/10 p-4">
+                    <div class="text-[#0b1a2d]/55">Email</div>
+                    <div id="rvEmail" class="mt-1 font-semibold">—</div>
+                  </div>
+
+                  <div class="rounded-xl border border-black/10 p-4">
+                    <div class="text-[#0b1a2d]/55">Number</div>
+                    <div id="rvPhone" class="mt-1 font-semibold">—</div>
+                  </div>
+
+                  <div class="rounded-xl border border-black/10 p-4">
+                    <div class="text-[#0b1a2d]/55">Crop</div>
+                    <div id="rvCrop" class="mt-1 font-semibold">—</div>
+                  </div>
+
+                  <div class="rounded-xl border border-black/10 p-4">
+                    <div class="text-[#0b1a2d]/55">SKU</div>
+                    <div id="rvSku" class="mt-1 font-semibold">—</div>
+                  </div>
+
+                  <div class="rounded-xl border border-black/10 p-4">
+                    <div class="text-[#0b1a2d]/55">Containers</div>
+                    <div id="rvContainers" class="mt-1 font-semibold">—</div>
+                  </div>
+
+                  <div class="rounded-xl border border-black/10 p-4">
+                    <div class="text-[#0b1a2d]/55">Destination</div>
+                    <div id="rvDestination" class="mt-1 font-semibold">—</div>
+                  </div>
+
+                  <div class="rounded-xl border border-black/10 p-4">
+                    <div class="text-[#0b1a2d]/55">Expected Delivery Date</div>
+                    <div id="rvDelivery" class="mt-1 font-semibold">—</div>
+                  </div>
+
+                  <div class="rounded-xl border border-black/10 p-4">
+                    <div class="text-[#0b1a2d]/55">Quality Inspection</div>
+                    <div id="rvQuality" class="mt-1 font-semibold">—</div>
+                  </div>
+
+                  <div class="rounded-xl border border-black/10 p-4">
+                    <div class="text-[#0b1a2d]/55">Insurance</div>
+                    <div id="rvInsurance" class="mt-1 font-semibold">—</div>
+                  </div>
+
+                  <div class="rounded-xl border border-black/10 p-4">
+                    <div class="text-[#0b1a2d]/55">Payment Method</div>
+                    <div id="rvPayment" class="mt-1 font-semibold">—</div>
+                  </div>
+                </div>
+
+                <div class="mt-8 flex justify-center">
+                  <button id="rfqFinalSubmit"
+                    class="w-full sm:w-[360px] rounded-full bg-[#22c55e] text-white px-6 py-3 font-semibold hover:bg-[#16a34a] transition">
+                    Final Submit
+                  </button>
+                </div>
+
+                <div id="rfqFinalMsg"
+                     class="mt-5 hidden rounded-xl border border-[#22c55e]/25 bg-[#22c55e]/10 p-4 text-[#0b1a2d]">
+                  <div class="flex items-start gap-3">
+                    <div class="shrink-0 mt-0.5">
+                      <svg class="w-6 h-6 text-[#16a34a]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 6L9 17l-5-5" />
+                      </svg>
+                    </div>
+                    <div>
+                      <div class="font-semibold">You will be contacted shortly</div>
+                      <div class="text-sm text-[#0b1a2d]/60 mt-1">
+                        Your request has been submitted successfully.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <script>
+    (function(){
+      const steps = [
+        { key:"crop",   label:"Crop",       title:"Buyer Choose Crop", subtitle:"Select the crop you want to purchase.", type:"select", options:["White Beans","Sesame","Fava Beans","Rice","Caraway","Fennel"]},
+        { key:"spec",   label:"Spec",       title:"SKU / Specification", subtitle:"Choose the SKU specification.", type:"select", options:["WKB-001 (Standard)","WKB-002 (Premium)","SSM-001 (Standard)","SSM-002 (Premium)","RCE-001 (Standard)"]},
+        { key:"containers", label:"Tons",   title:"Number of Containers", subtitle:"Enter the number of containers.", type:"number", placeholder:"e.g. 4" },
+        { key:"packing", label:"Packing",   title:"Packing", subtitle:"Choose packing format.", type:"select", options:["25kg PP Bags","50kg PP Bags","Jumbo Bags","Bulk"]},
+        { key:"destination", label:"Destination", title:"Destination", subtitle:"Where should the shipment be delivered?", type:"text", placeholder:"Country / City" },
+        { key:"delivery", label:"Delivery", title:"Expected Delivery Date", subtitle:"Choose your expected delivery date.", type:"date" },
+        { key:"quality", label:"Quality",   title:"Quality Inspection", subtitle:"Select inspection method.", type:"select", options:["Shunah QC","Third-Party Inspection","Buyer Inspection"]},
+        { key:"insurance", label:"Insurance", title:"Insurance", subtitle:"Select insurance option.", type:"select", options:["Included","Optional","Not Required"]},
+        { key:"payment", label:"Payment",   title:"Payment Method", subtitle:"Select payment method.", type:"select", options:["LC","TT","Cash Against Documents"]}
+      ];
+
+      const state = {};
+      let current = 0;
+      const completed = new Set();
+      let finalSubmitted = false;
+
+      const step0Card = document.getElementById("rfqStep0Card");
+      const wizardWrap = document.getElementById("rfqWizardWrap");
+
+      const nameEl = document.getElementById("rfqName");
+      const emailEl = document.getElementById("rfqEmail");
+      const phoneEl = document.getElementById("rfqPhone");
+      const startBtn = document.getElementById("rfqStart");
+
+      const trackerWrap = document.getElementById("rfqTrackerWrap");
+      const tracker = document.getElementById("rfqTracker");
+      const wizardCard = document.getElementById("rfqWizardCard");
+      const reviewWrap = document.getElementById("rfqReviewWrap");
+
+      const stepTitle = document.getElementById("rfqStepTitle");
+      const stepSubtitle = document.getElementById("rfqStepSubtitle");
+      const stepBody = document.getElementById("rfqStepBody");
+
+      const backBtn = document.getElementById("rfqBack");
+      const nextBtn = document.getElementById("rfqNext");
+      const submitWrap = document.getElementById("rfqSubmitWrap");
+      const submitBtn = document.getElementById("rfqSubmit");
+
+      const finalBtn = document.getElementById("rfqFinalSubmit");
+      const finalMsg = document.getElementById("rfqFinalMsg");
+
+      const rv = {
+        name: document.getElementById("rvName"),
+        email: document.getElementById("rvEmail"),
+        phone: document.getElementById("rvPhone"),
+        crop: document.getElementById("rvCrop"),
+        sku: document.getElementById("rvSku"),
+        containers: document.getElementById("rvContainers"),
+        destination: document.getElementById("rvDestination"),
+        delivery: document.getElementById("rvDelivery"),
+        quality: document.getElementById("rvQuality"),
+        insurance: document.getElementById("rvInsurance"),
+        payment: document.getElementById("rvPayment"),
+      };
+
+      function makeField(step){
+        const wrap = document.createElement("div");
+
+        if(step.type === "select"){
+          const sel = document.createElement("select");
+          sel.className = "rfqField";
+          sel.innerHTML =
+            `<option value="">Select...</option>` +
+            (step.options||[]).map(o=>`<option value="${o}">${o}</option>`).join("");
+          sel.value = state[step.key] || "";
+          sel.addEventListener("change", ()=> state[step.key]=sel.value);
+          wrap.appendChild(sel);
+        } else {
+          const input = document.createElement("input");
+          input.type = step.type || "text";
+          input.placeholder = step.placeholder || "";
+          input.className = "rfqField";
+          input.value = state[step.key] || "";
+          input.addEventListener("input", ()=> state[step.key]=input.value);
+          wrap.appendChild(input);
+
+          if(step.key === "containers"){
+            const note = document.createElement("div");
+            note.className = "mt-2 text-xs text-[#0b1a2d]/55";
+            note.textContent = "* A container is typically between 24–25 tons.";
+            wrap.appendChild(note);
+          }
+        }
+
+        return wrap;
+      }
+
+      function isFilled(i){
+        const k = steps[i].key;
+        return state[k] && String(state[k]).trim().length > 0;
+      }
+
+      function buildTracker(){
+        tracker.innerHTML = "";
+        steps.forEach((s, idx) => {
+          const cell = document.createElement("div");
+          cell.className = "tCircleWrap";
+
+          const c = document.createElement("div");
+          c.className = "tCircle";
+          c.textContent = String(idx + 1);
+          c.dataset.idx = String(idx);
+
+          const label = document.createElement("div");
+          label.className = "tLabel";
+          label.textContent = s.label;
+          label.dataset.idx = String(idx);
+
+          c.addEventListener("click", () => {
+            current = idx;
+            for(let j = steps.length - 1; j > idx; j--){
+              completed.delete(j);
+            }
+            render();
+          });
+
+          cell.appendChild(c);
+          cell.appendChild(label);
+          tracker.appendChild(cell);
+        });
+      }
+
+      function updateTrackerUI(){
+        const circles = tracker.querySelectorAll(".tCircle");
+        const labels  = tracker.querySelectorAll(".tLabel");
+        const done = Array.from(completed).filter(i=>i!==0).sort((a,b)=>a-b);
+
+        circles.forEach((c) => {
+          const idx = Number(c.dataset.idx);
+          c.classList.toggle("active", idx === current);
+          c.classList.toggle("done", completed.has(idx));
+
+          c.classList.remove("stack-1","stack-2","stack-3","stack-4","stack-5","stack-6","stack-7","stack-8");
+
+          if(idx !== 0 && completed.has(idx)){
+            const rank = done.indexOf(idx) + 1; // 1..8
+            if(rank > 0) c.classList.add("stack-" + Math.min(rank, 8));
+          }
+        });
+
+        labels.forEach((l) => {
+          const idx = Number(l.dataset.idx);
+          const hide = (idx !== 0 && completed.has(idx));
+          l.classList.toggle("hiddenLabel", hide);
+        });
+      }
+
+      function renderStep(){
+        const s = steps[current];
+        stepTitle.textContent = s.title;
+        stepSubtitle.textContent = s.subtitle;
+
+        stepBody.innerHTML = "";
+        stepBody.appendChild(makeField(s));
+
+        backBtn.disabled = current === 0;
+        nextBtn.textContent = "Next →";
+
+        submitWrap.classList.toggle("hidden", completed.size !== steps.length);
+      }
+
+      function fillReview(){
+        rv.name.textContent = state.__name || "—";
+        rv.email.textContent = state.__email || "—";
+        rv.phone.textContent = state.__phone || "—";
+
+        rv.crop.textContent = state.crop || "—";
+        rv.sku.textContent = state.spec || "—";
+        rv.containers.textContent = state.containers || "—";
+        rv.destination.textContent = state.destination || "—";
+        rv.delivery.textContent = state.delivery || "—";
+        rv.quality.textContent = state.quality || "—";
+        rv.insurance.textContent = state.insurance || "—";
+        rv.payment.textContent = state.payment || "—";
+      }
+
+      function showReview(){
+        fillReview();
+        trackerWrap.classList.add("hidden");
+        wizardCard.classList.add("hidden");
+        reviewWrap.classList.remove("hidden");
+        finalMsg.classList.toggle("hidden", !finalSubmitted);
+      }
+
+      startBtn.addEventListener("click", () => {
+        const n = (nameEl.value||"").trim();
+        const e = (emailEl.value||"").trim();
+        const p = (phoneEl.value||"").trim();
+        if(!n || !e || !p) return;
+
+        state.__name = n;
+        state.__email = e;
+        state.__phone = p;
+
+        step0Card.classList.add("hidden");
+        wizardWrap.classList.remove("hidden");
+        render();
+      });
+
+      nextBtn.addEventListener("click", () => {
+        if(!isFilled(current)) return;
+        completed.add(current);
+        if(current < steps.length - 1) current++;
+        render();
+      });
+
+      backBtn.addEventListener("click", () => {
+        if(current === 0) return;
+        current--;
+        render();
+      });
+
+      submitBtn.addEventListener("click", () => {
+        showReview();
+      });
+
+      finalBtn.addEventListener("click", () => {
+        finalSubmitted = true;
+        finalMsg.classList.remove("hidden");
+      });
+
+      function render(){
+        if(!reviewWrap.classList.contains("hidden")) return;
+        renderStep();
+        updateTrackerUI();
+      }
+
+      buildTracker();
+      renderStep();
+      updateTrackerUI();
+    })();
+  </script>
+
+</body>
+</html>
