@@ -3,1121 +3,2657 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Shunah | Our Focus</title>
+  <title>Shunah | Product Suite</title>
 
-  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     body { font-family: 'Inter', sans-serif; }
+    html { scroll-behavior: smooth; }
 
-    /* ===== Marquee (FIXED: true seamless infinite loop) =====
-       The old -50% approach jumps when widths change (images/fonts/rounding).
-       This version animates by an exact pixel distance we set via JS: --marquee-distance
-    */
-    .marquee-track{
-      animation: marqueeX linear infinite;
-      /* duration is set dynamically in JS for perfect looping */
-      will-change: transform;
-    }
-    #cropsMarquee:hover .marquee-track{ animation-play-state: paused; }
-
-    @keyframes marqueeX{
-      from{ transform: translateX(0); }
-      to  { transform: translateX(calc(-1 * var(--marquee-distance, 0px))); }
-    }
-
-    /* ===== Chip footprint in ribbon (does NOT push layout when expanding) ===== */
-    .chip{
-      width: 108px;
-      flex: 0 0 auto;
-      position: relative;
-      text-align: center;
-      overflow: visible;
-      z-index: 1;
-    }
-    .chip:hover{ z-index: 50; }
-
-    .chip-label{
-      margin-top: 8px;
-      font-size: 11px;
-      font-weight: 600;
-      color: rgba(11,26,45,.75);
-      white-space: nowrap;
-    }
-
-    /* ===== SIMPLE: circle image -> pill on hover (NO SPLIT) ===== */
-    .pillWrap{
-      width: 72px;
-      height: 72px;
-      margin: 0 auto;
-      border-radius: 9999px;
-      background: rgba(255,255,255,.90);
-      border: 1px solid rgba(11,26,45,.12);
-      box-shadow: 0 8px 22px rgba(11,26,45,.10);
-      transition: width 260ms cubic-bezier(.2,.9,.2,1);
-      display: flex;
-      align-items: center;
-      padding: 6px;
-      overflow: hidden;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-    }
-    .chip:hover .pillWrap{ width: 320px; }
-
-    .circleImage{
-      width: 60px;
-      height: 60px;
-      border-radius: 9999px;
-      background-size: cover;
-      background-position: center;
-      flex: 0 0 auto;
-      border: 1px solid rgba(11,26,45,.10);
-      background-color: rgba(11,26,45,.04);
-    }
-
-    .pillContent{
-      opacity: 0;
-      transform: translateX(-10px);
-      transition: opacity 200ms ease, transform 220ms ease;
-      margin-left: 14px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      min-width: 0;
-      width: calc(100% - 60px - 14px);
-    }
-    .chip:hover .pillContent{
-      opacity: 1;
-      transform: translateX(0);
-    }
-
-    .meta{
-      display: grid;
-      gap: 2px;
-      text-align: left;
-      min-width: 0;
-      flex: 1 1 auto;
-    }
-    .meta .name{
-      font-size: 12px;
-      font-weight: 800;
-      color: rgba(11,26,45,.95);
-      line-height: 1.1;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 180px;
-    }
-    .meta .skus{
-      font-size: 11px;
-      color: rgba(11,26,45,.62);
-      line-height: 1.1;
-      white-space: nowrap;
-    }
-
-    .knowMore{
-      margin-left: auto;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11px;
-      font-weight: 800;
-      color: #fff;
-      background: #0b1a2d;
-      border-radius: 9999px;
-      padding: 7px 10px;
-      transition: opacity 150ms ease;
-      white-space: nowrap;
-      flex: 0 0 auto;
-    }
-    .knowMore:hover{ opacity: .9; }
-
-    @media (max-width: 640px){
-      .chip{ width: 96px; }
-      .chip:hover .pillWrap{ width: 280px; }
-      .meta .name{ max-width: 140px; }
-    }
+    /* keep your satellite helper styles if you want */
+    #shunah-satellite-circle { min-height: 100dvh; }
   </style>
 </head>
 
-<body class="bg-[#f7f9fc] text-[#0b1a2d]">
+<body class="bg-gray-900 text-white min-h-screen overflow-y-auto">
 
-<!-- NAV -->
+<!-- NAV (smaller + shadow + centered menu) -->
+<!-- NAV — White, Thin, Perfectly Centered -->
+<!-- NAV — White, Thin, Single Line, Centered -->
 <nav class="sticky top-0 z-50 bg-white border-b border-black/10 shadow-sm h-12">
+
   <div class="relative max-w-7xl mx-auto h-12 px-6 md:px-10 flex items-center">
 
-    <a href="index.html" class="absolute left-6 md:left-10 flex items-center">
+    <!-- LEFT: Logo (absolute so menu can center perfectly) -->
+    <a href="index.html"
+       class="absolute left-6 md:left-10 flex items-center">
       <img src="images/shunah-logo.png" alt="Shunah Logo" class="h-7 w-auto" />
     </a>
 
+    <!-- CENTER: Menu -->
     <div class="mx-auto hidden md:flex items-center gap-6 text-[12.5px] font-medium text-[#0b1a2d]/80 whitespace-nowrap">
+
       <a href="index.html#home" class="hover:text-[#0b1a2d] transition">Home</a>
       <a href="index.html#about" class="hover:text-[#0b1a2d] transition">About Us</a>
-      <a href="technology.html" class="hover:text-[#0b1a2d] transition">Product Suite</a>
 
-      <a href="focus.html"
+      <!-- ACTIVE -->
+      <a href="technology.html"
          class="text-[#0b1a2d] font-semibold rounded-full px-4 py-1 bg-[#0b1a2d]/6 ring-1 ring-[#0b1a2d]/15">
-        Our Focus
+        Product Suite
       </a>
 
+      <a href="focus.html" class="hover:text-[#0b1a2d] transition">Our Focus</a>
       <a href="index.html#our-story" class="hover:text-[#0b1a2d] transition">Our Story</a>
       <a href="rfq.html" class="hover:text-[#0b1a2d] transition">RFQ</a>
       <a href="contact.html" class="hover:text-[#0b1a2d] transition">Contact Us</a>
+
+    </div>
+</nav>
+  </div>
+<section id="tech-hero" class="bg-white h-screen flex items-center overflow-hidden">
+
+<div class="max-w-7xl mx-auto px-6 w-full">
+
+<div class="grid lg:grid-cols-12 gap-12 items-center">
+
+<!-- LEFT IMAGE -->
+<div class="lg:col-span-7 flex justify-center -mt-6 relative">
+
+<!-- BLUE GLOW LINES -->
+<svg
+class="absolute left-0 top-0 w-full h-full pointer-events-none z-0"
+viewBox="0 0 1000 700"
+preserveAspectRatio="xMidYMid meet"
+aria-hidden="true"
+>
+
+<defs>
+
+<filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+<feGaussianBlur stdDeviation="7" result="blur"/>
+<feMerge>
+<feMergeNode in="blur"/>
+<feMergeNode in="SourceGraphic"/>
+</feMerge>
+</filter>
+
+<linearGradient id="blueGlow" x1="0%" y1="0%" x2="100%" y2="0%">
+<stop offset="0%" stop-color="#6dd3f5" stop-opacity="0"/>
+<stop offset="30%" stop-color="#6dd3f5" stop-opacity="0.6"/>
+<stop offset="60%" stop-color="#6dd3f5" stop-opacity="0.35"/>
+<stop offset="100%" stop-color="#6dd3f5" stop-opacity="0"/>
+</linearGradient>
+
+</defs>
+
+<!-- GLOW LINE 1 -->
+<path
+d="M 40 620 C 220 585, 340 680, 520 635"
+stroke="url(#blueGlow)"
+stroke-width="18"
+fill="none"
+stroke-linecap="round"
+filter="url(#glow)"
+opacity="0.85"
+/>
+
+<!-- GLOW LINE 2 -->
+<path
+d="M 320 655 C 520 615, 650 705, 900 655"
+stroke="url(#blueGlow)"
+stroke-width="18"
+fill="none"
+stroke-linecap="round"
+filter="url(#glow)"
+opacity="0.65"
+/>
+
+<!-- GLOW LINE 3 -->
+<path
+d="M 520 640 C 680 610, 780 660, 980 635"
+stroke="url(#blueGlow)"
+stroke-width="12"
+fill="none"
+stroke-linecap="round"
+filter="url(#glow)"
+opacity="0.6"
+/>
+
+</svg>
+
+<img
+src="images/First-time-farmer.png"
+alt="Farmer progression"
+class="max-h-[90vh] w-[110%] object-contain relative z-10"
+/>
+
+</div>
+
+<!-- RIGHT TEXT -->
+<div class="lg:col-span-5 max-w-xl">
+
+<h1 class="text-5xl font-semibold tracking-tight text-[#0b1a2d] leading-tight">
+Building the Digital Infrastructure of Agriculture
+</h1>
+
+<p class="mt-6 text-lg text-slate-600 leading-relaxed">
+For generations, small farmers have been disconnected from institutional agricultural markets.
+Shunah’s technology changes that.
+</p>
+
+<div class="mt-6 border-l-2 border-slate-200 pl-4">
+
+<h2 class="text-sm font-semibold text-[#0b1a2d]">
+Farmer-Driven Technology
+</h2>
+
+<p class="mt-2 text-sm text-slate-600">
+Small-scale farmers comprise almost
+<span class="font-semibold text-slate-800">79%</span>
+of our supplier base.
+</p>
+
+</div>
+
+<div class="mt-10 flex justify-center">
+
+<a
+href="/product-suite.html"
+class="bg-[#0b1a2d] text-white px-7 py-3 rounded-lg font-semibold hover:opacity-90 transition"
+>
+Explore Shunah Product Suite
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+</section>
+  <!-- ✅ ONLY CHANGE: make the images taller by letting the media block fill the available space.
+     Everything else stays the same (titles, spacing, Know more position, hover, JS). -->
+
+<section
+  id="technology"
+  class="bg-white text-slate-900 snap-start overflow-hidden pb-10"
+  style="height: calc(100dvh - 3rem);"  <!-- ✅ 3rem = nav h-12 -->
+  <div class="max-w-7xl mx-auto px-6 h-full flex flex-col min-h-0">
+
+    <!-- Title (UNCHANGED) -->
+    <div class="pt-0 md:pt-0 pb-1 shrink-0">
+      <h2 class="text-xl md:text-2xl font-semibold leading-tight text-[#0b1a2d]">
+        Shunah Product Suite
+      </h2>
+      <p class="mt-1 text-[13px] md:text-sm text-slate-600 max-w-2xl">
+        Satellite, computer-aided vision, and IoT — one connected operating system for dry crops.
+      </p>
+    </div>
+
+    <!-- Panels (UNCHANGED) -->
+    <div class="flex-1 min-h-0 pb-2">
+      <div id="suiteRow" class="h-full min-h-0 flex gap-4 items-stretch">
+
+        <!-- ================= Panel 1 ================= -->
+        <a href="#shunah-satellite-circle"
+           class="suitePanel block h-full relative min-h-0 flex-1 overflow-hidden rounded-3xl ring-1 ring-black/10 bg-white"
+           data-panel="0">
+
+          <div class="suiteCard relative z-[2] h-full w-full p-6 flex flex-col">
+            <div class="suitePill">SATELLITE</div>
+
+            <div class="mt-2 text-[18px] leading-[1.15] font-semibold text-[#0b1a2d]">
+              Satellite Remote Identification
+            </div>
+
+            <p class="mt-1 text-[13px] leading-[1.45] text-slate-600">
+              Identify and locate dry crops remotely using satellite imagery.
+            </p>
+
+            <!-- ✅ IMAGE: now stretches to fill space between text and "Know more" -->
+            <div class="mt-3 suiteMedia suiteMediaFill">
+              <img src="images/RCI-Crop.jpg" alt="Satellite Remote Identification" />
+            </div>
+
+            <!-- Know more (UNCHANGED position/style) -->
+            <div class="mt-3 pt-2 mt-auto">
+              <span class="suiteKnowMore">Know more →</span>
+            </div>
+          </div>
+
+          <!-- ===== HOVER LAYER (UNCHANGED) ===== -->
+          <img src="images/RCI-Crop.jpg" class="suiteImg suiteImgLeft" alt="" aria-hidden="true" />
+          <div class="suiteShade"></div>
+
+          <div class="suiteOverlay">
+            <div class="text-xs font-semibold tracking-widest text-[#0b1a2d]/70">SATELLITE</div>
+            <div class="mt-2 text-xl md:text-2xl font-semibold leading-tight text-[#0b1a2d]">
+              Satellite Remote Identification
+            </div>
+            <p class="mt-2 text-sm md:text-[15px] text-slate-700 leading-relaxed max-w-xl suiteDesc">
+              Identify and locate dry crops remotely to accelerate aggregation decisions and reduce field uncertainty.
+            </p>
+                     </div>
+        </a>
+
+        <!-- ================= Panel 2 ================= -->
+        <a href="#shunah-cav-hex"
+           class="suitePanel block h-full relative min-h-0 flex-1 overflow-hidden rounded-3xl ring-1 ring-black/10 bg-white"
+           data-panel="1">
+
+          <div class="suiteCard relative z-[2] h-full w-full p-6 flex flex-col">
+            <div class="suitePill">VISION</div>
+
+            <div class="mt-2 text-[18px] leading-[1.15] font-semibold text-[#0b1a2d]">
+              Computer Aided Vision
+            </div>
+
+            <p class="mt-1 text-[13px] leading-[1.45] text-slate-600">
+              Assess crop quality using rapid image-based grading.
+            </p>
+
+            <!-- ✅ IMAGE FILL -->
+            <div class="mt-3 suiteMedia suiteMediaFill">
+              <img src="images/CAD-Crop.jpg" alt="Computer Aided Vision" />
+            </div>
+
+            <div class="mt-3 pt-2 mt-auto">
+              <span class="suiteKnowMore">Know more →</span>
+            </div>
+          </div>
+
+          <!-- ===== HOVER LAYER (UNCHANGED) ===== -->
+          <img src="images/CAD-Crop.jpg" class="suiteImg suiteImgCenter" alt="" aria-hidden="true" />
+          <div class="suiteShade"></div>
+
+          <div class="suiteOverlay">
+            <div class="text-xs font-semibold tracking-widest text-[#0b1a2d]/70">VISION</div>
+            <div class="mt-2 text-xl md:text-2xl font-semibold leading-tight text-[#0b1a2d]">
+              Computer Aided Vision
+            </div>
+            <p class="mt-2 text-sm md:text-[15px] text-slate-700 leading-relaxed max-w-xl suiteDesc">
+              Standardize quality assessment with rapid image-based grading for consistent export specifications.
+            </p>
+                      </div>
+        </a>
+
+        <!-- ================= Panel 3 ================= -->
+        <a href="#infrastructure-iot"
+           class="suitePanel block h-full relative min-h-0 flex-1 overflow-hidden rounded-3xl ring-1 ring-black/10 bg-white"
+           data-panel="2">
+
+          <div class="suiteCard relative z-[2] h-full w-full p-6 flex flex-col">
+            <div class="suitePill">IOT</div>
+
+            <div class="mt-2 text-[18px] leading-[1.15] font-semibold text-[#0b1a2d]">
+              Social Infrastructure IoT
+            </div>
+
+            <p class="mt-1 text-[13px] leading-[1.45] text-slate-600">
+              Connect hubs, scales, and logistics for real-time coordination.
+            </p>
+
+            <!-- ✅ IMAGE FILL -->
+            <div class="mt-3 suiteMedia suiteMediaFill">
+              <img src="images/IOT-Crop.jpg" alt="Social Infrastructure IoT" />
+            </div>
+
+            <div class="mt-3 pt-2 mt-auto">
+              <span class="suiteKnowMore">Know more →</span>
+            </div>
+          </div>
+
+          <!-- ===== HOVER LAYER (UNCHANGED) ===== -->
+          <img src="images/IOT-Crop.jpg" class="suiteImg suiteImgRight" alt="" aria-hidden="true" />
+          <div class="suiteShade"></div>
+
+          <div class="suiteOverlay">
+            <div class="text-xs font-semibold tracking-widest text-[#0b1a2d]/70">INFRASTRUCTURE</div>
+            <div class="mt-2 text-xl md:text-2xl font-semibold leading-tight text-[#0b1a2d]">
+              IoT
+            </div>
+            <p class="mt-2 text-sm md:text-[15px] text-slate-700 leading-relaxed max-w-xl suiteDesc">
+              Connect hubs, scales, storage, and logistics to enable real-time crop flow orchestration.
+            </p>
+            
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </div>
+
+  <style>
+    /* keep your hover expand exactly the same */
+    .suitePanel{
+      transition: flex-grow 650ms cubic-bezier(.2,.8,.2,1), filter 650ms cubic-bezier(.2,.8,.2,1);
+      will-change: flex-grow;
+      filter: saturate(.95) brightness(.98);
+      position: relative;
+    }
+    #suiteRow.has-active .suitePanel.is-active{ flex-grow: 4; filter: saturate(1.02) brightness(1); }
+    #suiteRow.has-active .suitePanel:not(.is-active){ flex-grow: 1; filter: saturate(.92) brightness(.96); }
+
+    /* Hover image layer (unchanged) */
+    .suiteImg{
+      position:absolute;
+      top:0; bottom:0;
+      height:100%;
+      width:auto;
+      min-width:100%;
+      max-width:none;
+      object-fit:cover;
+      pointer-events:none;
+      z-index:0;
+      opacity: 0;
+    }
+    .suiteImgLeft{ left:0; }
+    .suiteImgCenter{ left:50%; transform:translateX(-50%); }
+    .suiteImgRight{ right:0; }
+
+    .suitePill{
+      display:inline-flex;
+      align-self:flex-start;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .16em;
+      color: rgba(11,26,45,.75);
+      background: rgba(11,26,45,.06);
+      border: 1px solid rgba(15,23,42,.10);
+    }
+
+    .suiteMedia{
+      border-radius: 18px;
+      overflow:hidden;
+      border: 1px solid rgba(15,23,42,.10);
+      background: #fff;
+      box-shadow: 0 18px 38px rgba(15,23,42,.08);
+      min-height: 0;
+    }
+
+    /* ✅ ONLY REAL CHANGE: let media fill remaining height */
+    .suiteMediaFill{
+      flex: 1 1 auto;
+      min-height: 0;
+    }
+    .suiteMediaFill img{
+      width:100%;
+      height:100%;              /* ✅ fill the media box */
+      display:block;
+      object-fit:cover;
+      aspect-ratio: auto;       /* ✅ remove ratio constraint so it can grow */
+    }
+
+    .suiteKnowMore{
+      font-weight: 600;
+      color: rgba(11,26,45,.85);
+	margin-top:auto;
+    }
+
+    .suiteShade{
+      position:absolute; inset:0;
+      background: linear-gradient(to top,
+        rgba(255,255,255,0.92),
+        rgba(255,255,255,0.35),
+        rgba(255,255,255,0.00)
+      );
+      opacity:0;
+      transition: opacity 650ms ease;
+      pointer-events:none;
+      z-index:1;
+    }
+
+    .suiteOverlay{
+      position:absolute;
+      left:0; right:0; bottom:70px;
+      padding:24px 24px 24px 34px;
+      opacity:0;
+      transform:translateY(4px);
+      transition: opacity 650ms ease, transform 650ms ease;
+      pointer-events:none;
+      text-align:left;
+      z-index:2;
+    }
+    .suitePanel.is-active .suiteShade{ opacity:1; }
+    .suitePanel.is-active .suiteOverlay{ opacity:1; transform:translateY(0); }
+
+    .suiteDesc{ text-align:left; margin-left:0; margin-right:auto; }
+
+    @media (max-width: 1023px){
+      #suiteRow{ flex-direction: column; }
+      #suiteRow .suitePanel{ flex: 1 1 auto; min-height: 160px; }
+      #suiteRow.has-active .suitePanel.is-active{ flex-grow: 1; }
+      #suiteRow.has-active .suitePanel:not(.is-active){ flex-grow: 1; }
+
+      /* keep mobile reasonable */
+      .suiteMediaFill{ flex: 0 0 auto; }
+      .suiteMediaFill img{ height:auto; aspect-ratio: 16 / 10; }
+    }
+  </style>
+
+  <script>
+    (function(){
+      const row = document.getElementById("suiteRow");
+      if(!row) return;
+
+      const panels = Array.from(row.querySelectorAll(".suitePanel"));
+      const isTouchLike = () =>
+        window.matchMedia("(hover: none)").matches || window.matchMedia("(pointer: coarse)").matches;
+
+      function setActive(i){
+        row.classList.add("has-active");
+        panels.forEach((p, idx) => p.classList.toggle("is-active", idx === i));
+      }
+      function clearActive(){
+        row.classList.remove("has-active");
+        panels.forEach(p => p.classList.remove("is-active"));
+      }
+
+      panels.forEach((p, i) => {
+        p.addEventListener("mouseenter", () => { if(!isTouchLike()) setActive(i); });
+        p.addEventListener("mouseleave", () => { if(!isTouchLike()) clearActive(); });
+        p.addEventListener("focus", () => setActive(i));
+        p.addEventListener("blur",  () => clearActive());
+      });
+
+      let activeTap = null;
+      panels.forEach((p, i) => {
+        p.addEventListener("click", (e) => {
+          if(!isTouchLike()) return;
+          if(activeTap !== i){
+            e.preventDefault();
+            activeTap = i;
+            setActive(i);
+          }
+        });
+      });
+
+      document.addEventListener("touchstart", (e) => {
+        if(!isTouchLike()) return;
+        if(!row.contains(e.target)){
+          activeTap = null;
+          clearActive();
+        }
+      }, {passive:true});
+    })();
+  </script>
+</section>
+<!-- =======================
+SHUNAH – Satellite Intelligence Circle (NAV-AWARE / FITS SCREEN)
+Changes:
+✅ fits screen WITH nav (height: calc(100dvh - 3rem))
+✅ removed “TECHNOLOGY” label
+✅ removed “* Hover on the circles…” text
+✅ moved title/header upwards + tightened vertical spacing
+======================= -->
+
+<section
+  id="shunah-satellite-circle"
+  class="relative text-slate-900 bg-cover bg-center bg-no-repeat overflow-hidden"
+  style="
+    background-image: url('assets/delta-bg.png');
+    height: calc(100dvh - 3rem); /* 3rem = nav h-12 */
+  "
+>
+  <!-- Soft white overlay -->
+  <div class="absolute inset-0" style="background: rgba(0,0,0,0.45);"></div>
+
+  <!-- FULL-HEIGHT STAGE -->
+  <div
+  class="relative z-10 mx-auto max-w-7xl px-6 h-full
+         flex flex-col justify-start
+         pt-2 sm:pt-3 pb-3 sm:pb-4 lg:pb-5
+         gap-12 sm:gap-13"
+>
+    <!-- Header -->
+    <div class="max-w-3xl">
+      <h2 class="text-3xl font-semibold tracking-tight sm:text-4xl text-white">
+        Satellite Crop Identification Engine
+      </h2>
+
+      <p class="mt-2 text-base leading-relaxed text-white/85">
+        From field detection to market execution — one connected intelligence loop combining satellite imagery,
+        AI, IoT infrastructure, and real-world feedback.
+      </p>
+    </div>
+
+    <!-- Layout -->
+    <div class="-mt-4 lg:-mt-3 grid gap-6 lg:grid-cols-12 lg:gap-8 items-stretch flex-none min-h-0">
+      <!-- Circle / Visual -->
+      <div class="lg:col-span-7 min-h-0">
+        <!-- ✅ BOX REMOVED: no rounded container, no border, no background panel -->
+        <div class="relative h-full min-h-0">
+
+          <!-- subtle background texture (kept, now floats) -->
+          <div class="pointer-events-none absolute inset-0 opacity-[0.06]
+               [background:radial-gradient(circle_at_30%_30%,#0E2A47_0,transparent_55%),radial-gradient(circle_at_70%_70%,#0E2A47_0,transparent_55%)]"></div>
+
+          <!-- Circle stage -->
+          <div
+            id="ssc-stage"
+            class="relative mx-auto -mt-4 sm:-mt-6 aspect-square w-full
+                   max-w-[min(540px,68vh)]
+                   max-h-[68vh]"
+style="
+       background: radial-gradient(
+         circle at center,
+         rgba(120,190,255,0.18) 0%,
+         rgba(120,190,255,0.10) 25%,
+         rgba(120,190,255,0.05) 45%,
+         transparent 70%
+       );
+     "
+          >
+            <!-- SVG ring + progress arc -->
+            <svg class="absolute inset-0 h-full w-full" viewBox="0 0 100 100" aria-hidden="true">
+              <!-- base ring (OPEN so there is NO 8->1 connection) -->
+              <circle
+                cx="50" cy="50" r="36"
+                fill="none"
+                stroke="rgba(15, 23, 42, 0.12)"
+                stroke-width="2"
+                stroke-dasharray="200 40"
+                transform="rotate(-90 50 50)"
+                stroke-linecap="round"
+              />
+
+              <!-- animated progress arc -->
+              <circle
+                id="ssc-arc"
+                cx="50" cy="50" r="36"
+                fill="none"
+                stroke="#0E2A47"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-dasharray="226.2"
+                stroke-dashoffset="226.2"
+                transform="rotate(-90 50 50)"
+                class="transition-[stroke-dashoffset] duration-700 ease-out"
+              />
+
+              <!-- subtle ticks -->
+              <g opacity="0.12" stroke="#0E2A47" stroke-width="0.6">
+                <line x1="50" y1="10" x2="50" y2="13" />
+                <line x1="50" y1="87" x2="50" y2="90" />
+                <line x1="10" y1="50" x2="13" y2="50" />
+                <line x1="87" y1="50" x2="90" y2="50" />
+              </g>
+            </svg>
+
+            <!-- center image + pulse rings -->
+            <div class="absolute inset-0 grid place-items-center">
+              <div id="ssc-pulse" class="pointer-events-none absolute h-[62%] w-[62%] rounded-full border border-slate-200 opacity-0"></div>
+              <div id="ssc-pulse2" class="pointer-events-none absolute h-[46%] w-[46%] rounded-full border border-slate-200 opacity-0"></div>
+
+              <img
+                id="ssc-center-img"
+                class="w-[42%] max-w-[260px] min-w-[140px] object-contain drop-shadow-sm opacity-95"
+                src="assets/ssc-center.png"
+                alt="Satellite intelligence visual"
+                onerror="this.style.opacity='0.25'; this.style.filter='grayscale(1)';"
+              />
+            </div>
+
+            <!-- nodes container -->
+            <div id="ssc-nodes" class="absolute inset-0"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right panel (UNCHANGED) -->
+      <div class="lg:col-span-5 min-h-0 -mt-10">
+        <div
+  id="ssc-panel"
+  class="rounded-2xl border border-slate-200 bg-white p-6 sm:p-7 shadow-sm relative overflow-hidden h-[100%]"
+>
+          <div class="relative h-full min-h-0 overflow-auto">
+            <!-- INTRO layer -->
+            <div id="ssc-intro" class="absolute inset-0 transition-opacity duration-150 opacity-100 pr-2">
+              <p class="text-xs font-semibold tracking-widest text-slate-500">OVERVIEW</p>
+              <h3 class="mt-2 text-xl font-semibold text-slate-900">
+                Satellite Crop Identification
+              </h3>
+              <p class="mt-3 text-sm leading-relaxed text-slate-600">
+                Satellite crop identification has many use cases; crop identification, yield estimation,
+                and even crop management — but for now we are focusing on crop identification.
+              </p>
+
+              <div class="mt-6 grid grid-cols-3 gap-4">
+                <div class="rounded-xl border border-slate-200 bg-slate-50 px-4 py-4 text-center">
+                  <div class="text-3xl font-semibold tracking-tight text-slate-900">
+                    <span class="ssc-counter" data-target="80" data-suffix="%">0</span>
+                  </div>
+                  <div class="mt-1 text-[11px] font-semibold tracking-widest text-slate-500">EFFICIENCY</div>
+                </div>
+
+                <div class="rounded-xl border border-slate-200 bg-slate-50 px-4 py-4 text-center">
+                  <div class="text-3xl font-semibold tracking-tight text-slate-900">
+                    <span class="ssc-counter" data-target="23" data-suffix="x">0</span>
+                  </div>
+                  <div class="mt-1 text-[11px] font-semibold tracking-widest text-slate-500">FASTER</div>
+                </div>
+
+                <div class="rounded-xl border border-slate-200 bg-slate-50 px-4 py-4 text-center">
+                  <div class="text-3xl font-semibold tracking-tight text-slate-900">
+                    <span class="ssc-counter" data-target="45" data-suffix="x">0</span>
+                  </div>
+                  <div class="mt-1 text-[11px] font-semibold tracking-widest text-slate-500">COST SAVING</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- DETAIL layer -->
+            <div id="ssc-detail" class="absolute inset-0 transition-opacity duration-150 opacity-0 pointer-events-none pr-2">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <p class="text-xs font-semibold tracking-widest text-slate-500">IN-DEPTH</p>
+
+                  <div class="mt-4 flex justify-center">
+                    <img
+                      id="ssc-detail-icon"
+                      src=""
+                      alt="Step icon"
+                      class="h-16 w-16 object-contain"
+                      onerror="this.style.opacity='0.25'; this.style.filter='grayscale(1)';"
+                    />
+                  </div>
+
+                  <h3 id="ssc-title" class="mt-4 text-xl font-semibold">Field Mapping & Plot Registration</h3>
+                  <p id="ssc-desc" class="mt-3 text-sm leading-relaxed text-slate-600">
+                    Register known land plots, link them to farmers and hubs, and build the geo-referenced base map used by the engine.
+                  </p>
+                </div>
+
+                <span
+                  id="ssc-step"
+                  class="shrink-0 rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-700"
+                >Step 1 / 8</span>
+              </div>
+
+              <div class="mt-6">
+                <div class="text-sm font-semibold text-slate-800">What happens here</div>
+                <ul id="ssc-bullets" class="mt-3 space-y-2 text-sm text-slate-600"></ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile step list (UNCHANGED) -->
+        <div class="mt-5 rounded-2xl border border-slate-200 bg-white p-5 lg:hidden">
+          <div class="text-sm font-semibold text-slate-800">Steps</div>
+          <div id="ssc-mobile-list" class="mt-3 grid gap-2"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ✅ SINGLE JS BLOCK ONLY -->
+  <script>
+    (function () {
+      const section = document.getElementById("shunah-satellite-circle");
+      if (!section) return;
+
+      const steps = [
+        { short: "Plot Mapping", title: "Field Mapping & Plot Registration", desc: "Register known land plots, link them to farmers and hubs, and build the geo-referenced base map used by the engine.", icon: "assets/ssc-step-1.jpg", bullets: ["Register plots + ownership associations", "Capture GPS boundaries", "Build baseline plot index"] },
+        { short: "Coordination", title: "Coordinate Collection", desc: "Coordinate field agents and known plot owners to confirm target-crop intent and prepare verification visits.", icon: "assets/ssc-step-2.jpg", bullets: ["Assign field agents by region", "Confirm crop intent", "Schedule verification"] },
+        { short: "Satellite", title: "Scheduled Satellite Image Analysis", desc: "Capture satellite images of target plots periodically to monitor pattern changes across growth stages.", icon: "assets/ssc-step-3.jpg", bullets: ["Schedule image windows", "Index imagery by time", "Normalize for analysis"] },
+        { short: "AI Detection", title: "AI Crop Detection", desc: "Computer vision models detect and classify the target crop with confidence scoring per plot.", icon: "assets/ssc-step-4.jpg", bullets: ["Detect target crop", "Assign confidence score", "Flag uncertainty"] },
+        { short: "Verification", title: "Field Verification", desc: "On-ground verification confirms detections and transforms model predictions into trusted ground-truth data.", icon: "assets/ssc-step-5.jpg", bullets: ["Verify flagged plots", "Confirm crop + stage", "Collect ground evidence"] },
+        { short: "Feedback", title: "Feedback Integration", desc: "Integrate field corrections and discrepancies into the dataset to continuously improve data quality.", icon: "assets/ssc-step-6.jpg", bullets: ["Log corrections", "Update metadata", "Prepare clean datasets"] },
+        { short: "Training", title: "Model Training", desc: "Retrain the model using integrated feedback to increase accuracy across regions and seasons.", icon: "assets/ssc-step-7.jpg", bullets: ["Retrain on new data", "Validate performance", "Deploy improved version"] },
+        { short: "Access", title: "User Access", desc: "Provide controlled dashboard access to stakeholders with live crop visibility and performance insights.", icon: "assets/ssc-step-8.jpg", bullets: ["Stakeholder dashboards", "Confidence visibility", "Access control"] }
+      ];
+
+      const stage = document.getElementById("ssc-stage");
+      const nodesWrap = document.getElementById("ssc-nodes");
+      const arc = document.getElementById("ssc-arc");
+
+      const intro = document.getElementById("ssc-intro");
+      const detail = document.getElementById("ssc-detail");
+
+      const tTitle = document.getElementById("ssc-title");
+      const tDesc = document.getElementById("ssc-desc");
+      const tStep = document.getElementById("ssc-step");
+      const bullets = document.getElementById("ssc-bullets");
+      const mobileList = document.getElementById("ssc-mobile-list");
+
+      const pulse = document.getElementById("ssc-pulse");
+      const pulse2 = document.getElementById("ssc-pulse2");
+      const centerImg = document.getElementById("ssc-center-img");
+      const detailIcon = document.getElementById("ssc-detail-icon");
+
+      const counters = Array.from(section.querySelectorAll(".ssc-counter"));
+
+      const dashTotal = 226.2;
+      const nodeRadiusPercent = 36;
+      const nodeCount = steps.length;
+
+      let active = 0;
+      let autoplay = false;
+      let timer = null;
+      let countersRan = false;
+
+      const isReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      function showIntro() {
+        intro.classList.add("opacity-100");
+        intro.classList.remove("opacity-0");
+
+        detail.classList.add("opacity-0", "pointer-events-none");
+        detail.classList.remove("opacity-100");
+      }
+
+      function showDetail() {
+        intro.classList.add("opacity-0");
+        intro.classList.remove("opacity-100");
+
+        detail.classList.add("opacity-100");
+        detail.classList.remove("opacity-0", "pointer-events-none");
+      }
+
+      showIntro();
+
+      function animateCounter(el, to, suffix) {
+        if (isReducedMotion) {
+          el.textContent = String(to) + (suffix || "");
+          return;
+        }
+        const duration = 900;
+        const start = performance.now();
+        const from = 0;
+
+        function tick(now) {
+          const p = Math.min(1, (now - start) / duration);
+          const eased = 1 - Math.pow(1 - p, 3);
+          const val = Math.round(from + (to - from) * eased);
+          el.textContent = String(val) + (suffix || "");
+          if (p < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      }
+
+      function runCountersOnce() {
+        if (countersRan) return;
+        countersRan = true;
+        counters.forEach((el) => {
+          const to = Number(el.getAttribute("data-target") || "0");
+          const suffix = el.getAttribute("data-suffix") || "";
+          animateCounter(el, to, suffix);
+        });
+      }
+
+      function buildBullets(list) {
+        bullets.innerHTML = "";
+        list.forEach((txt) => {
+          const li = document.createElement("li");
+          li.className = "flex gap-2";
+          li.innerHTML =
+            '<span class="mt-2 h-1.5 w-1.5 rounded-full bg-[#0E2A47]"></span>' +
+            "<span>" + txt + "</span>";
+          bullets.appendChild(li);
+        });
+      }
+
+      function updatePanelOnly(i) {
+        const s = steps[i];
+        tTitle.textContent = s.title;
+        tDesc.textContent = s.desc;
+        tStep.textContent = "Step " + (i + 1) + " / " + nodeCount;
+        buildBullets(s.bullets);
+
+        // ✅ Right panel icon on hover
+        if (detailIcon) detailIcon.src = s.icon;
+      }
+
+      function setArcProgress(stepIndex, instant) {
+        const progress = stepIndex / nodeCount;
+        const offset = dashTotal * (1 - progress);
+
+        if (instant) {
+          arc.classList.remove("transition-[stroke-dashoffset]", "duration-700", "ease-out");
+          arc.style.strokeDashoffset = String(offset);
+          arc.getBoundingClientRect();
+          arc.classList.add("transition-[stroke-dashoffset]", "duration-700", "ease-out");
+        } else {
+          arc.style.strokeDashoffset = String(offset);
+        }
+      }
+
+      function blinkCenter() {
+        if (!centerImg || isReducedMotion) return;
+        centerImg.animate(
+          [
+            { transform: "scale(1)", opacity: 0.94 },
+            { transform: "scale(1.03)", opacity: 1 },
+            { transform: "scale(1)", opacity: 0.94 }
+          ],
+          { duration: 520, easing: "ease-in-out" }
+        );
+      }
+
+      function updateAutoplayVisuals(i) {
+        setArcProgress(i, false);
+
+        if (!isReducedMotion) {
+          pulse.animate(
+            [
+              { transform: "scale(0.98)", opacity: 0.0 },
+              { transform: "scale(1.06)", opacity: 0.30 },
+              { transform: "scale(1.10)", opacity: 0.0 }
+            ],
+            { duration: 900, easing: "ease-out" }
+          );
+          pulse2.animate(
+            [
+              { transform: "scale(0.98)", opacity: 0.0 },
+              { transform: "scale(1.06)", opacity: 0.20 },
+              { transform: "scale(1.10)", opacity: 0.0 }
+            ],
+            { duration: 1100, easing: "ease-out" }
+          );
+        }
+
+        blinkCenter();
+      }
+
+      function setActive(i, isAutoplayTick) {
+        const prev = active;
+        active = i;
+
+        const btns = nodesWrap.querySelectorAll("button[data-step]");
+        btns.forEach((b) => {
+          const idx = Number(b.getAttribute("data-step"));
+          const isOn = idx === i;
+
+          const ring = b.querySelector(".ssc-ring");
+          const dot = b.querySelector(".ssc-dot");
+          const label = b.querySelector(".ssc-label");
+          const icon = b.querySelector(".ssc-icon");
+
+          if (isOn) {
+            ring.className =
+              "ssc-ring absolute inset-0 rounded-full border border-slate-200 bg-white shadow-sm outline outline-2 outline-[#0E2A47] outline-offset-0";
+            dot.className =
+              "ssc-dot absolute -right-2 -top-2 grid h-6 w-6 place-items-center rounded-full bg-[#0E2A47] text-[10px] font-semibold text-white";
+            label.className =
+              "ssc-label mt-2 max-w-[9rem] text-center text-xs font-semibold text-slate-900";
+            if (icon) icon.classList.add("ssc-pulse-on");
+          } else {
+            ring.className =
+              "ssc-ring absolute inset-0 rounded-full border border-slate-200 bg-white";
+            dot.className =
+              "ssc-dot absolute -right-2 -top-2 grid h-6 w-6 place-items-center rounded-full bg-slate-200 text-[10px] font-semibold text-slate-700";
+            label.className =
+              "ssc-label mt-2 max-w-[9rem] text-center text-xs font-semibold text-white sm:block hidden";
+            if (icon) icon.classList.remove("ssc-pulse-on");
+          }
+        });
+
+        if (isAutoplayTick && prev === nodeCount - 1 && i === 0) {
+          setArcProgress(0, true);
+        }
+
+        updateAutoplayVisuals(i);
+      }
+
+      function nodeAngle(i) {
+        const start = -90;
+        return start + (360 / nodeCount) * i;
+      }
+
+      function buildNodes() {
+        nodesWrap.innerHTML = "";
+        for (let i = 0; i < nodeCount; i++) {
+          const angle = nodeAngle(i);
+          const rad = (Math.PI / 180) * angle;
+          const x = 50 + nodeRadiusPercent * Math.cos(rad);
+          const y = 50 + nodeRadiusPercent * Math.sin(rad);
+
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.setAttribute("data-step", String(i));
+          btn.className = "group absolute -translate-x-1/2 -translate-y-1/2 focus:outline-none";
+          btn.style.left = x + "%";
+          btn.style.top = y + "%";
+          btn.setAttribute("aria-label", steps[i].title);
+
+          btn.innerHTML = `
+            <span class="relative block h-14 w-14 sm:h-16 sm:w-16">
+              <span class="ssc-ring absolute inset-0 rounded-full border border-slate-200 bg-white"></span>
+
+              <span class="ssc-dot absolute -right-2 -top-2 grid h-6 w-6 place-items-center rounded-full bg-slate-200 text-[10px] font-semibold text-slate-700">
+                ${i + 1}
+              </span>
+
+              <span class="absolute inset-0 grid place-items-center">
+                <img
+                  class="ssc-icon h-[70%] w-[70%] object-contain opacity-90"
+                  src="${steps[i].icon}"
+                  alt="${steps[i].short} icon"
+                  onerror="this.style.opacity='0.25'; this.style.filter='grayscale(1)';"
+                />
+              </span>
+            </span>
+
+            <span class="ssc-label mt-2 hidden max-w-[9rem] text-center text-xs font-semibold text-slate-600 sm:block">
+              ${steps[i].short}
+            </span>
+          `;
+
+          btn.addEventListener("mouseenter", () => {
+            showDetail();
+            updatePanelOnly(i);
+          });
+
+          btn.addEventListener("click", () => {
+            if (!window.matchMedia("(hover: hover)").matches) {
+              showDetail();
+              updatePanelOnly(i);
+              const panel = document.getElementById("ssc-panel");
+              if (panel) panel.scrollIntoView({ behavior: isReducedMotion ? "auto" : "smooth", block: "start" });
+            }
+          });
+
+          nodesWrap.appendChild(btn);
+        }
+      }
+
+      function buildMobileList() {
+        if (!mobileList) return;
+        mobileList.innerHTML = "";
+        steps.forEach((s, i) => {
+          const b = document.createElement("button");
+          b.type = "button";
+          b.className =
+            "flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 text-left text-sm font-semibold text-slate-800 hover:bg-slate-50";
+          b.innerHTML = `
+            <span class="flex items-center gap-3">
+              <span class="grid h-8 w-8 place-items-center rounded-lg bg-slate-50 text-xs font-semibold text-slate-700">${i + 1}</span>
+              <span>${s.title}</span>
+            </span>
+            <span class="text-slate-400">›</span>
+          `;
+          b.addEventListener("click", () => {
+            showDetail();
+            updatePanelOnly(i);
+            const panel = document.getElementById("ssc-panel");
+            if (panel) panel.scrollIntoView({ behavior: isReducedMotion ? "auto" : "smooth", block: "start" });
+          });
+          mobileList.appendChild(b);
+        });
+      }
+
+      if (stage) {
+        stage.addEventListener("mouseleave", () => {
+          if (window.matchMedia("(hover: hover)").matches) {
+            showIntro();
+            runCountersOnce();
+          }
+        });
+      }
+
+      function startAutoplay() {
+        if (isReducedMotion) return;
+        autoplay = true;
+        let i = active;
+        timer = setInterval(() => {
+          const next = (i + 1) % nodeCount;
+          setActive(next, true);
+          i = next;
+        }, 1800);
+      }
+
+      function stopAutoplay() {
+        autoplay = false;
+        if (timer) clearInterval(timer);
+        timer = null;
+      }
+
+      function setupScrollTrigger() {
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) {
+                if (!autoplay) startAutoplay();
+                runCountersOnce();
+              } else {
+                stopAutoplay();
+                if (window.matchMedia("(hover: hover)").matches) showIntro();
+              }
+            });
+          },
+          { threshold: 0.35 }
+        );
+        io.observe(section);
+      }
+
+      buildNodes();
+      buildMobileList();
+
+      setArcProgress(0, true);
+      setActive(0, true);
+
+      setupScrollTrigger();
+    })();
+  </script>
+</section>
+
+<section id="shunah-cav-hex" class="relative h-[100dvh] overflow-hidden bg-white text-slate-900">
+  <div class="mx-auto max-w-7xl px-6 h-full grid grid-rows-[auto_1fr_auto] gap-y-8 pt-10 lg:pt-12 pb-0">
+
+    <!-- TOP (title + image placeholder) -->
+    <div class="grid grid-cols-12 gap-8 items-center">
+      <div class="col-span-12 lg:col-span-6">
+        <p class="text-sm font-semibold tracking-widest text-slate-500">TECHNOLOGY</p>
+        <h2 class="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl text-[#0E2A47]">
+          Computer Aided Vision
+        </h2>
+        <p class="mt-3 text-base leading-relaxed text-slate-600 max-w-xl">
+          We use satellite imagery and computer vision to detect crops, verify on-ground reality, and continuously
+          retrain models using real feedback — transforming field signals into trusted intelligence.
+        </p>
+      </div>
+
+      <div class="col-span-12 lg:col-span-6">
+        <!-- image placeholder -->
+        <div class="h-[180px] sm:h-[220px] lg:h-[240px] flex items-center justify-center">
+  <img 
+    src="images/CAD.png" 
+    alt="Computer Aided Vision Illustration"
+    class="w-full h-full object-contain"
+  />
+</div>
+      </div>
+    </div>
+
+    <!-- MIDDLE (8 hexagons row) -->
+    <div class="min-h-0 flex items-end justify-center pb-0">
+      <!-- This wrapper will be auto-scaled down (never overflow) -->
+      <div id="hexFitOuter" class="w-full">
+        <div id="hexFitInner" class="relative mx-auto">
+          <!-- ARROWS LAYER (always visible) -->
+          <svg
+            id="hexArrows"
+            class="pointer-events-none absolute inset-0 w-full h-full"
+            aria-hidden="true"
+          >
+            <defs>
+              <marker
+                id="arrowHead"
+                viewBox="0 0 10 10"
+                refX="9"
+                refY="5"
+                markerWidth="7"
+                markerHeight="7"
+                orient="auto-start-reverse"
+              >
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#0E2A47"></path>
+              </marker>
+            </defs>
+          </svg>
+
+          <!-- 8 hexes in a single row (never wraps) -->
+          <div id="hexRow" class="relative flex flex-nowrap items-center justify-center gap-6">
+            <!-- Hex buttons inserted by JS -->
+          </div>
+
+          <!-- labels under -->
+          <div id="hexLabels" class="mt-4 flex flex-nowrap items-start justify-center gap-6 text-center">
+            <!-- labels inserted by JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTTOM (purple panel) -->
+    <div>
+      <div class="relative left-1/2 right-1/2 -mx-[50vw] w-screen bg-[#0E2A47] text-white">
+        <div class="mx-auto max-w-7xl px-6 py-4 sm:px-8 sm:py-4 relative min-h-[110px]">
+
+          <!-- Default panel (no hover) -->
+          <div id="cavDefault"
+  class="absolute inset-0 px-6 py-4 sm:px-8 sm:py-4
+         transition-[opacity,transform,filter] duration-1800 ease-in-out
+         opacity-100 translate-y-0 blur-0">
+  <div class="h-full flex items-center justify-center">
+    <!-- centered counters only -->
+    <div class="grid grid-cols-3 gap-3 sm:gap-4 w-full max-w-md mx-auto">
+      <div class="rounded-xl bg-white/10 border border-white/15 px-3 py-3 text-center">
+        <div class="text-2xl sm:text-3xl font-semibold">
+          <span class="cavCounter" data-target="180" data-suffix="%">0</span>
+        </div>
+        <div class="mt-1 text-[11px] font-semibold tracking-widest text-white/70">EFFICIENCY</div>
+      </div>
+
+      <div class="rounded-xl bg-white/10 border border-white/15 px-3 py-3 text-center">
+        <div class="text-2xl sm:text-3xl font-semibold">
+          <span class="cavCounter" data-target="23" data-suffix="x">0</span>
+        </div>
+        <div class="mt-1 text-[11px] font-semibold tracking-widest text-white/70">TIME SAVED</div>
+      </div>
+
+      <div class="rounded-xl bg-white/10 border border-white/15 px-3 py-3 text-center">
+        <div class="text-2xl sm:text-3xl font-semibold">
+          <span class="cavCounter" data-target="51" data-suffix="x">0</span>
+        </div>
+        <div class="mt-1 text-[11px] font-semibold tracking-widest text-white/70">COST SAVING</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+          <!-- Hover detail panel -->
+          <div id="cavHover"
+  class="absolute inset-0 px-6 py-4 sm:px-8 sm:py-4
+         transition-[opacity,transform,filter] duration-1800 ease-in-out delay-175
+         opacity-0 pointer-events-none translate-y-1 blur-[1px]">
+  <div class="h-full flex items-center justify-center">
+    <div class="flex items-center justify-center gap-5 max-w-5xl w-full text-center">
+      
+      <!-- icon far left -->
+      <div class="h-14 w-14 rounded-xl bg-white/10 border border-white/15 grid place-items-center shrink-0">
+        <div id="hoverIcon" class="h-8 w-8 text-white"></div>
+      </div>
+
+      <!-- left block: IN DEPTH + step name -->
+      <div class="shrink-0 text-center">
+        <div class="text-xs font-semibold tracking-widest text-white/70">IN DEPTH</div>
+        <div id="hoverTitle" class="mt-2 text-lg sm:text-xl font-semibold leading-tight">
+          Step title
+        </div>
+      </div>
+
+      <!-- short vertical divider (with top/bottom space) -->
+     <div class="mx-3 w-[2px] bg-white/50 h-14 sm:h-16 rounded-full"></div>
+
+      <!-- right: explanation (smaller text) -->
+      <div class="min-w-0 text-center">
+  <p id="hoverDesc" class="text-sm text-white/75 leading-relaxed max-w-3xl mx-auto">
+          Step description
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
     </div>
 
   </div>
-</nav>
 
-<!-- HERO -->
-<section id="focus" class="relative overflow-hidden min-h-[calc(100dvh-3rem)] bg-[#0b1a2d]">
-  <div class="absolute inset-0">
-    <img src="images/small-farmers.jpg" alt="Small-scale farmers" class="h-full w-full object-cover" />
-    <div class="absolute inset-0 bg-[#0b1a2d]/55"></div>
-    <div class="absolute inset-0 bg-gradient-to-br from-[#18a34a]/20 via-transparent to-transparent"></div>
+  <script>
+    (function () {
+      const root = document.getElementById("shunah-cav-hex");
+      if (!root) return;
+
+      // ====== STEP DATA ======
+      const steps = [
+        { short: "Plot Mapping", title: "Field Mapping & Plot Registration", desc: "Register land plots and build a geo-referenced base map for scanning.", icon: iconPin() },
+        { short: "Coordination", title: "Coordinate Collection", desc: "Coordinate field agents and confirm target plots before analysis windows.", icon: iconGrid() },
+        { short: "Satellite", title: "Scheduled Image Analysis", desc: "Capture periodic satellite imagery and normalize it for consistent detection.", icon: iconImage() },
+        { short: "AI Detection", title: "AI Crop Detection", desc: "Detect and classify crops with confidence scoring per plot.", icon: iconChip() },
+        { short: "Verification", title: "Field Verification", desc: "Verify detections on the ground and produce trusted ground-truth labels.", icon: iconCheck() },
+        { short: "Feedback", title: "Feedback Integration", desc: "Integrate corrections and discrepancies into the dataset continuously.", icon: iconChat() },
+        { short: "Training", title: "Model Training", desc: "Retrain models on new data to improve accuracy across regions and seasons.", icon: iconCycle() },
+        { short: "Access", title: "User Access", desc: "Provide stakeholder dashboards with controlled access and live insights.", icon: iconUser() }
+      ];
+
+      const hexRow = document.getElementById("hexRow");
+      const hexLabels = document.getElementById("hexLabels");
+      const arrowsSvg = document.getElementById("hexArrows");
+
+      const cavDefault = document.getElementById("cavDefault");
+      const cavHover = document.getElementById("cavHover");
+      const hoverIcon = document.getElementById("hoverIcon");
+      const hoverTitle = document.getElementById("hoverTitle");
+      const hoverDesc = document.getElementById("hoverDesc");
+
+      const counters = Array.from(root.querySelectorAll(".cavCounter"));
+      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      // ====== Build hex row ======
+      function buildHexes() {
+        hexRow.innerHTML = "";
+        hexLabels.innerHTML = "";
+
+        steps.forEach((s, i) => {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "relative cavHexBtn shrink-0 focus:outline-none";
+          btn.setAttribute("data-i", String(i));
+          btn.id = "cav-hex-" + i;
+          btn.setAttribute("aria-label", s.title);
+
+          btn.innerHTML = `
+            <div class="relative">
+              <svg class="cavHexSvg" width="72" height="72" viewBox="0 0 100 100" aria-hidden="true">
+                <polygon class="cavHexPoly" points="25,10 75,10 95,50 75,90 25,90 5,50"></polygon>
+              </svg>
+
+              <div class="absolute inset-0 grid place-items-center">
+                <div class="cavIconWrap h-9 w-9 text-[#0E2A47]">${s.icon}</div>
+              </div>
+
+              <div class="absolute -right-2 -top-2 h-7 w-7 rounded-full grid place-items-center text-[11px] font-semibold
+                          bg-slate-200 text-slate-700 cavStepDot">
+                ${i + 1}
+              </div>
+            </div>
+          `;
+
+          btn.addEventListener("mouseenter", () => showHover(i));
+          btn.addEventListener("mouseleave", () => hideHover());
+          btn.addEventListener("focus", () => showHover(i));
+          btn.addEventListener("blur", () => hideHover());
+
+          hexRow.appendChild(btn);
+
+          const lab = document.createElement("div");
+          lab.className = "shrink-0 w-[72px] text-xs font-semibold text-slate-600";
+          lab.textContent = s.short;
+          hexLabels.appendChild(lab);
+        });
+      }
+
+      // ====== Hover panel toggle ======
+      function showHover(i) {
+
+  if (hideTimeout) {
+    clearTimeout(hideTimeout);
+    hideTimeout = null;
+  }
+
+  const s = steps[i];
+
+  // Fade OUT default
+  cavDefault.classList.remove("opacity-100", "translate-y-0", "blur-0");
+  cavDefault.classList.add("opacity-0", "-translate-y-1", "blur-[1px]");
+
+  // Fade IN hover
+  cavHover.classList.remove("opacity-0", "pointer-events-none", "translate-y-1", "blur-[1px]");
+  cavHover.classList.add("opacity-100", "translate-y-0", "blur-0");
+
+  hoverIcon.innerHTML = s.icon;
+  hoverTitle.textContent = s.title;
+  hoverDesc.textContent = s.desc;
+}
+
+function hideHover() {
+
+  hideTimeout = setTimeout(() => {
+
+    // Fade IN default
+    cavDefault.classList.remove("opacity-0", "-translate-y-1", "blur-[1px]");
+    cavDefault.classList.add("opacity-100", "translate-y-0", "blur-0");
+
+    // Fade OUT hover
+    cavHover.classList.remove("opacity-100", "translate-y-0", "blur-0");
+    cavHover.classList.add("opacity-0", "pointer-events-none", "translate-y-1", "blur-[1px]");
+
+  }, 550); // delay time in milliseconds
+}
+
+      // ====== Counters (once) ======
+      function animateCounter(el, to, suffix) {
+        if (reduced) { el.textContent = String(to) + (suffix || ""); return; }
+        const dur = 900, start = performance.now();
+        function tick(now) {
+          const p = Math.min(1, (now - start) / dur);
+          const eased = 1 - Math.pow(1 - p, 3);
+          const val = Math.round(to * eased);
+          el.textContent = String(val) + (suffix || "");
+          if (p < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      }
+      let countersRan = false;
+      function runCountersOnce() {
+        if (countersRan) return;
+        countersRan = true;
+        counters.forEach(el => animateCounter(el, Number(el.dataset.target || 0), el.dataset.suffix || ""));
+      }
+
+      // ====== Repeating sequential “clarity” animation ======
+      let active = 0, timer = null;
+      let hideTimeout = null;
+      function setActiveHex(i) {
+        const btns = root.querySelectorAll(".cavHexBtn");
+        btns.forEach((b, idx) => {
+          const poly = b.querySelector(".cavHexPoly");
+          const dot = b.querySelector(".cavStepDot");
+          if (idx === i) {
+            poly.style.opacity = "1";
+            poly.style.stroke = "#0E2A47";
+            poly.style.strokeWidth = "2.5";
+            dot.className = dot.className.replace("bg-slate-200 text-slate-700", "bg-[#0E2A47] text-white");
+          } else {
+            poly.style.opacity = "0.35";
+            poly.style.stroke = "rgba(15,23,42,0.22)";
+            poly.style.strokeWidth = "2";
+            dot.className = dot.className.replace("bg-[#0E2A47] text-white", "bg-slate-200 text-slate-700");
+          }
+        });
+      }
+      function startLoop() {
+        if (reduced) { setActiveHex(0); return; }
+        if (timer) return;
+        setActiveHex(active);
+        timer = setInterval(() => {
+          active = (active + 1) % steps.length;
+          setActiveHex(active);
+        }, 900);
+      }
+
+      // ====== Force “one row, no overflow” via auto-scale ======
+      const outer = document.getElementById("hexFitOuter");
+      const inner = document.getElementById("hexFitInner");
+
+      function fitHexRow() {
+        if (!outer || !inner) return;
+        inner.style.transform = "scale(1)";
+        inner.style.transformOrigin = "center";
+        const maxW = outer.clientWidth;
+        const naturalW = inner.scrollWidth;
+        const scale = naturalW > maxW ? (maxW / naturalW) : 1;
+        inner.style.transform = "scale(" + scale.toFixed(4) + ")";
+      }
+
+      // ====== Draw arrows between hexes (1->2->...->8, no arrow after 8) ======
+      function drawArrows() {
+  if (!arrowsSvg || !inner) return;
+
+  // clear old lines (keep defs)
+  const defs = arrowsSvg.querySelector("defs");
+  arrowsSvg.innerHTML = "";
+  if (defs) arrowsSvg.appendChild(defs);
+
+  const innerRect = inner.getBoundingClientRect();
+  const w = innerRect.width;
+  const h = innerRect.height;
+
+  arrowsSvg.setAttribute("viewBox", `0 0 ${w} ${h}`);
+  arrowsSvg.setAttribute("preserveAspectRatio", "none");
+
+  // --- helpers ---
+  const cross = (a, b) => a.x * b.y - a.y * b.x;
+
+  // Ray from origin (0,0) in direction d intersects segment a->b
+  function raySegHit(d, a, b) {
+    const s = { x: b.x - a.x, y: b.y - a.y };
+    const denom = cross(d, s);
+    if (Math.abs(denom) < 1e-6) return null; // parallel
+
+    // origin = (0,0)
+    const t = cross(a, s) / denom;     // along ray
+    const u = cross(a, d) / denom;     // along segment
+
+    if (t >= 0 && u >= 0 && u <= 1) return t;
+    return null;
+  }
+
+  // Get boundary intersection point on a flat-top hex for a given direction
+  function hexBoundaryPoint(svgEl, dir) {
+    const r = svgEl.getBoundingClientRect();
+    const hw = r.width / 2;
+    const hh = r.height / 2;
+
+    // flat-top regular hex vertices in LOCAL coords (center at 0,0)
+    const V = [
+      { x:  hw,     y:   0 },
+      { x:  hw/2,   y: -hh },
+      { x: -hw/2,   y: -hh },
+      { x: -hw,     y:   0 },
+      { x: -hw/2,   y:  hh },
+      { x:  hw/2,   y:  hh },
+    ];
+
+    let bestT = Infinity;
+    for (let i = 0; i < 6; i++) {
+      const a = V[i];
+      const b = V[(i + 1) % 6];
+      const t = raySegHit(dir, a, b);
+      if (t !== null && t < bestT) bestT = t;
+    }
+
+    // fallback (shouldn't happen)
+    if (!isFinite(bestT)) bestT = Math.min(hw, hh);
+
+    return { x: dir.x * bestT, y: dir.y * bestT };
+  }
+
+  // Collect centers + svg refs for each hex
+  const nodes = [];
+  for (let i = 0; i < steps.length; i++) {
+    const btn = document.getElementById("cav-hex-" + i);
+    if (!btn) continue;
+    const svg = btn.querySelector(".cavHexSvg");
+    if (!svg) continue;
+
+    const br = btn.getBoundingClientRect();
+    const cx = (br.left + br.right) / 2 - innerRect.left;
+    const cy = (br.top + br.bottom) / 2 - innerRect.top;
+
+    nodes.push({ cx, cy, svg });
+  }
+
+  // Draw arrows between consecutive hexes using true boundary intersections
+  for (let i = 0; i < nodes.length - 1; i++) {
+    const A = nodes[i];
+    const B = nodes[i + 1];
+
+    const dx = B.cx - A.cx;
+    const dy = B.cy - A.cy;
+    const len = Math.max(1, Math.hypot(dx, dy));
+    const dir = { x: dx / len, y: dy / len };
+    const dirBack = { x: -dir.x, y: -dir.y };
+
+    const aLocal = hexBoundaryPoint(A.svg, dir);
+    const bLocal = hexBoundaryPoint(B.svg, dirBack);
+
+    const x1 = A.cx + aLocal.x;
+    const y1 = A.cy + aLocal.y;
+    const x2 = B.cx + bLocal.x;
+    const y2 = B.cy + bLocal.y;
+
+    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    line.setAttribute("x1", x1);
+    line.setAttribute("y1", y1);
+    line.setAttribute("x2", x2);
+    line.setAttribute("y2", y2);
+    line.setAttribute("stroke", "#0E2A47");
+    line.setAttribute("stroke-width", "1.5"); // small
+    line.setAttribute("stroke-linecap", "round");
+    line.setAttribute("marker-end", "url(#arrowHead)");
+    arrowsSvg.appendChild(line);
+  }
+}
+
+      // ====== Minimal inline styles for hex visuals ======
+      function injectMiniStyles() {
+        if (document.getElementById("cavHexStyles")) return;
+        const st = document.createElement("style");
+        st.id = "cavHexStyles";
+        st.textContent = `
+          .cavHexSvg { display:block; }
+          .cavHexPoly {
+            fill: #ffffff;
+            stroke: rgba(15,23,42,0.22);
+            stroke-width: 2;
+            opacity: 0.35;
+            transition: opacity 220ms ease, stroke 220ms ease, stroke-width 220ms ease;
+            filter: drop-shadow(0 2px 2px rgba(15,23,42,0.08));
+          }
+        `;
+        document.head.appendChild(st);
+      }
+
+      // ====== Tiny inline SVG icons ======
+      function iconPin(){return `
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 21s7-4.5 7-10a7 7 0 0 0-14 0c0 5.5 7 10 7 10z"/>
+          <circle cx="12" cy="11" r="2"/>
+        </svg>`;}
+      function iconGrid(){return `
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z"/>
+        </svg>`;}
+      function iconImage(){return `
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="5" width="18" height="14" rx="2"/>
+          <path d="M8 11l2 2 4-4 5 6"/>
+          <circle cx="8" cy="9" r="1"/>
+        </svg>`;}
+      function iconChip(){return `
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="7" y="7" width="10" height="10" rx="2"/>
+          <path d="M9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"/>
+        </svg>`;}
+      function iconCheck(){return `
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 6L9 17l-5-5"/>
+        </svg>`;}
+      function iconChat(){return `
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/>
+          <path d="M8 10h8M8 14h6"/>
+        </svg>`;}
+      function iconCycle(){return `
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12a9 9 0 1 1-2.64-6.36"/>
+          <path d="M21 3v6h-6"/>
+        </svg>`;}
+      function iconUser(){return `
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 21a8 8 0 0 0-16 0"/>
+          <circle cx="12" cy="8" r="4"/>
+        </svg>`;}
+
+      // ====== Init ======
+      injectMiniStyles();
+      buildHexes();
+      hideHover();
+      runCountersOnce();
+      startLoop();
+
+      // fit then draw arrows (critical order)
+      fitHexRow();
+      // wait one frame so layout is final, then draw arrows
+      requestAnimationFrame(() => drawArrows());
+
+      window.addEventListener("resize", () => {
+        fitHexRow();
+        requestAnimationFrame(() => drawArrows());
+      });
+
+      // if fonts/icons load later, re-draw once
+      window.addEventListener("load", () => requestAnimationFrame(() => drawArrows()));
+    })();
+  </script>
+</section>
+<section
+  id="iot-network-circle"
+  class="relative text-slate-900 bg-white overflow-hidden"
+  style="height: calc(100dvh - 3rem);"
+>
+  <div
+    class="pointer-events-none absolute inset-0 opacity-100"
+    style="
+      background:
+        radial-gradient(circle at 30% 50%, rgba(14,165,233,0.05) 0%, transparent 28%),
+        radial-gradient(circle at 50% 52%, rgba(14,165,233,0.06) 0%, transparent 18%),
+        radial-gradient(circle at 70% 50%, rgba(15,23,42,0.03) 0%, transparent 25%);
+    "
+  ></div>
+
+  <div
+    class="relative z-10 mx-auto max-w-7xl px-6 h-full
+           flex flex-col min-h-0
+           pt-4 sm:pt-5 pb-4 sm:pb-5 gap-4 sm:gap-5"
+  >
+    <div class="shrink-0 max-w-3xl">
+      <h2 class="text-3xl font-semibold tracking-tight sm:text-4xl text-[#0E2A47]">
+        IoT Orchestrating Crop Flow
+      </h2>
+
+      <p class="mt-2 text-base leading-relaxed text-slate-600">
+        Processing, storage, transport, scales, and freight — all connected as one intelligent network.
+      </p>
+    </div>
+
+    <div class="flex-1 min-h-0 grid gap-6 lg:grid-cols-12 lg:gap-8 items-stretch">
+      <!-- Left side -->
+      <div class="lg:col-span-7 min-h-0">
+        <div class="relative h-full min-h-0 flex items-center justify-center">
+          <div
+            id="iot-stage"
+            class="relative aspect-square w-full"
+            style="max-width:min(560px,100%); max-height:min(560px,100%);"
+          >
+            <div
+              id="iot-stage-glow"
+              class="absolute inset-[-8%] rounded-full pointer-events-none z-0"
+              style="
+                background: radial-gradient(
+                  circle at center,
+                  rgba(14,165,233,0.14) 0%,
+                  rgba(14,165,233,0.06) 24%,
+                  rgba(14,165,233,0.02) 42%,
+                  transparent 70%
+                );
+                filter: blur(3px);
+                opacity: .78;
+              "
+            ></div>
+
+            <div id="iot-pulse-a" class="pointer-events-none absolute inset-0 grid place-items-center z-0">
+              <div class="h-[54%] w-[54%] rounded-full border border-[#0E2A47]/10 opacity-0"></div>
+            </div>
+
+            <div id="iot-pulse-b" class="pointer-events-none absolute inset-0 grid place-items-center z-0">
+              <div class="h-[70%] w-[70%] rounded-full border border-[#0E2A47]/8 opacity-0"></div>
+            </div>
+
+            <svg id="iot-lines" class="absolute inset-0 h-full w-full z-0" viewBox="0 0 100 100" aria-hidden="true"></svg>
+
+            <div class="absolute inset-0 grid place-items-center z-10">
+              <div
+                id="iot-globe-wrap"
+                class="relative h-[180px] w-[180px] sm:h-[200px] sm:w-[200px]"
+              >
+                <div class="iot-globe-shell">
+                  <div id="iot-globe-map" class="iot-globe-map"></div>
+                  <div class="iot-globe-shade"></div>
+                  <div class="iot-globe-highlight"></div>
+                </div>
+              </div>
+            </div>
+
+            <div id="iot-nodes" class="absolute inset-0 z-20"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right panel -->
+      <div class="lg:col-span-5 h-full min-h-0">
+        <div
+          id="iot-panel"
+          class="rounded-2xl border border-slate-200 bg-white text-slate-900 p-6 sm:p-7 shadow-sm relative overflow-hidden h-full"
+        >
+          <div class="relative h-full min-h-0 overflow-auto pr-2">
+            <!-- INTRO -->
+            <div id="iot-intro" class="absolute inset-0 transition-opacity duration-150 opacity-100 pr-2">
+  <p class="text-xs font-semibold tracking-widest text-slate-500">OVERVIEW</p>
+
+  <h3 class="mt-2 text-xl font-semibold text-slate-900">
+    Connected Infrastructure Layer
+  </h3>
+
+  <p class="mt-3 text-sm leading-relaxed text-slate-600">
+    Shunah’s current IoT connects various stakeholders. Crop flow is orchestrated with zero human interaction.
+  </p>
+
+  <div class="mt-6 divide-y divide-slate-200 border-y border-slate-200">
+    <div class="py-4">
+      <div class="flex items-baseline justify-between gap-4">
+        <div class="text-sm font-semibold text-slate-900">Processing Stations</div>
+        <div class="text-2xl font-semibold tracking-tight text-slate-900">12</div>
+      </div>
+      <p class="mt-1 text-xs leading-relaxed text-slate-500">
+        Connected intake and processing points across the network.
+      </p>
+    </div>
+
+    <div class="py-4">
+      <div class="flex items-baseline justify-between gap-4">
+        <div class="text-sm font-semibold text-slate-900">Trucks</div>
+        <div class="text-2xl font-semibold tracking-tight text-slate-900">64</div>
+      </div>
+      <p class="mt-1 text-xs leading-relaxed text-slate-500">
+        Transport capacity linked into live crop movement orchestration.
+      </p>
+    </div>
+
+    <div class="py-4">
+      <div class="flex items-baseline justify-between gap-4">
+        <div class="text-sm font-semibold text-slate-900">Freight Forwarders</div>
+        <div class="text-2xl font-semibold tracking-tight text-slate-900">7</div>
+      </div>
+      <p class="mt-1 text-xs leading-relaxed text-slate-500">
+        Export execution partners connected for downstream shipment flow.
+      </p>
+    </div>
+
+    <div class="py-4">
+      <div class="flex items-baseline justify-between gap-4">
+        <div class="text-sm font-semibold text-slate-900">Scales</div>
+        <div class="text-2xl font-semibold tracking-tight text-slate-900">19</div>
+      </div>
+      <p class="mt-1 text-xs leading-relaxed text-slate-500">
+        Digital weigh points feeding trusted measurement events into the system.
+      </p>
+    </div>
+
+    <div class="py-4">
+      <div class="flex items-baseline justify-between gap-4">
+        <div class="text-sm font-semibold text-slate-900">Quality & Labs</div>
+        <div class="text-2xl font-semibold tracking-tight text-slate-900">6</div>
+      </div>
+      <p class="mt-1 text-xs leading-relaxed text-slate-500">
+        Quality checks and lab signals connected directly into execution logic.
+      </p>
+    </div>
+
+    <div class="py-4">
+      <div class="flex items-baseline justify-between gap-4">
+        <div class="text-sm font-semibold text-slate-900">Storage Space</div>
+        <div class="text-2xl font-semibold tracking-tight text-slate-900">28</div>
+      </div>
+      <p class="mt-1 text-xs leading-relaxed text-slate-500">
+        Warehousing and storage nodes mapped for live capacity allocation.
+      </p>
+    </div>
+  </div>
+</div>
+
+            <!-- DETAIL -->
+            <div id="iot-detail" class="absolute inset-0 transition-opacity duration-150 opacity-0 pointer-events-none pr-2">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <p class="text-xs font-semibold tracking-widest text-slate-500">IN-DEPTH</p>
+
+                  <div class="mt-4 flex justify-center">
+                    <img
+                      id="iot-detail-icon"
+                      src=""
+                      alt="Element icon"
+                      class="h-16 w-16 object-contain"
+                      onerror="this.style.opacity='0.25'; this.style.filter='grayscale(1)';"
+                    />
+                  </div>
+
+                  <h3 id="iot-title" class="mt-4 text-xl font-semibold">Processing Stations</h3>
+
+                  <p id="iot-desc" class="mt-3 text-sm leading-relaxed text-slate-600">
+                    Connect processing stations into the operating system so intake, capacity, and execution status become visible in real time.
+                  </p>
+                </div>
+
+                <span
+                  id="iot-step"
+                  class="shrink-0 rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-700"
+                >Element 1 / 6</span>
+              </div>
+
+              <div class="mt-6">
+                <div class="text-sm font-semibold text-slate-800">What happens here</div>
+                <ul id="iot-bullets" class="mt-3 space-y-2 text-sm text-slate-600"></ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-5 rounded-2xl border border-slate-200 bg-white p-5 lg:hidden text-slate-900">
+          <div class="text-sm font-semibold text-slate-800">Elements</div>
+          <div id="iot-mobile-list" class="mt-3 grid gap-2"></div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="relative mx-auto max-w-7xl px-6 h-full min-h-[calc(100dvh-3rem)] flex items-center">
+  <style>
+    .iot-globe-shell{
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 9999px;
+      overflow: hidden;
+      background:
+        radial-gradient(
+          circle at 35% 30%,
+          rgba(255,255,255,0.35) 0%,
+          rgba(14,42,71,0.35) 35%,
+          rgba(11,26,45,0.75) 70%,
+          rgba(11,26,45,0.95) 100%
+        );
+      box-shadow:
+        inset -20px 0 35px rgba(0,0,0,0.35),
+        inset 20px 0 30px rgba(255,255,255,0.05),
+        0 0 30px rgba(14,165,233,0.20);
+    }
+
+    .iot-globe-map{
+      position: absolute;
+      inset: 0;
+      width: 300%;
+      height: 100%;
+      background: url('images/world-map-white.png') repeat-x center center;
+      background-size: auto 100%;
+      opacity: 0.96;
+      filter: contrast(1.02) grayscale(1);
+      transform: translateX(0);
+      will-change: transform;
+    }
+
+    .iot-globe-shade{
+      position: absolute;
+      inset: 0;
+      border-radius: 9999px;
+      background:
+        radial-gradient(circle at 72% 50%, transparent 0%, transparent 42%, rgba(14,42,71,0.10) 72%, rgba(14,42,71,0.18) 100%);
+      pointer-events: none;
+    }
+
+    .iot-globe-highlight{
+      position: absolute;
+      inset: 0;
+      border-radius: 9999px;
+      background:
+        radial-gradient(circle at 30% 26%, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.12) 18%, transparent 34%);
+      pointer-events: none;
+      mix-blend-mode: screen;
+    }
+
+    @media (max-width: 640px){
+      #iot-globe-wrap{
+        width: 170px !important;
+        height: 170px !important;
+      }
+    }
+  </style>
+
+  <script>
+    (function () {
+      const section = document.getElementById("iot-network-circle");
+      if (!section) return;
+
+      const steps = [
+        {
+          short: "Processing",
+          title: "Processing Stations",
+          desc: "Connect processing stations into the operating system so intake, capacity, and execution status become visible in real time.",
+          icon: "images/iot-processing-stations.png",
+          bullets: ["Register stations", "Track throughput", "Monitor intake readiness"]
+        },
+        {
+          short: "Trucks",
+          title: "Trucks",
+          desc: "Bring transport fleet visibility into the network so loads can be assigned and crop movement can be coordinated efficiently.",
+          icon: "images/iot-trucks.png",
+          bullets: ["Track fleet access", "Monitor availability", "Match loads to timing"]
+        },
+        {
+          short: "Freight",
+          title: "Freight Forwarders",
+          desc: "Integrate freight forwarders to coordinate downstream shipment execution once product exits the domestic flow.",
+          icon: "images/iot-freight-forwarders.png",
+          bullets: ["Link freight partners", "Track shipment stages", "Coordinate handoff"]
+        },
+        {
+          short: "Scales",
+          title: "Scales",
+          desc: "Digitize weigh points and measurement events so movement verification becomes faster and more trusted.",
+          icon: "images/iot-scales.png",
+          bullets: ["Capture weight events", "Reduce reconciliation friction", "Centralize measurement data"]
+        },
+        {
+          short: "Labs",
+          title: "Quality & Labs",
+          desc: "Connect quality-control and lab functions so grading, inspection, and verification signals feed directly into execution decisions.",
+          icon: "images/iot-quality-labs.png",
+          bullets: ["Record quality tests", "Sync inspection outputs", "Support trusted execution"]
+        },
+        {
+          short: "Storage",
+          title: "Storage Space",
+          desc: "Map warehouse and storage capacity across the network so inventory can be positioned dynamically and overflow risks reduced.",
+          icon: "images/iot-storage-space.png",
+          bullets: ["Track free capacity", "Map storage nodes", "Allocate inventory intelligently"]
+        }
+      ];
+
+      const stage = document.getElementById("iot-stage");
+      const nodesWrap = document.getElementById("iot-nodes");
+      const linesSvg = document.getElementById("iot-lines");
+
+      const intro = document.getElementById("iot-intro");
+      const detail = document.getElementById("iot-detail");
+
+      const tTitle = document.getElementById("iot-title");
+      const tDesc = document.getElementById("iot-desc");
+      const tStep = document.getElementById("iot-step");
+      const bullets = document.getElementById("iot-bullets");
+      const mobileList = document.getElementById("iot-mobile-list");
+      const detailIcon = document.getElementById("iot-detail-icon");
+
+      const stageGlow = document.getElementById("iot-stage-glow");
+      const pulseA = document.querySelector("#iot-pulse-a > div");
+      const pulseB = document.querySelector("#iot-pulse-b > div");
+      const globeMap = document.getElementById("iot-globe-map");
+
+      const counters = Array.from(section.querySelectorAll(".iot-counter"));
+
+      const nodeCount = steps.length;
+      const nodeRadiusPercent = 37;
+      const center = { x: 50, y: 50 };
+      const nodeCircleRadius = 3.15;
+      const globeStopRadius = 28;
+
+      let active = 0;
+      let autoplay = false;
+      let timer = null;
+      let countersRan = false;
+      let glowLevel = 0;
+
+      let globeOffset = 0;
+      let globeSpeed = 0.06;
+      let globeAnimFrame = null;
+
+      const isReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const svgNS = "http://www.w3.org/2000/svg";
+
+      function showIntro() {
+        intro.classList.add("opacity-100");
+        intro.classList.remove("opacity-0");
+        detail.classList.add("opacity-0", "pointer-events-none");
+        detail.classList.remove("opacity-100");
+      }
+
+      function showDetail() {
+        intro.classList.add("opacity-0");
+        intro.classList.remove("opacity-100");
+        detail.classList.add("opacity-100");
+        detail.classList.remove("opacity-0", "pointer-events-none");
+      }
+
+      function animateCounter(el, to, suffix) {
+        if (isReducedMotion) {
+          el.textContent = String(to) + (suffix || "");
+          return;
+        }
+
+        const duration = 900;
+        const start = performance.now();
+
+        function tick(now) {
+          const p = Math.min(1, (now - start) / duration);
+          const eased = 1 - Math.pow(1 - p, 3);
+          const val = Math.round(to * eased);
+          el.textContent = String(val) + (suffix || "");
+          if (p < 1) requestAnimationFrame(tick);
+        }
+
+        requestAnimationFrame(tick);
+      }
+
+      function runCountersOnce() {
+        if (countersRan) return;
+        countersRan = true;
+        counters.forEach((el) => {
+          const to = Number(el.getAttribute("data-target") || "0");
+          const suffix = el.getAttribute("data-suffix") || "";
+          animateCounter(el, to, suffix);
+        });
+      }
+
+      function buildBullets(list) {
+        bullets.innerHTML = "";
+        list.forEach((txt) => {
+          const li = document.createElement("li");
+          li.className = "flex gap-2";
+          li.innerHTML =
+            '<span class="mt-2 h-1.5 w-1.5 rounded-full bg-[#0E2A47]"></span>' +
+            "<span>" + txt + "</span>";
+          bullets.appendChild(li);
+        });
+      }
+
+      function updatePanelOnly(i) {
+        const s = steps[i];
+        tTitle.textContent = s.title;
+        tDesc.textContent = s.desc;
+        tStep.textContent = "Element " + (i + 1) + " / " + nodeCount;
+        buildBullets(s.bullets);
+        if (detailIcon) detailIcon.src = s.icon;
+      }
+
+      function nodeAngle(i) {
+        const start = -90;
+        return start + (360 / nodeCount) * i;
+      }
+
+      function getNodePosition(i) {
+        const angle = nodeAngle(i);
+        const rad = (Math.PI / 180) * angle;
+
+        let x = 50 + nodeRadiusPercent * Math.cos(rad);
+        let y = 50 + nodeRadiusPercent * Math.sin(rad);
+
+        // Lower Freight and Labs slightly
+        if (i === 2 || i === 4) {
+          y += 3.2;
+        }
+
+        // Keep top and bottom perfectly reciprocal
+        if (i === 0) y = 50 - nodeRadiusPercent;
+        if (i === 3) y = 50 + nodeRadiusPercent + 3.2; // scales lower
+
+        return { x, y };
+      }
+
+      function getPerfectLinePoints(node) {
+        const dx = center.x - node.x;
+        const dy = center.y - node.y;
+        const dist = Math.hypot(dx, dy) || 1;
+
+        const ux = dx / dist;
+        const uy = dy / dist;
+
+        return {
+          start: {
+            x: node.x + ux * nodeCircleRadius,
+            y: node.y + uy * nodeCircleRadius
+          },
+          end: {
+            x: center.x - ux * globeStopRadius,
+            y: center.y - uy * globeStopRadius
+          }
+        };
+      }
+
+      function buildLines() {
+        linesSvg.innerHTML = "";
+
+        for (let i = 0; i < nodeCount; i++) {
+          const node = getNodePosition(i);
+          const pts = getPerfectLinePoints(node);
+          const start = pts.start;
+          const end = pts.end;
+
+          const line = document.createElementNS(svgNS, "line");
+          line.setAttribute("x1", start.x);
+          line.setAttribute("y1", start.y);
+          line.setAttribute("x2", end.x);
+          line.setAttribute("y2", end.y);
+          line.setAttribute("stroke", "rgba(15,23,42,0.35)");
+          line.setAttribute("stroke-width", "1.2");
+          line.setAttribute("stroke-linecap", "round");
+          line.setAttribute("opacity", "0");
+
+          const dx = end.x - start.x;
+          const dy = end.y - start.y;
+          const len = Math.hypot(dx, dy);
+
+          line.dataset.len = String(len);
+          line.dataset.active = "0";
+
+          linesSvg.appendChild(line);
+        }
+      }
+
+      function animateLine(i) {
+        const lines = Array.from(linesSvg.querySelectorAll("line"));
+        const line = lines[i];
+        if (!line) return;
+
+        line.setAttribute("opacity", "1");
+
+        if (isReducedMotion) {
+          line.dataset.active = "1";
+          return;
+        }
+
+        const len = Number(line.dataset.len || 0);
+        line.animate(
+          [
+            { strokeDashoffset: len, opacity: 0.0 },
+            { strokeDashoffset: 0, opacity: 1.0 }
+          ],
+          { duration: 520, easing: "ease-out", fill: "forwards" }
+        );
+
+        line.dataset.active = "1";
+      }
+
+      function dimLinesExcept(i) {
+        const lines = Array.from(linesSvg.querySelectorAll("line"));
+        lines.forEach((line, idx) => {
+          if (line.dataset.active === "1") {
+            line.setAttribute("opacity", idx === i ? "1" : "0.22");
+          } else {
+            line.setAttribute("opacity", "0");
+          }
+        });
+      }
+
+      function applyGlobeMotion() {
+        if (!globeMap) return;
+        globeMap.style.transform = `translateX(${globeOffset}%)`;
+      }
+
+      function startGlobeSpin() {
+        if (!globeMap || globeAnimFrame || isReducedMotion) return;
+
+        const loop = () => {
+          globeOffset -= globeSpeed;
+          if (globeOffset <= -33.3333) globeOffset = 0;
+          applyGlobeMotion();
+          globeAnimFrame = requestAnimationFrame(loop);
+        };
+
+        globeAnimFrame = requestAnimationFrame(loop);
+      }
+
+      function stopGlobeSpin() {
+        if (!globeAnimFrame) return;
+        cancelAnimationFrame(globeAnimFrame);
+        globeAnimFrame = null;
+      }
+
+      function pulseCenter(stepIndex) {
+        glowLevel = Math.min(1, (stepIndex + 1) / nodeCount);
+
+        const a1 = 0.16 + glowLevel * 0.24;
+        const a2 = 0.08 + glowLevel * 0.15;
+        const scaleA = 1.02 + glowLevel * 0.08;
+        const scaleB = 1.04 + glowLevel * 0.12;
+
+        if (stageGlow) {
+          stageGlow.style.opacity = String(0.60 + glowLevel * 0.22);
+        }
+
+        if (isReducedMotion) {
+          pulseA.style.opacity = String(a1);
+          pulseB.style.opacity = String(a2);
+          return;
+        }
+
+        pulseA.animate(
+          [
+            { transform: "scale(0.96)", opacity: 0 },
+            { transform: `scale(${scaleA})`, opacity: a1 },
+            { transform: "scale(1.12)", opacity: 0 }
+          ],
+          { duration: 900, easing: "ease-out" }
+        );
+
+        pulseB.animate(
+          [
+            { transform: "scale(0.98)", opacity: 0 },
+            { transform: `scale(${scaleB})`, opacity: a2 },
+            { transform: "scale(1.16)", opacity: 0 }
+          ],
+          { duration: 1150, easing: "ease-out" }
+        );
+      }
+
+      function setActive(i) {
+        active = i;
+
+        const btns = nodesWrap.querySelectorAll("button[data-step]");
+        btns.forEach((b, idx) => {
+          const isOn = idx === i;
+          const label = b.querySelector(".iot-label");
+          const icon = b.querySelector(".iot-icon");
+          const shell = b.querySelector(".iot-node-shell");
+
+          if (label) {
+            label.className =
+              "iot-label absolute left-1/2 -translate-x-1/2 top-full mt-2 w-max text-center text-xs font-semibold text-[#0E2A47] whitespace-nowrap";
+          }
+
+          if (shell) {
+            if (isOn) {
+              shell.style.borderColor = "rgba(14,42,71,0.18)";
+              shell.style.boxShadow = "0 0 0 2px rgba(14,165,233,0.18)";
+              shell.style.background = "rgba(255,255,255,1)";
+            } else {
+              shell.style.borderColor = "rgba(15,23,42,0.12)";
+              shell.style.boxShadow = "none";
+              shell.style.background = "rgba(255,255,255,0.96)";
+            }
+          }
+
+          if (icon) {
+            if (isOn) {
+              icon.style.opacity = "1";
+              icon.style.transform = "scale(1.06)";
+              icon.style.filter = "drop-shadow(0 0 8px rgba(14,165,233,0.16))";
+            } else {
+              icon.style.opacity = "0.92";
+              icon.style.transform = "scale(1)";
+              icon.style.filter = "none";
+            }
+          }
+        });
+
+        dimLinesExcept(i);
+        animateLine(i);
+        pulseCenter(i);
+      }
+
+      function buildNodes() {
+        nodesWrap.innerHTML = "";
+
+        for (let i = 0; i < nodeCount; i++) {
+          const p = getNodePosition(i);
+
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.setAttribute("data-step", String(i));
+          btn.className = "group absolute -translate-x-1/2 -translate-y-1/2 focus:outline-none";
+          btn.style.left = p.x + "%";
+          btn.style.top = p.y + "%";
+          btn.setAttribute("aria-label", steps[i].title);
+
+          btn.innerHTML = `
+            <span class="relative block h-14 w-14 sm:h-16 sm:w-16">
+              <span class="iot-node-shell absolute inset-0 grid place-items-center rounded-full border border-slate-200 bg-white transition-all duration-300">
+                <img
+                  class="iot-icon h-[62%] w-[62%] object-contain opacity-95 transition-all duration-300"
+                  src="${steps[i].icon}"
+                  alt="${steps[i].short} icon"
+                  onerror="this.style.opacity='0.25'; this.style.filter='grayscale(1)';"
+                />
+              </span>
+            </span>
+
+            <span class="iot-label absolute left-1/2 -translate-x-1/2 top-full mt-2 w-max text-center text-xs font-semibold text-[#0E2A47] whitespace-nowrap">
+              ${steps[i].short}
+            </span>
+          `;
+
+          btn.addEventListener("mouseenter", () => {
+            showDetail();
+            updatePanelOnly(i);
+            setActive(i);
+          });
+
+          btn.addEventListener("click", () => {
+            if (!window.matchMedia("(hover: hover)").matches) {
+              showDetail();
+              updatePanelOnly(i);
+              setActive(i);
+              const panel = document.getElementById("iot-panel");
+              if (panel) panel.scrollIntoView({ behavior: isReducedMotion ? "auto" : "smooth", block: "start" });
+            }
+          });
+
+          nodesWrap.appendChild(btn);
+        }
+      }
+
+      function buildMobileList() {
+        if (!mobileList) return;
+        mobileList.innerHTML = "";
+
+        steps.forEach((s, i) => {
+          const b = document.createElement("button");
+          b.type = "button";
+          b.className =
+            "flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 text-left text-sm font-semibold text-slate-800 hover:bg-slate-50";
+
+          b.innerHTML = `
+            <span class="flex items-center gap-3">
+              <span class="grid h-8 w-8 place-items-center rounded-lg bg-slate-50 text-xs font-semibold text-slate-700">${i + 1}</span>
+              <span>${s.title}</span>
+            </span>
+            <span class="text-slate-400">›</span>
+          `;
+
+          b.addEventListener("click", () => {
+            showDetail();
+            updatePanelOnly(i);
+            setActive(i);
+            const panel = document.getElementById("iot-panel");
+            if (panel) panel.scrollIntoView({ behavior: isReducedMotion ? "auto" : "smooth", block: "start" });
+          });
+
+          mobileList.appendChild(b);
+        });
+      }
+
+      if (stage) {
+        stage.addEventListener("mouseleave", () => {
+          if (window.matchMedia("(hover: hover)").matches) {
+            showIntro();
+            runCountersOnce();
+          }
+        });
+      }
+
+      function startAutoplay() {
+        if (isReducedMotion) return;
+        autoplay = true;
+        let i = active;
+
+        timer = setInterval(() => {
+          const next = (i + 1) % nodeCount;
+          setActive(next);
+          i = next;
+        }, 1700);
+      }
+
+      function stopAutoplay() {
+        autoplay = false;
+        if (timer) clearInterval(timer);
+        timer = null;
+      }
+
+      function setupScrollTrigger() {
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) {
+                if (!autoplay) startAutoplay();
+                startGlobeSpin();
+                runCountersOnce();
+              } else {
+                stopAutoplay();
+                stopGlobeSpin();
+                if (window.matchMedia("(hover: hover)").matches) showIntro();
+              }
+            });
+          },
+          { threshold: 0.35 }
+        );
+
+        io.observe(section);
+      }
+
+      buildLines();
+      buildNodes();
+      buildMobileList();
+      showIntro();
+      updatePanelOnly(0);
+      setActive(0);
+      setupScrollTrigger();
+    })();
+  </script>
+</section>
+<!-- INFRASTRUCTURE IoT — HALO ARC (higher + star-trail draw + background ramps up during halo) -->
+<section id="infrastructure-iot" class="h-screen snap-start bg-[#0b1220] text-white overflow-hidden relative">
+
+  <!-- Background image (fades in progressively during halo draw) -->
+  <div id="iotBg"
+       class="absolute inset-0 opacity-0 scale-[1.06] transition-transform duration-[1600ms] ease-out"
+       style="background-image:url('images/iot-bg.jpg'); background-size:cover; background-position:center;">
+    <!-- overlay opacity is also animated -->
+    <div id="iotOverlay" class="absolute inset-0 bg-[#0b1220]/85 transition-opacity duration-300"></div>
+  </div>
+
+  <!-- Halo SVG -->
+  <svg id="iotHalo" class="absolute inset-0 w-full h-full pointer-events-none" aria-hidden="true"></svg>
+
+  <div class="relative max-w-7xl mx-auto px-6 h-full flex items-center justify-center">
     <div class="w-full">
 
-      <!-- ✅ MOVED UP (only change: added a little more bottom spacing after it) -->
-      <div class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 shadow-sm backdrop-blur mb-4">
-        <span class="h-2 w-2 rounded-full bg-[#6fd04a]"></span>
-        <span class="text-sm font-medium text-white">Our Focus</span>
-        <span class="text-sm text-white/70">Dry crops • Small-scale farmers</span>
-      </div>
-
-      <div class="max-w-3xl">
-        <h2 class="text-4xl sm:text-5xl font-semibold tracking-tight text-white leading-tight">
-          Dry crops are the <span class="text-[#6fd04a]">small-scale farmer’s</span> game.
+      <!-- Title -->
+      <div id="iotHeadline"
+           class="text-center opacity-0 translate-y-8 blur-[6px] transition-all duration-[1200ms] ease-out">
+        <h2 id="iotTitle" class="text-4xl md:text-5xl font-semibold tracking-tight">
+          IoT Orchestrating Crop Flow
         </h2>
-
-        <p class="mt-5 text-lg leading-relaxed text-white/80">
-          Shunah is built around dry crops grown by small-scale farmers — resilient, storable, tradable,
-          and rooted in fragmented farm supply. We organize it end-to-end: aggregation, quality assessment, and delivery.
+        <p class="mt-3 text-white/60 text-lg max-w-3xl mx-auto">
+          Processing, storage, transport, scales, and freight — all connected as one network.
         </p>
+      </div>
 
-        <!-- ✅ NEW: 4 boxes (2x2), constrained to NOT exceed title width -->
-        <div class="mt-7 max-w-3xl">
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <!-- Box 1 -->
-            <div class="rounded-2xl border border-[#6fd04a]/60 bg-white/10 backdrop-blur px-4 py-4">
-              <div class="flex items-start gap-3">
-                <div class="shrink-0 mt-0.5">
-                  <!-- icon -->
-                  <svg class="h-5 w-5 text-[#6fd04a]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M3 7h18M6 7v12m12-12v12M3 19h18" />
-                  </svg>
-                </div>
-                <div class="min-w-0">
-                  <div class="font-semibold text-white">Smallholder Farmers</div>
-                  <div class="mt-1 text-sm text-white/75">
-                    450M+ smallholder farmers form the back backbone of African agriculture.
-                  </div>
-                </div>
-              </div>
+      <!-- BOX GRID -->
+      <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+
+        <div class="iot-box opacity-0 -translate-y-10">
+          <div class="rounded-2xl bg-[#111f36] ring-1 ring-white/10 p-6 text-center">
+            <div class="text-sm text-white/40">Node</div>
+            <div class="text-lg font-semibold mt-2">Processing Station</div>
+            <div class="text-4xl font-semibold mt-4 tabular-nums">
+              <span class="iot-counter" data-target="12">0</span>
             </div>
-
-            <!-- Box 2 -->
-            <div class="rounded-2xl border border-[#6fd04a]/60 bg-white/10 backdrop-blur px-4 py-4">
-              <div class="flex items-start gap-3">
-                <div class="shrink-0 mt-0.5">
-                  <svg class="h-5 w-5 text-[#6fd04a]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M12 2l3 4 5 .8-3.6 3.4.9 5.2L12 13.9 6.7 15.4l.9-5.2L4 6.8 9 6l3-4Z" />
-                  </svg>
-                </div>
-                <div class="min-w-0">
-                  <div class="font-semibold text-white">Dry Crop Dominance</div>
-                  <div class="mt-1 text-sm text-white/75">
-                    85% of the production are legumes, grains, and oilseeds.
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Box 3 -->
-            <div class="rounded-2xl border border-[#6fd04a]/60 bg-white/10 backdrop-blur px-4 py-4">
-              <div class="flex items-start gap-3">
-                <div class="shrink-0 mt-0.5">
-                  <svg class="h-5 w-5 text-[#6fd04a]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M4 12h6m4 0h6M12 4v6m0 4v6" />
-                  </svg>
-                </div>
-                <div class="min-w-0">
-                  <div class="font-semibold text-white">Massive Supply</div>
-                  <div class="mt-1 text-sm text-white/75">
-                    2,700 million tons of dry crops are produced annually across Africa.
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Box 4 -->
-            <div class="rounded-2xl border border-[#6fd04a]/60 bg-white/10 backdrop-blur px-4 py-4">
-              <div class="flex items-start gap-3">
-                <div class="shrink-0 mt-0.5">
-                  <svg class="h-5 w-5 text-[#6fd04a]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M12 3v18M5 12h14" />
-                    <path d="M12 12l-4-4m4 4l4-4m-4 4l-4 4m4-4l4 4" />
-                  </svg>
-                </div>
-                <div class="min-w-0">
-                  <div class="font-semibold text-white">Structural Disconnect</div>
-                  <div class="mt-1 text-sm text-white/75">
-                    <2% of small scale farmers are connected with structured demand.
-                  </div>
-                </div>
-              </div>
-            </div>
-
+            <div class="mt-1 text-white/55 text-sm">Stations connected</div>
           </div>
         </div>
-        <!-- /4 boxes -->
+
+        <div class="iot-box opacity-0 -translate-y-10">
+          <div class="rounded-2xl bg-[#111f36] ring-1 ring-white/10 p-6 text-center">
+            <div class="text-sm text-white/40">Node</div>
+            <div class="text-lg font-semibold mt-2">Storage Space</div>
+            <div class="text-4xl font-semibold mt-4 tabular-nums">
+              <span class="iot-counter" data-target="28">0</span>
+            </div>
+            <div class="mt-1 text-white/55 text-sm">Warehouses / hubs</div>
+          </div>
+        </div>
+
+        <div class="iot-box opacity-0 -translate-y-10">
+          <div class="rounded-2xl bg-[#111f36] ring-1 ring-white/10 p-6 text-center">
+            <div class="text-sm text-white/40">Node</div>
+            <div class="text-lg font-semibold mt-2">Trucks</div>
+            <div class="text-4xl font-semibold mt-4 tabular-nums">
+              <span class="iot-counter" data-target="64">0</span>
+            </div>
+            <div class="mt-1 text-white/55 text-sm">Active fleet access</div>
+          </div>
+        </div>
+
+        <div class="iot-box opacity-0 -translate-y-10">
+          <div class="rounded-2xl bg-[#111f36] ring-1 ring-white/10 p-6 text-center">
+            <div class="text-sm text-white/40">Node</div>
+            <div class="text-lg font-semibold mt-2">Truck Scales</div>
+            <div class="text-4xl font-semibold mt-4 tabular-nums">
+              <span class="iot-counter" data-target="19">0</span>
+            </div>
+            <div class="mt-1 text-white/55 text-sm">Digital weigh points</div>
+          </div>
+        </div>
+
+        <div class="iot-box opacity-0 -translate-y-10">
+          <div class="rounded-2xl bg-[#111f36] ring-1 ring-white/10 p-6 text-center">
+            <div class="text-sm text-white/40">Node</div>
+            <div class="text-lg font-semibold mt-2">Freight Forwarder</div>
+            <div class="text-4xl font-semibold mt-4 tabular-nums">
+              <span class="iot-counter" data-target="7">0</span>
+            </div>
+            <div class="mt-1 text-white/55 text-sm">Partners integrated</div>
+          </div>
+        </div>
 
       </div>
+
     </div>
   </div>
-</section>
-
-
-<!-- CROPS RIBBON -->
-<section class="relative bg-white border-y border-[#0b1a2d]/10">
-  <div class="mx-auto max-w-7xl px-6 py-6">
-    <div class="flex items-center justify-between gap-6 flex-wrap">
-      <div>
-        <h4 class="text-sm font-semibold tracking-tight text-[#0b1a2d]">Our Crops</h4>
-        <p class="text-xs text-[#0b1a2d]/60 mt-1">Hover a crop — it opens and pins that SKU section below.</p>
-      </div>
-    </div>
-
-    <div class="mt-5 relative overflow-hidden">
-      <div id="cropsMarquee" class="relative" aria-label="Crops ribbon">
-        <div id="cropsTrack" class="flex items-stretch gap-7 marquee-track"></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- MAIN SKUs -->
-<section id="skus" class="relative overflow-hidden bg-[#f6f9ff]">
-  <div class="relative mx-auto max-w-7xl px-6 py-14 lg:py-18">
-
-    <div class="mt-2">
-      <div class="flex items-end justify-between gap-6 flex-wrap">
-        <div>
-          <h3 class="text-3xl sm:text-4xl font-semibold tracking-tight text-[#0b1a2d]">Main SKUs</h3>
-          <p class="mt-2 text-[#0b1a2d]/70 max-w-2xl">
-            Standardized lines with clear specs and packaging options.
-          </p>
-        </div>
-      </div>
-
-      <div class="mt-8 space-y-6" id="skuCards">
-
-        <!-- ✅ Your 14 SKU cards are unchanged below (keeps the green table format). -->
-
-        <!-- 1) White Beans -->
-        <div class="rounded-3xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="white-beans">
-          <div class="p-5 sm:p-6">
-            <div class="flex items-start gap-4">
-              <div class="shrink-0">
-                <div class="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden">
-                  <img src="images/sku-white-beans.jpg" alt="White Beans" class="h-full w-full object-cover"
-                       onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=&quot;text-xs font-semibold text-[#0b1a2d]/60&quot;>IMG</span>'; ">
-                </div>
-              </div>
-
-              <div class="min-w-0 flex-1">
-                <div class="flex items-center justify-between gap-4 flex-wrap">
-                  <div>
-                    <p class="text-lg font-semibold text-[#0b1a2d]">White Beans</p>
-                    <p class="text-sm text-[#0b1a2d]/60">Premium pulses for local and export markets</p>
-                  </div>
-                  <span class="text-xs rounded-full bg-[#18a34a]/10 text-[#18a34a] px-3 py-1 font-semibold">Core SKU</span>
-                </div>
-
-                <div class="mt-4 overflow-hidden rounded-2xl border border-[#0b1a2d]/10">
-                  <div class="bg-[#6fd04a] text-[#0b1a2d]">
-                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-xs font-semibold uppercase tracking-wide">
-                      <div class="col-span-4">SKU</div>
-                      <div class="col-span-2">Variety</div>
-                      <div class="col-span-2">Packaging</div>
-                      <div class="col-span-2">Spec</div>
-                      <div class="col-span-2 text-right">MOQ</div>
-                    </div>
-                  </div>
-
-                  <div class="divide-y divide-[#0b1a2d]/10 bg-white">
-                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
-                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Egyptian White Beans</div>
-                      <div class="col-span-2">Navy / Redbeans</div>
-                      <div class="col-span-2">25kg / 50kg</div>
-                      <div class="col-span-2">Cleaned</div>
-                      <div class="col-span-2 text-right font-semibold">1 x 20’</div>
-                    </div>
-                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
-                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Sorted White Beans</div>
-                      <div class="col-span-2">Red Beans</div>
-                      <div class="col-span-2">25kg</div>
-                      <div class="col-span-2">Export</div>
-                      <div class="col-span-2 text-right font-semibold">1 x 40’</div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 2) Sesame -->
-        <div class="rounded-3xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="sesame">
-          <div class="p-5 sm:p-6">
-            <div class="flex items-start gap-4">
-              <div class="shrink-0">
-                <div class="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden">
-                  <img src="images/sku-sesame.jpg" alt="Sesame" class="h-full w-full object-cover"
-                       onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=&quot;text-xs font-semibold text-[#0b1a2d]/60&quot;>IMG</span>'; ">
-                </div>
-              </div>
-
-              <div class="min-w-0 flex-1">
-                <div class="flex items-center justify-between gap-4 flex-wrap">
-                  <div>
-                    <p class="text-lg font-semibold text-[#0b1a2d]">Sesame</p>
-                    <p class="text-sm text-[#0b1a2d]/60">White & golden grades</p>
-                  </div>
-                </div>
-
-                <div class="mt-4 overflow-hidden rounded-2xl border border-[#0b1a2d]/10">
-                  <div class="bg-[#6fd04a] text-[#0b1a2d]">
-                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-xs font-semibold uppercase tracking-wide">
-                      <div class="col-span-4">SKU</div>
-                      <div class="col-span-2">Color</div>
-                      <div class="col-span-2">Packaging</div>
-                      <div class="col-span-2">Spec</div>
-                      <div class="col-span-2 text-right">MOQ</div>
-                    </div>
-                  </div>
-
-                  <div class="divide-y divide-[#0b1a2d]/10 bg-white">
-                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
-                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Sesame Seeds</div>
-                      <div class="col-span-2">White</div>
-                      <div class="col-span-2">25kg</div>
-                      <div class="col-span-2">Cleaned</div>
-                      <div class="col-span-2 text-right font-semibold">1 x 20’</div>
-                    </div>
-                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
-                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Sesame Seeds</div>
-                      <div class="col-span-2">Golden</div>
-                      <div class="col-span-2">25kg</div>
-                      <div class="col-span-2">Export</div>
-                      <div class="col-span-2 text-right font-semibold">1 x 40’</div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 3) Fava -->
-        <div class="rounded-3xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="fava">
-          <div class="p-5 sm:p-6">
-            <div class="flex items-start gap-4">
-              <div class="shrink-0">
-                <div class="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden">
-                  <img src="images/sku-fava.jpg" alt="Fava Beans" class="h-full w-full object-cover"
-                       onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=&quot;text-xs font-semibold text-[#0b1a2d]/60&quot;>IMG</span>'; ">
-                </div>
-              </div>
-
-              <div class="min-w-0 flex-1">
-                <div class="flex items-center justify-between gap-4 flex-wrap">
-                  <div>
-                    <p class="text-lg font-semibold text-[#0b1a2d]">Fava Beans</p>
-                    <p class="text-sm text-[#0b1a2d]/60">Whole & split options</p>
-                  </div>
-                </div>
-
-                <div class="mt-4 overflow-hidden rounded-2xl border border-[#0b1a2d]/10">
-                  <div class="bg-[#6fd04a] text-[#0b1a2d]">
-                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-xs font-semibold uppercase tracking-wide">
-                      <div class="col-span-4">SKU</div>
-                      <div class="col-span-2">Type</div>
-                      <div class="col-span-2">Packaging</div>
-                      <div class="col-span-2">Spec</div>
-                      <div class="col-span-2 text-right">MOQ</div>
-                    </div>
-                  </div>
-
-                  <div class="divide-y divide-[#0b1a2d]/10 bg-white">
-                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
-                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Fava Beans</div>
-                      <div class="col-span-2">Whole</div>
-                      <div class="col-span-2">25kg / 50kg</div>
-                      <div class="col-span-2">Cleaned</div>
-                      <div class="col-span-2 text-right font-semibold">1 x 20’</div>
-                    </div>
-                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
-                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Split Fava</div>
-                      <div class="col-span-2">Split</div>
-                      <div class="col-span-2">25kg</div>
-                      <div class="col-span-2">Standard</div>
-                      <div class="col-span-2 text-right font-semibold">1 x 40’</div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 4) Corn -->
-        <div class="rounded-3xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="corn">
-          <div class="p-5 sm:p-6">
-            <div class="flex items-start gap-4">
-              <div class="shrink-0">
-                <div class="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden">
-                  <img src="images/sku-corn.jpg" alt="Corn" class="h-full w-full object-cover"
-                       onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=&quot;text-xs font-semibold text-[#0b1a2d]/60&quot;>IMG</span>'; ">
-                </div>
-              </div>
-
-              <div class="min-w-0 flex-1">
-                <div class="flex items-center justify-between gap-4 flex-wrap">
-                  <div>
-                    <p class="text-lg font-semibold text-[#0b1a2d]">Corn</p>
-                    <p class="text-sm text-[#0b1a2d]/60">Trade & feed grades</p>
-                  </div>
-                </div>
-
-                <div class="mt-4 overflow-hidden rounded-2xl border border-[#0b1a2d]/10">
-                  <div class="bg-[#6fd04a] text-[#0b1a2d]">
-                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-xs font-semibold uppercase tracking-wide">
-                      <div class="col-span-4">SKU</div>
-                      <div class="col-span-2">Type</div>
-                      <div class="col-span-2">Packaging</div>
-                      <div class="col-span-2">Spec</div>
-                      <div class="col-span-2 text-right">MOQ</div>
-                    </div>
-                  </div>
-
-                  <div class="divide-y divide-[#0b1a2d]/10 bg-white">
-                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
-                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Yellow Corn</div>
-                      <div class="col-span-2">Grain</div>
-                      <div class="col-span-2">25kg / 50kg</div>
-                      <div class="col-span-2">Cleaned</div>
-                      <div class="col-span-2 text-right font-semibold">1 x 20’</div>
-                    </div>
-                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
-                      <div class="col-span-4 font-semibold text-[#0b1a2d]">White Corn</div>
-                      <div class="col-span-2">Grain</div>
-                      <div class="col-span-2">25kg / 50kg</div>
-                      <div class="col-span-2">Standard</div>
-                      <div class="col-span-2 text-right font-semibold">1 x 40’</div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 5) Rice -->
-        <div class="rounded-3xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="rice">
-          <div class="p-5 sm:p-6">
-            <div class="flex items-start gap-4">
-              <div class="shrink-0">
-                <div class="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden">
-                  <img src="images/sku-rice.jpg" alt="Rice" class="h-full w-full object-cover"
-                       onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=&quot;text-xs font-semibold text-[#0b1a2d]/60&quot;>IMG</span>'; ">
-                </div>
-              </div>
-
-              <div class="min-w-0 flex-1">
-                <div class="flex items-center justify-between gap-4 flex-wrap">
-                  <div>
-                    <p class="text-lg font-semibold text-[#0b1a2d]">Rice</p>
-                    <p class="text-sm text-[#0b1a2d]/60">Milled rice options for trade & distribution</p>
-                  </div>
-                </div>
-
-                <div class="mt-4 overflow-hidden rounded-2xl border border-[#0b1a2d]/10">
-                  <div class="bg-[#6fd04a] text-[#0b1a2d]">
-                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-xs font-semibold uppercase tracking-wide">
-                      <div class="col-span-4">SKU</div>
-                      <div class="col-span-2">Type</div>
-                      <div class="col-span-2">Packaging</div>
-                      <div class="col-span-2">Spec</div>
-                      <div class="col-span-2 text-right">MOQ</div>
-                    </div>
-                  </div>
-
-                  <div class="divide-y divide-[#0b1a2d]/10 bg-white">
-                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
-                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Egyptian Rice</div>
-                      <div class="col-span-2">Milled</div>
-                      <div class="col-span-2">25kg / 50kg</div>
-                      <div class="col-span-2">Standard</div>
-                      <div class="col-span-2 text-right font-semibold">1 x 20’</div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 6) Lentils -->
-        <div class="rounded-3xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="lentils">
-          <div class="p-5 sm:p-6">
-            <div class="flex items-start gap-4">
-              <div class="shrink-0">
-                <div class="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden">
-                  <img src="images/sku-lentils.jpg" alt="Lentils" class="h-full w-full object-cover"
-                       onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=&quot;text-xs font-semibold text-[#0b1a2d]/60&quot;>IMG</span>'; ">
-                </div>
-              </div>
-
-              <div class="min-w-0 flex-1">
-                <div class="flex items-center justify-between gap-4 flex-wrap">
-                  <div>
-                    <p class="text-lg font-semibold text-[#0b1a2d]">Lentils</p>
-                    <p class="text-sm text-[#0b1a2d]/60">Red & brown options</p>
-                  </div>
-                </div>
-
-                <div class="mt-4 overflow-hidden rounded-2xl border border-[#0b1a2d]/10">
-                  <div class="bg-[#6fd04a] text-[#0b1a2d]">
-                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-xs font-semibold uppercase tracking-wide">
-                      <div class="col-span-4">SKU</div>
-                      <div class="col-span-2">Type</div>
-                      <div class="col-span-2">Packaging</div>
-                      <div class="col-span-2">Spec</div>
-                      <div class="col-span-2 text-right">MOQ</div>
-                    </div>
-                  </div>
-
-                  <div class="divide-y divide-[#0b1a2d]/10 bg-white">
-                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
-                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Red Lentils</div>
-                      <div class="col-span-2">Split</div>
-                      <div class="col-span-2">25kg</div>
-                      <div class="col-span-2">Cleaned</div>
-                      <div class="col-span-2 text-right font-semibold">1 x 20’</div>
-                    </div>
-                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
-                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Brown Lentils</div>
-                      <div class="col-span-2">Whole</div>
-                      <div class="col-span-2">25kg / 50kg</div>
-                      <div class="col-span-2">Standard</div>
-                      <div class="col-span-2 text-right font-semibold">1 x 40’</div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 7) Caraway -->
-        <div class="rounded-3xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="caraway">
-          <div class="p-5 sm:p-6">
-            <div class="flex items-start gap-4">
-              <div class="shrink-0">
-                <div class="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden">
-                  <img src="images/sku-caraway.jpg" alt="Caraway" class="h-full w-full object-cover"
-                       onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=&quot;text-xs font-semibold text-[#0b1a2d]/60&quot;>IMG</span>'; ">
-                </div>
-              </div>
-
-              <div class="min-w-0 flex-1">
-                <div class="flex items-center justify-between gap-4 flex-wrap">
-                  <div>
-                    <p class="text-lg font-semibold text-[#0b1a2d]">Caraway</p>
-                    <p class="text-sm text-[#0b1a2d]/60">Whole seed options</p>
-                  </div>
-                </div>
-
-                <div class="mt-4 overflow-hidden rounded-2xl border border-[#0b1a2d]/10">
-                  <div class="bg-[#6fd04a] text-[#0b1a2d]">
-                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-xs font-semibold uppercase tracking-wide">
-                      <div class="col-span-4">SKU</div>
-                      <div class="col-span-2">Type</div>
-                      <div class="col-span-2">Packaging</div>
-                      <div class="col-span-2">Spec</div>
-                      <div class="col-span-2 text-right">MOQ</div>
-                    </div>
-                  </div>
-
-                  <div class="divide-y divide-[#0b1a2d]/10 bg-white">
-                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
-                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Caraway Seeds</div>
-                      <div class="col-span-2">Whole</div>
-                      <div class="col-span-2">25kg</div>
-                      <div class="col-span-2">Cleaned</div>
-                      <div class="col-span-2 text-right font-semibold">1 x 20’</div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 8) Fennel -->
-        <div class="rounded-3xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="fennel">
-          <div class="p-5 sm:p-6">
-            <div class="flex items-start gap-4">
-              <div class="shrink-0">
-                <div class="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden">
-                  <img src="images/sku-fennel.jpg" alt="Fennel" class="h-full w-full object-cover"
-                       onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=&quot;text-xs font-semibold text-[#0b1a2d]/60&quot;>IMG</span>'; ">
-                </div>
-              </div>
-
-              <div class="min-w-0 flex-1">
-                <div class="flex items-center justify-between gap-4 flex-wrap">
-                  <div>
-                    <p class="text-lg font-semibold text-[#0b1a2d]">Fennel</p>
-                    <p class="text-sm text-[#0b1a2d]/60">Whole seed options</p>
-                  </div>
-                </div>
-
-                <div class="mt-4 overflow-hidden rounded-2xl border border-[#0b1a2d]/10">
-                  <div class="bg-[#6fd04a] text-[#0b1a2d]">
-                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-xs font-semibold uppercase tracking-wide">
-                      <div class="col-span-4">SKU</div>
-                      <div class="col-span-2">Type</div>
-                      <div class="col-span-2">Packaging</div>
-                      <div class="col-span-2">Spec</div>
-                      <div class="col-span-2 text-right">MOQ</div>
-                    </div>
-                  </div>
-
-                  <div class="divide-y divide-[#0b1a2d]/10 bg-white">
-                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
-                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Fennel Seeds</div>
-                      <div class="col-span-2">Whole</div>
-                      <div class="col-span-2">25kg</div>
-                      <div class="col-span-2">Cleaned</div>
-                      <div class="col-span-2 text-right font-semibold">1 x 20’</div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 9) Sunflower Seeds -->
-        <div class="rounded-3xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="sunflower">
-          <div class="p-5 sm:p-6">
-            <div class="flex items-start gap-4">
-              <div class="shrink-0">
-                <div class="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden">
-                  <img src="images/sku-sunflower.jpg" alt="Sunflower Seeds" class="h-full w-full object-cover"
-                       onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=&quot;text-xs font-semibold text-[#0b1a2d]/60&quot;>IMG</span>'; ">
-                </div>
-              </div>
-
-              <div class="min-w-0 flex-1">
-                <div class="flex items-center justify-between gap-4 flex-wrap">
-                  <div>
-                    <p class="text-lg font-semibold text-[#0b1a2d]">Sunflower Seeds</p>
-                    <p class="text-sm text-[#0b1a2d]/60">Confectionery & oil grades</p>
-                  </div>
-                </div>
-
-                <div class="mt-4 overflow-hidden rounded-2xl border border-[#0b1a2d]/10">
-                  <div class="bg-[#6fd04a] text-[#0b1a2d]">
-                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-xs font-semibold uppercase tracking-wide">
-                      <div class="col-span-4">SKU</div>
-                      <div class="col-span-2">Type</div>
-                      <div class="col-span-2">Packaging</div>
-                      <div class="col-span-2">Spec</div>
-                      <div class="col-span-2 text-right">MOQ</div>
-                    </div>
-                  </div>
-
-                  <div class="divide-y divide-[#0b1a2d]/10 bg-white">
-                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
-                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Sunflower Seeds</div>
-                      <div class="col-span-2">Raw</div>
-                      <div class="col-span-2">25kg</div>
-                      <div class="col-span-2">Standard</div>
-                      <div class="col-span-2 text-right font-semibold">1 x 20’</div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 10) Soybeans -->
-        <div class="rounded-3xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="soybean">
-          <div class="p-5 sm:p-6">
-            <div class="flex items-start gap-4">
-              <div class="shrink-0">
-                <div class="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden">
-                  <img src="images/sku-soybean.jpg" alt="Soybeans" class="h-full w-full object-cover"
-                       onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=&quot;text-xs font-semibold text-[#0b1a2d]/60&quot;>IMG</span>'; ">
-                </div>
-              </div>
-
-              <div class="min-w-0 flex-1">
-                <div class="flex items-center justify-between gap-4 flex-wrap">
-                  <div>
-                    <p class="text-lg font-semibold text-[#0b1a2d]">Soybeans</p>
-                    <p class="text-sm text-[#0b1a2d]/60">Feed & crushing grades</p>
-                  </div>
-                </div>
-
-                <div class="mt-4 overflow-hidden rounded-2xl border border-[#0b1a2d]/10">
-                  <div class="bg-[#6fd04a] text-[#0b1a2d]">
-                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-xs font-semibold uppercase tracking-wide">
-                      <div class="col-span-4">SKU</div>
-                      <div class="col-span-2">Type</div>
-                      <div class="col-span-2">Packaging</div>
-                      <div class="col-span-2">Spec</div>
-                      <div class="col-span-2 text-right">MOQ</div>
-                    </div>
-                  </div>
-
-                  <div class="divide-y divide-[#0b1a2d]/10 bg-white">
-                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
-                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Soybeans</div>
-                      <div class="col-span-2">Whole</div>
-                      <div class="col-span-2">50kg</div>
-                      <div class="col-span-2">Standard</div>
-                      <div class="col-span-2 text-right font-semibold">1 x 20’</div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 11) Peanuts -->
-        <div class="rounded-3xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="peanuts">
-          <div class="p-5 sm:p-6">
-            <div class="flex items-start gap-4">
-              <div class="shrink-0">
-                <div class="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden">
-                  <img src="images/sku-peanuts.jpg" alt="Peanuts" class="h-full w-full object-cover"
-                       onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=&quot;text-xs font-semibold text-[#0b1a2d]/60&quot;>IMG</span>'; ">
-                </div>
-              </div>
-
-              <div class="min-w-0 flex-1">
-                <div class="flex items-center justify-between gap-4 flex-wrap">
-                  <div>
-                    <p class="text-lg font-semibold text-[#0b1a2d]">Peanuts</p>
-                    <p class="text-sm text-[#0b1a2d]/60">Kabuli grades</p>
-                  </div>
-                </div>
-
-                <div class="mt-4 overflow-hidden rounded-2xl border border-[#0b1a2d]/10">
-                  <div class="bg-[#6fd04a] text-[#0b1a2d]">
-                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-xs font-semibold uppercase tracking-wide">
-                      <div class="col-span-4">SKU</div>
-                      <div class="col-span-2">Grade</div>
-                      <div class="col-span-2">Packaging</div>
-                      <div class="col-span-2">Spec</div>
-                      <div class="col-span-2 text-right">MOQ</div>
-                    </div>
-                  </div>
-
-                  <div class="divide-y divide-[#0b1a2d]/10 bg-white">
-                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
-                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Peanuts</div>
-                      <div class="col-span-2">Kabuli</div>
-                      <div class="col-span-2">25kg</div>
-                      <div class="col-span-2">Cleaned</div>
-                      <div class="col-span-2 text-right font-semibold">1 x 20’</div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 12) Red Beans -->
-        <div class="rounded-3xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="red-beans">
-          <div class="p-5 sm:p-6">
-            <div class="flex items-start gap-4">
-              <div class="shrink-0">
-                <div class="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden">
-                  <img src="images/sku-redbeans.jpg" alt="Red Beans" class="h-full w-full object-cover"
-                       onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=&quot;text-xs font-semibold text-[#0b1a2d]/60&quot;>IMG</span>'; ">
-                </div>
-              </div>
-
-              <div class="min-w-0 flex-1">
-                <div class="flex items-center justify-between gap-4 flex-wrap">
-                  <div>
-                    <p class="text-lg font-semibold text-[#0b1a2d]">Red Beans</p>
-                    <p class="text-sm text-[#0b1a2d]/60">Premium pulses options</p>
-                  </div>
-                </div>
-
-                <div class="mt-4 overflow-hidden rounded-2xl border border-[#0b1a2d]/10">
-                  <div class="bg-[#6fd04a] text-[#0b1a2d]">
-                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-xs font-semibold uppercase tracking-wide">
-                      <div class="col-span-4">SKU</div>
-                      <div class="col-span-2">Variety</div>
-                      <div class="col-span-2">Packaging</div>
-                      <div class="col-span-2">Spec</div>
-                      <div class="col-span-2 text-right">MOQ</div>
-                    </div>
-                  </div>
-
-                  <div class="divide-y divide-[#0b1a2d]/10 bg-white">
-                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
-                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Red Beans</div>
-                      <div class="col-span-2">Red</div>
-                      <div class="col-span-2">25kg / 50kg</div>
-                      <div class="col-span-2">Standard</div>
-                      <div class="col-span-2 text-right font-semibold">1 x 20’</div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 13) Anise -->
-        <div class="rounded-3xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="anise">
-          <div class="p-5 sm:p-6">
-            <div class="flex items-start gap-4">
-              <div class="shrink-0">
-                <div class="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden">
-                  <img src="images/sku-anise.jpg" alt="Anise" class="h-full w-full object-cover"
-                       onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=&quot;text-xs font-semibold text-[#0b1a2d]/60&quot;>IMG</span>'; ">
-                </div>
-              </div>
-
-              <div class="min-w-0 flex-1">
-                <div class="flex items-center justify-between gap-4 flex-wrap">
-                  <div>
-                    <p class="text-lg font-semibold text-[#0b1a2d]">Anise</p>
-                    <p class="text-sm text-[#0b1a2d]/60">Whole seed options</p>
-                  </div>
-                </div>
-
-                <div class="mt-4 overflow-hidden rounded-2xl border border-[#0b1a2d]/10">
-                  <div class="bg-[#6fd04a] text-[#0b1a2d]">
-                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-xs font-semibold uppercase tracking-wide">
-                      <div class="col-span-4">SKU</div>
-                      <div class="col-span-2">Type</div>
-                      <div class="col-span-2">Packaging</div>
-                      <div class="col-span-2">Spec</div>
-                      <div class="col-span-2 text-right">MOQ</div>
-                    </div>
-                  </div>
-
-                  <div class="divide-y divide-[#0b1a2d]/10 bg-white">
-                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
-                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Anise</div>
-                      <div class="col-span-2">Whole</div>
-                      <div class="col-span-2">25kg</div>
-                      <div class="col-span-2">Standard</div>
-                      <div class="col-span-2 text-right font-semibold">1 x 20’</div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 14) White Pulp -->
-        <div class="rounded-3xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="whitepulp">
-          <div class="p-5 sm:p-6">
-            <div class="flex items-start gap-4">
-              <div class="shrink-0">
-                <div class="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden">
-                  <img src="images/sku-whitepulp.jpg" alt="Whitepulp" class="h-full w-full object-cover"
-                       onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=&quot;text-xs font-semibold text-[#0b1a2d]/60&quot;>IMG</span>'; ">
-                </div>
-              </div>
-
-              <div class="min-w-0 flex-1">
-                <div class="flex items-center justify-between gap-4 flex-wrap">
-                  <div>
-                    <p class="text-lg font-semibold text-[#0b1a2d]">White Pulp</p>
-                    <p class="text-sm text-[#0b1a2d]/60">Milling grades</p>
-                  </div>
-                </div>
-
-                <div class="mt-4 overflow-hidden rounded-2xl border border-[#0b1a2d]/10">
-                  <div class="bg-[#6fd04a] text-[#0b1a2d]">
-                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-xs font-semibold uppercase tracking-wide">
-                      <div class="col-span-4">SKU</div>
-                      <div class="col-span-2">Grade</div>
-                      <div class="col-span-2">Packaging</div>
-                      <div class="col-span-2">Spec</div>
-                      <div class="col-span-2 text-right">MOQ</div>
-                    </div>
-                  </div>
-
-                  <div class="divide-y divide-[#0b1a2d]/10 bg-white">
-                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
-                      <div class="col-span-4 font-semibold text-[#0b1a2d]">White Pulp</div>
-                      <div class="col-span-2">Milling</div>
-                      <div class="col-span-2">50kg</div>
-                      <div class="col-span-2">Standard</div>
-                      <div class="col-span-2 text-right font-semibold">1 x 20’</div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- (I’m not repeating them here to avoid altering anything in your tables.) -->
-
-      </div><!-- /#skuCards -->
-    </div>
-
-  </div>
-</section>
-
-<script>
-  // 14 circles + 14 SKU blocks below
-  const CROPS = [
-    { key:"white-beans",      name:"White Beans",       skus:2, img:"images/sku-white-beans.jpg" },
-    { key:"sesame",          name:"Sesame",            skus:2, img:"images/sku-sesame.jpg" },
-    { key:"fava",            name:"Fava Beans",        skus:2, img:"images/sku-fava.jpg" },
-    { key:"corn",            name:"Corn",              skus:2, img:"images/sku-corn.jpg" },
-    { key:"rice",            name:"Rice",              skus:1, img:"images/sku-rice.jpg" },
-    { key:"carawy",          name:"Caraway",           skus:1, img:"images/sku-caraway.jpg" },
-    { key:"fennel",          name:"Fennel",            skus:1, img:"images/sku-fennel.jpg" },
-    { key:"sunflower",       name:"Sunflower Seeds",   skus:1, img:"images/sku-sunflower.jpg" },
-    { key:"lentils",         name:"Lentils",           skus:2, img:"images/sku-lentils.jpg" },
-    { key:"soybean",         name:"Soybeans",          skus:1, img:"images/sku-soybean.jpg" },
-    { key:"peanuts",       name:"Peanuts",         skus:1, img:"images/sku-peanuts.jpg" },
-    { key:"red-beans",    name:"Red Beans",      skus:1, img:"images/sku-redbeans.jpg" },
-    { key:"anise", name:"Anise",   skus:1, img:"images/sku-anise.jpg" },
-    { key:"whitepulp",           name:"White Pulp",             skus:1, img:"images/sku-whitepulp.jpg" },
-  ];
-
-  const track = document.getElementById("cropsTrack");
-  const skusSection = document.getElementById("skus");
-  const skuCardsContainer = document.getElementById("skuCards");
-
-  function findCardByKey(key){
-    return skuCardsContainer ? skuCardsContainer.querySelector(`[data-crop="${key}"]`) : null;
-  }
-  function pinSkuCardToTop(key){
-    if (!skuCardsContainer) return;
-    const el = findCardByKey(key);
-    if (!el) return;
-    skuCardsContainer.insertBefore(el, skuCardsContainer.firstChild);
-  }
-
-  function chipHTML(c){
-    return `
-      <div class="chip" data-key="${c.key}">
-        <div class="pillWrap" aria-label="${c.name}">
-          <div class="circleImage" style="background-image:url('${c.img}')"></div>
-
-          <div class="pillContent">
-            <div class="meta">
-              <div class="name">${c.name}</div>
-              <div class="skus"><span style="font-weight:800;color:rgba(11,26,45,.92)">${c.skus}</span> SKUs</div>
-            </div>
-
-            <a class="knowMore" href="#skus" data-know="${c.key}">
-              Know more
-              <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M7 17L17 7"></path><path d="M7 7h10v10"></path>
-              </svg>
-            </a>
-          </div>
-        </div>
-
-        <div class="chip-label">${c.name}</div>
-      </div>
-    `;
-  }
-
-  function render(){
-    const list = [...CROPS, ...CROPS]; // duplicate for seamless loop
-    track.innerHTML = list.map(chipHTML).join("");
-
-    // Hover pins the SKU card to the top and DOES NOT restore back.
-    const chips = Array.from(track.querySelectorAll(".chip"));
-    chips.forEach(ch => {
-      const key = ch.getAttribute("data-key");
-      ch.addEventListener("mouseenter", () => pinSkuCardToTop(key));
-
-      const btn = ch.querySelector(`[data-know="${key}"]`);
-      btn?.addEventListener("click", (e) => {
-        e.preventDefault();
-        pinSkuCardToTop(key);
-        skusSection?.scrollIntoView({ behavior: "smooth", block: "start" });
+
+  <style>
+    .iot-box {
+      transition: transform 1200ms cubic-bezier(.19,1,.22,1), opacity 1200ms cubic-bezier(.19,1,.22,1);
+      will-change: transform, opacity;
+    }
+    .iot-box.is-in { opacity: 1 !important; transform: translateY(0) !important; }
+
+    /* Halo styles: glow + crisp line + star head */
+    .haloGlow {
+      stroke: rgba(255,255,255,0.10);
+      stroke-width: 26;
+      fill: none;
+      filter: blur(2px);
+      stroke-linecap: round;
+    }
+    .haloLine {
+      stroke: rgba(255,255,255,0.88);
+      stroke-width: 3;
+      fill: none;
+      filter: drop-shadow(0 0 18px rgba(255,255,255,0.30));
+      stroke-linecap: round; /* makes "star trail" nicer */
+    }
+    .haloHead {
+      fill: rgba(255,255,255,0.95);
+      filter: drop-shadow(0 0 22px rgba(255,255,255,0.55));
+    }
+  </style>
+
+  <script>
+    (function () {
+      const section   = document.getElementById("infrastructure-iot");
+      const boxes     = Array.from(section.querySelectorAll(".iot-box"));
+      const counters  = Array.from(section.querySelectorAll(".iot-counter"));
+      const headline  = document.getElementById("iotHeadline");
+
+      const bg        = document.getElementById("iotBg");
+      const overlay   = document.getElementById("iotOverlay");
+
+      const svg       = document.getElementById("iotHalo");
+      const title     = document.getElementById("iotTitle");
+
+      let hasRun = false;
+
+      const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+
+      function animateCounter(el, to, durationMs) {
+        return new Promise((resolve) => {
+          const start = performance.now();
+          function tick(now) {
+            const t = Math.min((now - start) / durationMs, 1);
+            const eased = 1 - Math.pow(1 - t, 3); // easeOutCubic
+            const val = Math.round(to * eased);
+            el.textContent = val.toLocaleString();
+            if (t < 1) requestAnimationFrame(tick);
+            else resolve();
+          }
+          requestAnimationFrame(tick);
+        });
+      }
+
+      function clearSvg() { while (svg.firstChild) svg.removeChild(svg.firstChild); }
+
+      function centerTop(rect) {
+        return { x: rect.left + rect.width / 2, y: rect.top };
+      }
+
+      function buildHaloPath() {
+        const sRect = section.getBoundingClientRect();
+        const first = boxes[0].getBoundingClientRect();
+        const last  = boxes[4].getBoundingClientRect();
+        const tRect = title.getBoundingClientRect();
+
+        const a = centerTop(first);
+        const b = centerTop(last);
+
+        const x1 = a.x - sRect.left;
+        const y1 = a.y - sRect.top - 10;
+
+        const x2 = b.x - sRect.left;
+        const y2 = b.y - sRect.top - 10;
+
+        // ✅ Higher halo: use a point above the title and lift it a lot
+        const mx = (x1 + x2) / 2;
+        const my = (tRect.top - sRect.top) - 170; // higher than title
+        // Also push up more to feel grand
+        const extraLift = 180;
+        const apexY = my - extraLift;
+
+        return { d: `M ${x1} ${y1} Q ${mx} ${apexY} ${x2} ${y2}`, sRect };
+      }
+
+      function pointOnQuadratic(p0, p1, p2, t) {
+        const x = (1-t)*(1-t)*p0.x + 2*(1-t)*t*p1.x + t*t*p2.x;
+        const y = (1-t)*(1-t)*p0.y + 2*(1-t)*t*p1.y + t*t*p2.y;
+        return {x,y};
+      }
+
+      function parseQuadratic(d) {
+        // d = "M x1 y1 Q cx cy x2 y2"
+        const parts = d.replace(/[MQ]/g, "").trim().split(/\s+/).map(Number);
+        return {
+          p0: {x: parts[0], y: parts[1]},
+          p1: {x: parts[2], y: parts[3]},
+          p2: {x: parts[4], y: parts[5]},
+        };
+      }
+
+      async function animateHaloWithStarTrail() {
+        clearSvg();
+
+        const { d } = buildHaloPath();
+        const { p0, p1, p2 } = parseQuadratic(d);
+
+        // glow underlay
+        const glow = document.createElementNS("http://www.w3.org/2000/svg","path");
+        glow.setAttribute("d", d);
+        glow.setAttribute("class","haloGlow");
+
+        // main line
+        const line = document.createElementNS("http://www.w3.org/2000/svg","path");
+        line.setAttribute("d", d);
+        line.setAttribute("class","haloLine");
+
+        // star head (small circle that moves along the arc)
+        const head = document.createElementNS("http://www.w3.org/2000/svg","circle");
+        head.setAttribute("r", "3.6");
+        head.setAttribute("class","haloHead");
+
+        svg.appendChild(glow);
+        svg.appendChild(line);
+        svg.appendChild(head);
+
+        // make line "grow" from a tiny segment to full length
+        const len = line.getTotalLength();
+        [glow, line].forEach(p => {
+          p.style.strokeDasharray = len;
+          p.style.strokeDashoffset = len;
+        });
+
+        // Ensure background is ready to fade (we’ll control opacity via JS)
+        bg.classList.remove("opacity-0");
+        bg.style.opacity = "0";
+        bg.classList.add("scale-100"); // settle scale during reveal
+        overlay.style.opacity = "0.88"; // strong at start
+
+        const duration = 2200; // slower, more premium
+        const start = performance.now();
+
+        function frame(now) {
+          const t = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - t, 3);
+
+          // stroke draw (grows from start to end)
+          const dash = len * (1 - eased);
+          line.style.strokeDashoffset = dash;
+          glow.style.strokeDashoffset = dash;
+
+          // star head position along the curve
+          const pt = pointOnQuadratic(p0, p1, p2, eased);
+          head.setAttribute("cx", pt.x);
+          head.setAttribute("cy", pt.y);
+
+          // head grows slightly then settles (cinema feel)
+          const r = 3.2 + (eased < 0.15 ? eased * 10 : 1.5);
+          head.setAttribute("r", String(r));
+
+          // ✅ background becomes more apparent as halo completes
+          // 0 -> 1 opacity ramp, but slower at first
+          const bgOpacity = Math.min(0.85, eased * 0.95);
+          bg.style.opacity = String(bgOpacity);
+
+          // overlay reduces to show more image near the end
+          const overlayOpacity = 0.88 - (eased * 0.45); // 0.88 -> 0.43
+          overlay.style.opacity = String(Math.max(0.40, overlayOpacity));
+
+          if (t < 1) requestAnimationFrame(frame);
+          else {
+            // final polish: soften head after completion
+            head.style.transition = "opacity 900ms ease";
+            head.style.opacity = "0.65";
+          }
+        }
+        requestAnimationFrame(frame);
+
+        // also add a slight settle zoom to background
+        bg.classList.remove("scale-[1.06]");
+        bg.classList.add("scale-100");
+      }
+
+      async function runSequence() {
+        if (hasRun) return;
+        hasRun = true;
+
+        // sequential: box -> count -> next box
+        for (let i = 0; i < boxes.length; i++) {
+          boxes[i].classList.add("is-in");
+          await sleep(420);
+          await animateCounter(counters[i], Number(counters[i].dataset.target || 0), 1700);
+          await sleep(260);
+        }
+
+        // title reveal
+        headline.classList.remove("opacity-0","translate-y-8","blur-[6px]");
+        headline.classList.add("opacity-100","translate-y-0","blur-0");
+
+        // halo starts after title appears
+        await sleep(520);
+        await animateHaloWithStarTrail();
+      }
+
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) runSequence(); });
+      }, { threshold: 0.6 });
+
+      io.observe(section);
+
+      // keep halo aligned on resize (only after run)
+      window.addEventListener("resize", () => {
+        if (!hasRun) return;
+        // re-run halo positioning instantly (no re-count sequence)
+        animateHaloWithStarTrail();
       });
-    });
-  }
 
-  // ✅ Seamless marquee sync (no jump / no restart distortion)
-  function syncMarquee(){
-    // track contains TWO copies; one loop distance is half the total width
-    const half = track.scrollWidth / 2;
-
-    // protect against zero width before layout
-    if (!half || !isFinite(half)) return;
-
-    // set exact pixel distance for the keyframes
-    track.style.setProperty("--marquee-distance", half + "px");
-
-    // SPEED CONTROL (higher = faster)
-    const speed = 120; // try 160–260
-    const duration = half / speed;
-
-    track.style.animationDuration = duration.toFixed(2) + "s";
-  }
-
-  render();
-  // run after render + after images/fonts settle
-  syncMarquee();
-
-  window.addEventListener("load", syncMarquee);
-
-  window.addEventListener("resize", () => {
-    clearTimeout(window.__mqT);
-    window.__mqT = setTimeout(syncMarquee, 80);
-  });
-
-  // extra: re-sync shortly after first paint (helps when fonts swap)
-  setTimeout(syncMarquee, 250);
-  setTimeout(syncMarquee, 900);
-</script>
+    })();
+  </script>
+</section>
 
 </body>
 </html>
