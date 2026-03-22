@@ -17,39 +17,70 @@
   </style>
 </head>
 
-<body class="bg-gray-900 text-white min-h-screen overflow-y-auto">
+<body class="bg-gray-900 text-white min-h-screen overflow-y-auto pt-12">
 
-<!-- NAV (smaller + shadow + centered menu) -->
-<!-- NAV — White, Thin, Perfectly Centered -->
-<!-- NAV — White, Thin, Single Line, Centered -->
-<nav class="sticky top-0 z-50 bg-white border-b border-black/10 shadow-sm h-12">
+<!-- NAV -->
+<nav id="site-navbar" class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-black/10 shadow-sm h-12">
 
-  <div class="relative max-w-7xl mx-auto h-12 px-6 md:px-10 flex items-center">
+  <div class="relative max-w-7xl mx-auto h-12 px-6 md:px-10 flex items-center justify-between">
 
-    <!-- LEFT: Logo (absolute so menu can center perfectly) -->
-    <a href="index.html"
-       class="absolute left-6 md:left-10 flex items-center">
+    <!-- LEFT: Logo -->
+    <a href="index.html" class="flex items-center">
       <img src="images/shunah-logo.png" alt="Shunah Logo" class="h-7 w-auto" />
     </a>
 
-    <!-- CENTER: Menu -->
-    <div class="mx-auto hidden md:flex items-center gap-6 text-[12.5px] font-medium text-[#0b1a2d]/80 whitespace-nowrap">
+    <!-- DESKTOP MENU -->
+    <div class="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-6 text-[12.5px] font-medium text-[#0b1a2d]/80">
 
       <a href="index.html#home" class="hover:text-[#0b1a2d] transition">Home</a>
-    
+
       <!-- ACTIVE -->
       <a href="technology.html"
          class="text-[#0b1a2d] font-semibold rounded-full px-4 py-1 bg-[#0b1a2d]/6 ring-1 ring-[#0b1a2d]/15">
         Product Suite
       </a>
- <a href="usecases.html" class="hover:text-[#0b1a2d] transition">Use Cases</a>
+
+      <a href="usecases.html" class="hover:text-[#0b1a2d] transition">Use Cases</a>
       <a href="focus.html" class="hover:text-[#0b1a2d] transition">Our Focus</a>
-           <a href="rfq.html" class="hover:text-[#0b1a2d] transition">RFQ</a>
+      <a href="rfq.html" class="hover:text-[#0b1a2d] transition">RFQ</a>
       <a href="contact.html" class="hover:text-[#0b1a2d] transition">Contact Us</a>
+    </div>
+
+    <!-- MOBILE BUTTON -->
+    <button id="mobile-menu-button" class="md:hidden w-10 h-10 flex items-center justify-center text-[#0b1a2d]">
+
+      <!-- hamburger -->
+      <svg id="menu-open-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+
+      <!-- close -->
+      <svg id="menu-close-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/>
+      </svg>
+
+    </button>
+
+  </div>
+
+  <!-- MOBILE MENU -->
+  <div id="mobile-menu" class="hidden md:hidden border-t border-black/10 bg-white">
+
+    <div class="px-6 py-4 flex flex-col gap-2 text-[14px] font-medium text-[#0b1a2d]">
+
+      <a href="index.html#home">Home</a>
+      <a href="technology.html" class="font-semibold">Product Suite</a>
+      <a href="usecases.html">Use Cases</a>
+      <a href="focus.html">Our Focus</a>
+      <a href="rfq.html">RFQ</a>
+      <a href="contact.html">Contact Us</a>
 
     </div>
-</nav>
+
   </div>
+
+</nav>
+ 
 <section id="tech-hero" class="bg-white h-screen flex items-center overflow-hidden">
 
 <div class="max-w-7xl mx-auto px-6 w-full">
@@ -2653,5 +2684,66 @@ function hideHover() {
   </script>
 </section>
 
+<script>
+(function () {
+  const navbar = document.getElementById("site-navbar");
+  if (!navbar) return;
+
+  let lastScrollY = window.scrollY;
+  let ticking = false;
+  let idleTimer = null;
+
+  function showNav() {
+    navbar.classList.remove("-translate-y-full");
+    navbar.classList.add("translate-y-0");
+  }
+
+  function hideNav() {
+    navbar.classList.remove("translate-y-0");
+    navbar.classList.add("-translate-y-full");
+  }
+
+  function handleScroll() {
+    const currentScrollY = window.scrollY;
+    const delta = currentScrollY - lastScrollY;
+
+    if (currentScrollY <= 10) {
+      showNav();
+    } else if (delta > 2) {
+      hideNav();
+    } else if (delta < -2) {
+      showNav();
+    }
+
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(() => {
+      if (window.scrollY > 10) hideNav();
+    }, 180);
+
+    lastScrollY = currentScrollY;
+    ticking = false;
+  }
+
+  window.addEventListener("scroll", () => {
+    if (!ticking) {
+      requestAnimationFrame(handleScroll);
+      ticking = true;
+    }
+  }, { passive: true });
+
+})();
+</script>
+<script>
+  const btn = document.getElementById("mobile-menu-button");
+  const menu = document.getElementById("mobile-menu");
+  const openIcon = document.getElementById("menu-open-icon");
+  const closeIcon = document.getElementById("menu-close-icon");
+
+  btn.addEventListener("click", () => {
+    menu.classList.toggle("hidden");
+    openIcon.classList.toggle("hidden");
+    closeIcon.classList.toggle("hidden");
+  });
+</script>
 </body>
 </html>
