@@ -144,31 +144,60 @@
   </style>
 </head>
 
-<body class="bg-[#f7f9fc] text-[#0b1a2d]">
+<body class="bg-[#f7f9fc] text-[#0b1a2d] pt-12">
 
-<!-- NAV -->
-<nav class="sticky top-0 z-50 bg-white border-b border-black/10 shadow-sm h-12">
-  <div class="relative max-w-7xl mx-auto h-12 px-6 md:px-10 flex items-center">
+<!-- NAV --><!-- NAV -->
+<nav id="site-navbar" class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-black/10 shadow-sm h-12 transition-transform duration-300 ease-out translate-y-0">
+  <div class="relative max-w-7xl mx-auto h-12 px-6 md:px-10 flex items-center justify-between">
 
-    <a href="index.html" class="absolute left-6 md:left-10 flex items-center">
+    <!-- LEFT: Logo -->
+    <a href="index.html" class="flex items-center">
       <img src="images/shunah-logo.png" alt="Shunah Logo" class="h-7 w-auto" />
     </a>
 
-    <div class="mx-auto hidden md:flex items-center gap-6 text-[12.5px] font-medium text-[#0b1a2d]/80 whitespace-nowrap">
+    <!-- DESKTOP MENU -->
+    <div class="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-6 text-[12.5px] font-medium text-[#0b1a2d]/80 whitespace-nowrap">
       <a href="index.html#home" class="hover:text-[#0b1a2d] transition">Home</a>
-         <a href="technology.html" class="hover:text-[#0b1a2d] transition">Product Suite</a>
-<a href="usecases.html" class="hover:text-[#0b1a2d] transition">Use Cases</a>
+      <a href="technology.html" class="hover:text-[#0b1a2d] transition">Product Suite</a>
+      <a href="usecases.html" class="hover:text-[#0b1a2d] transition">Use Cases</a>
 
       <a href="focus.html"
          class="text-[#0b1a2d] font-semibold rounded-full px-4 py-1 bg-[#0b1a2d]/6 ring-1 ring-[#0b1a2d]/15">
         Our Focus
       </a>
 
-    
       <a href="rfq.html" class="hover:text-[#0b1a2d] transition">RFQ</a>
       <a href="contact.html" class="hover:text-[#0b1a2d] transition">Contact Us</a>
     </div>
-				
+
+    <!-- MOBILE BUTTON -->
+    <button
+      id="mobile-menu-button"
+      type="button"
+      aria-label="Toggle menu"
+      aria-expanded="false"
+      class="md:hidden w-10 h-10 flex items-center justify-center text-[#0b1a2d]"
+    >
+      <svg id="menu-open-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+
+      <svg id="menu-close-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- MOBILE DROPDOWN -->
+  <div id="mobile-menu" class="hidden md:hidden border-t border-black/10 bg-white">
+    <div class="px-6 py-4 flex flex-col gap-2 text-[14px] font-medium text-[#0b1a2d]">
+      <a href="index.html#home">Home</a>
+      <a href="technology.html">Product Suite</a>
+      <a href="usecases.html">Use Cases</a>
+      <a href="focus.html" class="font-semibold">Our Focus</a>
+      <a href="rfq.html">RFQ</a>
+      <a href="contact.html">Contact Us</a>
+    </div>
   </div>
 </nav>
 
@@ -1119,5 +1148,84 @@
   setTimeout(syncMarquee, 900);
 </script>
 
+<script>
+  (function () {
+    const navbar = document.getElementById("site-navbar");
+    if (!navbar) return;
+
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+    let idleTimer = null;
+    const hideAfterIdle = 180;
+
+    function showNav() {
+      navbar.classList.remove("-translate-y-full");
+      navbar.classList.add("translate-y-0");
+    }
+
+    function hideNav() {
+      navbar.classList.remove("translate-y-0");
+      navbar.classList.add("-translate-y-full");
+    }
+
+    function handleScroll() {
+      const currentScrollY = window.scrollY;
+      const delta = currentScrollY - lastScrollY;
+
+      if (currentScrollY <= 10) {
+        showNav();
+      } else if (delta > 2) {
+        hideNav(); // moving down
+      } else if (delta < -2) {
+        showNav(); // moving up
+      }
+
+      clearTimeout(idleTimer);
+      idleTimer = setTimeout(() => {
+        if (window.scrollY > 10) hideNav(); // stall = hide
+      }, hideAfterIdle);
+
+      lastScrollY = currentScrollY;
+      ticking = false;
+    }
+
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (!ticking) {
+          window.requestAnimationFrame(handleScroll);
+          ticking = true;
+        }
+      },
+      { passive: true }
+    );
+  })();
+</script>
+<script>
+  const mobileMenuButton = document.getElementById("mobile-menu-button");
+  const mobileMenu = document.getElementById("mobile-menu");
+  const menuOpenIcon = document.getElementById("menu-open-icon");
+  const menuCloseIcon = document.getElementById("menu-close-icon");
+
+  if (mobileMenuButton && mobileMenu) {
+    mobileMenuButton.addEventListener("click", () => {
+      const isHidden = mobileMenu.classList.contains("hidden");
+
+      mobileMenu.classList.toggle("hidden");
+      menuOpenIcon.classList.toggle("hidden");
+      menuCloseIcon.classList.toggle("hidden");
+      mobileMenuButton.setAttribute("aria-expanded", isHidden ? "true" : "false");
+    });
+
+    mobileMenu.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => {
+        mobileMenu.classList.add("hidden");
+        menuOpenIcon.classList.remove("hidden");
+        menuCloseIcon.classList.add("hidden");
+        mobileMenuButton.setAttribute("aria-expanded", "false");
+      });
+    });
+  }
+</script>
 </body>
 </html>
