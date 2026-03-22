@@ -81,16 +81,16 @@
 </head>
 <body class="bg-white text-slate-900">
 
-  <!-- TOP NAV -->
+ <!-- TOP NAV -->
 <nav id="site-navbar" class="fixed top-0 left-0 right-0 z-50 h-12 bg-white transition-transform duration-300">
-  <div class="relative max-w-7xl mx-auto h-12 px-6 md:px-10 flex items-center">
+  <div class="relative max-w-7xl mx-auto h-12 px-6 md:px-10 flex items-center justify-between">
 
     <!-- LEFT: Logo -->
-    <a href="index.html" class="absolute left-6 md:left-10 flex items-center">
+    <a href="index.html" class="flex items-center">
       <img src="images/shunah-logo.png" alt="Shunah Logo" class="h-7 w-auto" />
     </a>
 
-    <!-- CENTER: Menu -->
+    <!-- DESKTOP MENU -->
     <div class="mx-auto hidden md:flex items-center">
       <div id="nav-track" class="relative flex items-center gap-1">
         
@@ -120,7 +120,7 @@
           Our Focus
         </a>
 
-               <a href="rfq.html"
+        <a href="rfq.html"
            class="nav-link relative z-[2] px-4 h-[32px] inline-flex items-center rounded-full text-[12.5px] font-medium text-[#4b5563] transition-colors duration-200">
           RFQ
         </a>
@@ -132,6 +132,36 @@
       </div>
     </div>
 
+    <!-- MOBILE BUTTON -->
+    <button
+      id="mobile-menu-button"
+      type="button"
+      aria-label="Toggle menu"
+      aria-expanded="false"
+      class="md:hidden w-10 h-10 flex items-center justify-center text-[#0b1a2d]"
+    >
+      <!-- hamburger -->
+      <svg id="menu-open-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+
+      <!-- close -->
+      <svg id="menu-close-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- MOBILE DROPDOWN -->
+  <div id="mobile-menu" class="hidden md:hidden border-t border-black/10 bg-white">
+    <div class="px-6 py-4 flex flex-col gap-2 text-[14px] font-medium text-[#0b1a2d]">
+      <a href="index.html">Home</a>
+      <a href="technology.html">Product Suite</a>
+      <a href="#use-cases" class="font-semibold">Use Cases</a>
+      <a href="focus.html">Our Focus</a>
+      <a href="rfq.html">RFQ</a>
+      <a href="contact.html">Contact Us</a>
+    </div>
   </div>
 </nav>
 
@@ -625,5 +655,31 @@ function setNavPill(link) {
       backButton.addEventListener('click', closeUseCase);
     })();
   </script>
+<script>
+  const mobileMenuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const menuOpenIcon = document.getElementById('menu-open-icon');
+  const menuCloseIcon = document.getElementById('menu-close-icon');
+
+  if (mobileMenuButton && mobileMenu) {
+    mobileMenuButton.addEventListener('click', () => {
+      const isHidden = mobileMenu.classList.contains('hidden');
+
+      mobileMenu.classList.toggle('hidden');
+      menuOpenIcon.classList.toggle('hidden');
+      menuCloseIcon.classList.toggle('hidden');
+      mobileMenuButton.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
+    });
+
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        menuOpenIcon.classList.remove('hidden');
+        menuCloseIcon.classList.add('hidden');
+        mobileMenuButton.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+</script>
 </body>
 </html>
