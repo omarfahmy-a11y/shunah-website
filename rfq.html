@@ -56,25 +56,24 @@
 
 <body class="bg-white text-[#0b1a2d] min-h-screen overflow-y-auto">
 
-  <!-- NAV (thinner + RFQ highlighted) -->
-<!-- NAV (smaller + shadow + centered menu) -->
-<nav class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-black/10 h-12 shadow-[0_4px_14px_rgba(0,0,0,0.06)]">
-  
-  <div class="relative max-w-7xl mx-auto h-12 px-6 md:px-10 flex items-center">
+  <!-- NAV -->
+<nav id="site-navbar" class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-black/10 h-12 shadow-[0_4px_14px_rgba(0,0,0,0.06)]">
+
+  <div class="relative max-w-7xl mx-auto h-12 px-6 md:px-10 flex items-center justify-between">
 
     <!-- LEFT: Logo -->
-    <a href="index.html" class="absolute left-6 md:left-10 flex items-center">
+    <a href="index.html" class="flex items-center">
       <img src="images/shunah-logo.png" alt="Shunah Logo" class="h-7 w-auto" />
     </a>
 
-    <!-- CENTER: Menu -->
-    <div class="mx-auto hidden md:flex items-center gap-7 text-[12.5px] font-medium text-[#0b1a2d]/80">
+    <!-- DESKTOP MENU -->
+    <div class="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-7 text-[12.5px] font-medium text-[#0b1a2d]/80">
 
       <a href="index.html#home" class="hover:text-[#0b1a2d] transition">Home</a>
       <a href="technology.html" class="hover:text-[#0b1a2d] transition">Product Suite</a>
-<a href="usecases.html" class="hover:text-[#0b1a2d] transition">Use Cases</a>      
-<a href="focus.html" class="hover:text-[#0b1a2d] transition">Our Focus</a>
-     
+      <a href="usecases.html" class="hover:text-[#0b1a2d] transition">Use Cases</a>
+      <a href="focus.html" class="hover:text-[#0b1a2d] transition">Our Focus</a>
+
       <!-- ACTIVE -->
       <a href="rfq.html"
          class="text-[#0b1a2d] font-semibold rounded-full px-4 py-1 bg-[#0b1a2d]/6 ring-1 ring-[#0b1a2d]/15">
@@ -84,7 +83,36 @@
       <a href="contact.html" class="hover:text-[#0b1a2d] transition">Contact Us</a>
     </div>
 
+    <!-- MOBILE BUTTON -->
+    <button id="mobile-menu-button" class="md:hidden w-10 h-10 flex items-center justify-center">
+      <!-- hamburger -->
+      <svg id="menu-open-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+
+      <!-- close -->
+      <svg id="menu-close-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/>
+      </svg>
+    </button>
+
   </div>
+
+  <!-- MOBILE MENU -->
+  <div id="mobile-menu" class="hidden md:hidden border-t border-black/10 bg-white">
+
+    <div class="px-6 py-4 flex flex-col gap-2 text-[14px] font-medium">
+
+      <a href="index.html#home">Home</a>
+      <a href="technology.html">Product Suite</a>
+      <a href="usecases.html">Use Cases</a>
+      <a href="focus.html">Our Focus</a>
+      <a href="rfq.html" class="font-semibold">RFQ</a>
+      <a href="contact.html">Contact Us</a>
+
+    </div>
+  </div>
+
 </nav>
 
   <!-- RFQ SECTION (fits under 56px nav) -->
@@ -518,6 +546,18 @@
       updateTrackerUI();
     })();
   </script>
+<!-- ✅ ADD THIS EXACTLY HERE -->
+<script>
+  const btn = document.getElementById("mobile-menu-button");
+  const menu = document.getElementById("mobile-menu");
+  const openIcon = document.getElementById("menu-open-icon");
+  const closeIcon = document.getElementById("menu-close-icon");
 
+  btn.addEventListener("click", () => {
+    menu.classList.toggle("hidden");
+    openIcon.classList.toggle("hidden");
+    closeIcon.classList.toggle("hidden");
+  });
+</script>
 </body>
 </html>
