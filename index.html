@@ -65,12 +65,10 @@
 
     <!-- CENTER: Menu -->
     <div class="mx-auto hidden md:flex items-center gap-7 text-[12.5px] font-medium text-[#0b1a2d]/80">
-
       <a href="#home"
          class="text-[#0b1a2d] font-semibold rounded-full px-4 py-1 bg-[#0b1a2d]/6 ring-1 ring-[#0b1a2d]/15">
         Home
       </a>
-
       <a href="technology.html" class="hover:text-[#0b1a2d] transition">Product Suite</a>
       <a href="usecases.html" class="hover:text-[#0b1a2d] transition">Use Cases</a>
       <a href="focus.html" class="hover:text-[#0b1a2d] transition">Our Focus</a>
@@ -78,6 +76,39 @@
       <a href="contact.html" class="hover:text-[#0b1a2d] transition">Contact Us</a>
     </div>
 
+  <!-- MOBILE BUTTON -->
+    <button
+      id="mobile-menu-button"
+      type="button"
+      aria-label="Toggle menu"
+      aria-expanded="false"
+      class="md:hidden ml-auto inline-flex items-center justify-center w-10 h-10 rounded-full text-[#0b1a2d] hover:bg-[#0b1a2d]/5 transition"
+    >
+      <!-- hamburger -->
+      <svg id="menu-open-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+
+      <!-- close -->
+      <svg id="menu-close-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- MOBILE DROPDOWN -->
+  <div
+    id="mobile-menu"
+    class="md:hidden hidden border-t border-black/10 bg-white"
+  >
+    <div class="px-6 py-4 flex flex-col gap-1 text-[14px] font-medium text-[#0b1a2d]">
+      <a href="index.html" class="nav-link nav-active">Home</a>
+      <a href="technology.html" class="nav-link">Product Suite</a>
+      <a href="usecases.html" class="nav-link">Use Cases</a>
+      <a href="focus.html" class="nav-link">Our Focus</a>
+      <a href="rfq.html" class="nav-link">RFQ</a>
+      <a href="contact.html" class="nav-link">Contact Us</a>
+    </div>
   </div>
 </nav>
   <!-- HERO SECTION (fills screen) -->
@@ -2039,6 +2070,11 @@ Updated:
 <script>
   (function () {
     const navbar = document.getElementById('site-navbar');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const openIcon = document.getElementById('menu-open-icon');
+    const closeIcon = document.getElementById('menu-close-icon');
+
     if (!navbar) return;
 
     let lastScrollY = window.scrollY;
@@ -2052,6 +2088,7 @@ Updated:
     }
 
     function hideNav() {
+      if (mobileMenu && !mobileMenu.classList.contains('hidden')) return;
       navbar.classList.add('nav-hidden');
     }
 
@@ -2062,8 +2099,45 @@ Updated:
       }, idleHideDelay);
     }
 
+    function openMobileMenu() {
+      mobileMenu.classList.remove('hidden');
+      mobileMenuButton.setAttribute('aria-expanded', 'true');
+      openIcon.classList.add('hidden');
+      closeIcon.classList.remove('hidden');
+      showNav();
+      clearTimeout(hideTimer);
+    }
+
+    function closeMobileMenu() {
+      mobileMenu.classList.add('hidden');
+      mobileMenuButton.setAttribute('aria-expanded', 'false');
+      openIcon.classList.remove('hidden');
+      closeIcon.classList.add('hidden');
+      resetIdleHideTimer();
+    }
+
+    function toggleMobileMenu() {
+      if (mobileMenu.classList.contains('hidden')) {
+        openMobileMenu();
+      } else {
+        closeMobileMenu();
+      }
+    }
+
+    mobileMenuButton.addEventListener('click', toggleMobileMenu);
+
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', closeMobileMenu);
+    });
+
     window.addEventListener('scroll', function () {
       const currentScrollY = window.scrollY;
+
+      if (!mobileMenu.classList.contains('hidden')) {
+        showNav();
+        lastScrollY = currentScrollY;
+        return;
+      }
 
       if (currentScrollY <= 0) {
         showNav();
@@ -2073,11 +2147,9 @@ Updated:
       }
 
       if (currentScrollY < lastScrollY) {
-        /* scrolling up */
         showNav();
         resetIdleHideTimer();
       } else if (currentScrollY > lastScrollY) {
-        /* scrolling down */
         clearTimeout(hideTimer);
         if (currentScrollY > hideAfterDownScroll) {
           hideNav();
@@ -2086,6 +2158,12 @@ Updated:
 
       lastScrollY = currentScrollY;
     }, { passive: true });
+
+    window.addEventListener('resize', function () {
+      if (window.innerWidth >= 768) {
+        closeMobileMenu();
+      }
+    });
   })();
 </script>
 </body>
