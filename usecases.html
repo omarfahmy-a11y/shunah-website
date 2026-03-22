@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shunah Use Cases</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; }
+
+    .tri-right {
+      clip-path: polygon(0 0, 100% 50%, 0 100%);
+    }
+
+    .nav-hidden {
+      transform: translateY(-115%);
+    }
+ #nav-pill {
+  background: transparent;
+  border: 1px solid rgba(15, 23, 42, 0.12); /* soft grey border */
+  box-shadow: none;
+}
+
+    .nav-pill {
+      transition:
+        transform 0.32s cubic-bezier(.22,.9,.29,1),
+        width 0.32s cubic-bezier(.22,.9,.29,1),
+        opacity 0.2s ease;
+    }
+
+    .hero-screen-shadow {
+      box-shadow:
+        0 28px 70px rgba(15, 23, 42, 0.10),
+        0 10px 30px rgba(15, 23, 42, 0.06);
+    }
+
+    .soft-card {
+      box-shadow: 0 8px 26px rgba(15,23,42,0.05);
+      transition:
+        transform 0.42s cubic-bezier(.22,.9,.29,1),
+        box-shadow 0.35s ease,
+        opacity 0.35s ease,
+        filter 0.35s ease;
+    }
+
+    .soft-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 18px 45px rgba(15,23,42,0.08);
+    }
+
+    .panel-shadow {
+      box-shadow:
+        0 28px 70px rgba(15,23,42,0.09),
+        0 8px 24px rgba(15,23,42,0.04);
+    }
+
+    .view-anim {
+      transition:
+        opacity 0.34s ease,
+        transform 0.42s cubic-bezier(.22,.9,.29,1),
+        filter 0.34s ease;
+    }
+
+    .view-hidden {
+      opacity: 0;
+      transform: translateY(16px);
+      filter: blur(4px);
+      pointer-events: none;
+    }
+
+    .view-shown {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+      pointer-events: auto;
+    }
+  </style>
+</head>
+<body class="bg-white text-slate-900">
+
+  <!-- TOP NAV -->
+<nav id="site-navbar" class="fixed top-0 left-0 right-0 z-50 h-12 bg-white transition-transform duration-300">
+  <div class="relative max-w-7xl mx-auto h-12 px-6 md:px-10 flex items-center">
+
+    <!-- LEFT: Logo -->
+    <a href="index.html" class="absolute left-6 md:left-10 flex items-center">
+      <img src="images/shunah-logo.png" alt="Shunah Logo" class="h-7 w-auto" />
+    </a>
+
+    <!-- CENTER: Menu -->
+    <div class="mx-auto hidden md:flex items-center">
+      <div id="nav-track" class="relative flex items-center gap-1">
+        
+        <span
+          id="nav-pill"
+          class="absolute top-1/2 -translate-y-1/2 h-[32px] rounded-full bg-[#f1f3f5] border border-black/6 transition-all duration-300 ease-out">
+        </span>
+
+        <a href="index.html"
+           class="nav-link relative z-[2] px-4 h-[32px] inline-flex items-center rounded-full text-[12.5px] font-medium text-[#4b5563] transition-colors duration-200">
+          Home
+        </a>
+
+        <a href="technology.html"
+           class="nav-link relative z-[2] px-4 h-[32px] inline-flex items-center rounded-full text-[12.5px] font-medium text-[#4b5563] transition-colors duration-200">
+          Product Suite
+        </a>
+
+        <a href="#use-cases"
+           class="nav-link relative z-[2] px-4 h-[32px] inline-flex items-center rounded-full text-[12.5px] font-medium text-[#111827] transition-colors duration-200"
+           data-current="true">
+          Use Cases
+        </a>
+
+        <a href="focus.html"
+           class="nav-link relative z-[2] px-4 h-[32px] inline-flex items-center rounded-full text-[12.5px] font-medium text-[#4b5563] transition-colors duration-200">
+          Our Focus
+        </a>
+
+               <a href="rfq.html"
+           class="nav-link relative z-[2] px-4 h-[32px] inline-flex items-center rounded-full text-[12.5px] font-medium text-[#4b5563] transition-colors duration-200">
+          RFQ
+        </a>
+
+        <a href="contact.html"
+           class="nav-link relative z-[2] px-4 h-[32px] inline-flex items-center rounded-full text-[12.5px] font-medium text-[#4b5563] transition-colors duration-200">
+          Contact Us
+        </a>
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+
+  <!-- USE CASES SECTION -->
+  <section id="use-cases" class="bg-white pt-12">
+
+<!-- PART 1: HERO -->
+<div class="bg-[#dfeaf7]">
+  <div class="max-w-[1240px] mx-auto px-6 md:px-10 py-14 md:py-20">
+    <div class="grid lg:grid-cols-[1.02fr_1fr] gap-12 items-center min-h-[430px]">
+
+      <!-- LEFT (UNCHANGED) -->
+      <div class="max-w-[540px] text-[#0b1a2d]">
+        <div class="inline-flex items-center rounded-full border border-[#0b1a2d]/10 bg-white/55 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] mb-5">
+          Seller.Buyers.Savers.Investors
+        </div>
+
+        <h1 class="text-[clamp(2.2rem,4vw,4.6rem)] font-semibold tracking-[-0.055em] leading-[0.92]">
+          Use Cases
+        </h1>
+
+        <p class="mt-5 max-w-[460px] text-[15px] md:text-[16px] leading-7 text-[#0b1a2d]/72">
+         Shunah is building the digital infrastructure layer for the dry crops economy — connecting stakeholders, integrating new participants, and enabling trade, capital, and data to move seamlessly across the network.
+
+From farmers and aggregators to traders, processors, financiers, and entirely new entrants, the system becomes accessible, visible, and executable.
+        </p>
+      </div>
+
+     <!-- RIGHT (4 GLASS BOXES WITH FULL IMAGE PLACEHOLDERS) -->
+<div class="relative flex justify-center lg:justify-end">
+  <div class="w-full max-w-[680px] grid grid-cols-4 gap-5 h-[420px]">
+
+  <!-- BOX 1 -->
+<div class="relative rounded-[18px] border border-white/18 bg-gradient-to-b from-[#FFD400] to-[#FFD400] shadow-[0_18px_30px_rgba(8,39,84,0.28),inset_0_1px_0_rgba(255,255,255,0.22),inset_0_-10px_24px_rgba(7,33,74,0.16)] backdrop-blur-[10px]">
+
+  <!-- BOX VISUALS -->
+  <div class="absolute inset-[1px] rounded-[17px] bg-white/[0.03] pointer-events-none"></div>
+  <div class="absolute top-0 right-[10%] w-[70%] h-[42%] bg-gradient-to-b from-white/30 to-transparent skew-x-[-16deg] pointer-events-none"></div>
+  <div class="absolute inset-x-[12%] bottom-3 h-5 rounded-full bg-black/12 blur-md pointer-events-none"></div>
+
+  <!-- IMAGE LAYER -->
+  <div class="absolute inset-0 z-[2] pointer-events-none">
+    <img
+      src="images/usecase-hero-1.png"
+      alt=""
+      class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 scale-[1.4]"
+    />
+  </div>
+
+</div>
+
+    <!-- BOX 2 -->
+    <div class="relative rounded-[18px] border border-white/18 bg-gradient-to-b from-[#FFD400] to-[#FFD400] shadow-[0_18px_30px_rgba(8,39,84,0.28),inset_0_1px_0_rgba(255,255,255,0.22),inset_0_-10px_24px_rgba(7,33,74,0.16)] backdrop-blur-[10px]">
+
+  <!-- BOX VISUALS -->
+  <div class="absolute inset-[1px] rounded-[17px] bg-white/[0.03] pointer-events-none"></div>
+  <div class="absolute top-0 right-[10%] w-[70%] h-[42%] bg-gradient-to-b from-white/30 to-transparent skew-x-[-16deg] pointer-events-none"></div>
+  <div class="absolute inset-x-[12%] bottom-3 h-5 rounded-full bg-black/12 blur-md pointer-events-none"></div>
+
+  <!-- IMAGE LAYER -->
+  <div class="absolute inset-0 z-[2] pointer-events-none">
+    <img
+      src="images/usecase-hero-3-white.png"
+      alt=""
+      class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 scale-[1.4]"
+    />
+  </div>
+
+</div>
+
+    <!-- BOX 3 -->
+    <div class="relative rounded-[18px] border border-white/18 bg-gradient-to-b from-[#FFD400] to-[#FFD400] shadow-[0_18px_30px_rgba(8,39,84,0.28),inset_0_1px_0_rgba(255,255,255,0.22),inset_0_-10px_24px_rgba(7,33,74,0.16)] backdrop-blur-[10px]">
+
+  <!-- BOX VISUALS -->
+  <div class="absolute inset-[1px] rounded-[17px] bg-white/[0.03] pointer-events-none"></div>
+  <div class="absolute top-0 right-[10%] w-[70%] h-[42%] bg-gradient-to-b from-white/30 to-transparent skew-x-[-16deg] pointer-events-none"></div>
+  <div class="absolute inset-x-[12%] bottom-3 h-5 rounded-full bg-black/12 blur-md pointer-events-none"></div>
+
+  <!-- IMAGE LAYER -->
+  <div class="absolute inset-0 z-[2] pointer-events-none">
+    <img
+      src="images/usecase-hero-2-white.png"
+      alt=""
+      class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 scale-[1.5]"
+    />
+  </div>
+
+    </div>
+
+    <!-- BOX 4 -->
+    <div class="relative rounded-[18px] border border-white/18 bg-gradient-to-b from-[#FFD400] to-[#FFD400] shadow-[0_18px_30px_rgba(8,39,84,0.28),inset_0_1px_0_rgba(255,255,255,0.22),inset_0_-10px_24px_rgba(7,33,74,0.16)] backdrop-blur-[10px]">
+
+  <!-- BOX VISUALS -->
+  <div class="absolute inset-[1px] rounded-[17px] bg-white/[0.03] pointer-events-none"></div>
+  <div class="absolute top-0 right-[10%] w-[70%] h-[42%] bg-gradient-to-b from-white/30 to-transparent skew-x-[-16deg] pointer-events-none"></div>
+  <div class="absolute inset-x-[12%] bottom-3 h-5 rounded-full bg-black/12 blur-md pointer-events-none"></div>
+
+  <!-- IMAGE LAYER -->
+  <div class="absolute inset-0 z-[2] pointer-events-none">
+    <img
+      src="images/usecase-hero-4-white.png"
+      alt=""
+      class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 scale-[1.35]"
+    />
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+    </div>
+  </div>
+</div>
+    <!-- PART 2: MIDDLE STRIP -->
+    <div class="bg-[#eef1f4]">
+      <div class="max-w-[1240px] mx-auto px-6 md:px-10 py-14 md:py-16">
+        <div class="grid lg:grid-cols-[0.95fr_1.15fr] gap-10 items-center">
+
+          <!-- Left -->
+          <div class="relative flex items-center gap-4 md:gap-6 min-h-[170px]">
+
+  <div class="w-[210px] h-[210px] tri-right overflow-hidden bg-[#dfe7ef]">
+    <img src="images/triangle-1.png" alt="Use case visual 1" class="w-full h-full object-cover" />
+  </div>
+
+  <div class="w-[210px] h-[210px] tri-right overflow-hidden bg-[#dfe7ef]">
+    <img src="images/triangle-2.jpg" alt="Use case visual 2" class="w-full h-full object-cover" />
+  </div>
+
+  <div class="absolute left-[145px] bottom-[-10px] w-[90px] h-[90px] tri-right bg-white/55"></div>
+
+</div>
+
+          <!-- Right -->
+          <div class="max-w-[640px]">
+            <div class="text-[#c79d15] text-[44px] leading-none font-semibold mb-2">“</div>
+
+            <p class="text-[18px] md:text-[20px] leading-8 text-slate-800 font-medium">
+              Shunah is building the operating layer for Africa’s dry crops market — connecting supply, infrastructure, and capital in one integrated system.
+            </p>
+
+            <div class="mt-4 text-[13px] text-slate-500">
+              Shunah Platform · Use Cases
+            </div>
+
+            <div class="mt-7 flex flex-wrap gap-3">
+              <a href="#use-cases-grid" class="inline-flex items-center justify-center rounded-md bg-black text-white text-[13px] font-medium px-5 h-11 transition hover:opacity-90">
+                Read More
+              </a>
+
+              <a href="contact.html" class="inline-flex items-center justify-center rounded-md border border-black/15 bg-white text-slate-800 text-[13px] font-medium px-5 h-11 transition hover:bg-black/[0.03]">
+                See Other Cases
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- PART 3: CARDS -->
+    <div id="use-cases-grid" class="bg-white">
+      <div class="max-w-[1240px] mx-auto px-6 md:px-10 py-16 md:py-18">
+
+        <div class="mb-10">
+          <h2 class="text-[clamp(1.9rem,3vw,3rem)] font-semibold tracking-[-0.04em] text-slate-900">
+            Use Cases
+          </h2>
+        </div>
+
+        <!-- DEFAULT VIEW -->
+        <div id="usecases-default-view" class="view-anim view-shown">
+          <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-5">
+
+            <!-- CARD 1 -->
+            <article class="soft-card rounded-[18px] border border-black/8 bg-[#f8fafc] p-6">
+              <div class="mb-5 h-[160px] rounded-[14px] overflow-hidden bg-[#eef2f7]">
+                <img src="images/usecase-1.png" alt="Control Supply" class="w-full h-full object-cover" />
+              </div>
+
+              <h3 class="text-[20px] font-semibold tracking-[-0.03em] text-slate-900">
+                Control Supply
+              </h3>
+
+              <p class="mt-2 text-[13px] font-semibold uppercase tracking-[0.10em] text-[#0b1f47]">
+                Own the supply, not just access it
+              </p>
+
+              <p class="mt-4 text-[14px] leading-7 text-slate-600">
+                Directly locate crops, secure volumes, and transact with farmers and aggregators — without layers in between.
+              </p>
+
+              <button class="know-more mt-6 inline-flex items-center justify-center rounded-full border border-[#0b1f47] bg-white px-4 h-10 text-[12.5px] font-semibold text-[#0b1f47] transition hover:bg-[#0b1f47] hover:text-white" data-key="source">
+                Explore
+              </button>
+            </article>
+
+                      <!-- CARD 2 -->
+            <article class="soft-card rounded-[18px] border border-black/8 bg-[#f8fafc] p-6">
+              <div class="mb-5 h-[160px] rounded-[14px] overflow-hidden bg-[#eef2f7]">
+                <img src="images/usecase-3.png" alt="Own the Asset" class="w-full h-full object-cover" />
+              </div>
+
+              <h3 class="text-[20px] font-semibold tracking-[-0.03em] text-slate-900">
+                Own the Asset
+              </h3>
+
+              <p class="mt-2 text-[13px] font-semibold uppercase tracking-[0.10em] text-[#0b1f47]">
+                Turn crops into a financial asset class
+              </p>
+
+              <p class="mt-4 text-[14px] leading-7 text-slate-600">
+                Deploy capital into real crop positions. Shunah manages sourcing, storage, and exit — you capture the upside.
+              </p>
+
+              <button class="know-more mt-6 inline-flex items-center justify-center rounded-full border border-[#0b1f47] bg-white px-4 h-10 text-[12.5px] font-semibold text-[#0b1f47] transition hover:bg-[#0b1f47] hover:text-white" data-key="invest">
+                Explore
+              </button>
+            </article>
+
+            <!-- CARD 3 -->
+            <article class="soft-card rounded-[18px] border border-black/8 bg-[#f8fafc] p-6">
+              <div class="mb-5 h-[160px] rounded-[14px] overflow-hidden bg-[#eef2f7]">
+                <img src="images/usecase-2.png" alt="Activate Infrastructure" class="w-full h-full object-cover" />
+              </div>
+
+              <h3 class="text-[20px] font-semibold tracking-[-0.03em] text-slate-900">
+                Activate Infrastructure
+              </h3>
+
+              <p class="mt-2 text-[13px] font-semibold uppercase tracking-[0.10em] text-[#0b1f47]">
+                Put your infrastructure to work
+              </p>
+
+              <p class="mt-4 text-[14px] leading-7 text-slate-600">
+                Plug warehouses, silos, and processing lines into live trade flows — and earn from every transaction moving through them.
+              </p>
+
+              <button class="know-more mt-6 inline-flex items-center justify-center rounded-full border border-[#0b1f47] bg-white px-4 h-10 text-[12.5px] font-semibold text-[#0b1f47] transition hover:bg-[#0b1f47] hover:text-white" data-key="infra">
+                Explore
+              </button>
+            </article>
+
+            <!-- CARD 4 -->
+            <article class="soft-card rounded-[18px] border border-black/8 bg-[#f8fafc] p-6">
+              <div class="mb-5 h-[160px] rounded-[14px] overflow-hidden bg-[#eef2f7]">
+                <img src="images/usecase-4.png" alt="Fund the Flow" class="w-full h-full object-cover" />
+              </div>
+
+              <h3 class="text-[20px] font-semibold tracking-[-0.03em] text-slate-900">
+                Fund the Flow
+              </h3>
+
+              <p class="mt-2 text-[13px] font-semibold uppercase tracking-[0.10em] text-[#0b1f47]">
+                Deploy capital into real trade
+              </p>
+
+              <p class="mt-4 text-[14px] leading-7 text-slate-600">
+                Finance secured crop transactions across the network. Short cycles, real assets, disciplined returns.
+              </p>
+
+              <button class="know-more mt-6 inline-flex items-center justify-center rounded-full border border-[#0b1f47] bg-white px-4 h-10 text-[12.5px] font-semibold text-[#0b1f47] transition hover:bg-[#0b1f47] hover:text-white" data-key="finance">
+                Explore
+              </button>
+            </article>
+
+          </div>
+        </div>
+
+        <!-- EXPANDED VIEW -->
+        <div id="usecases-expanded-view" class="view-anim view-hidden hidden">
+          <div class="grid xl:grid-cols-[300px_minmax(0,1fr)] gap-5 items-start xl:items-start">
+
+            <!-- SELECTED SMALL CARD -->
+           <aside class="soft-card self-start rounded-[22px] border border-black/8 bg-[#f8fafc] p-5">
+              <div class="mb-4 h-[160px] rounded-[14px] overflow-hidden bg-[#eef2f7]">
+                <img id="selected-card-image" src="" alt="" class="w-full h-full object-cover" />
+              </div>
+
+              <h3 id="selected-card-title" class="text-[20px] font-semibold tracking-[-0.03em] text-slate-900"></h3>
+              <p id="selected-card-kicker" class="mt-2 text-[12px] font-semibold uppercase tracking-[0.10em] text-[#0b1f47]"></p>
+            </aside>
+
+            <!-- BIG DETAIL PANEL -->
+            <section class="panel-shadow rounded-[26px] border border-black/8 bg-[linear-gradient(180deg,#f8fbff,white)] p-7 md:p-9">
+              <div class="max-w-[780px]">
+                <div class="inline-flex items-center rounded-full border border-[#0b1f47]/10 bg-[#0b1f47]/[0.04] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#0b1f47]">
+                  Use Case Detail
+                </div>
+
+                <h3 id="detail-title" class="mt-5 text-[clamp(2rem,3vw,3.4rem)] font-semibold leading-[0.95] tracking-[-0.045em] text-slate-900"></h3>
+
+                <p id="detail-kicker" class="mt-4 text-[14px] font-semibold uppercase tracking-[0.11em] text-[#0b1f47]"></p>
+
+                <p id="detail-body" class="mt-6 text-[16px] leading-8 text-slate-600"></p>
+                <p id="detail-extra" class="mt-6 text-[16px] leading-8 text-slate-600"></p>
+
+                <div class="mt-8">
+                  <button id="back-to-usecases" class="inline-flex items-center justify-center rounded-full bg-[#0b1f47] text-white px-5 h-11 text-[13px] font-semibold transition hover:opacity-90">
+                    Back to the Use Cases
+                  </button>
+                </div>
+              </div>
+            </section>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+  <script>
+    (function () {
+      /* NAV */
+const nav = document.getElementById('site-navbar');
+const navTrack = document.getElementById('nav-track');
+const navPill = document.getElementById('nav-pill');
+const navLinks = Array.from(document.querySelectorAll('.nav-link'));
+const currentLink = document.querySelector('.nav-link[data-current="true"]');
+
+function setNavPill(link) {
+  if (!link || !navPill || !navTrack) return;
+
+  navLinks.forEach(a => {
+    a.classList.remove('text-[#111827]');
+    a.classList.add('text-[#4b5563]');
+  });
+
+  link.classList.remove('text-[#4b5563]');
+  link.classList.add('text-[#111827]');
+
+  const trackRect = navTrack.getBoundingClientRect();
+  const linkRect = link.getBoundingClientRect();
+
+  navPill.style.width = linkRect.width + 'px';
+  navPill.style.transform = `translateX(${linkRect.left - trackRect.left}px) translateY(-50%)`;
+  navPill.style.opacity = '1';
+}
+
+      let lastScrollY = window.scrollY;
+      let navHovering = false;
+      let navHideTimer = null;
+
+      function showNav() {
+        nav.classList.remove('nav-hidden');
+      }
+
+      function hideNav() {
+        if (!navHovering && window.scrollY > 30) {
+          nav.classList.add('nav-hidden');
+        }
+      }
+
+      function scheduleHide() {
+        clearTimeout(navHideTimer);
+        navHideTimer = setTimeout(() => {
+          hideNav();
+        }, 2000);
+      }
+
+      window.addEventListener('load', () => {
+        setNavPill(currentLink);
+        showNav();
+      });
+
+      window.addEventListener('scroll', () => {
+        const currentY = window.scrollY;
+
+        if (currentY <= 8) {
+          showNav();
+        } else if (currentY > lastScrollY) {
+          hideNav();
+        } else {
+          showNav();
+          scheduleHide();
+        }
+
+        lastScrollY = currentY;
+      }, { passive: true });
+
+      nav.addEventListener('mouseenter', () => {
+        navHovering = true;
+        clearTimeout(navHideTimer);
+        showNav();
+      });
+
+      nav.addEventListener('mouseleave', () => {
+        navHovering = false;
+        scheduleHide();
+      });
+
+      /* USE CASES */
+      const data = {
+        source: {
+          title: 'Control Supply',
+          kicker: 'Own the supply, not just access it',
+          image: 'images/usecase-1.png',
+          body: 'Locate crops across regions, connect directly with farmers and aggregators, and execute procurement without intermediaries. Shunah enables efficient sourcing with visibility, speed, and control.',
+          extra: 'This use case is built for buyers, traders, processors, and institutional off-takers who need dependable access to fragmented supply without the opacity and margin drag of layered middlemen. Shunah makes sourcing more visible, faster to execute, and easier to manage.'
+        },
+        infra: {
+          title: 'Activate Infrastructure',
+          kicker: 'Put your infrastructure to work',
+          image: 'images/usecase-2.png',
+          body: 'Warehouses, processing lines, and logistics assets integrate into Shunah’s network, receiving consistent deal flow and higher utilization. Infrastructure becomes an active income-generating layer.',
+          extra: 'Instead of waiting to be discovered offline, infrastructure owners can become part of a live operating network. Underused capacity is surfaced to relevant counterparties and matched with real demand, turning dormant assets into recurring commercial activity.'
+        },
+        invest: {
+          title: 'Own the Asset',
+          kicker: 'Turn crops into a financial asset class',
+          image: 'images/usecase-3.png',
+          body: 'Deploy capital into structured crop positions backed by physical goods. Shunah manages sourcing, storage, and exit, enabling exposure to commodity appreciation through a controlled, asset-backed approach.',
+          extra: 'This creates a more tangible route for capital seeking real-economy exposure. Rather than abstract commodity exposure alone, positions are linked to actual sourcing, controlled storage, and exit pathways anchored in physical crop flows.'
+        },
+        finance: {
+          title: 'Fund the Flow',
+          kicker: 'Deploy capital into real trade',
+          image: 'images/usecase-4.png',
+          body: 'Provide working capital to real trade cycles across the network. Transactions are short-term, secured against physical crops, and designed to generate disciplined, risk-adjusted returns.',
+          extra: 'The focus here is financing real movement and conversion of goods rather than open-ended speculation. By tying capital deployment to actual crop flows and transaction milestones, Shunah supports short-cycle, asset-linked funding with tighter discipline.'
+        }
+      };
+
+      const defaultView = document.getElementById('usecases-default-view');
+      const expandedView = document.getElementById('usecases-expanded-view');
+      const knowMoreButtons = document.querySelectorAll('.know-more');
+      const backButton = document.getElementById('back-to-usecases');
+
+      const selectedCardImage = document.getElementById('selected-card-image');
+      const selectedCardTitle = document.getElementById('selected-card-title');
+      const selectedCardKicker = document.getElementById('selected-card-kicker');
+
+      const detailTitle = document.getElementById('detail-title');
+      const detailKicker = document.getElementById('detail-kicker');
+      const detailBody = document.getElementById('detail-body');
+      const detailExtra = document.getElementById('detail-extra');
+
+      function openUseCase(key) {
+        const item = data[key];
+        if (!item) return;
+
+        selectedCardImage.src = item.image;
+        selectedCardImage.alt = item.title;
+        selectedCardTitle.textContent = item.title;
+        selectedCardKicker.textContent = item.kicker;
+
+        detailTitle.textContent = item.title;
+        detailKicker.textContent = item.kicker;
+        detailBody.textContent = item.body;
+        detailExtra.textContent = item.extra;
+
+        defaultView.classList.remove('view-shown');
+        defaultView.classList.add('view-hidden');
+
+        setTimeout(() => {
+          defaultView.classList.add('hidden');
+          expandedView.classList.remove('hidden');
+
+          requestAnimationFrame(() => {
+            expandedView.classList.remove('view-hidden');
+            expandedView.classList.add('view-shown');
+          });
+        }, 220);
+      }
+
+      function closeUseCase() {
+        expandedView.classList.remove('view-shown');
+        expandedView.classList.add('view-hidden');
+
+        setTimeout(() => {
+          expandedView.classList.add('hidden');
+          defaultView.classList.remove('hidden');
+
+          requestAnimationFrame(() => {
+            defaultView.classList.remove('view-hidden');
+            defaultView.classList.add('view-shown');
+          });
+        }, 220);
+      }
+
+      knowMoreButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          openUseCase(button.dataset.key);
+        });
+      });
+
+      backButton.addEventListener('click', closeUseCase);
+    })();
+  </script>
+</body>
+</html>
