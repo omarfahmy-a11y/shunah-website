@@ -6,48 +6,66 @@
   <title>Shunah | Contact Us</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <style>
-    body { font-family: 'Inter', sans-serif; }
     html { scroll-behavior: smooth; }
-
-    /* ✅ No scrollbar anywhere */
-    html, body { height: 100%; overflow: hidden; }
-    body::-webkit-scrollbar { display: none; }
-    body { scrollbar-width: none; }
-
-    /* Inputs (tight) */
-    .field-dark{
-      width:100%;
-      border-bottom: 1px solid rgba(255,255,255,.22);
-      padding: 7px 0;
-      outline:none;
-      background:transparent;
-      color: rgba(255,255,255,.92);
+    body {
+      font-family: 'Inter', sans-serif;
+      scrollbar-width: none;
     }
-    .field-dark::placeholder{ color: rgba(255,255,255,.35); }
-    .field-dark:focus{ border-bottom-color: rgba(111,208,74,.75); }
+    body::-webkit-scrollbar { display: none; }
 
-    .ta-dark{
-      width:100%;
+    @media (min-width: 1024px) {
+      html, body {
+        min-height: 100%;
+      }
+    }
+
+    .field-dark {
+      width: 100%;
+      border-bottom: 1px solid rgba(255,255,255,.22);
+      padding: 9px 0;
+      outline: none;
+      background: transparent;
+      color: rgba(255,255,255,.92);
+      font-size: 14px;
+    }
+
+    .field-dark::placeholder {
+      color: rgba(255,255,255,.35);
+    }
+
+    .field-dark:focus {
+      border-bottom-color: rgba(111,208,74,.78);
+    }
+
+    .ta-dark {
+      width: 100%;
       border: 1px solid rgba(255,255,255,.16);
       border-radius: 14px;
-      padding: 10px 12px;
-      outline:none;
+      padding: 12px 14px;
+      outline: none;
       background: rgba(255,255,255,.06);
       color: rgba(255,255,255,.92);
       box-shadow: 0 10px 30px rgba(0,0,0,.10);
+      resize: vertical;
+      min-height: 100px;
+      font-size: 14px;
     }
-    .ta-dark::placeholder{ color: rgba(255,255,255,.35); }
-    .ta-dark:focus{
+
+    .ta-dark::placeholder {
+      color: rgba(255,255,255,.35);
+    }
+
+    .ta-dark:focus {
       border-color: rgba(111,208,74,.55);
       box-shadow: 0 0 0 6px rgba(111,208,74,.10), 0 12px 32px rgba(0,0,0,.14);
     }
 
-    /* Fog fade from left into the image (white -> transparent) */
-    .fog-fade{
-      background: linear-gradient(90deg,
+    .fog-fade {
+      background: linear-gradient(
+        90deg,
         rgba(255,255,255,1) 0%,
         rgba(255,255,255,.96) 18%,
         rgba(255,255,255,.86) 34%,
@@ -60,64 +78,62 @@
 
 <body class="bg-white text-[#0b1a2d]">
 
-<!-- NAV -->
-<nav id="site-navbar" class="sticky top-0 z-50 bg-white border-b border-black/10 shadow-sm h-12">
-  <div class="relative max-w-7xl mx-auto h-12 px-6 md:px-10 flex items-center justify-between">
+  <!-- NAV -->
+  <nav id="site-navbar" class="sticky top-0 z-50 bg-white border-b border-black/10 shadow-sm h-12">
+    <div class="relative max-w-7xl mx-auto h-12 px-4 sm:px-6 md:px-10 flex items-center justify-between">
 
-    <!-- LEFT: Logo -->
-    <a href="index.html" class="flex items-center">
-      <img src="images/shunah-logo.png" alt="Shunah Logo" class="h-7 w-auto" />
-    </a>
-
-    <!-- DESKTOP MENU -->
-    <div class="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-6 text-[12.5px] font-medium text-[#0b1a2d]/80 whitespace-nowrap">
-      <a href="index.html#home" class="hover:text-[#0b1a2d] transition">Home</a>
-      <a href="technology.html" class="hover:text-[#0b1a2d] transition">Product Suite</a>
-      <a href="usecases.html" class="hover:text-[#0b1a2d] transition">Use Cases</a>
-      <a href="focus.html" class="hover:text-[#0b1a2d] transition">Our Focus</a>
-      <a href="rfq.html" class="hover:text-[#0b1a2d] transition">RFQ</a>
-
-      <a href="contact.html"
-         class="text-[#0b1a2d] font-semibold rounded-full px-4 py-1 bg-[#0b1a2d]/6 ring-1 ring-[#0b1a2d]/15">
-        Contact Us
+      <!-- LEFT: Logo -->
+      <a href="index.html" class="flex items-center shrink-0">
+        <img src="images/shunah-logo.png" alt="Shunah Logo" class="h-7 w-auto" />
       </a>
+
+      <!-- DESKTOP MENU -->
+      <div class="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-6 text-[12.5px] font-medium text-[#0b1a2d]/80 whitespace-nowrap">
+        <a href="index.html#home" class="hover:text-[#0b1a2d] transition">Home</a>
+        <a href="technology.html" class="hover:text-[#0b1a2d] transition">Product Suite</a>
+        <a href="usecases.html" class="hover:text-[#0b1a2d] transition">Use Cases</a>
+        <a href="focus.html" class="hover:text-[#0b1a2d] transition">Our Focus</a>
+        <a href="rfq.html" class="hover:text-[#0b1a2d] transition">RFQ</a>
+        <a href="contact.html" class="text-[#0b1a2d] font-semibold rounded-full px-4 py-1 bg-[#0b1a2d]/6 ring-1 ring-[#0b1a2d]/15">
+          Contact Us
+        </a>
+      </div>
+
+      <!-- MOBILE BUTTON -->
+      <button
+        id="mobile-menu-button"
+        type="button"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+        class="md:hidden w-10 h-10 flex items-center justify-center text-[#0b1a2d]"
+      >
+        <svg id="menu-open-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+
+        <svg id="menu-close-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/>
+        </svg>
+      </button>
     </div>
 
-    <!-- MOBILE BUTTON -->
-    <button
-      id="mobile-menu-button"
-      type="button"
-      aria-label="Toggle menu"
-      aria-expanded="false"
-      class="md:hidden w-10 h-10 flex items-center justify-center text-[#0b1a2d]"
-    >
-      <svg id="menu-open-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.8">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
-      </svg>
-
-      <svg id="menu-close-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" stroke="currentColor" stroke-width="1.8">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/>
-      </svg>
-    </button>
-  </div>
-
-  <!-- MOBILE DROPDOWN -->
-  <div id="mobile-menu" class="hidden md:hidden border-t border-black/10 bg-white">
-    <div class="px-6 py-4 flex flex-col gap-2 text-[14px] font-medium text-[#0b1a2d]">
-      <a href="index.html#home">Home</a>
-      <a href="technology.html">Product Suite</a>
-      <a href="usecases.html">Use Cases</a>
-      <a href="focus.html">Our Focus</a>
-      <a href="rfq.html">RFQ</a>
-      <a href="contact.html" class="font-semibold">Contact Us</a>
+    <!-- MOBILE DROPDOWN -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-black/10 bg-white">
+      <div class="px-4 sm:px-6 py-4 flex flex-col gap-2 text-[14px] font-medium text-[#0b1a2d]">
+        <a href="index.html#home">Home</a>
+        <a href="technology.html">Product Suite</a>
+        <a href="usecases.html">Use Cases</a>
+        <a href="focus.html">Our Focus</a>
+        <a href="rfq.html">RFQ</a>
+        <a href="contact.html" class="font-semibold">Contact Us</a>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
 
-  <!-- CONTACT (full screen under nav) -->
-  <section id="contact" class="relative bg-white h-[calc(100dvh-48px)]">
+  <!-- CONTACT -->
+  <section id="contact" class="relative bg-white min-h-[calc(100dvh-48px)] lg:min-h-[calc(100dvh-48px)]">
 
-    <!-- ✅ FULL-BLEED RIGHT HALF IMAGE (NO BOX / NO ROUNDING) -->
+    <!-- DESKTOP IMAGE -->
     <div class="hidden lg:block absolute inset-y-0 right-0 left-1/3">
       <img
         src="images/contact-agri-network.jpg"
@@ -126,101 +142,97 @@
       />
       <div class="absolute inset-0 bg-[#0b1a2d]/10"></div>
 
-      <!-- subtle tech glow (no blur) -->
-      <div class="absolute inset-0 opacity-90
-                  bg-[radial-gradient(circle_at_20%_22%,rgba(111,208,74,.16),transparent_45%),
-                      radial-gradient(circle_at_78%_14%,rgba(255,255,255,.10),transparent_55%)]"></div>
+      <div class="absolute inset-0 opacity-90 bg-[radial-gradient(circle_at_20%_22%,rgba(111,208,74,.16),transparent_45%),radial-gradient(circle_at_78%_14%,rgba(255,255,255,.10),transparent_55%)]"></div>
 
-      <!-- fog fade so the image “appears” -->
       <div class="absolute inset-y-0 left-0 w-[46%] fog-fade"></div>
     </div>
 
-    <!-- Content container -->
-    <div class="relative max-w-7xl mx-auto px-6 md:px-10 h-full py-5">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 h-full items-start">
+    <!-- CONTENT -->
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 md:px-10 py-5 sm:py-6 lg:py-5">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 lg:gap-8 items-start">
 
-        <!-- LEFT -->
-        <div class="lg:col-span-6 h-full flex flex-col justify-start">
-          <h1 class="text-[42px] sm:text-[48px] font-semibold tracking-tight text-[#0b1a2d] leading-tight">
-            Contact Shunah
-          </h1>
+        <!-- LEFT --><!-- LEFT -->
+<div class="col-span-12 lg:col-span-6 w-full min-w-0 flex flex-col justify-start">
+  <h1 class="text-[24px] sm:text-[34px] lg:text-[48px] font-semibold tracking-tight text-[#0b1a2d] leading-[1.05]">
+    Contact Shunah
+  </h1>
 
-          <p class="mt-3 text-[14px] text-[#0b1a2d]/70 leading-relaxed max-w-lg">
-            For sourcing, partnerships, or infrastructure access, reach our team directly.
-          </p>
+  <p class="mt-3 text-[13px] sm:text-[14px] text-[#0b1a2d]/70 leading-6 sm:leading-relaxed w-full max-w-full sm:max-w-lg">
+    For sourcing, partnerships, or infrastructure access, reach our team directly.
+  </p>
 
-          <div class="mt-6 space-y-4 max-w-xl">
-            <div class="rounded-2xl border border-[#6fd04a]/30 bg-[#f3f5f7] shadow-sm p-5">
-              <div class="flex items-start gap-4">
-                <div class="shrink-0 mt-0.5">
-                  <div class="h-10 w-10 rounded-xl bg-white border border-black/10 flex items-center justify-center">
-                    <svg class="h-5 w-5 text-[#0b1a2d]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M4 7l8 6 8-6"></path>
-                      <path d="M4 7v10h16V7"></path>
-                    </svg>
-                  </div>
-                </div>
-                <div class="min-w-0">
-                  <div class="text-xs tracking-widest uppercase text-[#0b1a2d]/55">Email</div>
-                  <div class="mt-1 font-semibold text-[#0b1a2d]">info@shunah.net</div>
-                  <div class="mt-1 text-sm text-[#0b1a2d]/65">rfq@shunah.net</div>
-                </div>
-              </div>
-            </div>
+  <div class="mt-5 sm:mt-6 space-y-3 sm:space-y-4 w-full max-w-full sm:max-w-xl">
 
-            <div class="rounded-2xl border border-black/15 bg-[#f3f5f7] shadow-sm p-5">
-              <div class="flex items-start gap-4">
-                <div class="shrink-0 mt-0.5">
-                  <div class="h-10 w-10 rounded-xl bg-white border border-black/10 flex items-center justify-center">
-                    <svg class="h-5 w-5 text-[#0b1a2d]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M21 16v3a2 2 0 0 1-2 2 18 18 0 0 1-8-3 18 18 0 0 1-6-6 18 18 0 0 1-3-8 2 2 0 0 1 2-2h3"></path>
-                      <path d="M7 5a12 12 0 0 0 2 5l-2 2"></path>
-                    </svg>
-                  </div>
-                </div>
-                <div class="min-w-0">
-                  <div class="text-xs tracking-widest uppercase text-[#0b1a2d]/55">Phone</div>
-                  <div class="mt-1 font-semibold text-[#0b1a2d]">+20 …</div>
-                  <div class="mt-1 text-sm text-[#0b1a2d]/65">Business hours: Sun–Thu</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="rounded-2xl border border-black/15 bg-[#f3f5f7] shadow-sm p-5">
-              <div class="flex items-start gap-4">
-                <div class="shrink-0 mt-0.5">
-                  <div class="h-10 w-10 rounded-xl bg-white border border-black/10 flex items-center justify-center">
-                    <svg class="h-5 w-5 text-[#ef4444]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M12 21s7-4.44 7-11a7 7 0 0 0-14 0c0 6.56 7 11 7 11Z"></path>
-                      <path d="M12 10.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"></path>
-                    </svg>
-                  </div>
-                </div>
-                <div class="min-w-0">
-                  <div class="text-xs tracking-widest uppercase text-[#0b1a2d]/55">Location</div>
-                  <div class="mt-1 font-semibold text-[#0b1a2d]">Cairo, Egypt</div>
-                  <div class="mt-1 text-sm text-[#0b1a2d]/65">Operations across Egypt</div>
-                </div>
-              </div>
-            </div>
-
+    <div class="w-full rounded-2xl border border-[#6fd04a]/30 bg-[#f3f5f7] shadow-sm p-4 sm:p-5">
+      <div class="flex items-start gap-3 sm:gap-4">
+        <div class="shrink-0 mt-0.5">
+          <div class="h-9 w-9 sm:h-10 sm:w-10 rounded-xl bg-white border border-black/10 flex items-center justify-center">
+            <svg class="h-4 w-4 sm:h-5 sm:w-5 text-[#0b1a2d]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 7l8 6 8-6"></path>
+              <path d="M4 7v10h16V7"></path>
+            </svg>
           </div>
         </div>
+        <div class="flex-1 min-w-0">
+          <div class="text-[11px] sm:text-xs tracking-[0.18em] uppercase text-[#0b1a2d]/55">Email</div>
+          <div class="mt-1 font-semibold text-[#0b1a2d] text-[15px] sm:text-base break-words">info@shunah.net</div>
+          <div class="mt-1 text-[13px] sm:text-sm text-[#0b1a2d]/65 break-words">Or Downalod our App</div>
+        </div>
+      </div>
+    </div>
 
-        <!-- RIGHT FORM (sits on top of the image; no extra background box now) -->
-        <div class="lg:col-span-6 h-full flex items-start">
-          <div class="w-full max-w-md ml-auto rounded-[26px] border border-white/14 bg-[#0b1a2d]/55 shadow-[0_18px_60px_rgba(0,0,0,.22)] px-7 py-6 text-white">
+    <div class="w-full rounded-2xl border border-black/15 bg-[#f3f5f7] shadow-sm p-4 sm:p-5">
+      <div class="flex items-start gap-3 sm:gap-4">
+        <div class="shrink-0 mt-0.5">
+          <div class="h-9 w-9 sm:h-10 sm:w-10 rounded-xl bg-white border border-black/10 flex items-center justify-center">
+            <svg class="h-4 w-4 sm:h-5 sm:w-5 text-[#0b1a2d]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 16v3a2 2 0 0 1-2 2 18 18 0 0 1-8-3 18 18 0 0 1-6-6 18 18 0 0 1-3-8 2 2 0 0 1 2-2h3"></path>
+              <path d="M7 5a12 12 0 0 0 2 5l-2 2"></path>
+            </svg>
+          </div>
+        </div>
+        <div class="flex-1 min-w-0">
+          <div class="text-[11px] sm:text-xs tracking-[0.18em] uppercase text-[#0b1a2d]/55">Phone</div>
+          <div class="mt-1 font-semibold text-[#0b1a2d] text-[15px] sm:text-base">+201092412224</div>
+          <div class="mt-1 text-[13px] sm:text-sm text-[#0b1a2d]/65">Sun–Thu From CLT9am-5pm</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="w-full rounded-2xl border border-black/15 bg-[#f3f5f7] shadow-sm p-4 sm:p-5">
+      <div class="flex items-start gap-3 sm:gap-4">
+        <div class="shrink-0 mt-0.5">
+          <div class="h-9 w-9 sm:h-10 sm:w-10 rounded-xl bg-white border border-black/10 flex items-center justify-center">
+            <svg class="h-4 w-4 sm:h-5 sm:w-5 text-[#ef4444]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 21s7-4.44 7-11a7 7 0 0 0-14 0c0 6.56 7 11 7 11Z"></path>
+              <path d="M12 10.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"></path>
+            </svg>
+          </div>
+        </div>
+        <div class="flex-1 min-w-0">
+          <div class="text-[11px] sm:text-xs tracking-[0.18em] uppercase text-[#0b1a2d]/55">Location</div>
+          <div class="mt-1 font-semibold text-[#0b1a2d] text-[15px] sm:text-base">Cairo, Egypt</div>
+          <div class="mt-1 text-[13px] sm:text-sm text-[#0b1a2d]/65">Operations: Behira, Menofia, Alexandria, Kafr El Sheikh</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+        <!-- RIGHT -->
+        <div class="col-span-12 lg:col-span-6 flex items-start mt-1 sm:mt-2 lg:mt-0">
+          <div class="w-full max-w-none sm:max-w-md mx-auto lg:ml-auto rounded-[22px] sm:rounded-[26px] border border-white/14 bg-[#0b1a2d]/55 shadow-[0_18px_60px_rgba(0,0,0,.22)] px-5 sm:px-7 py-5 sm:py-6 text-white">
 
             <div class="text-[18px] font-semibold text-white">Send a message</div>
 
-            <div class="mt-2 text-[13px] text-white/70">
+            <div class="mt-2 text-[13px] text-white/70 leading-6">
               Looking for supply?
               <a href="rfq.html" class="text-[#6fd04a] font-semibold hover:opacity-90 transition">
                 Submit an RFQ →
               </a>
             </div>
 
-            <div class="mt-5 space-y-3">
+            <div class="mt-4 space-y-3">
               <div>
                 <label class="block text-[13px] font-medium text-white/90 mb-1">Name</label>
                 <input id="cName" class="field-dark" type="text" placeholder="your name" />
@@ -238,24 +250,27 @@
 
               <div>
                 <label class="block text-[13px] font-medium text-white/90 mb-1">Message</label>
-                <textarea id="cMsg" rows="3" class="ta-dark" placeholder="Tell us what you need..."></textarea>
+                <textarea id="cMsg" rows="4" class="ta-dark" placeholder="Tell us what you need..."></textarea>
               </div>
             </div>
 
-            <div class="mt-5 flex items-center justify-between gap-3">
-              <a href="rfq.html"
-                 class="rounded-full px-5 py-2 text-[13px] font-semibold ring-1 ring-white/25 hover:bg-white/10 transition">
+            <div class="mt-5 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+              <a
+                href="rfq.html"
+                class="rounded-full px-5 py-2 text-[13px] font-semibold ring-1 ring-white/25 hover:bg-white/10 transition text-center"
+              >
                 Go to RFQ
               </a>
 
-              <button id="cSend"
-                class="rounded-full bg-[#0b1a2d] text-white px-6 py-2 text-[13px] font-semibold hover:bg-[#142a4a] transition shadow-sm ring-1 ring-white/10">
+              <button
+                id="cSend"
+                class="rounded-full bg-[#0b1a2d] text-white px-6 py-2 text-[13px] font-semibold hover:bg-[#142a4a] transition shadow-sm ring-1 ring-white/10 w-full sm:w-auto"
+              >
                 Send →
               </button>
             </div>
 
-            <div id="cSuccess"
-                 class="mt-4 hidden rounded-xl border border-[#22c55e]/25 bg-[#22c55e]/10 p-4 text-white">
+            <div id="cSuccess" class="mt-4 hidden rounded-xl border border-[#22c55e]/25 bg-[#22c55e]/10 p-4 text-white">
               <div class="flex items-start gap-3">
                 <div class="shrink-0 mt-0.5">
                   <svg class="w-6 h-6 text-[#6fd04a]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -270,7 +285,7 @@
             </div>
 
             <div class="mt-4 text-center text-[12.5px] text-white/75 leading-snug">
-              We usually respond within 24 hours.
+              We respond within 24 hours.
             </div>
 
           </div>
@@ -281,103 +296,88 @@
   </section>
 
   <script>
-    (function(){
+    (function () {
       const btn = document.getElementById("cSend");
-      const ok  = document.getElementById("cSuccess");
+      const ok = document.getElementById("cSuccess");
       const name = document.getElementById("cName");
       const email = document.getElementById("cEmail");
       const msg = document.getElementById("cMsg");
 
-      btn.addEventListener("click", () => {
-        const n = (name.value || "").trim();
-        const e = (email.value || "").trim();
-        const m = (msg.value || "").trim();
-        if(!n || !e || !m) return;
-        ok.classList.remove("hidden");
-      });
-    })();
-  </script>
-<script>
-    (function(){
-      const btn = document.getElementById("cSend");
-      const ok  = document.getElementById("cSuccess");
-      const name = document.getElementById("cName");
-      const email = document.getElementById("cEmail");
-      const msg = document.getElementById("cMsg");
+      if (btn && ok && name && email && msg) {
+        btn.addEventListener("click", () => {
+          const n = (name.value || "").trim();
+          const e = (email.value || "").trim();
+          const m = (msg.value || "").trim();
 
-      btn.addEventListener("click", () => {
-        const n = (name.value || "").trim();
-        const e = (email.value || "").trim();
-        const m = (msg.value || "").trim();
-        if(!n || !e || !m) return;
-        ok.classList.remove("hidden");
-      });
-    })();
-  </script>
-
-<script>
-  (function () {
-    const mobileMenuButton = document.getElementById('mobile-menu-button');
-    const mobileMenu = document.getElementById('mobile-menu');
-    const openIcon = document.getElementById('menu-open-icon');
-    const closeIcon = document.getElementById('menu-close-icon');
-
-    if (!mobileMenuButton || !mobileMenu) return;
-
-    let scrollCloseTimer;
-
-    function openMobileMenu() {
-      mobileMenu.classList.remove('hidden');
-      mobileMenuButton.setAttribute('aria-expanded', 'true');
-      if (openIcon) openIcon.classList.add('hidden');
-      if (closeIcon) closeIcon.classList.remove('hidden');
-    }
-
-    function closeMobileMenu() {
-      mobileMenu.classList.add('hidden');
-      mobileMenuButton.setAttribute('aria-expanded', 'false');
-      if (openIcon) openIcon.classList.remove('hidden');
-      if (closeIcon) closeIcon.classList.add('hidden');
-    }
-
-    function isMobileView() {
-      return window.innerWidth < 768; // matches md:hidden
-    }
-
-    function toggleMobileMenu() {
-      if (mobileMenu.classList.contains('hidden')) {
-        openMobileMenu();
-      } else {
-        closeMobileMenu();
+          if (!n || !e || !m) return;
+          ok.classList.remove("hidden");
+        });
       }
-    }
+    })();
+  </script>
 
-    mobileMenuButton.addEventListener('click', toggleMobileMenu);
+  <script>
+    (function () {
+      const mobileMenuButton = document.getElementById("mobile-menu-button");
+      const mobileMenu = document.getElementById("mobile-menu");
+      const openIcon = document.getElementById("menu-open-icon");
+      const closeIcon = document.getElementById("menu-close-icon");
 
-    // Close on any scroll movement
-    window.addEventListener(
-      'scroll',
-      function () {
-        if (!isMobileView()) return;
-        if (!mobileMenu.classList.contains('hidden')) {
+      if (!mobileMenuButton || !mobileMenu) return;
+
+      let scrollCloseTimer;
+
+      function openMobileMenu() {
+        mobileMenu.classList.remove("hidden");
+        mobileMenuButton.setAttribute("aria-expanded", "true");
+        if (openIcon) openIcon.classList.add("hidden");
+        if (closeIcon) closeIcon.classList.remove("hidden");
+      }
+
+      function closeMobileMenu() {
+        mobileMenu.classList.add("hidden");
+        mobileMenuButton.setAttribute("aria-expanded", "false");
+        if (openIcon) openIcon.classList.remove("hidden");
+        if (closeIcon) closeIcon.classList.add("hidden");
+      }
+
+      function isMobileView() {
+        return window.innerWidth < 768;
+      }
+
+      function toggleMobileMenu() {
+        if (mobileMenu.classList.contains("hidden")) {
+          openMobileMenu();
+        } else {
           closeMobileMenu();
         }
+      }
 
-        // also close again when scrolling "stalls"
-        clearTimeout(scrollCloseTimer);
-        scrollCloseTimer = setTimeout(() => {
+      mobileMenuButton.addEventListener("click", toggleMobileMenu);
+
+      window.addEventListener(
+        "scroll",
+        function () {
           if (!isMobileView()) return;
-          closeMobileMenu();
-        }, 120);
-      },
-      { passive: true }
-    );
 
-    // Optional: also close on resize back/forth
-    window.addEventListener('resize', function () {
-      closeMobileMenu();
-    });
-  })();
-</script>
+          if (!mobileMenu.classList.contains("hidden")) {
+            closeMobileMenu();
+          }
+
+          clearTimeout(scrollCloseTimer);
+          scrollCloseTimer = setTimeout(() => {
+            if (!isMobileView()) return;
+            closeMobileMenu();
+          }, 120);
+        },
+        { passive: true }
+      );
+
+      window.addEventListener("resize", function () {
+        closeMobileMenu();
+      });
+    })();
+  </script>
+
 </body>
 </html>
