@@ -3,343 +3,2555 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Shunah | Contact Us</title>
-
+  <title>Shunah | Next-Generation Platform Tech Platform for Dry Crops</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
   <style>
-    body { font-family: 'Inter', sans-serif; }
-    html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; }
+  html { scroll-behavior: smooth; }
+  section { scroll-snap-align: start; }
 
-    /* ✅ No scrollbar anywhere */
-    html, body { height: 100%; overflow: hidden; }
-    body::-webkit-scrollbar { display: none; }
-    body { scrollbar-width: none; }
+  /* ✅ Mobile-safe viewport height (fixes iOS/Chrome UI shrinking) */
+  .vh-safe { min-height: 100dvh; }
 
-    /* Inputs (tight) */
-    .field-dark{
-      width:100%;
-      border-bottom: 1px solid rgba(255,255,255,.22);
-      padding: 7px 0;
-      outline:none;
-      background:transparent;
-      color: rgba(255,255,255,.92);
-    }
-    .field-dark::placeholder{ color: rgba(255,255,255,.35); }
-    .field-dark:focus{ border-bottom-color: rgba(111,208,74,.75); }
+ /* Satellite section */
+  #shunah-satellite-circle {
+    min-height: 100dvh;
+  }
 
-    .ta-dark{
-      width:100%;
-      border: 1px solid rgba(255,255,255,.16);
-      border-radius: 14px;
-      padding: 10px 12px;
-      outline:none;
-      background: rgba(255,255,255,.06);
-      color: rgba(255,255,255,.92);
-      box-shadow: 0 10px 30px rgba(0,0,0,.10);
-    }
-    .ta-dark::placeholder{ color: rgba(255,255,255,.35); }
-    .ta-dark:focus{
-      border-color: rgba(111,208,74,.55);
-      box-shadow: 0 0 0 6px rgba(111,208,74,.10), 0 12px 32px rgba(0,0,0,.14);
-    }
+  /* Center PNG */
+  .ssc-center-img {
+    width: 240px;
+    height: 240px;
+    object-fit: contain;
+    background: transparent;
+    display: block;
+    opacity: 0.98;
+  }
+/* NAV hide / show */
+  #site-navbar {
+    transition: transform 0.3s ease;
+    will-change: transform;
+  }
 
-    /* Fog fade from left into the image (white -> transparent) */
-    .fog-fade{
-      background: linear-gradient(90deg,
-        rgba(255,255,255,1) 0%,
-        rgba(255,255,255,.96) 18%,
-        rgba(255,255,255,.86) 34%,
-        rgba(255,255,255,.55) 52%,
-        rgba(255,255,255,0) 70%
-      );
-    }
-  </style>
+  #site-navbar.nav-hidden {
+    transform: translateY(-100%);
+  }
+.nav-link {
+  padding: 4px 10px;
+  border-radius: 999px;
+  transition: all 0.2s ease;
+}
+
+.nav-active {
+  color: #0b1a2d;
+  background: rgba(11, 26, 45, 0.06);
+  box-shadow: inset 0 0 0 1px rgba(11, 26, 45, 0.12);
+}
+</style>
 </head>
 
-<body class="bg-white text-[#0b1a2d]">
+<!-- Make page snap to each full-screen section -->
+<body class="bg-gray-900 text-white min-h-screen overflow-y-auto snap-y snap-mandatory">
 
-<!-- NAV -->
-<nav id="site-navbar" class="sticky top-0 z-50 bg-white border-b border-black/10 shadow-sm h-12">
-  <div class="relative max-w-7xl mx-auto h-12 px-6 md:px-10 flex items-center justify-between">
+<!-- TOP NAV -->
+<nav id="site-navbar" class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-black/10 h-12 shadow-[0_4px_14px_rgba(0,0,0,0.04)]">
+  <div class="relative max-w-7xl mx-auto h-12 px-6 md:px-10 flex items-center">
 
     <!-- LEFT: Logo -->
-    <a href="index.html" class="flex items-center">
+    <a href="index.html" class="absolute left-6 md:left-10 flex items-center">
       <img src="images/shunah-logo.png" alt="Shunah Logo" class="h-7 w-auto" />
     </a>
 
-    <!-- DESKTOP MENU -->
-    <div class="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-6 text-[12.5px] font-medium text-[#0b1a2d]/80 whitespace-nowrap">
-      <a href="index.html#home" class="hover:text-[#0b1a2d] transition">Home</a>
+    <!-- CENTER: Menu -->
+    <div class="mx-auto hidden md:flex items-center gap-7 text-[12.5px] font-medium text-[#0b1a2d]/80">
+      <a href="#home"
+         class="text-[#0b1a2d] font-semibold rounded-full px-4 py-1 bg-[#0b1a2d]/6 ring-1 ring-[#0b1a2d]/15">
+        Home
+      </a>
       <a href="technology.html" class="hover:text-[#0b1a2d] transition">Product Suite</a>
       <a href="usecases.html" class="hover:text-[#0b1a2d] transition">Use Cases</a>
       <a href="focus.html" class="hover:text-[#0b1a2d] transition">Our Focus</a>
-      <a href="rfq.html" class="hover:text-[#0b1a2d] transition">RFQ</a>
-
-      <a href="contact.html"
-         class="text-[#0b1a2d] font-semibold rounded-full px-4 py-1 bg-[#0b1a2d]/6 ring-1 ring-[#0b1a2d]/15">
-        Contact Us
-      </a>
+           <a href="rfq.html" class="hover:text-[#0b1a2d] transition">RFQ</a>
+      <a href="contact.html" class="hover:text-[#0b1a2d] transition">Contact Us</a>
     </div>
 
-    <!-- MOBILE BUTTON -->
+  <!-- MOBILE BUTTON -->
     <button
       id="mobile-menu-button"
       type="button"
       aria-label="Toggle menu"
       aria-expanded="false"
-      class="md:hidden w-10 h-10 flex items-center justify-center text-[#0b1a2d]"
+      class="md:hidden ml-auto inline-flex items-center justify-center w-10 h-10 rounded-full text-[#0b1a2d] hover:bg-[#0b1a2d]/5 transition"
     >
-      <svg id="menu-open-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.8">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+      <!-- hamburger -->
+      <svg id="menu-open-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
       </svg>
 
-      <svg id="menu-close-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" stroke="currentColor" stroke-width="1.8">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/>
+      <!-- close -->
+      <svg id="menu-close-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18" />
       </svg>
     </button>
   </div>
 
   <!-- MOBILE DROPDOWN -->
-  <div id="mobile-menu" class="hidden md:hidden border-t border-black/10 bg-white">
-    <div class="px-6 py-4 flex flex-col gap-2 text-[14px] font-medium text-[#0b1a2d]">
-      <a href="index.html#home">Home</a>
-      <a href="technology.html">Product Suite</a>
-      <a href="usecases.html">Use Cases</a>
-      <a href="focus.html">Our Focus</a>
-      <a href="rfq.html">RFQ</a>
-      <a href="contact.html" class="font-semibold">Contact Us</a>
+  <div
+    id="mobile-menu"
+    class="md:hidden hidden border-t border-black/10 bg-white"
+  >
+    <div class="px-6 py-4 flex flex-col gap-1 text-[14px] font-medium text-[#0b1a2d]">
+      <a href="index.html" class="nav-link font-semibold">Home</a>
+      <a href="technology.html" class="nav-link">Product Suite</a>
+      <a href="usecases.html" class="nav-link">Use Cases</a>
+      <a href="focus.html" class="nav-link">Our Focus</a>
+      <a href="rfq.html" class="nav-link">RFQ</a>
+      <a href="contact.html" class="nav-link">Contact Us</a>
     </div>
   </div>
 </nav>
-
-  <!-- CONTACT (full screen under nav) -->
-  <section id="contact" class="relative bg-white h-[calc(100dvh-48px)]">
-
-    <!-- ✅ FULL-BLEED RIGHT HALF IMAGE (NO BOX / NO ROUNDING) -->
-    <div class="hidden lg:block absolute inset-y-0 right-0 left-1/3">
-      <img
-        src="images/contact-agri-network.jpg"
-        alt="Agricultural network"
-        class="absolute inset-0 h-full w-full object-cover"
-      />
-      <div class="absolute inset-0 bg-[#0b1a2d]/10"></div>
-
-      <!-- subtle tech glow (no blur) -->
-      <div class="absolute inset-0 opacity-90
-                  bg-[radial-gradient(circle_at_20%_22%,rgba(111,208,74,.16),transparent_45%),
-                      radial-gradient(circle_at_78%_14%,rgba(255,255,255,.10),transparent_55%)]"></div>
-
-      <!-- fog fade so the image “appears” -->
-      <div class="absolute inset-y-0 left-0 w-[46%] fog-fade"></div>
-    </div>
-
-    <!-- Content container -->
-    <div class="relative max-w-7xl mx-auto px-6 md:px-10 h-full py-5">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 h-full items-start">
-
-        <!-- LEFT -->
-        <div class="lg:col-span-6 h-full flex flex-col justify-start">
-          <h1 class="text-[42px] sm:text-[48px] font-semibold tracking-tight text-[#0b1a2d] leading-tight">
-            Contact Shunah
-          </h1>
-
-          <p class="mt-3 text-[14px] text-[#0b1a2d]/70 leading-relaxed max-w-lg">
-            For sourcing, partnerships, or infrastructure access, reach our team directly.
-          </p>
-
-          <div class="mt-6 space-y-4 max-w-xl">
-            <div class="rounded-2xl border border-[#6fd04a]/30 bg-[#f3f5f7] shadow-sm p-5">
-              <div class="flex items-start gap-4">
-                <div class="shrink-0 mt-0.5">
-                  <div class="h-10 w-10 rounded-xl bg-white border border-black/10 flex items-center justify-center">
-                    <svg class="h-5 w-5 text-[#0b1a2d]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M4 7l8 6 8-6"></path>
-                      <path d="M4 7v10h16V7"></path>
-                    </svg>
-                  </div>
-                </div>
-                <div class="min-w-0">
-                  <div class="text-xs tracking-widest uppercase text-[#0b1a2d]/55">Email</div>
-                  <div class="mt-1 font-semibold text-[#0b1a2d]">info@shunah.net</div>
-                  <div class="mt-1 text-sm text-[#0b1a2d]/65">rfq@shunah.net</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="rounded-2xl border border-black/15 bg-[#f3f5f7] shadow-sm p-5">
-              <div class="flex items-start gap-4">
-                <div class="shrink-0 mt-0.5">
-                  <div class="h-10 w-10 rounded-xl bg-white border border-black/10 flex items-center justify-center">
-                    <svg class="h-5 w-5 text-[#0b1a2d]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M21 16v3a2 2 0 0 1-2 2 18 18 0 0 1-8-3 18 18 0 0 1-6-6 18 18 0 0 1-3-8 2 2 0 0 1 2-2h3"></path>
-                      <path d="M7 5a12 12 0 0 0 2 5l-2 2"></path>
-                    </svg>
-                  </div>
-                </div>
-                <div class="min-w-0">
-                  <div class="text-xs tracking-widest uppercase text-[#0b1a2d]/55">Phone</div>
-                  <div class="mt-1 font-semibold text-[#0b1a2d]">+20 …</div>
-                  <div class="mt-1 text-sm text-[#0b1a2d]/65">Business hours: Sun–Thu</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="rounded-2xl border border-black/15 bg-[#f3f5f7] shadow-sm p-5">
-              <div class="flex items-start gap-4">
-                <div class="shrink-0 mt-0.5">
-                  <div class="h-10 w-10 rounded-xl bg-white border border-black/10 flex items-center justify-center">
-                    <svg class="h-5 w-5 text-[#ef4444]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M12 21s7-4.44 7-11a7 7 0 0 0-14 0c0 6.56 7 11 7 11Z"></path>
-                      <path d="M12 10.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"></path>
-                    </svg>
-                  </div>
-                </div>
-                <div class="min-w-0">
-                  <div class="text-xs tracking-widest uppercase text-[#0b1a2d]/55">Location</div>
-                  <div class="mt-1 font-semibold text-[#0b1a2d]">Cairo, Egypt</div>
-                  <div class="mt-1 text-sm text-[#0b1a2d]/65">Operations across Egypt</div>
-                </div>
-              </div>
-            </div>
-
-          </div>
+  <!-- HERO SECTION (fills screen) -->
+  <section
+    id="home"
+    class="relative min-h-screen snap-start bg-cover bg-center"
+    style="background-image: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=2400&q=70');"
+  >
+    <!-- Dark Overlay -->
+    <div class="absolute inset-0 bg-black/50"></div>
+   
+    <!-- HERO CONTENT (centered vertically within the screen) -->
+    <div class="relative z-10 min-h-screen flex items-center px-6 md:px-10 pt-12">
+      <div class="max-w-2xl">
+        <div class="inline-block bg-white/10 backdrop-blur-md px-4 py-1 rounded-full text-sm mb-6">
+          Starting with Egypt then Africa
         </div>
 
-        <!-- RIGHT FORM (sits on top of the image; no extra background box now) -->
-        <div class="lg:col-span-6 h-full flex items-start">
-          <div class="w-full max-w-md ml-auto rounded-[26px] border border-white/14 bg-[#0b1a2d]/55 shadow-[0_18px_60px_rgba(0,0,0,.22)] px-7 py-6 text-white">
+        <h1 class="text-5xl md:text-6xl font-semibold leading-tight mb-6">
+          Next Generation <br />
+          Tech Platform for Dry Crops
+        </h1>
 
-            <div class="text-[18px] font-semibold text-white">Send a message</div>
+        <p class="text-lg text-gray-200 mb-8">
+          Shunah is an Agritech Company focusing on Dry Crops. Utilizing Satellite Technology, Computer Aided Vision, Dynamic Market Intelligence Engine, and Social Infrastructure IoT, Shunah Optimizes the Dry Crops Supply Chain for Small Scale Farmers. 
+        </p>
 
-            <div class="mt-2 text-[13px] text-white/70">
-              Looking for supply?
-              <a href="rfq.html" class="text-[#6fd04a] font-semibold hover:opacity-90 transition">
-                Submit an RFQ →
-              </a>
-            </div>
-
-            <div class="mt-5 space-y-3">
-              <div>
-                <label class="block text-[13px] font-medium text-white/90 mb-1">Name</label>
-                <input id="cName" class="field-dark" type="text" placeholder="your name" />
-              </div>
-
-              <div>
-                <label class="block text-[13px] font-medium text-white/90 mb-1">Email</label>
-                <input id="cEmail" class="field-dark" type="email" placeholder="you@company.com" />
-              </div>
-
-              <div>
-                <label class="block text-[13px] font-medium text-white/90 mb-1">Phone</label>
-                <input id="cPhone" class="field-dark" type="tel" placeholder="+20 ..." />
-              </div>
-
-              <div>
-                <label class="block text-[13px] font-medium text-white/90 mb-1">Message</label>
-                <textarea id="cMsg" rows="3" class="ta-dark" placeholder="Tell us what you need..."></textarea>
-              </div>
-            </div>
-
-            <div class="mt-5 flex items-center justify-between gap-3">
-              <a href="rfq.html"
-                 class="rounded-full px-5 py-2 text-[13px] font-semibold ring-1 ring-white/25 hover:bg-white/10 transition">
-                Go to RFQ
-              </a>
-
-              <button id="cSend"
-                class="rounded-full bg-[#0b1a2d] text-white px-6 py-2 text-[13px] font-semibold hover:bg-[#142a4a] transition shadow-sm ring-1 ring-white/10">
-                Send →
-              </button>
-            </div>
-
-            <div id="cSuccess"
-                 class="mt-4 hidden rounded-xl border border-[#22c55e]/25 bg-[#22c55e]/10 p-4 text-white">
-              <div class="flex items-start gap-3">
-                <div class="shrink-0 mt-0.5">
-                  <svg class="w-6 h-6 text-[#6fd04a]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M20 6L9 17l-5-5" />
-                  </svg>
-                </div>
-                <div>
-                  <div class="font-semibold">Message sent</div>
-                  <div class="text-sm text-white/70 mt-1">We’ll get back to you shortly.</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="mt-4 text-center text-[12.5px] text-white/75 leading-snug">
-              We usually respond within 24 hours.
-            </div>
-
-          </div>
-        </div>
-
+        <a href="technology.html"
+           class="inline-flex items-center bg-[#0b1a2d] hover:bg-[#0f2540] text-white font-semibold px-8 py-3 rounded-full transition">
+          Understand Our Technology
+          <span class="ml-3">→</span>
+        </a>
       </div>
     </div>
   </section>
 
-  <script>
-    (function(){
-      const btn = document.getElementById("cSend");
-      const ok  = document.getElementById("cSuccess");
-      const name = document.getElementById("cName");
-      const email = document.getElementById("cEmail");
-      const msg = document.getElementById("cMsg");
+<!-- =========================================================
+SECTION — REFERENCE FLOW (6 STEPS / EQUAL CARD WIDTHS)
+Updated:
+- CTA button moved under title
+- In phase 2: box 1, new box, and moving box 6 all use original box 5 width
+- Stage 2 red line is recalculated live so it keeps routing around the moving boxes
+- Preserved original desktop/mobile structure
+========================================================= -->
+<section id="process-flow-reference" class="relative overflow-hidden bg-[#f3f3f3] text-slate-900">
+ <div class="mx-auto w-full max-w-[1540px] px-6 lg:px-10 pt-6 lg:pt-8 pb-0">
 
-      btn.addEventListener("click", () => {
-        const n = (name.value || "").trim();
-        const e = (email.value || "").trim();
-        const m = (msg.value || "").trim();
-        if(!n || !e || !m) return;
-        ok.classList.remove("hidden");
-      });
-    })();
-  </script>
+    <!-- =========================
+         DESKTOP - FLEXIBLE GRID
+    ========================== -->
+    <div class="flow-desktop-stage relative hidden lg:block min-h-[640px]">
+
+      <!-- TITLE + BUTTON SLOT -->
+    <div class="relative z-[4] w-fit" style="top: 20px;">
+        <h2 class="text-[clamp(2rem,3.1vw,3.8rem)] font-semibold leading-[0.95] tracking-[-0.03em]">
+          We use Technology to Disrupt
+          <br>
+          Africa’s
+          <span class="text-[#062a57]">Dry Crops</span>
+          <br>
+          <span class="text-[#062a57]">Market</span>
+        </h2>
+
+        <a href="#what-we-do" class="flow-cta-button flow-cta-button-under-title" aria-label="Check out What we Do">
+          <span class="flow-cta-text flow-cta-text-default">Check out What we Do</span>
+          <span class="flow-cta-text flow-cta-text-hover">Traditional Way</span>
+        </a>
+      </div>
+
+      <!-- MOVING CONTENT WRAP -->
+      <div class="flow-stage-content">
+
+        <!-- ROUTE SVG -->
+        <svg
+          class="absolute inset-0 w-full h-full pointer-events-none z-[1]"
+          viewBox="0 0 1500 560"
+          preserveAspectRatio="xMidYMid meet"
+          aria-hidden="true"
+        >
+          <!-- DEFAULT LINE -->
+          <g class="flow-route-default">
+            
+            <circle class="flow-line flow-line-dot" cx="1470" cy="250" r="4.5" fill="#062a57"/>
+
+            <circle class="flow-line-start-dot" cx="110" cy="64" r="4.5" fill="#062a57"/>
+            <circle class="flow-line-end-dot" cx="1400" cy="427.4" r="4.5" fill="#062a57"/>
+
+            <path
+              class="flow-line flow-main-path"
+              d="
+M 110 64
+L 204 64
+Q 240 64 240 100
+
+L 240 326.4
+Q 240 362.4 276 362.4
+
+L 459 362.4
+Q 495 362.4 495 326.4
+
+L 495 -3
+Q 495 -39 531 -39
+
+L 714 -39
+Q 750 -39 750 -3
+
+L 750 236.4
+Q 750 272.4 786 272.4
+
+L 969 272.4
+Q 1005 272.4 1005 236.4
+
+L 1005 60
+Q 1005 24 1041 24
+
+L 1224 24
+Q 1260 24 1260 60
+
+L 1260 391.4
+Q 1260 427.4 1296 427.4
+
+L 1400 427.4
+              "
+              stroke="#062a57"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              fill="none"
+            />
+          </g>
+
+          <!-- STAGE 2 DYNAMIC LINE -->
+          <g class="flow-route-stage2">
+            <circle class="flow-stage2-start-dot" cx="0" cy="0" r="4.5" fill="#062a57"/>
+            <circle class="flow-stage2-end-dot" cx="0" cy="0" r="4.5" fill="#062a57"/>
+            <path
+              class="flow-stage2-path"
+              d=""
+              stroke="#062a57"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              fill="none"
+            />
+          </g>
+        </svg>
+
+        <!-- Steps container with flex layout -->
+        <div class="flow-steps-container relative z-[2] flex justify-between gap-4 xl:gap-6">
+
+          <!-- STEP 1 -->
+          <div class="flow-step flex-1 min-w-[140px] max-w-[194px]" style="--step-delay:0ms;">
+            <div class="flow-step-inner relative" style="margin-top: 160px;">
+              <div class="flow-rail rail-sm w-full">
+                <div class="w-full pt-[18px] px-3">
+                  <div class="mx-auto flow-icon-wrap">
+                    <div class="flow-icon-disc">
+                       <img src="images/placeholder-1.png" alt="" />
+                    </div>
+                  </div>
+                  <h3 class="mt-4 text-center flow-title text-[#062a57]">Small Scale Farmers</h3>
+                  <div class="mt-2 flow-copy pb-4">
+                    <ul class="space-y-1.5">
+                      <li>• Limited visibility into demand</li>
+                      <li>• Forced to sell to intermediaries</li>
+                      <li>• Price uncertainty</li>
+<li>• Delayed payments</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 2 -->
+          <div class="flow-step flex-1 min-w-[140px] max-w-[194px]" style="--step-delay:280ms;">
+            <div class="flow-step-inner relative" style="margin-top: 128px;">
+              <div class="flow-rail rail-sm w-full">
+                <div class="w-full pt-[18px] px-3">
+                  <div class="mx-auto flow-icon-wrap">
+                    <div class="flow-icon-disc">
+                       <img src="images/placeholder-1.png" alt="" />
+                    </div>
+                  </div>
+                  <h3 class="mt-4 text-center flow-title text-[#062a57]">Village Aggregators</h3>
+                  <div class="mt-2 flow-copy pb-4">
+                    <ul class="space-y-1.5">
+                      <li>• No access to institutional buyers</li>
+                      <li>• Reliance on personal networks</li>
+                      <li>• Limited ability to scale</li>
+                    </ul>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 3 -->
+          <div class="flow-step flex-1 min-w-[140px] max-w-[194px]" style="--step-delay:560ms;">
+            <div class="flow-step-inner relative" style="margin-top: 70px;">
+              <div class="flow-rail rail-lg w-full">
+                <div class="w-full pt-[18px] px-3">
+                  <div class="mx-auto flow-icon-wrap">
+                    <div class="flow-icon-disc">
+                       <img src="images/placeholder-1.png" alt="" />
+                    </div>
+                  </div>
+                  <h3 class="mt-4 text-center flow-title text-[#062a57]">Agri-Connectors</h3>
+                  <div class="mt-2 flow-copy pb-4">
+                    <ul class="space-y-1.5">
+                      <li>• No structured coordination </li>
+                      <li>• Dependence on informal relationships</li>
+                      <li>• Limited scalability</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 4 -->
+          <div class="flow-step flex-1 min-w-[140px] max-w-[194px]" style="--step-delay:840ms;">
+            <div class="flow-step-inner relative" style="margin-top: 54px;">
+              <div class="flow-rail rail-sm w-full">
+                <div class="w-full pt-[18px] px-3">
+                  <div class="mx-auto flow-icon-wrap">
+                    <div class="flow-icon-disc">
+                       <img src="images/placeholder-1.png" alt="" />
+                    </div>
+                  </div>
+                  <h3 class="mt-4 text-center flow-title text-[#062a57]">Ari-Traders</h3>
+                  <div class="mt-2 flow-copy pb-4">
+                    <ul class="space-y-1.5">
+                      <li>• Difficulty locating crops regionally</li>
+                      <li>• Opaque pricing across markets</li>
+                      <li>• Unreliable and fragmented supply</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 5 -->
+          <div class="flow-step flex-1 min-w-[140px] max-w-[194px]" style="--step-delay:1120ms;">
+            <div class="flow-step-inner relative" style="margin-top: 120px;">
+              <div class="flow-rail rail-md w-full">
+                <div class="w-full pt-[18px] px-3">
+                  <div class="mx-auto flow-icon-wrap">
+                    <div class="flow-icon-disc">
+                       <img src="images/placeholder-1.png" alt="" />
+                    </div>
+                  </div>
+                  <h3 class="mt-4 text-center flow-title text-[#062a57]">Agri-Agents</h3>
+                  <div class="mt-2 flow-copy pb-4">
+                    <ul class="space-y-1.5">
+                      <li>• Difficulty locating crops across regions</li>
+                      <li>• Opaque pricing and unreliable supply chains</li>
+                      <li>• Time lost navigating fragmented intermediaries</li>
+                    </ul>
+</div>
+      </div>
+        </div>
+            </div>
+          </div>
+
+          <!-- STEP 6 -->
+          <div class="flow-step flex-1 min-w-[140px] max-w-[194px]" style="--step-delay:1400ms;">
+            <div class="flow-step-inner relative" style="margin-top: 74px;">
+              <div class="flow-rail rail-xl w-full">
+                <div class="w-full pt-[18px] px-3">
+                  <div class="mx-auto flow-icon-wrap">
+                    <div class="flow-icon-disc">
+                       <img src="images/placeholder-1.png" alt="" />
+                    </div>
+                  </div>
+                  <h3 class="mt-4 text-center flow-title text-[#062a57]">Institutional Buyers</h3>
+                  <div class="mt-2 flow-copy pb-4">
+                    <ul class="space-y-1.5">
+                      <li>• No visibility into origin</li>
+<li>• Unpredictable fulfillment</li>
+                      <li>• Inconsistent supply </li>
+                      <li>• Heavy reliance on intermediaries</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- =========================
+         MOBILE / TABLET FALLBACK
+    ========================== -->
+    <div class="lg:hidden">
+      <div class="mx-auto max-w-[760px]">
+        <div class="space-y-5">
+
+          <div class="flow-mobile-item flow-mobile-reveal" style="--step-delay:0ms;">
+            <div class="flow-mobile-icon">
+              <svg viewBox="0 0 24 24" class="h-7 w-7 text-[#ef6a4b]" fill="none" stroke="currentColor" stroke-width="1.7">
+                <path d="M7 4.5h7l3 3V19a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-13a1 1 0 0 1 1-1Z"/>
+                <path d="M14 4.5V8h3"/>
+                <path d="M9 12l2 2 4-4"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="flow-title text-[#062a57]">Small Scale Farmers</h3>
+              <p class="mt-1 flow-copy">Placeholder content for step one.</p>
+            </div>
+          </div>
+
+          <div class="flow-mobile-item flow-mobile-reveal" style="--step-delay:220ms;">
+            <div class="flow-mobile-icon">
+              <svg viewBox="0 0 24 24" class="h-7 w-7 text-[#ef6a4b]" fill="none" stroke="currentColor" stroke-width="1.7">
+                <circle cx="10" cy="10" r="5"/>
+                <path d="M14.5 14.5 20 20"/>
+                <path d="M10 7.5v5M7.5 10h5"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="flow-title text-[#062a57]">Agri-Connectors</h3>
+              <p class="mt-1 flow-copy">Placeholder content for step two.</p>
+            </div>
+          </div>
+
+          <div class="flow-mobile-item flow-mobile-reveal" style="--step-delay:440ms;">
+            <div class="flow-mobile-icon">
+              <svg viewBox="0 0 24 24" class="h-7 w-7 text-[#ef6a4b]" fill="none" stroke="currentColor" stroke-width="1.7">
+                <path d="M6 18V8"/>
+                <path d="M12 18V5"/>
+                <path d="M18 18v-9"/>
+                <path d="M4 19.5h16"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="flow-title text-[#062a57]">Agri-Traders</h3>
+              <p class="mt-1 flow-copy">Placeholder content for step three.</p>
+            </div>
+          </div>
+
+          <div class="flow-mobile-item flow-mobile-reveal" style="--step-delay:660ms;">
+            <div class="flow-mobile-icon">
+              <svg viewBox="0 0 24 24" class="h-7 w-7 text-[#ef6a4b]" fill="none" stroke="currentColor" stroke-width="1.7">
+                <path d="M5 12h14"/>
+                <path d="M13 6l6 6-6 6"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="flow-title text-[#062a57]">Agri-Agents</h3>
+              <p class="mt-1 flow-copy">Placeholder content for step four.</p>
+            </div>
+          </div>
+
+          <div class="flow-mobile-item flow-mobile-reveal" style="--step-delay:880ms;">
+            <div class="flow-mobile-icon">
+              <svg viewBox="0 0 24 24" class="h-7 w-7 text-[#ef6a4b]" fill="none" stroke="currentColor" stroke-width="1.7">
+                <path d="M12 3 4 9l8 6 8-6-8-6Z"/>
+                <path d="M4 15l8 6 8-6"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="flow-title text-[#062a57]">Global Agents</h3>
+              <p class="mt-1 flow-copy">Placeholder content for step five.</p>
+            </div>
+          </div>
+
+          <div class="flow-mobile-item flow-mobile-reveal" style="--step-delay:1100ms;">
+            <div class="flow-mobile-icon">
+              <svg viewBox="0 0 24 24" class="h-7 w-7 text-[#ef6a4b]" fill="none" stroke="currentColor" stroke-width="1.7">
+                <path d="M7 4h8l2 3v11a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V4Z"/>
+                <path d="M9 8h6M9 12h6M9 16h4"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="flow-title text-[#062a57]">Institutional Buyers</h3>
+              <p class="mt-1 flow-copy">Placeholder content for step six.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    #process-flow-reference{
+      --flow-stage-shift-y: 80px;
+      --flow-title-slot-h: 56px;
+      --stage2-phase2-width: 194px;
+    }
+
+    /* ---------- TYPOGRAPHY ---------- */
+    #process-flow-reference .flow-title{
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 13px;
+      line-height: 1.15;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    #process-flow-reference .flow-copy{
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 11px;
+      line-height: 1.45;
+      color: #4b5563;
+    }
+
+    /* ---------- DESKTOP STAGE WRAPPERS ---------- */
+    #process-flow-reference .flow-desktop-stage{
+      position: relative;
+      overflow: hidden;
+    }
+
+    #process-flow-reference .flow-stage-content{
+      position: absolute;
+      inset: 0;
+      transform: translateY(var(--flow-stage-shift-y));
+    }
+
+    /* ---------- FLEXIBLE DESKTOP LAYOUT ---------- */
+    #process-flow-reference .flow-steps-container {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      width: 100%;
+      position: relative;
+    }
+
+    #process-flow-reference .flow-step {
+      flex: 1;
+      min-width: 140px;
+      max-width: 194px;
+    }
+
+    #process-flow-reference .flow-step-inner {
+      width: 100%;
+    }
+
+    @media (min-width: 1280px) {
+      #process-flow-reference .flow-steps-container {
+        gap: 1.5rem;
+      }
+    }
+
+    @media (min-width: 1440px) {
+      #process-flow-reference .flow-steps-container {
+        gap: 2rem;
+      }
+    }
+
+    /* ---------- REVEAL ---------- */
+    #process-flow-reference .flow-step,
+    #process-flow-reference .flow-mobile-reveal{
+      opacity: 0;
+      transform: translateY(12px) scale(0.98);
+      animation: flowFadeUp 0.55s cubic-bezier(.22,.9,.29,1) forwards;
+      animation-delay: var(--step-delay);
+    }
+
+    @keyframes flowFadeUp{
+      to{
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* ---------- ICONS ---------- */
+    #process-flow-reference .flow-icon-wrap{
+      width: 78px;
+      height: 78px;
+      border-radius: 9999px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto;
+    }
+
+    #process-flow-reference .flow-icon-disc{
+      width: 78px;
+      height: 78px;
+      border-radius: 9999px;
+      background: #fbfbfb;
+      display: grid;
+      place-items: center;
+      box-shadow:
+        0 8px 22px rgba(0,0,0,0.06),
+        0 1px 0 rgba(255,255,255,0.9),
+        inset 0 1px 0 rgba(255,255,255,0.9);
+      border: 1px solid rgba(0,0,0,0.03);
+    }
+
+    /* ---------- GREY CARDS ---------- */
+    #process-flow-reference .flow-rail{
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  border-radius: 36px;
+
+  /* softer border */
+  border: 1.5px solid #e5e7eb;
+
+  /* lighter, slightly warmer background */
+  background: linear-gradient(180deg, #f7f7f7 0%, #efefef 100%);
+
+  /* more premium shadow (less harsh, more depth) */
+  box-shadow:
+    0 6px 18px rgba(0,0,0,0.04),
+    0 1px 0 rgba(255,255,255,0.8) inset;
+
+  width: 100%;
+}
+
+    #process-flow-reference .rail-sm{
+      height: 246px;
+    }
+
+    #process-flow-reference .rail-md{
+      height: 302px;
+    }
+
+    #process-flow-reference .rail-lg{
+      height: 338px;
+    }
+
+    #process-flow-reference .rail-xl{
+      height: 354px;
+    }
+
+    /* ---------- RED PATH ---------- */
+    #process-flow-reference .flow-stage-content > svg{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    #process-flow-reference .flow-route-default,
+    #process-flow-reference .flow-route-stage2{
+      transition: opacity 0.35s ease;
+    }
+
+    #process-flow-reference .flow-route-default{
+      opacity: 1;
+    }
+
+    #process-flow-reference .flow-route-stage2{
+      opacity: 0;
+    }
+
+    #process-flow-reference.flow-stage2-phase1 .flow-route-default,
+    #process-flow-reference.flow-stage2-phase2 .flow-route-default{
+      opacity: 0;
+    }
+
+    #process-flow-reference.flow-stage2-phase1 .flow-route-stage2,
+    #process-flow-reference.flow-stage2-phase2 .flow-route-stage2{
+      opacity: 1;
+    }
+
+    #process-flow-reference .flow-line{
+      opacity: 0;
+    }
+
+    #process-flow-reference .flow-line-dot{
+      animation: flowLineDotAppear 0.08s linear forwards;
+      animation-delay: 2200ms;
+    }
+
+    #process-flow-reference .flow-main-path{
+      opacity: 1;
+      stroke-dasharray: 3200;
+      stroke-dashoffset: 3200;
+      animation:
+        flowPathVisible 0.01s linear forwards 2200ms,
+        flowPathDraw 4.4s cubic-bezier(.65,.05,.36,1) forwards 2200ms;
+    }
+
+    @keyframes flowLineDotAppear{
+      to{ opacity: 1; }
+    }
+
+    @keyframes flowPathVisible{
+      to{ opacity: 1; }
+    }
+
+    @keyframes flowPathDraw{
+      to{ stroke-dashoffset: 0; }
+    }
+
+    #process-flow-reference .flow-line-start-dot,
+    #process-flow-reference .flow-line-end-dot{
+      opacity: 0;
+    }
+
+    #process-flow-reference .flow-line-start-dot{
+      animation: flowDotAppear 0.08s linear forwards;
+      animation-delay: 2200ms;
+    }
+
+    #process-flow-reference .flow-line-end-dot{
+      animation: flowDotAppear 0.08s linear forwards;
+      animation-delay: 5400ms;
+    }
+
+    #process-flow-reference .flow-stage2-start-dot,
+    #process-flow-reference .flow-stage2-end-dot{
+      opacity: 1;
+    }
+
+    @keyframes flowDotAppear{
+      to{ opacity: 1; }
+    }
+
+    /* ---------- CTA BUTTON ---------- */
+    #process-flow-reference .flow-cta-button{
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 210px;
+      height: 42px;
+      padding: 0 18px;
+      border-radius: 9999px;
+      background: #062a57;
+      color: #ffffff;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      box-shadow:
+        0 8px 22px rgba(6, 42, 87, 0.18),
+        inset 0 1px 0 rgba(255,255,255,0.18);
+      opacity: 0;
+      pointer-events: none;
+      text-decoration: none;
+      white-space: nowrap;
+      overflow: hidden;
+      animation: flowCtaAppear 0.35s cubic-bezier(.22,.9,.29,1) forwards;
+      animation-delay: 6680ms;
+      transition:
+        background-color 0.22s ease,
+        box-shadow 0.22s ease,
+        transform 0.22s ease;
+    }
+
+    #process-flow-reference .flow-cta-button-under-title{
+      position: relative;
+      margin-top: 18px;
+      transform: translateY(12px);
+      z-index: 4;
+    }
+
+    #process-flow-reference .flow-cta-button:hover{
+      background: #062a57;
+      box-shadow:
+        0 10px 26px rgba(6, 42, 87, 0.22),
+        inset 0 1px 0 rgba(255,255,255,0.18);
+    }
+
+    #process-flow-reference .flow-cta-text{
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      transition:
+        opacity 0.2s ease,
+        transform 0.2s ease;
+    }
+
+    #process-flow-reference .flow-cta-text-default{
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    #process-flow-reference .flow-cta-text-hover{
+      opacity: 0;
+      transform: translateY(8px);
+    }
+
+    #process-flow-reference .flow-cta-button:hover .flow-cta-text-default{
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+
+    #process-flow-reference .flow-cta-button:hover .flow-cta-text-hover{
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes flowCtaAppear{
+      to{
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+      }
+    }
+
+    /* ---------- MOBILE ---------- */
+    #process-flow-reference .flow-mobile-item{
+      display: grid;
+      grid-template-columns: 64px 1fr;
+      gap: 14px;
+      align-items: start;
+      padding: 18px 16px;
+      border-radius: 24px;
+      background: #ececec;
+      border: 2px solid #d1d5db;
+      box-shadow:
+        0 2px 4px rgba(0,0,0,0.03),
+        0 10px 24px rgba(0,0,0,0.05);
+    }
+
+    #process-flow-reference .flow-mobile-icon{
+      width: 56px;
+      height: 56px;
+      border-radius: 9999px;
+      display: grid;
+      place-items: center;
+      background: #fbfbfb;
+      box-shadow:
+        0 1px 2px rgba(0,0,0,0.04),
+        0 8px 18px rgba(0,0,0,0.06),
+        inset 0 1px 0 rgba(255,255,255,0.85);
+      border: 1px solid rgba(0,0,0,0.03);
+    }
+  </style>
+
+  <style>
+  <style>
+  /* =========================================================
+     STAGE 2 ADD-ON FOR #process-flow-reference
+     Updated:
+     - Removed stage 2 red line entirely
+     - Added right image panel in phase 2
+     - Box 1, new card, and moving box 6 use original box 5 width
+     - Visible cards shift left in phase 2 to make room for image
+  ========================================================= */
+
+  #process-flow-reference.flow-stage2-locked .flow-steps-container{
+    display:block !important;
+    position:relative !important;
+    min-height:640px;
+    width:100%;
+  }
+
+  #process-flow-reference.flow-stage2-locked .flow-step{
+    position:absolute !important;
+    margin:0 !important;
+    flex:none !important;
+    min-width:0 !important;
+    max-width:none !important;
+    transition:
+      left 0.7s cubic-bezier(.22,.9,.29,1),
+      top 0.7s cubic-bezier(.22,.9,.29,1),
+      width 0.7s cubic-bezier(.22,.9,.29,1),
+      max-width 0.7s cubic-bezier(.22,.9,.29,1),
+      opacity 0.35s ease,
+      transform 0.35s ease;
+    will-change:left, top, width, max-width, opacity, transform;
+  }
+
+  #process-flow-reference.flow-stage2-locked .flow-step-inner{
+    width:100%;
+  }
+
+  /* hide all red line layers during stage 2 */
+  #process-flow-reference.flow-stage2-locked .flow-route-default,
+  #process-flow-reference.flow-stage2-locked .flow-route-stage2{
+    opacity:0 !important;
+    pointer-events:none !important;
+  }
+
+  #process-flow-reference .stage2-hide{
+    opacity:0 !important;
+    transform:translateY(8px) !important;
+    pointer-events:none !important;
+  }
+
+  #process-flow-reference.flow-stage2-phase1 .flow-step.stage2-card-3,
+  #process-flow-reference.flow-stage2-phase1 .flow-step.stage2-card-4{
+    opacity:0 !important;
+    transform:translateY(8px) !important;
+    pointer-events:none !important;
+  }
+
+  #process-flow-reference.flow-stage2-phase1 .flow-step.stage2-card-5{
+    left:var(--stage2-slot-4-left) !important;
+    top:var(--stage2-slot-4-top) !important;
+  }
+
+  #process-flow-reference.flow-stage2-phase1 .flow-step.stage2-card-6{
+    left:var(--stage2-slot-5-left) !important;
+    top:var(--stage2-slot-1-top) !important;
+  }
+
+  #process-flow-reference.flow-stage2-phase2 .flow-step.stage2-card-2,
+  #process-flow-reference.flow-stage2-phase2 .flow-step.stage2-card-5{
+    opacity:0 !important;
+    transform:translateY(8px) !important;
+    pointer-events:none !important;
+  }
+
+  #process-flow-reference.flow-stage2-phase2 .flow-step.stage2-card-1{
+    left:var(--stage2-slot-1-left-shifted) !important;
+    top:var(--stage2-slot-1-top) !important;
+    width:var(--stage2-phase2-width) !important;
+    max-width:var(--stage2-phase2-width) !important;
+  }
+
+  #process-flow-reference.flow-stage2-phase2 .flow-step.stage2-card-6{
+    left:var(--stage2-slot-3-left-shifted) !important;
+    top:var(--stage2-slot-1-top) !important;
+    width:var(--stage2-phase2-width) !important;
+    max-width:var(--stage2-phase2-width) !important;
+  }
+
+  #process-flow-reference .stage2-grow-rail{
+    transition: height 0.7s cubic-bezier(.22,.9,.29,1);
+  }
+
+  #process-flow-reference.flow-stage2-phase2 .flow-step.stage2-card-1 .stage2-grow-rail{
+    height:354px !important;
+  }
+
+  #process-flow-reference .stage2-new-card{
+    position:absolute;
+    opacity:0;
+    transform:translateY(8px);
+    pointer-events:none;
+    transition:
+      left 0.7s cubic-bezier(.22,.9,.29,1),
+      top 0.7s cubic-bezier(.22,.9,.29,1),
+      width 0.7s cubic-bezier(.22,.9,.29,1),
+      max-width 0.7s cubic-bezier(.22,.9,.29,1),
+      opacity 0.35s ease,
+      transform 0.35s ease;
+    z-index:3;
+  }
+
+  #process-flow-reference.flow-stage2-phase2 .stage2-new-card{
+    opacity:1 !important;
+    transform:translateY(0) !important;
+    left:var(--stage2-slot-2-left-shifted) !important;
+    top:var(--stage2-slot-1-top) !important;
+    width:var(--stage2-phase2-width) !important;
+    max-width:var(--stage2-phase2-width) !important;
+  }
+
+  #process-flow-reference .stage2-new-card .flow-rail{
+    background: linear-gradient(180deg, #eaf3ff 0%, #d9e9ff 100%) !important;
+    border: 2.5px solid #7fb0ff !important;
+    box-shadow:
+      0 0 0 1px rgba(127,176,255,0.28),
+      0 0 24px rgba(73, 132, 255, 0.22),
+      0 0 54px rgba(73, 132, 255, 0.14),
+      inset 0 1px 0 rgba(255,255,255,0.8) !important;
+  }
+
+  #process-flow-reference .stage2-new-card .flow-icon-disc{
+    background: #f7fbff !important;
+    border: 1px solid rgba(73, 132, 255, 0.18) !important;
+    box-shadow:
+      0 0 0 1px rgba(127,176,255,0.18),
+      0 0 22px rgba(73, 132, 255, 0.16),
+      inset 0 1px 0 rgba(255,255,255,0.95) !important;
+  }
+
+  #process-flow-reference .stage2-new-card .flow-title{
+    color: #2563eb !important;
+  }
+
+  /* ---------- RIGHT PANEL ---------- */
+  #process-flow-reference .stage2-right-panel{
+  position:absolute;
+  right:0;
+  top:0;
+  width:240px;
+  height:82%;
+  opacity:0;
+  transform:translateX(24px);
+  pointer-events:none;
+  z-index:2;
+  transition:
+    opacity 0.45s ease,
+    transform 0.7s cubic-bezier(.22,.9,.29,1);
+}
+
+  #process-flow-reference .stage2-right-panel .min-w-0,
+  #process-flow-reference .stage2-right-panel .w-full,
+  #process-flow-reference .stage2-right-panel .h-full{
+    height:100%;
+  }
+
+  #process-flow-reference .stage2-right-panel img{
+    display:block;
+    width:100%;
+    height:100%;
+transform: translate(-250px, -20px);
+
+  }
+
+  #process-flow-reference.flow-stage2-phase2 .stage2-right-panel{
+    opacity:1;
+    transform:translateX(0);
+  }
+</style>
+
 <script>
-    (function(){
-      const btn = document.getElementById("cSend");
-      const ok  = document.getElementById("cSuccess");
-      const name = document.getElementById("cName");
-      const email = document.getElementById("cEmail");
-      const msg = document.getElementById("cMsg");
+  (function () {
+    const section = document.getElementById('process-flow-reference');
+    if (!section) return;
 
-      btn.addEventListener("click", () => {
-        const n = (name.value || "").trim();
-        const e = (email.value || "").trim();
-        const m = (msg.value || "").trim();
-        if(!n || !e || !m) return;
-        ok.classList.remove("hidden");
+    const stepsContainer = section.querySelector('.flow-steps-container');
+    const button = section.querySelector('.flow-cta-button');
+    if (!stepsContainer || !button) return;
+
+    const cards = Array.from(stepsContainer.querySelectorAll('.flow-step'));
+    if (cards.length !== 6) return;
+
+    const PHASE_2_DELAY = 430;
+    const CLEANUP_HIDDEN_DELAY = 820;
+
+    let phase2Timer = null;
+    let cleanupTimer = null;
+    let newCard = null;
+    let rightPanel = null;
+    let hasSetup = false;
+
+    let originalCard6MarginTop = '';
+    let originalNewCardMarginTop = '';
+
+    function clearTimers() {
+      if (phase2Timer) {
+        clearTimeout(phase2Timer);
+        phase2Timer = null;
+      }
+      if (cleanupTimer) {
+        clearTimeout(cleanupTimer);
+        cleanupTimer = null;
+      }
+    }
+
+    function setVar(name, value) {
+      section.style.setProperty(name, value + 'px');
+    }
+
+    function getRail(el) {
+      return el.querySelector('.flow-rail');
+    }
+
+    function getStepInner(el) {
+      return el.querySelector('.flow-step-inner');
+    }
+
+    function getInlineMarginTop(el) {
+      const inner = getStepInner(el);
+      return inner ? inner.style.marginTop : '';
+    }
+
+    function buildNewCard() {
+      if (newCard) return newCard;
+
+      const clone = cards[5].cloneNode(true);
+      clone.classList.add('stage2-new-card');
+      clone.classList.remove(
+        'stage2-card-1',
+        'stage2-card-2',
+        'stage2-card-3',
+        'stage2-card-4',
+        'stage2-card-5',
+        'stage2-card-6'
+      );
+
+      const step1MarginTop = getInlineMarginTop(cards[0]) || '160px';
+      const cloneInner = getStepInner(clone);
+      if (cloneInner) {
+        originalNewCardMarginTop = cloneInner.style.marginTop || '';
+        cloneInner.style.marginTop = step1MarginTop;
+      }
+
+      const title = clone.querySelector('.flow-title');
+      if (title) title.textContent = 'Shunah';
+
+      const copy = clone.querySelector('.flow-copy');
+      if (copy) {
+        copy.innerHTML = `
+          <ul class="space-y-1.5">
+            <li>• Replace this with your new step.</li>
+            <li>• Same format and size as original box five.</li>
+            <li>• Appears as card 2 fades out.</li>
+          </ul>
+        `;
+      }
+
+      const newIcon = clone.querySelector('svg');
+      if (newIcon) {
+        newIcon.classList.remove('text-[#ef6a4b]');
+        newIcon.style.color = '#2563eb';
+      }
+
+      clone.style.left = '0px';
+      clone.style.top = '0px';
+
+      stepsContainer.parentElement.appendChild(clone);
+      newCard = clone;
+      return newCard;
+    }
+
+    function buildRightPanel() {
+      if (rightPanel) return rightPanel;
+
+      const panel = document.createElement('div');
+      panel.className = 'stage2-right-panel';
+      panel.setAttribute('aria-hidden', 'true');
+      panel.innerHTML = `
+        <div class="min-w-0 flex justify-center xl:justify-end h-full">
+          <div class="w-full h-full">
+            <img
+              src="images/shunah-app.png"
+              alt="Shunah App"
+              class="w-full h-full object-contain xl:object-cover"
+            >
+          </div>
+        </div>
+      `;
+
+      stepsContainer.parentElement.appendChild(panel);
+      rightPanel = panel;
+      return rightPanel;
+    }
+
+    function prepareLayout() {
+      const containerRect = stepsContainer.getBoundingClientRect();
+
+      const rects = cards.map(card => {
+        const r = card.getBoundingClientRect();
+        return {
+          left: r.left - containerRect.left,
+          top: r.top - containerRect.top,
+          width: r.width
+        };
       });
-    })();
-  </script>
 
-  <script>
-    const mobileMenuButton = document.getElementById("mobile-menu-button");
-    const mobileMenu = document.getElementById("mobile-menu");
-    const menuOpenIcon = document.getElementById("menu-open-icon");
-    const menuCloseIcon = document.getElementById("menu-close-icon");
-
-    if (mobileMenuButton && mobileMenu) {
-      mobileMenuButton.addEventListener("click", () => {
-        const isHidden = mobileMenu.classList.contains("hidden");
-
-        mobileMenu.classList.toggle("hidden");
-        menuOpenIcon.classList.toggle("hidden");
-        menuCloseIcon.classList.toggle("hidden");
-        mobileMenuButton.setAttribute("aria-expanded", isHidden ? "true" : "false");
+      rects.forEach((r, i) => {
+        setVar(`--stage2-slot-${i + 1}-left`, r.left);
+        setVar(`--stage2-slot-${i + 1}-top`, r.top);
       });
 
-      mobileMenu.querySelectorAll("a").forEach(link => {
-        link.addEventListener("click", () => {
-          mobileMenu.classList.add("hidden");
-          menuOpenIcon.classList.remove("hidden");
-          menuCloseIcon.classList.add("hidden");
-          mobileMenuButton.setAttribute("aria-expanded", "false");
-        });
+      const phase2Width = rects[4].width; /* original box 5 width */
+      setVar('--stage2-phase2-width', phase2Width);
+
+      const gap = 24;
+      const shifted1 = rects[0].left;
+      const shifted2 = shifted1 + phase2Width + gap;
+      const shifted3 = shifted2 + phase2Width + gap;
+
+      setVar('--stage2-slot-1-left-shifted', shifted1);
+      setVar('--stage2-slot-2-left-shifted', shifted2);
+      setVar('--stage2-slot-3-left-shifted', shifted3);
+
+      cards.forEach((card, i) => {
+        card.classList.add(`stage2-card-${i + 1}`);
+        card.style.left = rects[i].left + 'px';
+        card.style.top = rects[i].top + 'px';
+        card.style.width = rects[i].width + 'px';
+        card.style.maxWidth = rects[i].width + 'px';
+        card.style.margin = '0';
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
+        card.style.pointerEvents = 'auto';
+        card.style.display = '';
+        card.style.visibility = '';
+      });
+
+      const step1MarginTop = getInlineMarginTop(cards[0]) || '160px';
+
+      const card6Inner = getStepInner(cards[5]);
+      if (card6Inner) {
+        originalCard6MarginTop = card6Inner.style.marginTop || '';
+        card6Inner.style.marginTop = step1MarginTop;
+      }
+
+      const rail1 = getRail(cards[0]);
+      if (rail1) rail1.classList.add('stage2-grow-rail');
+
+      const injected = buildNewCard();
+      injected.style.left = rects[1].left + 'px';
+      injected.style.top = rects[0].top + 'px';
+      injected.style.width = phase2Width + 'px';
+      injected.style.maxWidth = phase2Width + 'px';
+
+      buildRightPanel();
+
+      section.classList.add('flow-stage2-locked');
+      hasSetup = true;
+    }
+
+    function hardHideCards(indexes) {
+      indexes.forEach(i => {
+        const card = cards[i];
+        if (!card) return;
+        card.classList.add('stage2-hide');
+        card.style.opacity = '0';
+        card.style.visibility = 'hidden';
+        card.style.pointerEvents = 'none';
       });
     }
-  </script>
+
+    function resetLayout() {
+      clearTimers();
+
+      section.classList.remove('flow-stage2-phase1', 'flow-stage2-phase2', 'flow-stage2-locked');
+
+      cards.forEach((card, i) => {
+        card.style.left = '';
+        card.style.top = '';
+        card.style.width = '';
+        card.style.maxWidth = '';
+        card.style.margin = '';
+        card.style.opacity = '';
+        card.style.transform = '';
+        card.style.pointerEvents = '';
+        card.style.display = '';
+        card.style.visibility = '';
+        card.classList.remove(`stage2-card-${i + 1}`, 'stage2-hide');
+      });
+
+      const card6Inner = getStepInner(cards[5]);
+      if (card6Inner) {
+        card6Inner.style.marginTop = originalCard6MarginTop;
+      }
+
+      const rail1 = getRail(cards[0]);
+      if (rail1) rail1.classList.remove('stage2-grow-rail');
+
+      if (newCard) {
+        const newCardInner = getStepInner(newCard);
+        if (newCardInner) {
+          newCardInner.style.marginTop = originalNewCardMarginTop;
+        }
+        newCard.remove();
+        newCard = null;
+      }
+
+      if (rightPanel) {
+        rightPanel.remove();
+        rightPanel = null;
+      }
+
+      hasSetup = false;
+    }
+
+    function startStage2() {
+      clearTimers();
+
+      if (!hasSetup) prepareLayout();
+
+      void section.offsetWidth;
+      section.classList.add('flow-stage2-phase1');
+
+      phase2Timer = setTimeout(() => {
+        section.classList.add('flow-stage2-phase2');
+      }, PHASE_2_DELAY);
+
+      cleanupTimer = setTimeout(() => {
+        hardHideCards([1, 2, 3, 4]);
+      }, CLEANUP_HIDDEN_DELAY);
+    }
+
+    function stopStage2() {
+      resetLayout();
+    }
+
+    button.addEventListener('mouseenter', startStage2);
+    button.addEventListener('mouseleave', stopStage2);
+
+    const buttonTexts = button.querySelectorAll('.flow-cta-text');
+    buttonTexts.forEach(el => {
+      el.addEventListener('mouseenter', startStage2);
+      el.addEventListener('mouseleave', stopStage2);
+    });
+
+    window.addEventListener('resize', () => {
+      if (section.classList.contains('flow-stage2-phase1') || section.classList.contains('flow-stage2-phase2')) {
+        resetLayout();
+      }
+    });
+  })();
+</script>
+</section>
+
+<!-- =========================================================
+SECTION — SHUNAH KPIs (STRUCTURED / LEFT-ALIGNED)
+========================================================= -->
+<section class="bg-[#f8fafc] py-20">
+  <div class="max-w-[1200px] mx-auto px-6">
+
+    <!-- TOP ROW -->
+    <div class="grid lg:grid-cols-2 gap-12 items-start mb-14">
+
+      <!-- LEFT TEXT BOX -->
+      <div>
+        <h2 class="text-[clamp(2rem,3vw,3rem)] font-semibold text-[#0f172a] leading-tight">
+  <span class="text-[#1e3a8a]">Shunah</span> KPIs reflect the scale, efficiency, and precision of our platform
+</h2>
+      </div>
+
+      <!-- RIGHT TEXT -->
+      <div>
+        <p class="text-slate-600 text-base leading-relaxed max-w-[520px]">
+          Through digital aggregation, computer-aided vision, and infrastructure connectivity,
+          Shunah transforms fragmented agricultural supply chains into a streamlined,
+          data-driven ecosystem.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- KPI ROW -->
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-10">
+
+      <!-- KPI 1 -->
+      <div class="pl-4 border-l border-slate-300">
+        <h3 class="text-[clamp(2.8rem,3.8vw,4.5rem)] font-semibold text-[#1e3a8a]">80%+</h3>
+        <p class="text-sm font-medium text-[#0f172a] mt-2">
+          Digital Aggregation Share
+        </p>
+      </div>
+
+      <!-- KPI 2 -->
+      <div class="pl-4 border-l border-slate-300">
+        <h3 class="text-3xl font-semibold text-[#1e3a8a]">27K</h3>
+        <p class="text-sm font-medium text-[#0f172a] mt-2">
+          Farmer Interactions
+        </p>
+      </div>
+
+      <!-- KPI 3 -->
+      <div class="pl-4 border-l border-slate-300">
+        <h3 class="text-3xl font-semibold text-[#1e3a8a]">120K+</h3>
+        <p class="text-sm font-medium text-[#0f172a] mt-2">
+          Tons Assessed
+        </p>
+      </div>
+
+      <!-- KPI 4 -->
+      <div class="pl-4 border-l border-slate-300">
+        <h3 class="text-3xl font-semibold text-[#1e3a8a]">60%</h3>
+        <p class="text-sm font-medium text-[#0f172a] mt-2">
+          Tech Accuracy
+        </p>
+      </div>
+
+      <!-- KPI 5 -->
+      <div class="pl-4 border-l border-slate-300">
+        <h3 class="text-3xl font-semibold text-[#1e3a8a]">123</h3>
+        <p class="text-sm font-medium text-[#0f172a] mt-2">
+          Third Parties Connected
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- =========================================================
+SECTION — WHY DRY CROPS
+Updated:
+- Added premium pulsating chip above title
+- Added soft premium shadows to bottom metric circles
+- Kept all existing behavior intact
+========================================================= -->
+<section id="why-dry-crops" class="bg-white text-slate-900 overflow-hidden"> 
+  <div class="mx-auto max-w-[1380px] px-6 lg:px-10 py-12 lg:py-14">
+
+    <!-- TOP -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+
+      <!-- LEFT TEXT -->
+      <div class="lg:col-span-5 text-side">
+        <div class="max-w-[470px]">
+
+          <!-- PREMIUM CHIP -->
+          <div class="context-chip-wrap mb-5">
+            <div class="context-chip">
+              <span class="context-chip-dot"></span>
+              <span>450M farmers feeding 27% of the global population</span>
+            </div>
+          </div>
+
+          <h2 class="text-[clamp(2rem,3.1vw,3.8rem)] font-semibold leading-[0.95] tracking-[-0.03em]">
+            We are Unlocking 
+            <br>
+            Africa’s
+            <span class="text-[#062a57]">$850Bn</span>
+            <br>
+            <span class="text-[#062a57]">Dry Crops Opportunity</span>
+          </h2>
+
+          <p class="mt-5 text-[15px] leading-7 text-slate-600 max-w-[42ch]">
+            Africa’s dry crops production is massive, fragmented, and disconnected from
+            structured institutional demand. Shunah focuses on building the tech infrastructure that
+            connects fragmented supply to processors, manufacturers, and exporters.
+          </p>
+        </div>
+      </div>
+
+      <!-- RIGHT HERO CIRCLE -->
+      <div class="lg:col-span-7">
+        <div class="relative flex justify-center lg:justify-end">
+          <div class="hero-circle relative right-0 lg:right-24 h-[396px] w-[396px] lg:h-[440px] lg:w-[440px] rounded-full bg-[#d9d9d4]">
+            <div class="absolute inset-0 rounded-full overflow-hidden">
+              <div class="hero-slide is-active absolute inset-x-0 bottom-0 top-[-16%] flex items-end justify-center">
+                <img src="images/hero-1.png" alt="Hero 1" class="hero-img">
+              </div>
+              <div class="hero-slide absolute inset-x-0 bottom-0 top-[-16%] flex items-end justify-center">
+                <img src="images/hero-2.jpg" alt="Hero 2" class="hero-img">
+              </div>
+              <div class="hero-slide absolute inset-x-0 bottom-0 top-[-16%] flex items-end justify-center">
+                <img src="images/hero-3.png" alt="Hero 3" class="hero-img">
+              </div>
+              <div class="hero-slide absolute inset-x-0 bottom-0 top-[-16%] flex items-end justify-center">
+                <img src="images/hero-4.png" alt="Hero 4" class="hero-img">
+              </div>
+              <div class="hero-slide absolute inset-x-0 bottom-0 top-[-16%] flex items-end justify-center">
+                <img src="images/hero-5.jpg" alt="Hero 5" class="hero-img">
+              </div>
+<div class="hero-slide absolute inset-x-0 bottom-0 top-[-16%] flex items-end justify-center">
+                <img src="images/hero-6.jpg" alt="Hero 6" class="hero-img">
+              </div>
+<div class="hero-slide absolute inset-x-0 bottom-0 top-[-16%] flex items-end justify-center">
+                <img src="images/hero-7.jpg" alt="Hero 7" class="hero-img">
+              </div>
+<div class="hero-slide absolute inset-x-0 bottom-0 top-[-16%] flex items-end justify-center">
+                <img src="images/hero-8.png" alt="Hero 8" class="hero-img">
+              </div>
+<div class="hero-slide absolute inset-x-0 bottom-0 top-[-16%] flex items-end justify-center">
+                <img src="images/hero-9.png" alt="Hero 9" class="hero-img">
+              </div>
+           </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- METRICS -->
+    <!-- METRICS -->
+<div class="metrics-wrap mt-10">
+  <div class="metrics-stage">
+
+    <div class="metrics-grid">
+
+      <!-- 1 -->
+      <article class="metric-slot">
+        <div class="metric-card metric-right">
+          <div class="metric-shell">
+            <div class="metric-row">
+
+              <div class="metric-thumb">
+                <img src="images/metric-farmers.png" alt="Farmers">
+              </div>
+
+              <div class="metric-main">
+                <h3 class="metric-title">African Farmers</h3>
+                <p class="metric-number">450M</p>
+              </div>
+
+              <div class="metric-expand">
+                <div class="metric-separator"></div>
+
+                <div class="metric-text">
+                  Hundreds of millions of farmers operate across fragmented rural supply chains.
+                </div>
+
+                <div class="metric-subgrid">
+                  <div class="subnode">
+                    <div class="subvalue">95%</div>
+                    <div class="subtitle">Smallholder Farmers</div>
+                  </div>
+                  <div class="subnode">
+                    <div class="subvalue">98%</div>
+                    <div class="subtitle">Dry Crops Farmer</div>
+                  </div>
+                  <div class="subnode">
+                    <div class="subvalue">1 Acre</div>
+                    <div class="subtitle">Avg Land Ownership</div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 2 -->
+      <article class="metric-slot">
+        <div class="metric-card metric-right">
+          <div class="metric-shell">
+            <div class="metric-row">
+
+              <div class="metric-thumb">
+                <img src="images/metric-crops.png" alt="Dry Crops Output">
+              </div>
+
+              <div class="metric-main">
+                <h3 class="metric-title">Dry Crops Output</h3>
+                <p class="metric-number">2.5MT</p>
+              </div>
+
+              <div class="metric-expand">
+                <div class="metric-separator"></div>
+
+                <div class="metric-text">
+                  A fragmented crop universe makes the sector highly suitable for structured aggregation.
+                </div>
+
+                <div class="metric-subgrid">
+                  <div class="subnode">
+                    <div class="subvalue">99%</div>
+                    <div class="subtitle">by Small Scale Farmers</div>
+                  </div>
+                  <div class="subnode">
+                    <div class="subvalue">15%</div>
+                    <div class="subtitle">Post Harvest Losses</div>
+                  </div>
+                  <div class="subnode">
+                    <div class="subvalue">72</div>
+                    <div class="subtitle">Unquie Crops to Africa</div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 3 -->
+      <article class="metric-slot">
+        <div class="metric-card metric-left">
+          <div class="metric-shell">
+            <div class="metric-row">
+
+              <div class="metric-thumb">
+                <img src="images/metric-buyers.png" alt="Structured Buyers">
+              </div>
+
+              <div class="metric-main">
+                <h3 class="metric-title">Structured Buyers</h3>
+                <p class="metric-number">1.5%</p>
+              </div>
+
+              <div class="metric-expand">
+                <div class="metric-separator"></div>
+
+                <div class="metric-text">
+                  Very little supply is connected directly to processors, manufacturers, or exporters.
+                </div>
+
+                <div class="metric-subgrid">
+                  <div class="subnode">
+                    <div class="subvalue">40%</div>
+                    <div class="subtitle">Perfect Fullfillment</div>
+                  </div>
+                  <div class="subnode">
+                    <div class="subvalue">40%</div>
+                    <div class="subtitle">Quality Inconsistency</div>
+                  </div>
+                  <div class="subnode">
+                    <div class="subvalue">4%</div>
+                    <div class="subtitle">Price Leakage/Losses</div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 4 -->
+      <article class="metric-slot">
+        <div class="metric-card metric-left">
+          <div class="metric-shell">
+            <div class="metric-row">
+
+              <div class="metric-thumb">
+                <img src="images/metric-output.png" alt="Export">
+              </div>
+
+              <div class="metric-main">
+                <h3 class="metric-title">Dry Crops Exported</h3>
+                <p class="metric-number">450KT</p>
+              </div>
+
+              <div class="metric-expand">
+                <div class="metric-separator"></div>
+
+                <div class="metric-text">
+                  Output scale creates the need for storage, logistics, quality assessment, and market infrastructure.
+                </div>
+
+                <div class="metric-subgrid">
+                  <div class="subnode">
+                    <div class="subvalue">27%</div>
+                    <div class="subtitle">Global Dry Crops is African</div>
+                  </div>
+                  <div class="subnode">
+                    <div class="subvalue">1.5%</div>
+                    <div class="subtitle">Digitized Supply</div>
+                  </div>
+                  <div class="subnode">
+                    <div class="subvalue">15%</div>
+                    <div class="subtitle">Traceable to the Source</div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- MOBILE OVERLAY -->
+    <div class="metric-mobile-overlay" aria-hidden="true">
+      <div class="metric-mobile-overlay-inner">
+        
+        <div class="metric-mobile-top">
+          <div class="metric-mobile-head">
+            <div class="metric-mobile-thumb"></div>
+            <div class="metric-mobile-main">
+              <h3 class="metric-mobile-title"></h3>
+              <p class="metric-mobile-number"></p>
+            </div>
+          </div>
+
+          <div class="metric-mobile-text"></div>
+        </div>
+
+        <div class="metric-mobile-subs"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+      
+<!-- AFRICA MAP BACKGROUND -->
+<div class="africa-map-bg" aria-hidden="true">
+  <img src="images/africa-grey.jpg" alt="">
+</div>
+  <style>
+   /* =========================
+   AFRICA MAP (BACKGROUND)
+   ========================= */
+#why-dry-crops{
+  position: relative;
+ 
+
+  /* CONTROL PANEL */
+  --map-width: 520px;
+  --map-left: 60px;
+  --map-top: 140px;
+  --map-opacity: 0.16;
+}
+
+#why-dry-crops .africa-map-bg{
+  position: absolute;
+  left: var(--map-left);
+  top: var(--map-top);
+  width: var(--map-width);
+  opacity: var(--map-opacity);
+  pointer-events: none;
+  user-select: none;
+  z-index: -1;
+}
+
+#why-dry-crops .africa-map-bg img{
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+
+  /* force it to be soft + grey */
+  filter: grayscale(100%) brightness(1.05);
+}
+
+/* keep all content above it */
+#why-dry-crops > div{
+  position: relative;
+  z-index: 5;
+}
+ /* move text right, circle left */
+    #why-dry-crops .text-side{
+      margin-left: 34px;
+    }
+
+    /* premium context chip */
+    #why-dry-crops .context-chip-wrap{
+      display: inline-flex;
+      position: relative;
+    }
+
+    #why-dry-crops .context-chip{
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 42px;
+      padding: 10px 16px 10px 14px;
+      border-radius: 999px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(244,247,251,0.98) 100%);
+      border: 1px solid rgba(6,42,87,0.10);
+      box-shadow:
+        0 1px 0 rgba(255,255,255,0.9) inset,
+        0 10px 24px rgba(15,23,42,0.08),
+        0 4px 10px rgba(15,23,42,0.05);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: #0f172a;
+      font-size: 12px;
+      line-height: 1.2;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      animation: chipPulse 5.5s ease-in-out infinite;
+      transform-origin: center;
+    }
+
+    #why-dry-crops .context-chip::before{
+      content: "";
+      position: absolute;
+      inset: 1px;
+      border-radius: inherit;
+      background: linear-gradient(135deg, rgba(255,255,255,0.72), rgba(255,255,255,0.18));
+      pointer-events: none;
+    }
+
+    #why-dry-crops .context-chip > *{
+      position: relative;
+      z-index: 1;
+    }
+
+    #why-dry-crops .context-chip-dot{
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 35% 35%, #4ade80 0%, #16a34a 55%, #14532d 100%);
+  box-shadow:
+    0 0 0 4px rgba(22,163,74,0.10),
+    0 0 18px rgba(22,163,74,0.25);
+  flex: 0 0 auto;
+}
+
+    @keyframes chipPulse{
+      0%, 82%, 100%{
+        transform: scale(1);
+        box-shadow:
+          0 1px 0 rgba(255,255,255,0.9) inset,
+          0 10px 24px rgba(15,23,42,0.08),
+          0 4px 10px rgba(15,23,42,0.05);
+      }
+      88%{
+        transform: scale(1.028);
+        box-shadow:
+          0 1px 0 rgba(255,255,255,0.9) inset,
+          0 16px 34px rgba(15,23,42,0.12),
+          0 6px 16px rgba(6,42,87,0.10);
+      }
+      92%{
+        transform: scale(1);
+        box-shadow:
+          0 1px 0 rgba(255,255,255,0.9) inset,
+          0 12px 26px rgba(15,23,42,0.09),
+          0 4px 10px rgba(15,23,42,0.05);
+      }
+    }
+
+    /* hero slideshow */
+    #why-dry-crops .hero-circle{
+      box-shadow:
+        0 26px 54px rgba(15,23,42,0.12),
+        0 10px 22px rgba(15,23,42,0.08);
+    }
+
+    #why-dry-crops .hero-slide{
+      opacity: 0;
+      transition: opacity .9s ease;
+    }
+
+    #why-dry-crops .hero-slide.is-active{
+      opacity: 1;
+    }
+
+    #why-dry-crops .hero-img{
+      height: 118%;
+      width: auto;
+      max-width: none;
+      object-fit: contain;
+    }
+
+    /* metrics grid */
+    #why-dry-crops .metrics-grid{
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+      position: relative;
+    }
+
+    #why-dry-crops .metric-slot{
+      position: relative;
+      height: 116px;
+    }
+
+    #why-dry-crops .metric-card{
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+         }
+
+#why-dry-crops .metric-card{
+  opacity: 1 !important;
+}
+    #why-dry-crops .metric-card:hover{
+      z-index: 20;
+      opacity: 1 !important;
+    }
+
+    /* default state */
+    #why-dry-crops .metric-shell{
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 116px;
+      width: 100%;
+      background: transparent;
+      border: 1px solid transparent;
+      padding: 14px 16px;
+      overflow: hidden;
+      border-radius: 999px;
+      transition:
+        width .42s cubic-bezier(.2,.8,.2,1),
+        transform .42s cubic-bezier(.2,.8,.2,1),
+        background-color .28s ease,
+        border-color .28s ease,
+        box-shadow .28s ease;
+    }
+
+    /* hover state: darker pill */
+    #why-dry-crops .metric-card:hover .metric-shell{
+      background: #eef2f6;
+      border-color: rgba(15,23,42,0.10);
+      box-shadow:
+        0 20px 45px rgba(15,23,42,0.12),
+        0 6px 14px rgba(15,23,42,0.08);
+    }
+
+    /* first two expand right */
+    #why-dry-crops .metric-right:hover .metric-shell{
+      width: calc(100% + 520px);
+    }
+
+    /* last two expand left */
+    #why-dry-crops .metric-left:hover .metric-shell{
+      width: calc(100% + 520px);
+      transform: translateX(-520px);
+    }
+
+    #why-dry-crops .metric-row{
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      height: 100%;
+      white-space: nowrap;
+    }
+
+    #why-dry-crops .metric-thumb{
+  width: 84px;
+  height: 84px;
+  flex: 0 0 84px;
+  overflow: hidden;
+  background: #e5e7eb;
+  border-radius: 999px;
+
+  /* 👇 NEW faint blue outline */
+  border: 1px solid rgba(6, 42, 87, 0.14);
+
+  box-shadow:
+    0 14px 28px rgba(15,23,42,0.11),
+    0 5px 12px rgba(15,23,42,0.08),
+    0 0 0 3px rgba(75, 144, 226, 0.05),
+    0 1px 0 rgba(255,255,255,0.60) inset;
+
+  transition: box-shadow .28s ease, transform .28s ease, border-color .28s ease;
+}
+
+    #why-dry-crops .metric-card:hover .metric-thumb{
+      box-shadow:
+        0 18px 34px rgba(15,23,42,0.14),
+        0 8px 18px rgba(15,23,42,0.10),
+        0 1px 0 rgba(255,255,255,0.68) inset;
+      transform: translateY(-1px);
+    }
+
+    #why-dry-crops .metric-thumb img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    #why-dry-crops .metric-main{
+      min-width: 124px;
+      flex: 0 0 124px;
+    }
+
+    #why-dry-crops .metric-title{
+      font-size: 14px;
+      line-height: 1.25;
+      font-weight: 600;
+      color: #0f172a;
+    }
+
+    #why-dry-crops .metric-number{
+      margin-top: 8px;
+      font-size: 28px;
+      line-height: 1;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      color: #062a57;
+    }
+
+    /* hover content */
+    #why-dry-crops .metric-expand{
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      opacity: 0;
+      transform: translateX(-10px);
+      transition: opacity .26s ease, transform .3s ease;
+      pointer-events: none;
+      min-width: 0;
+    }
+
+    #why-dry-crops .metric-card:hover .metric-expand{
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* separator grows */
+    #why-dry-crops .metric-separator{
+      width: 1px;
+      height: 0;
+      background: rgba(15,23,42,0.12);
+      flex: 0 0 1px;
+      transition: height .35s ease;
+    }
+
+    #why-dry-crops .metric-card:hover .metric-separator{
+      height: 70px;
+    }
+
+    #why-dry-crops .metric-text{
+      width: 190px;
+      flex: 0 0 190px;
+      font-size: 13px;
+      line-height: 1.45;
+      color: #475569;
+      white-space: normal;
+    }
+
+    #why-dry-crops .metric-subgrid{
+      display: flex;
+      align-items: flex-start;
+      gap: 24px;
+      flex: 0 0 auto;
+    }
+
+    #why-dry-crops .subnode{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      width: 86px;
+      flex: 0 0 86px;
+      opacity: 0;
+      transform: translateX(-8px);
+    }
+
+    #why-dry-crops .metric-card:hover .subnode{
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    #why-dry-crops .subnode:nth-child(1){
+      transition: opacity .35s ease .15s, transform .35s ease .15s;
+    }
+
+    #why-dry-crops .subnode:nth-child(2){
+      transition: opacity .35s ease .25s, transform .35s ease .25s;
+    }
+
+    #why-dry-crops .subnode:nth-child(3){
+      transition: opacity .35s ease .35s, transform .35s ease .35s;
+    }
+
+    /* numbers instead of icons */
+    #why-dry-crops .subvalue{
+      font-size: 20px;
+      line-height: 1;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: #062a57;
+    }
+
+    #why-dry-crops .subtitle{
+      margin-top: 8px;
+      font-size: 11px;
+      line-height: 1.2;
+      font-weight: 600;
+      color: #0f172a;
+      white-space: normal;
+    }
+
+    #why-dry-crops .subtext{
+      display: none;
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      #why-dry-crops .hero-slide,
+      #why-dry-crops .metric-card,
+      #why-dry-crops .metric-shell,
+      #why-dry-crops .metric-expand,
+      #why-dry-crops .metric-separator,
+      #why-dry-crops .subnode,
+      #why-dry-crops .context-chip{
+        transition: none !important;
+        animation: none !important;
+      }
+    }
+
+    @media (max-width: 1279px){
+      #why-dry-crops .text-side{
+        margin-left: 0;
+      }
+
+      #why-dry-crops .metrics-grid{
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      #why-dry-crops .metric-right:hover .metric-shell,
+      #why-dry-crops .metric-left:hover .metric-shell{
+        width: 100%;
+        transform: none;
+      }
+    }
+
+    @media (max-width: 1024px){
+  #why-dry-crops .context-chip{
+    font-size: 11px;
+    padding: 9px 13px 9px 12px;
+  }
+
+  #why-dry-crops .metrics-stage{
+    position: relative;
+    min-height: 252px;
+  }
+
+  #why-dry-crops .metrics-grid{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  #why-dry-crops .metric-slot{
+    height: 122px;
+  }
+
+  #why-dry-crops .metric-card{
+    position: absolute;
+    inset: 0;
+    cursor: pointer;
+  }
+
+  #why-dry-crops .metric-shell{
+    width: 100% !important;
+    transform: none !important;
+    height: 118px;
+    border-radius: 999px;
+    padding: 12px 14px;
+  }
+
+  #why-dry-crops .metric-row{
+  gap: 10px;
+  align-items: center;
+}
+
+#why-dry-crops .metric-thumb{
+  width: 62px;
+  height: 62px;
+  flex: 0 0 62px;
+}
+
+#why-dry-crops .metric-main{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  text-align: left;
+  min-width: 0;
+  flex: 1;
+}
+
+#why-dry-crops .metric-title{
+  font-size: 12px;
+  line-height: 1.2;
+  white-space: normal;
+  text-align: left;
+  max-width: 70px;
+  margin: 0;
+  width: 100%;
+}
+
+#why-dry-crops .metric-number{
+  font-size: 22px;
+  margin-top: 6px;
+  text-align: left;
+  width: 100%;
+  display: block;
+line-height: 1;
+}
+
+ /* disable desktop hover expansion on mobile */
+#why-dry-crops .metric-expand{
+  display: none !important;
+}
+
+#why-dry-crops .metric-card:hover{
+  z-index: 1 !important;
+  opacity: 1 !important;
+}
+
+#why-dry-crops .metric-card:hover .metric-shell{
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+#why-dry-crops .metric-right:hover .metric-shell,
+#why-dry-crops .metric-left:hover .metric-shell{
+  width: 100% !important;
+  transform: none !important;
+}
+
+#why-dry-crops .metric-card:hover .metric-thumb{
+  box-shadow:
+    0 14px 28px rgba(15,23,42,0.11),
+    0 5px 12px rgba(15,23,42,0.08),
+    0 0 0 3px rgba(75, 144, 226, 0.05),
+    0 1px 0 rgba(255,255,255,0.60) inset !important;
+  transform: none !important;
+  border-color: rgba(6, 42, 87, 0.14) !important;
+}
+
+#why-dry-crops .metric-card:hover .metric-separator{
+  height: 0 !important;
+}
+
+#why-dry-crops .metric-card:hover .subnode{
+  opacity: 0 !important;
+  transform: translateX(-8px) !important;
+}
+
+/* mobile overlay */
+#why-dry-crops .metric-mobile-overlay{
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  display: none;
+}
+
+#why-dry-crops .metric-mobile-overlay.is-open{
+  display: block;
+}
+
+#why-dry-crops .metric-mobile-overlay-inner{
+  position: relative;
+  width: 100%;
+  min-height: 252px;
+  border-radius: 28px;
+  background: linear-gradient(180deg, #f8fafc 0%, #eef2f6 100%);
+  border: 1px solid rgba(15,23,42,0.08);
+  box-shadow:
+    0 24px 48px rgba(15,23,42,0.12),
+    0 8px 18px rgba(15,23,42,0.08);
+  padding: 16px 14px 14px;
+
+  text-align: left; /* 👈 ADD THIS */
+}
+
+  #why-dry-crops .metric-mobile-close{
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    width: 28px;
+    height: 28px;
+    border: 0;
+    background: transparent;
+    color: #475569;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  #why-dry-crops .metric-mobile-top{
+  display: flex;
+  flex-direction: column;
+}
+
+  #why-dry-crops .metric-mobile-head{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  width: 100%;
+}
+
+  #why-dry-crops .metric-mobile-thumb{
+    width: 72px;
+    height: 72px;
+    border-radius: 999px;
+    overflow: hidden;
+    background: #e5e7eb;
+    border: 1px solid rgba(6, 42, 87, 0.14);
+    box-shadow:
+      0 14px 28px rgba(15,23,42,0.11),
+      0 5px 12px rgba(15,23,42,0.08),
+      0 0 0 3px rgba(75, 144, 226, 0.05),
+      0 1px 0 rgba(255,255,255,0.60) inset;
+  }
+
+  #why-dry-crops .metric-mobile-thumb img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  #why-dry-crops .metric-mobile-main{
+  min-width: 0;
+  text-align: left;
+}
+
+  #why-dry-crops .metric-mobile-title{
+    font-size: 13px;
+    line-height: 1.15;
+    font-weight: 600;
+    color: #0f172a;
+  }
+
+  #why-dry-crops .metric-mobile-number{
+    margin-top: 6px;
+    font-size: 24px;
+    line-height: 1;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: #062a57;
+  }
+
+#why-dry-crops .metric-mobile-text{
+  margin-top: 18px;
+  width: 100%;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #475569;
+ padding-left: 12px;   /* 👈 ADD THIS */
+  padding-right: 12px;  /* 👈 MATCH GRID */
+ text-align: justify;
+}
+
+#why-dry-crops .metric-mobile-subs{
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 16px;
+}
+  #why-dry-crops .metric-mobile-subs .subnode{
+    width: auto;
+    flex: none;
+    opacity: 1;
+    transform: none;
+    align-items: center;
+    text-align: center;
+    border-radius: 18px;
+    background: rgba(255,255,255,0.72);
+    border: 1px solid rgba(15,23,42,0.06);
+    padding: 12px 8px;
+    box-shadow: 0 6px 16px rgba(15,23,42,0.05);
+  }
+
+  #why-dry-crops .metric-mobile-subs .subvalue{
+    font-size: 18px;
+  }
+
+  #why-dry-crops .metric-mobile-subs .subtitle{
+    margin-top: 6px;
+    font-size: 10px;
+    line-height: 1.2;
+  }
+}
+  </style>
+
+  <script>
+  (function () {
+    const section = document.getElementById('why-dry-crops');
+    if (!section) return;
+
+    /* hero slideshow */
+    const slides = section.querySelectorAll('.hero-slide');
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (slides.length && !prefersReducedMotion) {
+      let current = 0;
+
+      setInterval(() => {
+        slides[current].classList.remove('is-active');
+        current = (current + 1) % slides.length;
+        slides[current].classList.add('is-active');
+      }, 2400);
+    }
+
+    /* mobile overlay */
+    const overlay = section.querySelector('.metric-mobile-overlay');
+    const overlayThumb = section.querySelector('.metric-mobile-thumb');
+    const overlayTitle = section.querySelector('.metric-mobile-title');
+    const overlayNumber = section.querySelector('.metric-mobile-number');
+    const overlayText = section.querySelector('.metric-mobile-text');
+    const overlaySubs = section.querySelector('.metric-mobile-subs');
+    const overlayClose = section.querySelector('.metric-mobile-close');
+    const metricSlots = Array.from(section.querySelectorAll('.metric-slot'));
+
+    if (!overlay || !metricSlots.length) return;
+
+    function isMobileMetrics() {
+      return window.innerWidth <= 1024;
+    }
+
+    function openMetricOverlay(slot) {
+      const thumb = slot.querySelector('.metric-thumb')?.innerHTML || '';
+      const title = slot.querySelector('.metric-title')?.textContent || '';
+      const number = slot.querySelector('.metric-number')?.textContent || '';
+      const text = slot.querySelector('.metric-text')?.textContent || '';
+      const subgrid = slot.querySelector('.metric-subgrid');
+
+      overlayThumb.innerHTML = thumb;
+      overlayTitle.textContent = title;
+      overlayNumber.textContent = number;
+      overlayText.textContent = text;
+      overlaySubs.innerHTML = subgrid ? subgrid.innerHTML : '';
+
+      overlay.classList.add('is-open');
+      overlay.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeMetricOverlay() {
+      overlay.classList.remove('is-open');
+      overlay.setAttribute('aria-hidden', 'true');
+    }
+
+    metricSlots.forEach((slot) => {
+      slot.addEventListener('click', function (e) {
+        if (!isMobileMetrics()) return;
+        e.stopPropagation();
+        openMetricOverlay(slot);
+      });
+    });
+
+  
+    overlay.addEventListener('click', function (e) {
+      if (e.target === overlay) {
+        closeMetricOverlay();
+      }
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!isMobileMetrics()) return;
+      if (!section.contains(e.target)) return;
+      if (e.target.closest('.metric-slot')) return;
+      if (e.target.closest('.metric-mobile-overlay-inner')) return;
+      closeMetricOverlay();
+    });
+
+    window.addEventListener('resize', function () {
+  if (!isMobileMetrics()) {
+    closeMetricOverlay();
+    overlayThumb.innerHTML = '';
+    overlayTitle.textContent = '';
+    overlayNumber.textContent = '';
+    overlayText.textContent = '';
+    overlaySubs.innerHTML = '';
+   }
+});
+})();
+</script>
+</section>
+<script>
+(function () {
+  const navbar = document.getElementById('site-navbar');
+  const mobileMenuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const openIcon = document.getElementById('menu-open-icon');
+  const closeIcon = document.getElementById('menu-close-icon');
+
+  if (!navbar || !mobileMenuButton || !mobileMenu) return;
+
+  let mobileCloseTimer = null;
+  let desktopScrollStopTimer = null;
+  let lastScrollY = window.scrollY;
+
+  function isMobileView() {
+    return window.innerWidth < 768;
+  }
+
+  function showNavbar() {
+    navbar.classList.remove('nav-hidden');
+  }
+
+  function hideNavbar() {
+    navbar.classList.add('nav-hidden');
+  }
+
+  function openMobileMenu() {
+    clearTimeout(mobileCloseTimer);
+
+    mobileMenu.classList.remove('hidden');
+    mobileMenuButton.setAttribute('aria-expanded', 'true');
+
+    if (openIcon) openIcon.classList.add('hidden');
+    if (closeIcon) closeIcon.classList.remove('hidden');
+
+    showNavbar();
+  }
+
+  function closeMobileMenu() {
+    clearTimeout(mobileCloseTimer);
+
+    mobileMenu.classList.add('hidden');
+    mobileMenuButton.setAttribute('aria-expanded', 'false');
+
+    if (openIcon) openIcon.classList.remove('hidden');
+    if (closeIcon) closeIcon.classList.add('hidden');
+  }
+
+  function toggleMobileMenu(e) {
+    e.stopPropagation();
+
+    if (mobileMenu.classList.contains('hidden')) {
+      openMobileMenu();
+    } else {
+      closeMobileMenu();
+    }
+  }
+
+  mobileMenuButton.addEventListener('click', toggleMobileMenu);
+
+  document.addEventListener('click', function (e) {
+    if (!isMobileView()) return;
+    if (mobileMenu.classList.contains('hidden')) return;
+    if (mobileMenu.contains(e.target)) return;
+    if (mobileMenuButton.contains(e.target)) return;
+    closeMobileMenu();
+  });
+
+  window.addEventListener(
+    'scroll',
+    function () {
+      const currentScrollY = window.scrollY;
+
+      if (isMobileView()) {
+        if (!mobileMenu.classList.contains('hidden')) {
+          closeMobileMenu();
+        }
+
+        clearTimeout(mobileCloseTimer);
+        mobileCloseTimer = setTimeout(() => {
+          if (!isMobileView()) return;
+          hideNavbar();
+        }, 1500);
+
+        if (currentScrollY <= 0) {
+          showNavbar();
+        } else if (currentScrollY < lastScrollY) {
+          showNavbar();
+        } else if (currentScrollY > lastScrollY) {
+          hideNavbar();
+        }
+
+        lastScrollY = currentScrollY;
+        return;
+      }
+
+      if (currentScrollY <= 0) {
+        showNavbar();
+        lastScrollY = currentScrollY;
+        clearTimeout(desktopScrollStopTimer);
+        return;
+      }
+
+      if (currentScrollY < lastScrollY) {
+        showNavbar();
+      } else if (currentScrollY > lastScrollY) {
+        hideNavbar();
+      }
+
+      clearTimeout(desktopScrollStopTimer);
+      desktopScrollStopTimer = setTimeout(() => {
+        if (!isMobileView()) hideNavbar();
+      }, 1500);
+
+      lastScrollY = currentScrollY;
+    },
+    { passive: true }
+  );
+
+  window.addEventListener('resize', function () {
+    clearTimeout(mobileCloseTimer);
+    clearTimeout(desktopScrollStopTimer);
+    closeMobileMenu();
+
+    if (isMobileView()) {
+      showNavbar();
+    }
+  });
+
+  showNavbar();
+})();
+</script>
 </body>
 </html>
