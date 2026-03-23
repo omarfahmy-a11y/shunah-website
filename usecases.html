@@ -95,9 +95,9 @@
       <div id="nav-track" class="relative flex items-center gap-1">
         
         <span
-          id="nav-pill"
-          class="absolute top-1/2 -translate-y-1/2 h-[32px] rounded-full bg-[#f1f3f5] border border-black/6 transition-all duration-300 ease-out">
-        </span>
+  id="nav-pill"
+  class="absolute left-0 top-1/2 -translate-y-1/2 h-[32px] rounded-full bg-[#f1f3f5] border border-black/6 transition-all duration-300 ease-out pointer-events-none">
+</span>
 
         <a href="index.html"
            class="nav-link relative z-[2] px-4 h-[32px] inline-flex items-center rounded-full text-[12.5px] font-medium text-[#4b5563] transition-colors duration-200">
@@ -494,6 +494,12 @@ const navPill = document.getElementById('nav-pill');
 const navLinks = Array.from(document.querySelectorAll('.nav-link'));
 const currentLink = document.querySelector('.nav-link[data-current="true"]');
 
+function refreshNavPill() {
+  if (window.innerWidth >= 768 && currentLink) {
+    requestAnimationFrame(() => setNavPill(currentLink));
+  }
+}
+
 function setNavPill(link) {
   if (!link || !navPill || !navTrack) return;
 
@@ -535,9 +541,16 @@ function setNavPill(link) {
       }
 
       window.addEventListener('load', () => {
-        setNavPill(currentLink);
-        showNav();
-      });
+  refreshNavPill();
+  showNav();
+});
+
+window.addEventListener('resize', refreshNavPill);
+window.addEventListener('pageshow', refreshNavPill);
+
+if (document.fonts && document.fonts.ready) {
+  document.fonts.ready.then(refreshNavPill);
+}
 
       window.addEventListener('scroll', () => {
         const currentY = window.scrollY;
