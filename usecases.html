@@ -637,7 +637,12 @@ function setNavPill(link) {
             expandedView.classList.add('view-shown');
           });
         }, 220);
-      }
+       setTimeout(() => {
+    const section = document.getElementById('use-cases-grid');
+    const y = section.getBoundingClientRect().top + window.scrollY - 60;
+    window.scrollTo({ top: y, behavior: 'smooth' });
+  }, 250);
+}
 
       function closeUseCase() {
         expandedView.classList.remove('view-shown');
