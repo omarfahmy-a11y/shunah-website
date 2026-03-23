@@ -14,7 +14,14 @@
 
     /* keep your satellite helper styles if you want */
     #shunah-satellite-circle { min-height: 100dvh; }
-  </style>
+  #site-navbar{
+  transition: transform 0.25s ease;
+  will-change: transform;
+}
+#site-navbar.nav-hidden{
+  transform: translateY(-100%);
+}
+</style>
 </head>
 
 <body class="bg-gray-900 text-white min-h-screen overflow-y-auto pt-12">
@@ -2366,384 +2373,122 @@ function hideHover() {
     })();
   </script>
 </section>
-<!-- INFRASTRUCTURE IoT — HALO ARC (higher + star-trail draw + background ramps up during halo) -->
-<section id="infrastructure-iot" class="h-screen snap-start bg-[#0b1220] text-white overflow-hidden relative">
-
-  <!-- Background image (fades in progressively during halo draw) -->
-  <div id="iotBg"
-       class="absolute inset-0 opacity-0 scale-[1.06] transition-transform duration-[1600ms] ease-out"
-       style="background-image:url('images/iot-bg.jpg'); background-size:cover; background-position:center;">
-    <!-- overlay opacity is also animated -->
-    <div id="iotOverlay" class="absolute inset-0 bg-[#0b1220]/85 transition-opacity duration-300"></div>
-  </div>
-
-  <!-- Halo SVG -->
-  <svg id="iotHalo" class="absolute inset-0 w-full h-full pointer-events-none" aria-hidden="true"></svg>
-
-  <div class="relative max-w-7xl mx-auto px-6 h-full flex items-center justify-center">
-    <div class="w-full">
-
-      <!-- Title -->
-      <div id="iotHeadline"
-           class="text-center opacity-0 translate-y-8 blur-[6px] transition-all duration-[1200ms] ease-out">
-        <h2 id="iotTitle" class="text-4xl md:text-5xl font-semibold tracking-tight">
-          IoT Orchestrating Crop Flow
-        </h2>
-        <p class="mt-3 text-white/60 text-lg max-w-3xl mx-auto">
-          Processing, storage, transport, scales, and freight — all connected as one network.
-        </p>
-      </div>
-
-      <!-- BOX GRID -->
-      <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
-
-        <div class="iot-box opacity-0 -translate-y-10">
-          <div class="rounded-2xl bg-[#111f36] ring-1 ring-white/10 p-6 text-center">
-            <div class="text-sm text-white/40">Node</div>
-            <div class="text-lg font-semibold mt-2">Processing Station</div>
-            <div class="text-4xl font-semibold mt-4 tabular-nums">
-              <span class="iot-counter" data-target="12">0</span>
-            </div>
-            <div class="mt-1 text-white/55 text-sm">Stations connected</div>
-          </div>
-        </div>
-
-        <div class="iot-box opacity-0 -translate-y-10">
-          <div class="rounded-2xl bg-[#111f36] ring-1 ring-white/10 p-6 text-center">
-            <div class="text-sm text-white/40">Node</div>
-            <div class="text-lg font-semibold mt-2">Storage Space</div>
-            <div class="text-4xl font-semibold mt-4 tabular-nums">
-              <span class="iot-counter" data-target="28">0</span>
-            </div>
-            <div class="mt-1 text-white/55 text-sm">Warehouses / hubs</div>
-          </div>
-        </div>
-
-        <div class="iot-box opacity-0 -translate-y-10">
-          <div class="rounded-2xl bg-[#111f36] ring-1 ring-white/10 p-6 text-center">
-            <div class="text-sm text-white/40">Node</div>
-            <div class="text-lg font-semibold mt-2">Trucks</div>
-            <div class="text-4xl font-semibold mt-4 tabular-nums">
-              <span class="iot-counter" data-target="64">0</span>
-            </div>
-            <div class="mt-1 text-white/55 text-sm">Active fleet access</div>
-          </div>
-        </div>
-
-        <div class="iot-box opacity-0 -translate-y-10">
-          <div class="rounded-2xl bg-[#111f36] ring-1 ring-white/10 p-6 text-center">
-            <div class="text-sm text-white/40">Node</div>
-            <div class="text-lg font-semibold mt-2">Truck Scales</div>
-            <div class="text-4xl font-semibold mt-4 tabular-nums">
-              <span class="iot-counter" data-target="19">0</span>
-            </div>
-            <div class="mt-1 text-white/55 text-sm">Digital weigh points</div>
-          </div>
-        </div>
-
-        <div class="iot-box opacity-0 -translate-y-10">
-          <div class="rounded-2xl bg-[#111f36] ring-1 ring-white/10 p-6 text-center">
-            <div class="text-sm text-white/40">Node</div>
-            <div class="text-lg font-semibold mt-2">Freight Forwarder</div>
-            <div class="text-4xl font-semibold mt-4 tabular-nums">
-              <span class="iot-counter" data-target="7">0</span>
-            </div>
-            <div class="mt-1 text-white/55 text-sm">Partners integrated</div>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </div>
-
-  <style>
-    .iot-box {
-      transition: transform 1200ms cubic-bezier(.19,1,.22,1), opacity 1200ms cubic-bezier(.19,1,.22,1);
-      will-change: transform, opacity;
-    }
-    .iot-box.is-in { opacity: 1 !important; transform: translateY(0) !important; }
-
-    /* Halo styles: glow + crisp line + star head */
-    .haloGlow {
-      stroke: rgba(255,255,255,0.10);
-      stroke-width: 26;
-      fill: none;
-      filter: blur(2px);
-      stroke-linecap: round;
-    }
-    .haloLine {
-      stroke: rgba(255,255,255,0.88);
-      stroke-width: 3;
-      fill: none;
-      filter: drop-shadow(0 0 18px rgba(255,255,255,0.30));
-      stroke-linecap: round; /* makes "star trail" nicer */
-    }
-    .haloHead {
-      fill: rgba(255,255,255,0.95);
-      filter: drop-shadow(0 0 22px rgba(255,255,255,0.55));
-    }
-  </style>
-
-  <script>
-    (function () {
-      const section   = document.getElementById("infrastructure-iot");
-      const boxes     = Array.from(section.querySelectorAll(".iot-box"));
-      const counters  = Array.from(section.querySelectorAll(".iot-counter"));
-      const headline  = document.getElementById("iotHeadline");
-
-      const bg        = document.getElementById("iotBg");
-      const overlay   = document.getElementById("iotOverlay");
-
-      const svg       = document.getElementById("iotHalo");
-      const title     = document.getElementById("iotTitle");
-
-      let hasRun = false;
-
-      const sleep = (ms) => new Promise(r => setTimeout(r, ms));
-
-      function animateCounter(el, to, durationMs) {
-        return new Promise((resolve) => {
-          const start = performance.now();
-          function tick(now) {
-            const t = Math.min((now - start) / durationMs, 1);
-            const eased = 1 - Math.pow(1 - t, 3); // easeOutCubic
-            const val = Math.round(to * eased);
-            el.textContent = val.toLocaleString();
-            if (t < 1) requestAnimationFrame(tick);
-            else resolve();
-          }
-          requestAnimationFrame(tick);
-        });
-      }
-
-      function clearSvg() { while (svg.firstChild) svg.removeChild(svg.firstChild); }
-
-      function centerTop(rect) {
-        return { x: rect.left + rect.width / 2, y: rect.top };
-      }
-
-      function buildHaloPath() {
-        const sRect = section.getBoundingClientRect();
-        const first = boxes[0].getBoundingClientRect();
-        const last  = boxes[4].getBoundingClientRect();
-        const tRect = title.getBoundingClientRect();
-
-        const a = centerTop(first);
-        const b = centerTop(last);
-
-        const x1 = a.x - sRect.left;
-        const y1 = a.y - sRect.top - 10;
-
-        const x2 = b.x - sRect.left;
-        const y2 = b.y - sRect.top - 10;
-
-        // ✅ Higher halo: use a point above the title and lift it a lot
-        const mx = (x1 + x2) / 2;
-        const my = (tRect.top - sRect.top) - 170; // higher than title
-        // Also push up more to feel grand
-        const extraLift = 180;
-        const apexY = my - extraLift;
-
-        return { d: `M ${x1} ${y1} Q ${mx} ${apexY} ${x2} ${y2}`, sRect };
-      }
-
-      function pointOnQuadratic(p0, p1, p2, t) {
-        const x = (1-t)*(1-t)*p0.x + 2*(1-t)*t*p1.x + t*t*p2.x;
-        const y = (1-t)*(1-t)*p0.y + 2*(1-t)*t*p1.y + t*t*p2.y;
-        return {x,y};
-      }
-
-      function parseQuadratic(d) {
-        // d = "M x1 y1 Q cx cy x2 y2"
-        const parts = d.replace(/[MQ]/g, "").trim().split(/\s+/).map(Number);
-        return {
-          p0: {x: parts[0], y: parts[1]},
-          p1: {x: parts[2], y: parts[3]},
-          p2: {x: parts[4], y: parts[5]},
-        };
-      }
-
-      async function animateHaloWithStarTrail() {
-        clearSvg();
-
-        const { d } = buildHaloPath();
-        const { p0, p1, p2 } = parseQuadratic(d);
-
-        // glow underlay
-        const glow = document.createElementNS("http://www.w3.org/2000/svg","path");
-        glow.setAttribute("d", d);
-        glow.setAttribute("class","haloGlow");
-
-        // main line
-        const line = document.createElementNS("http://www.w3.org/2000/svg","path");
-        line.setAttribute("d", d);
-        line.setAttribute("class","haloLine");
-
-        // star head (small circle that moves along the arc)
-        const head = document.createElementNS("http://www.w3.org/2000/svg","circle");
-        head.setAttribute("r", "3.6");
-        head.setAttribute("class","haloHead");
-
-        svg.appendChild(glow);
-        svg.appendChild(line);
-        svg.appendChild(head);
-
-        // make line "grow" from a tiny segment to full length
-        const len = line.getTotalLength();
-        [glow, line].forEach(p => {
-          p.style.strokeDasharray = len;
-          p.style.strokeDashoffset = len;
-        });
-
-        // Ensure background is ready to fade (we’ll control opacity via JS)
-        bg.classList.remove("opacity-0");
-        bg.style.opacity = "0";
-        bg.classList.add("scale-100"); // settle scale during reveal
-        overlay.style.opacity = "0.88"; // strong at start
-
-        const duration = 2200; // slower, more premium
-        const start = performance.now();
-
-        function frame(now) {
-          const t = Math.min((now - start) / duration, 1);
-          const eased = 1 - Math.pow(1 - t, 3);
-
-          // stroke draw (grows from start to end)
-          const dash = len * (1 - eased);
-          line.style.strokeDashoffset = dash;
-          glow.style.strokeDashoffset = dash;
-
-          // star head position along the curve
-          const pt = pointOnQuadratic(p0, p1, p2, eased);
-          head.setAttribute("cx", pt.x);
-          head.setAttribute("cy", pt.y);
-
-          // head grows slightly then settles (cinema feel)
-          const r = 3.2 + (eased < 0.15 ? eased * 10 : 1.5);
-          head.setAttribute("r", String(r));
-
-          // ✅ background becomes more apparent as halo completes
-          // 0 -> 1 opacity ramp, but slower at first
-          const bgOpacity = Math.min(0.85, eased * 0.95);
-          bg.style.opacity = String(bgOpacity);
-
-          // overlay reduces to show more image near the end
-          const overlayOpacity = 0.88 - (eased * 0.45); // 0.88 -> 0.43
-          overlay.style.opacity = String(Math.max(0.40, overlayOpacity));
-
-          if (t < 1) requestAnimationFrame(frame);
-          else {
-            // final polish: soften head after completion
-            head.style.transition = "opacity 900ms ease";
-            head.style.opacity = "0.65";
-          }
-        }
-        requestAnimationFrame(frame);
-
-        // also add a slight settle zoom to background
-        bg.classList.remove("scale-[1.06]");
-        bg.classList.add("scale-100");
-      }
-
-      async function runSequence() {
-        if (hasRun) return;
-        hasRun = true;
-
-        // sequential: box -> count -> next box
-        for (let i = 0; i < boxes.length; i++) {
-          boxes[i].classList.add("is-in");
-          await sleep(420);
-          await animateCounter(counters[i], Number(counters[i].dataset.target || 0), 1700);
-          await sleep(260);
-        }
-
-        // title reveal
-        headline.classList.remove("opacity-0","translate-y-8","blur-[6px]");
-        headline.classList.add("opacity-100","translate-y-0","blur-0");
-
-        // halo starts after title appears
-        await sleep(520);
-        await animateHaloWithStarTrail();
-      }
-
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach(e => { if (e.isIntersecting) runSequence(); });
-      }, { threshold: 0.6 });
-
-      io.observe(section);
-
-      // keep halo aligned on resize (only after run)
-      window.addEventListener("resize", () => {
-        if (!hasRun) return;
-        // re-run halo positioning instantly (no re-count sequence)
-        animateHaloWithStarTrail();
-      });
-
-    })();
-  </script>
-</section>
 
 <script>
 (function () {
-  const navbar = document.getElementById("site-navbar");
+  const mobileMenuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const openIcon = document.getElementById('menu-open-icon');
+  const closeIcon = document.getElementById('menu-close-icon');
+
+  if (!mobileMenuButton || !mobileMenu) return;
+
+  let scrollCloseTimer;
+
+  function openMobileMenu() {
+    mobileMenu.classList.remove('hidden');
+    mobileMenuButton.setAttribute('aria-expanded', 'true');
+    if (openIcon) openIcon.classList.add('hidden');
+    if (closeIcon) closeIcon.classList.remove('hidden');
+  }
+
+  function closeMobileMenu() {
+    mobileMenu.classList.add('hidden');
+    mobileMenuButton.setAttribute('aria-expanded', 'false');
+    if (openIcon) openIcon.classList.remove('hidden');
+    if (closeIcon) closeIcon.classList.add('hidden');
+  }
+
+  function isMobileView() {
+    return window.innerWidth < 768;
+  }
+
+  function toggleMobileMenu() {
+    if (mobileMenu.classList.contains('hidden')) {
+      openMobileMenu();
+    } else {
+      closeMobileMenu();
+    }
+  }
+
+  mobileMenuButton.addEventListener('click', toggleMobileMenu);
+
+  window.addEventListener(
+    'scroll',
+    function () {
+      if (!isMobileView()) return;
+      if (!mobileMenu.classList.contains('hidden')) {
+        closeMobileMenu();
+      }
+
+      clearTimeout(scrollCloseTimer);
+      scrollCloseTimer = setTimeout(() => {
+        if (!isMobileView()) return;
+        closeMobileMenu();
+      }, 120);
+    },
+    { passive: true }
+  );
+
+  window.addEventListener('resize', function () {
+    closeMobileMenu();
+  });
+})();
+</script>
+
+<script>
+(function () {
+  const navbar = document.getElementById('site-navbar');
   if (!navbar) return;
 
   let lastScrollY = window.scrollY;
-  let ticking = false;
-  let idleTimer = null;
+  let scrollStopTimer;
+
+  function isDesktop() {
+    return window.innerWidth >= 768;
+  }
 
   function showNav() {
-    navbar.classList.remove("-translate-y-full");
-    navbar.classList.add("translate-y-0");
+    navbar.classList.remove('nav-hidden');
   }
 
   function hideNav() {
-    navbar.classList.remove("translate-y-0");
-    navbar.classList.add("-translate-y-full");
+    navbar.classList.add('nav-hidden');
   }
 
-  function handleScroll() {
-    const currentScrollY = window.scrollY;
-    const delta = currentScrollY - lastScrollY;
-
-    if (currentScrollY <= 10) {
+  window.addEventListener('scroll', function () {
+    if (!isDesktop()) {
       showNav();
-    } else if (delta > 2) {
+      return;
+    }
+
+    const currentScrollY = window.scrollY;
+
+    if (currentScrollY <= 0) {
+      showNav();
+      lastScrollY = currentScrollY;
+      clearTimeout(scrollStopTimer);
+      return;
+    }
+
+    if (currentScrollY > lastScrollY) {
       hideNav();
-    } else if (delta < -2) {
+    } else if (currentScrollY < lastScrollY) {
       showNav();
     }
 
-    clearTimeout(idleTimer);
-    idleTimer = setTimeout(() => {
-      if (window.scrollY > 10) hideNav();
-    }, 180);
+    clearTimeout(scrollStopTimer);
+    scrollStopTimer = setTimeout(() => {
+      if (isDesktop()) hideNav();
+    }, 140);
 
     lastScrollY = currentScrollY;
-    ticking = false;
-  }
-
-  window.addEventListener("scroll", () => {
-    if (!ticking) {
-      requestAnimationFrame(handleScroll);
-      ticking = true;
-    }
   }, { passive: true });
 
-})();
-</script>
-<script>
-  const btn = document.getElementById("mobile-menu-button");
-  const menu = document.getElementById("mobile-menu");
-  const openIcon = document.getElementById("menu-open-icon");
-  const closeIcon = document.getElementById("menu-close-icon");
-
-  btn.addEventListener("click", () => {
-    menu.classList.toggle("hidden");
-    openIcon.classList.toggle("hidden");
-    closeIcon.classList.toggle("hidden");
+  window.addEventListener('resize', function () {
+    if (!isDesktop()) showNav();
   });
+})();
 </script>
 </body>
 </html>
