@@ -526,27 +526,19 @@ SHUNAH – Technology Cards
         height:auto;
       }
 
-      /* collapsed state: show a rectangle preview */
-      .suiteMediaFill{
-        flex: 0 0 auto;
-        max-height: 88px;
-        min-height: 88px;
-        opacity: 1;
-        margin-top: 12px;
-        transition: max-height 280ms ease;
-      }
+      /* mobile: always show expanded image */
+.suiteMediaFill{
+  flex: 0 0 auto;
+  max-height: 260px;
+  min-height: 260px;
+  opacity: 1;
+  margin-top: 12px;
+  transition: none;
+}
 
-      .suiteMediaFill img{
-        width:100%;
-        height:100%;
-        object-fit:cover;
-        aspect-ratio: auto;
-      }
-
-      /* expanded state */
-      .suitePanel.is-active .suiteMediaFill{
-        max-height: 260px;
-      }
+.suitePanel.is-active .suiteMediaFill{
+  max-height: 260px;
+}
 
       .suiteHoverNumber{
         right:14px;
@@ -561,10 +553,15 @@ SHUNAH – Technology Cards
         font-size: 12px;
       }
 
-      .suitePanel.is-active .suiteHoverNumber{
-        opacity:1;
-        transform:translateY(0);
-      }
+      .suiteHoverNumber{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.suitePanel.is-active .suiteHoverNumber{
+  opacity:1;
+  transform:translateY(0);
+}
     }
   </style>
 
@@ -590,7 +587,7 @@ SHUNAH – Technology Cards
 
         const btn = p.querySelector(".suiteKnowMore");
         if(btn){
-          btn.textContent = isActive && !isDesktop() ? "More Details" : "Explore";
+          btn.textContent = "Explore";
         }
       });
     }
@@ -602,6 +599,11 @@ SHUNAH – Technology Cards
         const btn = p.querySelector(".suiteKnowMore");
         if(btn) btn.textContent = "Explore";
       });
+    }
+
+    function setMobileDefaultActive(){
+      if(isDesktop()) return;
+      setActive(0);
     }
 
     panels.forEach((p, i) => {
@@ -628,17 +630,10 @@ SHUNAH – Technology Cards
 
         if(clickedKnowMore){
           if(isDesktop()){
-            return; // desktop: Explore navigates immediately
-          }
-
-          // mobile: first click expands, second click navigates
-          if(!p.classList.contains("is-active")){
-            e.preventDefault();
-            setActive(i);
             return;
           }
 
-          return; // already expanded on mobile, allow navigation
+          return; // mobile: always Explore, navigate immediately
         }
 
         if(isDesktop()){
@@ -648,22 +643,28 @@ SHUNAH – Technology Cards
         }
 
         e.preventDefault();
-        if(!p.classList.contains("is-active")){
-          setActive(i);
-        } else {
-          clearActive();
-        }
+        setActive(i); // mobile: card is already in expanded behavior
       });
     });
 
     document.addEventListener("click", (e) => {
       if(isDesktop()) return;
-      if(!row.contains(e.target)) clearActive();
+      if(!row.contains(e.target)) setMobileDefaultActive();
     });
 
     window.addEventListener("resize", () => {
-      clearActive();
+      if(isDesktop()){
+        clearActive();
+      } else {
+        setMobileDefaultActive();
+      }
     });
+
+    if(isDesktop()){
+      clearActive();
+    } else {
+      setMobileDefaultActive();
+    }
   })();
 </script>
 </section>
