@@ -546,18 +546,69 @@
       updateTrackerUI();
     })();
   </script>
-<!-- ✅ ADD THIS EXACTLY HERE -->
 <script>
-  const btn = document.getElementById("mobile-menu-button");
-  const menu = document.getElementById("mobile-menu");
-  const openIcon = document.getElementById("menu-open-icon");
-  const closeIcon = document.getElementById("menu-close-icon");
+  (function () {
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const openIcon = document.getElementById('menu-open-icon');
+    const closeIcon = document.getElementById('menu-close-icon');
 
-  btn.addEventListener("click", () => {
-    menu.classList.toggle("hidden");
-    openIcon.classList.toggle("hidden");
-    closeIcon.classList.toggle("hidden");
-  });
+    if (!mobileMenuButton || !mobileMenu) return;
+
+    let scrollCloseTimer;
+
+    function openMobileMenu() {
+      mobileMenu.classList.remove('hidden');
+      mobileMenuButton.setAttribute('aria-expanded', 'true');
+      if (openIcon) openIcon.classList.add('hidden');
+      if (closeIcon) closeIcon.classList.remove('hidden');
+    }
+
+    function closeMobileMenu() {
+      mobileMenu.classList.add('hidden');
+      mobileMenuButton.setAttribute('aria-expanded', 'false');
+      if (openIcon) openIcon.classList.remove('hidden');
+      if (closeIcon) closeIcon.classList.add('hidden');
+    }
+
+    function isMobileView() {
+      return window.innerWidth < 768; // matches md:hidden
+    }
+
+    function toggleMobileMenu() {
+      if (mobileMenu.classList.contains('hidden')) {
+        openMobileMenu();
+      } else {
+        closeMobileMenu();
+      }
+    }
+
+    mobileMenuButton.addEventListener('click', toggleMobileMenu);
+
+    // Close on any scroll movement
+    window.addEventListener(
+      'scroll',
+      function () {
+        if (!isMobileView()) return;
+        if (!mobileMenu.classList.contains('hidden')) {
+          closeMobileMenu();
+        }
+
+        // also close again when scrolling "stalls"
+        clearTimeout(scrollCloseTimer);
+        scrollCloseTimer = setTimeout(() => {
+          if (!isMobileView()) return;
+          closeMobileMenu();
+        }, 120);
+      },
+      { passive: true }
+    );
+
+    // Optional: also close on resize back/forth
+    window.addEventListener('resize', function () {
+      closeMobileMenu();
+    });
+  })();
 </script>
 </body>
 </html>
