@@ -265,7 +265,7 @@ class="relative mx-auto aspect-square w-full max-w-[min(360px,88vw)] sm:max-w-[m
       <div class="hidden min-h-0 -mt-6 lg:col-span-5 lg:-mt-10 lg:block">
         <div
   id="ssc-panel"
-  class="relative h-full overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-7"
+  class="relative h-full overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-7 lg:max-h-[420px]"
 >
   <div class="relative h-full min-h-[420px] lg:min-h-[500px] overflow-auto">
             <div id="ssc-intro" class="absolute inset-0 pr-2 opacity-100 transition-opacity duration-150">
@@ -860,9 +860,16 @@ function unlockMobilePageScroll() {
   if (isMobileView()) {
     closeMobileDetail();
     runMobileHelper();
+    setArcProgress(active < 0 ? 0 : active, true);
+    setActive(active < 0 ? 0 : active, false);
   } else {
+    closeMobileDetail();
     showDesktopIntro();
+    setArcProgress(active < 0 ? 0 : active, true);
+    setActive(active < 0 ? 0 : active, false);
   }
+
+  startAutoplay();
 });
       function runDesktopIntro() {
 
