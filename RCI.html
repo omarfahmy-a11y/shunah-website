@@ -45,8 +45,7 @@
     <div class="flex h-10 items-center">
 
       <!-- ONLY LEFT BUTTON -->
-      <a 
-        href="#technology" 
+      <a href="technology.html#technology"" 
         class="text-xs font-semibold text-slate-700 hover:text-slate-900 transition-colors"
       >
         ← Back to Product Suite
@@ -215,7 +214,7 @@ class="relative mx-auto aspect-square w-full max-w-[min(360px,88vw)] sm:max-w-[m
             </div>
 
             <!-- mobile detail -->
-            <div id="ssc-mobile-detail" class="hidden border-t border-slate-200">
+           <div id="ssc-mobile-detail" class="hidden h-[44vh] min-h-[320px] max-h-[420px] border-t border-slate-200 flex-col">
               <div class="flex items-center justify-between gap-3 border-b border-slate-200 px-4 py-3">
                 <div class="min-w-0">
                   <div class="text-[11px] font-semibold tracking-widest text-slate-500">IN-DEPTH</div>
@@ -232,7 +231,7 @@ class="relative mx-auto aspect-square w-full max-w-[min(360px,88vw)] sm:max-w-[m
                 </button>
               </div>
 
-              <div id="ssc-mobile-scroll" class="max-h-[42vh] overflow-y-auto px-4 py-4">
+             <div id="ssc-mobile-scroll" class="flex-1 overflow-y-auto px-4 py-4">
                 <div class="flex justify-center">
                   <img
                     id="ssc-mobile-icon"
@@ -356,56 +355,56 @@ class="relative mx-auto aspect-square w-full max-w-[min(360px,88vw)] sm:max-w-[m
           short: "Coordinate Collection",
           title: "Field Mapping & Plot Registration",
           desc: "Identify and map farmland growing the target crop using satellite data, historical records, and local inputs. This creates the initial dataset of candidate fields to monitor and analyze.",
-          icon: "assets/ssc-step-1.jpg",
+          icon: "assets/RCI-step-1.png",
           bullets: ["Register plots + ownership associations", "Capture GPS boundaries", "Build baseline plot index"]
         },
         {
           short: "Scheduled Image Analysis",
           title: "Image Capture",
           desc: "Continuously capture satellite imagery of these fields at defined intervals. Analyze temporal changes in color, texture, and growth patterns.",
-          icon: "assets/ssc-step-2.jpg",
+          icon: "assets/RCI-step-2.png",
           bullets: ["Schedule image windows", "Index imagery by time", "Normalize for analysis"]
         },
         {
           short: "Train Model",
           title: "Machine Learning",
           desc: "Train classification models using labeled imagery and validated field-level examples.",
-          icon: "assets/ssc-step-3.jpg",
+          icon: "assets/RCI-step-3.png",
           bullets: ["Prepare training set", "Learn crop signatures", "Validate model accuracy"]
         },
         {
           short: "Model Expansion",
           title: "Model Enhancement",
           desc: "Deploy the trained model across broader geographies while refining performance for edge cases like mixed crops, weather variation, and lower-resolution imagery.",
-          icon: "assets/ssc-step-4.jpg",
+          icon: "assets/RCI-step-4.png",
           bullets: ["Detect target crop", "Assign confidence score", "Flag uncertainty"]
         },
         {
           short: "Field Operator Verification",
           title: "Field Verification",
           desc: "On-ground verification confirms detections and transforms model predictions into trusted ground-truth data.",
-          icon: "assets/ssc-step-5.jpg",
+          icon: "assets/RCI-step-5.png",
           bullets: ["Verify flagged plots", "Confirm crop + stage", "Collect ground evidence"]
         },
         {
           short: "Feedback Collection Correction",
           title: "Feedback Integration",
           desc: "Integrate field corrections and discrepancies into the dataset to continuously improve data quality.",
-          icon: "assets/ssc-step-6.jpg",
+          icon: "assets/RCI-step-6.png",
           bullets: ["Log corrections", "Update metadata", "Prepare clean datasets"]
         },
         {
           short: "Iterative Model Retraining",
           title: "Model Retraining",
           desc: "Retrain the model using integrated feedback to improve accuracy across regions and seasons.",
-          icon: "assets/ssc-step-7.jpg",
+          icon: "assets/RCI-step-7.png",
           bullets: ["Retrain on new data", "Validate performance", "Deploy improved version"]
         },
         {
           short: "User Access",
           title: "User Access",
           desc: "Provide controlled dashboard access to stakeholders with live crop visibility and performance insights.",
-          icon: "assets/ssc-step-8.jpg",
+          icon: "assets/RCI-step-8.png",
           bullets: ["Stakeholder dashboards", "Confidence visibility", "Access control"]
         }
       ];
@@ -520,27 +519,43 @@ class="relative mx-auto aspect-square w-full max-w-[min(360px,88vw)] sm:max-w-[m
         detail.classList.remove("opacity-0", "pointer-events-none");
       }
 
-      function openMobileDetail(i) {
+     function openMobileDetail(i) {
   updateMobilePanelOnly(i);
+
   if (mobileIntro) mobileIntro.classList.add("hidden");
-  if (mobileDetail) mobileDetail.classList.remove("hidden");
+
+  if (mobileDetail) {
+    mobileDetail.classList.remove("hidden");
+    mobileDetail.classList.add("flex");
+  }
+
   if (header) header.classList.add("ssc-mobile-hidden");
   if (leftCol) leftCol.classList.add("ssc-mobile-open");
   if (stageWrap) stageWrap.classList.add("ssc-mobile-sticky-wrap");
+
   if (mobileScroll) mobileScroll.scrollTop = 0;
+
+  requestAnimationFrame(() => {
+    stageWrap?.scrollIntoView({ block: "start", behavior: "smooth" });
+  });
+
   lockMobilePageScroll();
   stopHelper();
 }
 
-      function closeMobileDetail() {
-  if (mobileDetail) mobileDetail.classList.add("hidden");
+  function closeMobileDetail() {
+  if (mobileDetail) {
+    mobileDetail.classList.add("hidden");
+    mobileDetail.classList.remove("flex");
+  }
+
   if (mobileIntro) mobileIntro.classList.remove("hidden");
   if (header) header.classList.remove("ssc-mobile-hidden");
   if (leftCol) leftCol.classList.remove("ssc-mobile-open");
   if (stageWrap) stageWrap.classList.remove("ssc-mobile-sticky-wrap");
+
   unlockMobilePageScroll();
 }
-
       function animateCounter(el, to, suffix) {
         if (isReducedMotion) {
           el.textContent = String(to) + (suffix || "");
@@ -643,12 +658,12 @@ class="relative mx-auto aspect-square w-full max-w-[min(360px,88vw)] sm:max-w-[m
           if (isOn) {
             ring.className = "ssc-ring absolute inset-0 rounded-full border border-slate-200 bg-white shadow-sm outline outline-2 outline-[#0E2A47]";
             dot.className = "ssc-dot absolute -right-2 -top-2 grid h-6 w-6 place-items-center rounded-full bg-[#0E2A47] text-[10px] font-semibold text-white";
-            label.className = "ssc-label absolute left-1/2 top-full mt-2 w-[9rem] -translate-x-1/2 text-center text-xs font-semibold leading-tight text-slate-900 hidden sm:block";
+            label.className = "ssc-label absolute left-1/2 top-full mt-2 w-[5.5rem] -translate-x-1/2 text-center text-[9px] font-semibold leading-[1.15] text-slate-900 sm:w-[9rem] sm:text-xs";
             if (icon) icon.classList.add("ssc-pulse-on");
           } else {
             ring.className = "ssc-ring absolute inset-0 rounded-full border border-slate-200 bg-white";
             dot.className = "ssc-dot absolute -right-2 -top-2 grid h-6 w-6 place-items-center rounded-full bg-slate-200 text-[10px] font-semibold text-slate-700";
-            label.className = "ssc-label absolute left-1/2 top-full mt-2 w-[9rem] -translate-x-1/2 text-center text-xs font-semibold leading-tight text-white hidden sm:block";
+            label.className = "ssc-label absolute left-1/2 top-full mt-2 w-[5.5rem] -translate-x-1/2 text-center text-[9px] font-semibold leading-[1.15] text-white sm:w-[9rem] sm:text-xs";
             if (icon) icon.classList.remove("ssc-pulse-on");
           }
         });
@@ -683,9 +698,9 @@ class="relative mx-auto aspect-square w-full max-w-[min(360px,88vw)] sm:max-w-[m
               />
             </span>
 
-            <span class="ssc-label absolute left-1/2 top-full mt-2 hidden w-[9rem] -translate-x-1/2 text-center text-xs font-semibold leading-tight text-white sm:block">
-              ${step.short}
-            </span>
+            <span class="ssc-label absolute left-1/2 top-full mt-2 w-[5.5rem] -translate-x-1/2 text-center text-[9px] font-semibold leading-[1.15] text-white sm:w-[9rem] sm:text-xs">
+  ${step.short}
+</span>
           </span>
         `;
       }
@@ -718,11 +733,10 @@ class="relative mx-auto aspect-square w-full max-w-[min(360px,88vw)] sm:max-w-[m
             updateDesktopPanelOnly(i);
           });
 
-          btn.addEventListener("click", () => {
+        btn.addEventListener("click", () => {
   if (!isMobileView()) return;
 
-  setActive(i, false);
-  updateAllPanels(i);
+  updateMobilePanelOnly(i);
   openMobileDetail(i);
 });
 
@@ -730,17 +744,20 @@ class="relative mx-auto aspect-square w-full max-w-[min(360px,88vw)] sm:max-w-[m
         }
       }
 
-      function startAutoplay() {
-        if (isReducedMotion || isMobileView()) return;
-        autoplay = true;
+   function startAutoplay() {
+  if (isReducedMotion) return;
+  if (autoplay) return;
 
-        let i = active;
-        timer = setInterval(() => {
-          const next = (i + 1) % nodeCount;
-          setActive(next, true);
-          i = next;
-        }, 1800);
-      }
+  autoplay = true;
+
+  let i = active < 0 ? 0 : active;
+
+  timer = setInterval(() => {
+    const next = (i + 1) % nodeCount;
+    setActive(next, true);
+    i = next;
+  }, 1800);
+}
 function lockMobilePageScroll() {
   if (!isMobileView()) return;
   document.body.style.overflow = "hidden";
@@ -789,16 +806,23 @@ function unlockMobilePageScroll() {
                             if (entry.isIntersecting) {
                 runCountersOnce();
 
-                if (isMobileView()) {
-                  runMobileHelper();
-                } else {
-                  if (!section.dataset.desktopAnimated) {
-                    runDesktopIntro();
-                    section.dataset.desktopAnimated = "true";
-                  }
+            if (isMobileView()) {
+  if (!section.dataset.mobileAnimated) {
+    runMobileIntro();
+    section.dataset.mobileAnimated = "true";
+  }
 
-                  if (!autoplay) startAutoplay();
-                }
+  runMobileHelper();
+
+  if (!autoplay) startAutoplay();
+} else {
+  if (!section.dataset.desktopAnimated) {
+    runDesktopIntro();
+    section.dataset.desktopAnimated = "true";
+  }
+
+  if (!autoplay) startAutoplay();
+}
               } else {
                 stopAutoplay();
                 stopHelper();
@@ -841,6 +865,7 @@ function unlockMobilePageScroll() {
   }
 });
       function runDesktopIntro() {
+
         if (isMobileView() || isReducedMotion) return;
 
         section.classList.add("ssc-desktop-intro");
@@ -849,12 +874,47 @@ function unlockMobilePageScroll() {
           section.classList.remove("ssc-desktop-intro");
         }, 1800);
       }
-      updateAllPanels(0);
-      showDesktopIntro();
-      buildNodes();
-      setArcProgress(0, true);
-      setActive(0, true);
-      setupScrollTrigger();
+// 🔥 PASTE THIS RIGHT HERE
+function runMobileIntro() {
+  if (!isMobileView() || isReducedMotion) return;
+
+  const nodes = document.querySelectorAll("#ssc-nodes > button");
+
+  if (stageWrap) {
+    stageWrap.style.opacity = "0";
+    stageWrap.style.transform = "scale(0.95)";
+    requestAnimationFrame(() => {
+      stageWrap.style.transition = "all 0.6s ease";
+      stageWrap.style.opacity = "1";
+      stageWrap.style.transform = "scale(1)";
+    });
+  }
+
+  nodes.forEach((node, i) => {
+    node.style.opacity = "0";
+    node.style.transform = "translate(-50%, -50%) scale(0.82)";
+
+    setTimeout(() => {
+      node.style.transition = "all 0.4s ease";
+      node.style.opacity = "1";
+      node.style.transform = "translate(-50%, -50%) scale(1)";
+    }, 120 + i * 60);
+  });
+}
+     updateAllPanels(0);
+showDesktopIntro();
+buildNodes();
+
+if (isMobileView()) {
+  setArcProgress(0, true);
+  active = -1;
+  setActive(0, false);
+} else {
+  setArcProgress(0, true);
+  setActive(0, true);
+}
+
+setupScrollTrigger();
     })();
   </script>
 
@@ -957,26 +1017,40 @@ function unlockMobilePageScroll() {
         transform: translateY(-10px);
       }
 
-      #shunah-satellite-circle #ssc-left-col.ssc-mobile-open {
-        display: flex;
-        flex-direction: column;
-      }
+   #shunah-satellite-circle #ssc-left-col.ssc-mobile-open {
+  display: flex;
+  flex-direction: column;
+  padding-top: 0.25rem;
+}
 
-    #shunah-satellite-circle #ssc-stageWrap.ssc-mobile-sticky-wrap {
+#shunah-satellite-circle #ssc-stageWrap.ssc-mobile-sticky-wrap {
   position: sticky;
-  top: 1rem;
+  top: 2.1rem;
   z-index: 15;
-  padding-top: 0.75rem;
+  padding-top: 0.5rem;
 }
 
 #shunah-satellite-circle #ssc-stage {
   overflow: visible !important;
 }
 
-#shunah-satellite-circle #ssc-left-col.ssc-mobile-open {
-  display: flex;
-  flex-direction: column;
-  padding-top: 0.25rem;
+#shunah-satellite-circle #ssc-left-col.ssc-mobile-open #ssc-stage {
+  max-width: min(320px, 80vw);
+}
+
+#shunah-satellite-circle #ssc-mobile-panel {
+  overflow: hidden;
+}
+
+#shunah-satellite-circle #ssc-mobile-detail {
+  height: 44vh;
+  min-height: 320px;
+  max-height: 420px;
+}
+
+#shunah-satellite-circle #ssc-mobile-scroll {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
 }
 
       #shunah-satellite-circle .group:hover .ssc-ring,
