@@ -90,7 +90,6 @@
 <!-- =======================
 SHUNAH – Technology Hero
 ======================= -->
- 
 <section id="tech-hero" class="bg-white min-h-screen lg:h-screen flex items-start lg:items-center overflow-visible lg:overflow-hidden">
   <div class="max-w-7xl mx-auto px-6 md:px-10 w-full pt-16 pb-0 lg:pt-0 lg:pb-0">
     <div class="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
@@ -102,99 +101,271 @@ SHUNAH – Technology Hero
         </h1>
 
         <p class="mt-6 text-[17px] md:text-lg text-slate-600 leading-relaxed">
-          For generations, small farmers have been disconnected from institutional agricultural markets.
-          Shunah’s technology changes that.
+          Agriculture runs as a disconnected system — stakeholders misaligned, and capital and new entrants waiting on the sidelines.
+Shunah is building the infrastructure that brings the system together.
         </p>
 
-        <div class="mt-6 border-l-2 border-slate-200 pl-4">
-          <h2 class="text-sm font-semibold text-[#0b1a2d]">
-            Farmer-Driven Technology
-          </h2>
+             </div>
 
-          <p class="mt-2 text-sm text-slate-600 leading-relaxed">
-            Small-scale farmers comprise almost
-            <span class="font-semibold text-slate-800">79%</span>
-            of our supplier base.
-          </p>
+      <!-- RIGHT COLLAGE -->
+      <div class="lg:col-span-7 relative flex justify-center lg:justify-end min-h-[420px] sm:min-h-[500px] lg:min-h-[620px]">
+
+      
+        <!-- COLLAGE -->
+        <div class="hero-collage-wrap relative z-10 w-full flex items-center justify-center">
+          <div class="shape-container">
+            <div class="block-5"></div>
+            <div class="block-6"></div>
+
+            <div class="star star-main"></div>
+            <div class="star star-top"></div>
+            <div class="star star-bottom"></div>
+
+            <div class="top-row">
+              <div class="block block-1"><img src="Product/hero1.png" alt="1"></div>
+              <div class="block block-2"><img src="Product/hero2.png" alt="2"></div>
+            </div>
+
+            <div class="bottom-row">
+              <div class="block block-3"><img src="Product/hero3.png" alt="3"></div>
+              <div class="block block-4"><img src="Product/hero4.png" alt="4"></div>
+            </div>
+
+            <div class="center-badge"><img src="Product/hero5.png" alt="5"></div>
+          </div>
         </div>
 
-        <div class="mt-10">
-          <a
-            href="/product-suite.html"
-            class="inline-flex items-center justify-center bg-[#0b1a2d] text-white px-7 py-3 rounded-lg font-semibold hover:opacity-90 transition"
-          >
-            Explore Shunah Product Suite
-          </a>
-        </div>
       </div>
-
-      <!-- RIGHT IMAGE -->
-      <div class="lg:col-span-7 relative flex justify-center lg:justify-end">
-        
-        <!-- BLUE GLOW LINES -->
-        <svg
-          class="absolute inset-0 w-full h-full pointer-events-none z-0"
-          viewBox="0 0 1000 700"
-          preserveAspectRatio="xMidYMid meet"
-          aria-hidden="true"
-        >
-          <defs>
-            <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
-              <feGaussianBlur stdDeviation="7" result="blur"/>
-              <feMerge>
-                <feMergeNode in="blur"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
-            </filter>
-
-            <linearGradient id="blueGlow" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#6dd3f5" stop-opacity="0"/>
-              <stop offset="30%" stop-color="#6dd3f5" stop-opacity="0.6"/>
-              <stop offset="60%" stop-color="#6dd3f5" stop-opacity="0.35"/>
-              <stop offset="100%" stop-color="#6dd3f5" stop-opacity="0"/>
-            </linearGradient>
-          </defs>
-
-          <path
-            d="M 40 620 C 220 585, 340 680, 520 635"
-            stroke="url(#blueGlow)"
-            stroke-width="18"
-            fill="none"
-            stroke-linecap="round"
-            filter="url(#glow)"
-            opacity="0.85"
-          />
-
-          <path
-            d="M 320 655 C 520 615, 650 705, 900 655"
-            stroke="url(#blueGlow)"
-            stroke-width="18"
-            fill="none"
-            stroke-linecap="round"
-            filter="url(#glow)"
-            opacity="0.65"
-          />
-
-          <path
-            d="M 520 640 C 680 610, 780 660, 980 635"
-            stroke="url(#blueGlow)"
-            stroke-width="12"
-            fill="none"
-            stroke-linecap="round"
-            filter="url(#glow)"
-            opacity="0.6"
-          />
-        </svg>
-
-        <img
-          src="images/First-time-farmer.png"
-          alt="Farmer progression"
-          class="relative z-10 w-full max-w-[620px] lg:max-w-none lg:w-[110%] max-h-[42vh] sm:max-h-[52vh] md:max-h-[60vh] lg:max-h-[88vh] object-contain"
-        />
-      </div>
-
     </div>
   </div>
+
+  <style>
+    #tech-hero .hero-collage-wrap{
+      min-height: 420px;
+    }
+
+    #tech-hero .shape-container {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      width: min(500px, 100%);
+      overflow: visible;
+    }
+
+    #tech-hero .top-row,
+    #tech-hero .bottom-row {
+      display: grid;
+      gap: 15px;
+      position: relative;
+      z-index: 2;
+    }
+
+    #tech-hero .top-row {
+      grid-template-columns: 1.4fr 0.8fr;
+      height: 240px;
+    }
+
+    #tech-hero .bottom-row {
+      grid-template-columns: 0.9fr 1.3fr;
+      height: 200px;
+    }
+
+    #tech-hero .block {
+      position: relative;
+      box-sizing: border-box;
+      overflow: hidden;
+      background-color: #eee;
+    }
+
+    #tech-hero .block img,
+    #tech-hero .center-badge img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Accent shapes */
+    #tech-hero .block-5 {
+      position: absolute;
+      width: calc(100% * (1.4 / 2.2) - 8px);
+      height: 240px;
+      background-color: #4a6cf7;
+      top: -10px;
+      left: -10px;
+      border-radius: 12px;
+      border-top-left-radius: 80px !important;
+      z-index: 1;
+    }
+
+    #tech-hero .block-6 {
+      position: absolute;
+      width: calc(100% * (1.3 / 2.2) - 8px);
+      height: 200px;
+      background-color: #0a1128;
+      bottom: -10px;
+      right: -10px;
+      border-radius: 12px;
+      border-bottom-right-radius: 80px !important;
+      z-index: 1;
+    }
+
+    /* Block curves */
+    #tech-hero .block-1 { border-radius: 12px; border-top-left-radius: 80px !important; }
+    #tech-hero .block-2 { border-radius: 12px; border-top-right-radius: 50px !important; }
+    #tech-hero .block-3 { border-radius: 12px; border-bottom-left-radius: 50px !important; }
+    #tech-hero .block-4 { border-radius: 12px; border-bottom-right-radius: 80px !important; }
+
+    /* Center badge */
+    #tech-hero .center-badge {
+      position: absolute;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      border: 6px solid #fff;
+      box-sizing: border-box;
+      overflow: hidden;
+      top: 52%;
+      left: 62%;
+      transform: translate(-50%, -50%);
+      background-color: #ddd;
+      z-index: 10;
+    }
+
+    /* Stars */
+    #tech-hero .star {
+      position: absolute;
+      background-color: #3E70F4;
+      -webkit-mask-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg"><path d="M70 4 C60 42 42 60 4 70 C42 80 60 98 70 136 C80 98 98 80 136 70 C98 60 80 42 70 4Z"/></svg>');
+      mask-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg"><path d="M70 4 C60 42 42 60 4 70 C42 80 60 98 70 136 C80 98 98 80 136 70 C98 60 80 42 70 4Z"/></svg>');
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      -webkit-mask-size: contain;
+      mask-size: contain;
+      z-index: 5;
+    }
+
+    #tech-hero .star-main {
+      width: 35px;
+      height: 35px;
+      bottom: -25px;
+      left: -30px;
+    }
+
+    #tech-hero .star-top {
+      width: 35px;
+      height: 35px;
+      bottom: 45px;
+      left: -45px;
+    }
+
+    #tech-hero .star-bottom {
+      width: 65px;
+      height: 65px;
+      bottom: -45px;
+      left: 45px;
+    }
+
+    /* Responsive */
+    @media (max-width: 1023px){
+      #tech-hero .hero-collage-wrap{
+        min-height: auto;
+        padding-top: 18px;
+        padding-bottom: 10px;
+      }
+
+      #tech-hero .shape-container{
+        width: min(420px, 100%);
+        gap: 12px;
+      }
+
+      #tech-hero .top-row{
+        height: 200px;
+        gap: 12px;
+      }
+
+      #tech-hero .bottom-row{
+        height: 168px;
+        gap: 12px;
+      }
+
+      #tech-hero .block-5{
+        height: 200px;
+      }
+
+      #tech-hero .block-6{
+        height: 168px;
+      }
+
+      #tech-hero .center-badge{
+        width: 62px;
+        height: 62px;
+        border-width: 5px;
+      }
+    }
+
+    @media (max-width: 640px){
+      #tech-hero .shape-container{
+        width: min(340px, 100%);
+        gap: 10px;
+      }
+
+      #tech-hero .top-row{
+        height: 165px;
+        gap: 10px;
+      }
+
+      #tech-hero .bottom-row{
+        height: 138px;
+        gap: 10px;
+      }
+
+      #tech-hero .block-5{
+        height: 165px;
+        top: -8px;
+        left: -8px;
+      }
+
+      #tech-hero .block-6{
+        height: 138px;
+        bottom: -8px;
+        right: -8px;
+      }
+
+      #tech-hero .block-1 { border-top-left-radius: 54px !important; }
+      #tech-hero .block-2 { border-top-right-radius: 36px !important; }
+      #tech-hero .block-3 { border-bottom-left-radius: 36px !important; }
+      #tech-hero .block-4 { border-bottom-right-radius: 54px !important; }
+
+      #tech-hero .center-badge{
+        width: 54px;
+        height: 54px;
+        border-width: 4px;
+      }
+
+      #tech-hero .star-main{
+        width: 26px;
+        height: 26px;
+        bottom: -18px;
+        left: -18px;
+      }
+
+      #tech-hero .star-top{
+        width: 26px;
+        height: 26px;
+        bottom: 34px;
+        left: -24px;
+      }
+
+      #tech-hero .star-bottom{
+        width: 46px;
+        height: 46px;
+        bottom: -28px;
+        left: 32px;
+      }
+    }
+  </style>
 </section>
 
 <!-- =======================
@@ -227,10 +398,10 @@ SHUNAH – Technology Cards
           data-panel="0"
         >
           <div class="suiteCard relative z-[2] h-full w-full p-6 flex flex-col">
-            <div class="suitePill">SATELLITE</div>
+
 
             <div class="mt-2 text-[18px] leading-[1.15] font-semibold text-[#0b1a2d]">
-              Satellite Remote Identification
+              Remote Identification
             </div>
 
             <p class="mt-1 text-[13px] leading-[1.45] text-slate-600">
@@ -258,7 +429,7 @@ SHUNAH – Technology Cards
           data-panel="1"
         >
           <div class="suiteCard relative z-[2] h-full w-full p-6 flex flex-col">
-            <div class="suitePill">VISION</div>
+           
 
             <div class="mt-2 text-[18px] leading-[1.15] font-semibold text-[#0b1a2d]">
               Computer Aided Vision
@@ -289,7 +460,7 @@ SHUNAH – Technology Cards
           data-panel="2"
         >
           <div class="suiteCard relative z-[2] h-full w-full p-6 flex flex-col">
-            <div class="suitePill">IOT</div>
+
 
             <div class="mt-2 text-[18px] leading-[1.15] font-semibold text-[#0b1a2d]">
               Social Infrastructure IoT
@@ -320,7 +491,7 @@ SHUNAH – Technology Cards
           data-panel="3"
         >
           <div class="suiteCard relative z-[2] h-full w-full p-6 flex flex-col">
-            <div class="suitePill">PLATFORM</div>
+
 
             <div class="mt-2 text-[18px] leading-[1.15] font-semibold text-[#0b1a2d]">
               Workflow & Market Layer
@@ -403,22 +574,26 @@ SHUNAH – Technology Cards
     }
 
     .suiteKnowMore{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      padding: 8px 16px;
-      border-radius: 999px;
-      font-weight: 600;
-      font-size: 13px;
-      line-height: 1;
-      color: #ffffff;
-      background: #0b1a2d;
-      border: 1px solid #0b1a2d;
-      text-decoration: none;
-      cursor: pointer;
-      position: relative;
-      z-index: 5;
-    }
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 1;
+
+  color: #0b1a2d;           /* navy text */
+  background: #ffffff;      /* white fill */
+  border: 1px solid #0b1a2d;/* navy outline */
+
+  text-decoration: none;
+  cursor: pointer;
+  position: relative;
+  z-index: 5;
+
+  transition: all 200ms ease;
+}
 
     /* remove old hover text/image overlay completely */
     .suiteOverlay,
@@ -472,97 +647,96 @@ SHUNAH – Technology Cards
     }
 
     /* ===== Mobile / tablet ===== */
-    @media (max-width: 1023px){
-      #technology{
-        height: auto !important;
-        min-height: calc(100dvh - 3rem);
-        overflow: visible;
-      }
+@media (max-width: 1023px){
+  #technology{
+    height: auto !important;
+    min-height: calc(100dvh - 3rem);
+    overflow: visible;
+  }
 
-      .techShell{
-        height: auto !important;
-        min-height: calc(100dvh - 3rem);
-        display:block;
-      }
+  .techShell{
+    height: auto !important;
+    min-height: calc(100dvh - 3rem);
+    display:block;
+  }
 
-      .techHeader{
-        position: sticky;
-        top: 3rem;
-        z-index: 20;
-        background: rgba(255,255,255,0.96);
-        backdrop-filter: blur(8px);
-        padding-top: 10px;
-        padding-bottom: 10px;
-      }
+  .techHeader{
+    position: sticky;
+    top: 3rem;
+    z-index: 20;
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(8px);
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
 
-      .techBody{
-        min-height: auto;
-        height: auto;
-        padding-bottom: 8px;
-      }
+  .techBody{
+    min-height: auto;
+    height: auto;
+    padding-bottom: 8px;
+  }
 
-      #suiteRow{
-        flex-direction: column;
-        height:auto;
-        min-height:auto;
-        gap: 14px;
-        align-items: stretch;
-      }
+  #suiteRow{
+    flex-direction: column;
+    height:auto;
+    min-height:auto;
+    gap: 14px;
+    align-items: stretch;
+  }
 
-      #suiteRow .suitePanel{
-        flex: 0 0 auto;
-        height: auto;
-        min-height: 0;
-        filter: none;
-        transition: none;
-      }
+  #suiteRow .suitePanel{
+    flex: 0 0 auto;
+    height: auto;
+    min-height: 0;
+    filter: none;
+    transition: none;
+  }
 
-      #suiteRow.has-active .suitePanel.is-active,
-      #suiteRow.has-active .suitePanel:not(.is-active){
-        flex-grow: 1;
-      }
+  #suiteRow.has-active .suitePanel.is-active,
+  #suiteRow.has-active .suitePanel:not(.is-active){
+    flex-grow: 1;
+  }
 
-      .suiteCard{
-        height:auto;
-      }
+  .suiteCard{
+    height:auto;
+  }
 
-      /* mobile: always show expanded image */
-.suiteMediaFill{
-  flex: 0 0 auto;
-  max-height: 260px;
-  min-height: 260px;
-  opacity: 1;
-  margin-top: 12px;
-  transition: none;
+  /* mobile: always show image, but smaller */
+  .suiteMediaFill{
+    position: relative;
+    flex: 0 0 auto;
+    height: 160px;
+    min-height: 160px;
+    max-height: 160px;
+    margin-top: 12px;
+    overflow: hidden;
+  }
+
+  .suiteMediaFill img{
+    width:100%;
+    height:100%;
+    display:block;
+    object-fit: cover;
+    aspect-ratio: auto;
+  }
+
+  /* keep number always visible and on the image */
+  .suiteHoverNumber{
+    right: 14px;
+    bottom: 12px;
+    opacity: 1;
+    transform: translateY(0);
+    z-index: 3;
+  }
+
+  .suiteHoverNumberValue{
+    font-size: 34px;
+  }
+
+  .suiteHoverNumberLabel{
+    font-size: 11px;
+  }
 }
-
-.suitePanel.is-active .suiteMediaFill{
-  max-height: 260px;
-}
-
-      .suiteHoverNumber{
-        right:14px;
-        bottom:12px;
-      }
-
-      .suiteHoverNumberValue{
-        font-size: 44px;
-      }
-
-      .suiteHoverNumberLabel{
-        font-size: 12px;
-      }
-
-      .suiteHoverNumber{
-  opacity:1;
-  transform:translateY(0);
-}
-
-.suitePanel.is-active .suiteHoverNumber{
-  opacity:1;
-  transform:translateY(0);
-}
-    }
   </style>
 
 <script>
