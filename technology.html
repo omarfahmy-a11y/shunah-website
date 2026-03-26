@@ -97,13 +97,37 @@ SHUNAH – Technology Hero
       <!-- LEFT TEXT -->
       <div class="lg:col-span-5 max-w-xl">
         <h1 class="text-4xl md:text-5xl font-semibold tracking-tight text-[#0b1a2d] leading-tight">
-          Building the Digital Infrastructure of Agriculture
-        </h1>
+  Building the <span class="text-[#225AB4]">Digital Infrastructure</span> for Agriculture    
+</h1>
 
         <p class="mt-6 text-[17px] md:text-lg text-slate-600 leading-relaxed">
           Agriculture runs as a disconnected system — stakeholders misaligned, and capital and new entrants waiting on the sidelines.
 Shunah is building the infrastructure that brings the system together.
         </p>
+<!-- METRICS -->
+<div class="mt-8 flex gap-10">
+
+  <!-- Metric 1 -->
+  <div>
+    <div class="text-[#225AB4] text-3xl md:text-4xl font-bold leading-none">
+      450Mn
+    </div>
+    <div class="mt-1 text-[12px] md:text-[13px] text-slate-500 font-medium tracking-wide">
+      African Farmers
+    </div>
+  </div>
+
+  <!-- Metric 2 -->
+  <div>
+    <div class="text-[#225AB4] text-3xl md:text-4xl font-bold leading-none">
+      $1.2Tn
+    </div>
+    <div class="mt-1 text-[12px] md:text-[13px] text-slate-500 font-medium tracking-wide">
+      African Dry Crops
+    </div>
+  </div>
+
+</div>
 
              </div>
 
@@ -131,7 +155,7 @@ Shunah is building the infrastructure that brings the system together.
               <div class="block block-4"><img src="product/hero4.png" alt="4"></div>
             </div>
 
-            <div class="center-badge"><img src="product/hero5.png" alt="5"></div>
+            <div class="center-badge"><img src="Product/hero5.png" alt="5"></div>
           </div>
         </div>
 
@@ -271,8 +295,9 @@ Shunah is building the infrastructure that brings the system together.
     @media (max-width: 1023px){
       #tech-hero .hero-collage-wrap{
         min-height: auto;
-        padding-top: 18px;
+        padding-top: 4px;
         padding-bottom: 10px;
+margin-top: -90px;  /* pulls collage upward */
       }
 
       #tech-hero .shape-container{
@@ -311,6 +336,13 @@ Shunah is building the infrastructure that brings the system together.
         gap: 10px;
       }
 
+#tech-hero .block-5 {
+  border-top-left-radius: 54px !important;
+}
+
+#tech-hero .block-6 {
+  border-bottom-right-radius: 54px !important;
+}
       #tech-hero .top-row{
         height: 165px;
         gap: 10px;
@@ -379,13 +411,13 @@ SHUNAH – Technology Cards
   <div class="max-w-7xl mx-auto px-6 h-full flex flex-col min-h-0 techShell">
 
     <!-- Title -->
-    <div class="pt-0 md:pt-0 pb-1 shrink-0 techHeader">
-      <h2 class="text-xl md:text-2xl font-semibold leading-tight text-[#0b1a2d]">
-        Shunah Product Suite
-      </h2>
-      <p class="mt-1 text-[13px] md:text-sm text-slate-600 max-w-2xl">
-        Satellite, computer-aided vision, and IoT — one connected operating system for dry crops.
-      </p>
+    <div class="pt-0 md:pt-0 pb-4 md:pb-6 shrink-0 techHeader">
+      <h2 class="text-2xl md:text-3xl font-semibold leading-tight text-[#0b1a2d]">
+  Shunah <span class="text-[#225AB4]">Product Suite</span>
+</h2>
+<p class="mt-2 text-[15px] md:text-base text-slate-600 max-w-3xl leading-relaxed">
+  Four integrated technologies forming the operating system for dry crops
+</p>
     </div>
 
     <!-- Panels -->
@@ -400,7 +432,7 @@ SHUNAH – Technology Cards
           <div class="suiteCard relative z-[2] h-full w-full p-6 flex flex-col">
 
 
-            <div class="mt-2 text-[18px] leading-[1.15] font-semibold text-[#0b1a2d]">
+            <div class="suiteTitle mt-2 text-[18px] leading-[1.15] font-semibold text-[#0b1a2d]">
               Remote Identification
             </div>
 
@@ -522,22 +554,81 @@ SHUNAH – Technology Cards
 
   <style>
     .suitePanel{
-      transition: flex-grow 650ms cubic-bezier(.2,.8,.2,1), filter 650ms cubic-bezier(.2,.8,.2,1);
-      will-change: flex-grow;
-      filter: saturate(.95) brightness(.98);
-      position: relative;
-    }
+  transition: flex-grow 650ms cubic-bezier(.2,.8,.2,1),
+              filter 650ms cubic-bezier(.2,.8,.2,1),
+              transform 400ms cubic-bezier(.2,.8,.2,1);
+  will-change: flex-grow;
+  filter: saturate(.95) brightness(.98);
+  position: relative;
+}
+
+.suitePanel:hover{
+  transform: translateY(-4px);
+}
 
     #suiteRow.has-active .suitePanel.is-active{
       flex-grow: 4;
       filter: saturate(1.02) brightness(1);
     }
 
+.suitePanel::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:3px;
+  background:#225AB4;
+  opacity:0;
+  transition: opacity 300ms ease;
+}
+
+.suitePanel::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:3px;
+  background:#225AB4;
+  opacity:.2;
+  transition: opacity 300ms ease;
+}
+
+.suitePanel.is-active::before{
+  opacity:1;
+}
     #suiteRow.has-active .suitePanel:not(.is-active){
       flex-grow: 1;
       filter: saturate(.92) brightness(.96);
     }
 
+#suiteRow{
+  position: relative;
+  z-index: 1;
+}
+
+#suiteRow::after{
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 5%;
+  right: 5%;
+  height: 1px;
+  transform: translateY(-50%);
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(34,90,180,.18),
+    transparent
+  );
+  z-index: 0;
+  pointer-events: none;
+}
+
+.suitePanel{
+  z-index: 1;
+}
     .suitePill{
       display:inline-flex;
       align-self:flex-start;
@@ -560,6 +651,12 @@ SHUNAH – Technology Cards
       min-height: 0;
     }
 
+/* IMAGE GLOW ON HOVER */
+.suitePanel:hover .suiteMedia{
+  box-shadow:
+    0 20px 40px rgba(15,23,42,.08),
+    0 0 0 1px rgba(34,90,180,.15);
+}
     .suiteMediaFill{
       flex: 1 1 auto;
       min-height: 0;
@@ -572,7 +669,11 @@ SHUNAH – Technology Cards
       object-fit:cover;
       aspect-ratio:auto;
     }
-
+.suiteKnowMore:hover{
+  background:#225AB4;
+  color:#ffffff;
+  border-color:#225AB4;
+}
     .suiteKnowMore{
   display:inline-flex;
   align-items:center;
@@ -583,9 +684,9 @@ SHUNAH – Technology Cards
   font-size: 13px;
   line-height: 1;
 
-  color: #0b1a2d;           /* navy text */
-  background: #ffffff;      /* white fill */
-  border: 1px solid #0b1a2d;/* navy outline */
+  background: #ffffff;
+border: 1px solid #225AB4;
+color: #225AB4;
 
   text-decoration: none;
   cursor: pointer;
@@ -653,6 +754,11 @@ SHUNAH – Technology Cards
     min-height: calc(100dvh - 3rem);
     overflow: visible;
   }
+
+/* MOBILE: default blue top line */
+#suiteRow .suitePanel::before{
+  opacity: 1;
+}
 
   .techShell{
     height: auto !important;
