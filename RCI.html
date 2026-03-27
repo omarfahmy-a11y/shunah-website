@@ -6,1119 +6,1117 @@
   <title>Shunah | RCI</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <style>
     body { font-family: 'Inter', sans-serif; }
     html { scroll-behavior: smooth; }
 
-    /* separate nav above the section */
-#satellite-top-nav{
-  position: relative;
-  z-index: 40;
-}
+    #satellite-top-nav {
+      position: relative;
+      z-index: 40;
+    }
 
-#shunah-satellite-circle{
-  min-height: 100dvh;
-}
+    #shunah-satellite-circle {
+      min-height: 100dvh;
+    }
 
-#site-navbar{
-  transition: transform 0.25s ease;
-  will-change: transform;
-}
-#site-navbar.nav-hidden{
-  transform: translateY(-100%);
-}
-</style>
+    #site-navbar {
+      transition: transform 0.25s ease;
+      will-change: transform;
+    }
+
+    #site-navbar.nav-hidden {
+      transform: translateY(-100%);
+    }
+  </style>
 </head>
 
 <body class="bg-white text-slate-900 min-h-screen overflow-y-auto">
 
-<!-- SEPARATE NAV BAR ABOVE THE SECTION -->
-<nav
-  id="satellite-top-nav"
-  class="w-full bg-white border-b border-slate-200"
->
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-6">
-    
-    <!-- THINNER HEIGHT -->
-    <div class="flex h-10 items-center">
-
-      <!-- ONLY LEFT BUTTON -->
-      <a href="technology.html#technology"" 
-        class="text-xs font-semibold text-slate-700 hover:text-slate-900 transition-colors"
-      >
-        ← Back to Product Suite
-      </a>
-
+  <!-- SEPARATE NAV BAR ABOVE THE SECTION -->
+  <nav id="satellite-top-nav" class="w-full bg-white border-b border-slate-200">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-6">
+      <div class="flex h-10 items-center">
+        <a
+          href="technology.html#technology"
+          class="text-xs font-semibold text-slate-700 hover:text-slate-900 transition-colors"
+        >
+          ← Back to Product Suite
+        </a>
+      </div>
     </div>
-  </div>
-</nav>
-<section
-  id="shunah-satellite-circle"
-  class="relative overflow-hidden bg-white text-slate-900"
-  style="min-height: 100dvh;"
->
+  </nav>
 
- 
-
-  <div
-    id="ssc-shell"
-    class="relative z-10 mx-auto flex h-full max-w-7xl flex-col justify-start gap-6 px-4 pt-3 pb-4 sm:gap-8 sm:px-6 sm:pt-4 lg:gap-10 lg:px-6 lg:pb-5"
+  <section
+    id="shunah-satellite-circle"
+    class="relative overflow-hidden bg-white text-slate-900"
+    style="min-height: 100dvh;"
   >
-    <!-- Header -->
-    <div id="ssc-header" class="max-w-3xl transition-all duration-300">
-     <h2 class="text-[28px] sm:text-4xl font-semibold tracking-tight text-slate-900">
-  Satellite <span class="text-[#2A5CAA] font-semibold">Crop Identification</span>
+    <div
+      id="ssc-shell"
+      class="relative z-10 mx-auto flex h-full max-w-7xl flex-col justify-start gap-6 px-4 pt-2 pb-8 sm:gap-8 sm:px-6 sm:pt-4 lg:gap-10 lg:px-6 lg:pt-6 lg:pb-10"
+    >
+      <!-- MAIN LAYOUT -->
+      <div class="grid min-h-0 flex-1 items-start gap-6 lg:grid-cols-12 lg:gap-8">
+
+        <!-- LEFT: HEADER / PARAGRAPH / METRICS -->
+        <div id="ssc-header" class="transition-all duration-300 lg:col-span-4 lg:pt-2">
+<div class="w-10 h-[2px] bg-[#2F5DA8] mb-5 rounded-full"></div>        
+ <h2 class="text-[44px] leading-[1.05] font-semibold tracking-[-0.02em] text-[#0F172A]">
+  Remote <span class="text-[#2F5DA8]">Crop Identification</span>
 </h2>
 
-<p class="mt-2 text-sm leading-relaxed text-slate-600 sm:text-base">
-        Satellite technology enables multiple high-impact use cases — from field detection to supply intelligence
-      </p>
-    </div>
+          <p class="mt-6 max-w-[540px] text-[16px] leading-[1.75] text-slate-600">
+  Remote crop identification allows us to detect and map target crops at scale, build a reliable digital layer of field-level visibility, and create a stronger foundation for procurement, planning, and supply intelligence. It transforms fragmented agricultural information into a more traceable, structured, and decision-ready system.
+</p>
 
-    <!-- Layout -->
-    <div class="grid min-h-0 flex-1 items-start gap-4 lg:grid-cols-12 lg:gap-8">
-      <!-- LEFT / TOP AREA -->
-      <div id="ssc-left-col" class="min-h-0 lg:col-span-7">
-        <div class="relative h-full min-h-0 overflow-visible">
-         
+         <div class="mt-8 mb-6 h-px w-[88%] bg-slate-200 hidden lg:block"></div>
 
-          <div
-            id="ssc-stageWrap"
-            class="relative mx-auto transition-opacity duration-300"
-          >
-            <div
-              id="ssc-stage"
-class="relative mx-auto aspect-square w-full max-w-[min(360px,88vw)] sm:max-w-[min(460px,68vh)] lg:max-w-[min(560px,70vh)] max-h-[70vh] overflow-visible lg:-translate-y-10"
-              style="
-               background: none;
-              "
-            >
-              <!-- Ring -->
-              <svg class="absolute inset-0 h-full w-full" viewBox="0 0 100 100" aria-hidden="true">
-                <circle
-                  cx="50" cy="50" r="36"
-                  fill="none"
-                  stroke="#dbeafe"
-                  stroke-width="2"
-                  stroke-dasharray="200 40"
-                  transform="rotate(-90 50 50)"
-                  stroke-linecap="round"
-                />
+<div class="grid grid-cols-3 gap-6 lg:gap-8 items-start mt-5 lg:mt-0">
+            <div class="flex flex-col gap-1 text-left">
+  <div class="text-[40px] leading-none font-semibold tracking-[-0.03em] text-[#2F5DA8]">
+    <span class="ssc-counter" data-target="80" data-suffix="%">0</span>
+  </div>
+  <div class="text-[12px] font-semibold tracking-[0.16em] uppercase text-slate-500">Efficiency</div>
+</div>
 
-                <circle
-                  id="ssc-arc"
-                  cx="50" cy="50" r="36"
-                  fill="none"
-                  stroke="#0E2A47"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-dasharray="226.2"
-                  stroke-dashoffset="226.2"
-                  transform="rotate(-90 50 50)"
-                  class="transition-[stroke-dashoffset] duration-700 ease-out"
-                />
+<div class="flex flex-col gap-1 text-left">
+  <div class="text-[40px] leading-none font-semibold tracking-[-0.03em] text-[#2F5DA8]">
+    <span class="ssc-counter" data-target="23" data-suffix="x">0</span>
+  </div>
+  <div class="text-[12px] font-semibold tracking-[0.16em] uppercase text-slate-500">Faster</div>
+</div>
 
-                <g opacity="0.12" stroke="#0E2A47" stroke-width="0.6">
-                  <line x1="50" y1="10" x2="50" y2="13" />
-                  <line x1="50" y1="87" x2="50" y2="90" />
-                  <line x1="10" y1="50" x2="13" y2="50" />
-                  <line x1="87" y1="50" x2="90" y2="50" />
-                </g>
-              </svg>
-
-              <!-- Center -->
-              <div class="absolute inset-0 grid place-items-center">
-                <div id="ssc-pulse" class="pointer-events-none absolute h-[62%] w-[62%] rounded-full border border-slate-200 opacity-0"></div>
-                <div id="ssc-pulse2" class="pointer-events-none absolute h-[46%] w-[46%] rounded-full border border-slate-200 opacity-0"></div>
-
-                <img
-                  id="ssc-center-img"
-                  class="w-[42%] min-w-[120px] max-w-[240px] object-contain opacity-95 drop-shadow-sm"
-                  src="assets/ssc-center.png"
-                  alt="Satellite intelligence visual"
-                  onerror="this.style.opacity='0.25'; this.style.filter='grayscale(1)';"
-                />
-              </div>
-
-              <!-- Nodes -->
-              <div id="ssc-nodes" class="absolute inset-0"></div>
-
-              <!-- Mobile helper -->
-              <div
-                id="ssc-mobile-helper"
-                class="pointer-events-none absolute inset-0 z-20 hidden lg:hidden"
-                aria-hidden="true"
-              >
-                <div id="ssc-helper-hand" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-4xl opacity-0">
-                  👆
-                </div>
-
-                <div
-                  id="ssc-helper-bubble"
-                  class="absolute left-1/2 top-[72%] w-[220px] -translate-x-1/2 rounded-full bg-white/95 px-4 py-2 text-center text-xs font-semibold text-slate-700 shadow-lg opacity-0"
-                >
-                  Click on the circle to know more
-                </div>
-              </div>
-            </div>
+<div class="flex flex-col gap-1 text-left">
+  <div class="text-[40px] leading-none font-semibold tracking-[-0.03em] text-[#2F5DA8]">
+    <span class="ssc-counter" data-target="45" data-suffix="x">0</span>
+  </div>
+  <div class="text-[12px] font-semibold tracking-[0.16em] uppercase text-slate-500">Saving</div>
+</div>
           </div>
+        </div>
 
-          <!-- MOBILE PANEL ONLY -->
-          <div
-            id="ssc-mobile-panel"
-            class="mt-4 overflow-hidden rounded-xl border border-[#0E2A47]/15 bg-white lg:hidden"
-          >
-            <!-- mobile intro -->
-            <div id="ssc-mobile-intro" class="p-5">
-              <p class="text-[11px] font-semibold tracking-widest text-slate-500">OVERVIEW</p>
-              <h3 class="mt-2 text-lg font-semibold text-[#2A5CAA]">Satellite Crop Identification</h3>
+        <!-- CENTER: CIRCLES + MOBILE PANEL -->
+        <div id="ssc-left-col" class="min-h-0 lg:col-span-5 lg:pt-12">
+          <div class="relative h-full min-h-0 overflow-visible">
+            <div
+              id="ssc-stageWrap"
+              class="relative mx-auto transition-opacity duration-300"
+            >
+              <div
+                id="ssc-stage"
+                class="relative mx-auto aspect-square w-full max-w-[min(360px,88vw)] sm:max-w-[min(460px,68vh)] lg:max-w-[min(680px,82vh)] max-h-[70vh] overflow-visible"
+                style="background: none;"
+              >
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
+  <div class="h-[72%] w-[72%] rounded-full bg-[radial-gradient(circle,rgba(47,93,168,0.10)_0%,rgba(47,93,168,0.05)_34%,transparent_72%)] blur-3xl"></div>
+</div>
+                <!-- Ring -->
+                <svg class="absolute inset-0 h-full w-full" viewBox="0 0 100 100" aria-hidden="true">
+                  <circle
+  cx="50" cy="50" r="37.5"
+  fill="none"
+  stroke="#dbeafe"
+  stroke-width="2"
+  stroke-dasharray="212 40"
+  transform="rotate(-90 50 50)"
+  stroke-linecap="round"
+/>
 
-              <p class="mt-3 text-sm leading-relaxed text-slate-600">
-                Satellite crop identification has many use cases; crop identification, yield estimation,
-                and even crop management — but for now we are focusing on crop identification.
-              </p>
+<circle
+  id="ssc-arc"
+  cx="50" cy="50" r="37.5"
+  fill="none"
+  stroke="#0E2A47"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-dasharray="235.6"
+  stroke-dashoffset="235.6"
+  transform="rotate(-90 50 50)"
+  class="transition-[stroke-dashoffset] duration-700 ease-out"
+/>
 
-              <div class="mt-5 grid grid-cols-3 gap-3">
-                <div class="rounded-xl border border-slate-200 bg-slate-50 px-3 py-3 text-center">
-                  <div class="text-[28px] font-medium tracking-tight tracking-tight text-slate-900">
-                    <span class="ssc-counter" data-target="80" data-suffix="%">0</span>
-                  </div>
-                  <div class="mt-1 text-[10px] font-semibold tracking-widest text-slate-500">EFFICIENCY</div>
-                </div>
+                  <g opacity="0.12" stroke="#0E2A47" stroke-width="0.6">
+                    <line x1="50" y1="10" x2="50" y2="13" />
+                    <line x1="50" y1="87" x2="50" y2="90" />
+                    <line x1="10" y1="50" x2="13" y2="50" />
+                    <line x1="87" y1="50" x2="90" y2="50" />
+                  </g>
+                </svg>
 
-                <div class="rounded-xl border border-slate-200 bg-slate-50 px-3 py-3 text-center">
-                  <div class="text-[28px] font-medium tracking-tight tracking-tight text-slate-900">
-                    <span class="ssc-counter" data-target="23" data-suffix="x">0</span>
-                  </div>
-                  <div class="mt-1 text-[10px] font-semibold tracking-widest text-slate-500">FASTER</div>
-                </div>
+                <!-- Center -->
+                <div class="absolute inset-0 grid place-items-center">
+                  <div id="ssc-pulse" class="pointer-events-none absolute h-[62%] w-[62%] rounded-full border border-slate-200 opacity-0"></div>
+                  <div id="ssc-pulse2" class="pointer-events-none absolute h-[46%] w-[46%] rounded-full border border-slate-200 opacity-0"></div>
 
-                <div class="rounded-xl border border-slate-200 bg-slate-50 px-3 py-3 text-center">
-                  <div class="text-[28px] font-medium tracking-tight tracking-tight text-slate-900">
-                    <span class="ssc-counter" data-target="45" data-suffix="x">0</span>
-                  </div>
-                  <div class="mt-1 text-[10px] font-semibold tracking-widest text-slate-500">COST SAVING</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- mobile detail -->
-           <div id="ssc-mobile-detail" class="hidden h-[44vh] min-h-[320px] max-h-[420px] border-t border-slate-200 flex-col">
-              <div class="flex items-center justify-between gap-3 border-b border-slate-200 px-4 py-3">
-                <div class="min-w-0">
-                  <div class="text-[11px] font-semibold tracking-widest text-slate-500">IN-DEPTH</div>
-                  <div id="ssc-mobile-step" class="mt-1 text-xs font-semibold text-slate-600">Step 1 / 8</div>
-                </div>
-
-                <button
-                  id="ssc-mobile-close"
-                  type="button"
-                  class="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-slate-200 bg-white text-lg font-semibold text-slate-700"
-                  aria-label="Close details"
-                >
-                  ×
-                </button>
-              </div>
-
-             <div id="ssc-mobile-scroll" class="flex-1 overflow-y-auto px-4 py-4">
-                <div class="flex justify-center">
                   <img
-                    id="ssc-mobile-icon"
-                    src=""
-                    alt="Step icon"
-                    class="h-14 w-14 object-contain"
+                    id="ssc-center-img"
+                    class="w-[42%] min-w-[120px] max-w-[240px] object-contain opacity-95 drop-shadow-sm"
+                    src="assets/ssc-center.png"
+                    alt="Satellite intelligence visual"
                     onerror="this.style.opacity='0.25'; this.style.filter='grayscale(1)';"
                   />
                 </div>
 
-                <h3 id="ssc-mobile-title" class="mt-4 text-lg font-semibold text-slate-900">
-                  Field Mapping & Plot Registration
-                </h3>
+                <!-- Nodes -->
+                <div id="ssc-nodes" class="absolute inset-0"></div>
 
-                <p id="ssc-mobile-desc" class="mt-3 text-sm leading-relaxed text-slate-600">
-                  Identify and map farmland growing the target crop using satellite data, historical records,
-                  and local inputs. This creates the initial dataset of candidate fields to monitor and analyze.
+                <!-- Mobile helper -->
+                <div
+                  id="ssc-mobile-helper"
+                  class="pointer-events-none absolute inset-0 z-20 hidden lg:hidden"
+                  aria-hidden="true"
+                >
+                  <div id="ssc-helper-hand" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-4xl opacity-0">
+                    👆
+                  </div>
+
+                  <div
+                    id="ssc-helper-bubble"
+                    class="absolute left-1/2 top-[72%] w-[220px] -translate-x-1/2 rounded-full bg-white/95 px-4 py-2 text-center text-xs font-semibold text-slate-700 shadow-lg opacity-0"
+                  >
+                    Click on the circle to know more
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- MOBILE PANEL ONLY -->
+            <div
+              id="ssc-mobile-panel"
+              class="mt-5 overflow-hidden rounded-xl border border-[#0E2A47]/15 bg-white lg:hidden"
+            >
+              <!-- mobile intro -->
+              <div id="ssc-mobile-intro" class="p-5">
+                <p class="text-[11px] font-semibold tracking-widest text-slate-500">OVERVIEW</p>
+                <h3 class="mt-2 text-lg font-semibold text-slate-900">Remote Crop Identification</h3>
+
+                <p class="mt-3 text-sm leading-relaxed text-slate-600">
+                  Satellite crop identification has many use cases; crop identification, yield estimation,
+                  and even crop management — but for now we are focusing on crop identification.
                 </p>
 
-                <div class="mt-6">
-                  <div class="text-sm font-semibold text-slate-800">What happens here</div>
-                  <ul id="ssc-mobile-bullets" class="mt-3 space-y-2 text-sm text-slate-600"></ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- DESKTOP RIGHT PANEL -->
-     <div class="hidden min-h-0 lg:col-span-5 lg:flex lg:items-center lg:self-stretch lg:block">
-        <div
-  id="ssc-panel"
-  class="relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-7 lg:w-full lg:max-h-[420px] lg:-translate-y-3"
->
-  <div class="relative min-h-[420px] lg:min-h-[500px] overflow-auto">
-            <div id="ssc-intro" class="absolute inset-0 pr-2 opacity-100 transition-opacity duration-150">
-              <p class="text-xs font-semibold tracking-widest text-slate-500">OVERVIEW</p>
-              <h3 class="mt-2 text-xl font-semibold text-[#2A5CAA]">Satellite Crop Identification</h3>
-
-              <p class="mt-3 text-sm leading-relaxed text-slate-600">
-                Satellite crop identification has many use cases; crop identification, yield estimation,
-                and even crop management — but for now we are focusing on crop identification.
-              </p>
-
-              <div class="mt-6 grid grid-cols-3 gap-4">
-                <div class="rounded-xl border border-slate-200 bg-slate-50 px-4 py-4 text-center">
-                  <div class="text-3xl font-semibold tracking-tight text-slate-900">
-                    <span class="ssc-counter" data-target="80" data-suffix="%">0</span>
-                  </div>
-                  <div class="mt-1 text-[11px] font-semibold tracking-widest text-slate-500">EFFICIENCY</div>
-                </div>
-
-                <div class="rounded-xl border border-slate-200 bg-slate-50 px-4 py-4 text-center">
-                  <div class="text-3xl font-semibold tracking-tight text-slate-900">
-                    <span class="ssc-counter" data-target="23" data-suffix="x">0</span>
-                  </div>
-                  <div class="mt-1 text-[11px] font-semibold tracking-widest text-slate-500">FASTER</div>
-                </div>
-
-                <div class="rounded-xl border border-slate-200 bg-slate-50 px-4 py-4 text-center">
-                  <div class="text-3xl font-semibold tracking-tight text-slate-900">
-                    <span class="ssc-counter" data-target="45" data-suffix="x">0</span>
-                  </div>
-                  <div class="mt-1 text-[11px] font-semibold tracking-widest text-slate-500">COST SAVING</div>
-                </div>
-              </div>
-            </div>
-
-            <div id="ssc-detail" class="pointer-events-none absolute inset-0 pr-2 opacity-0 transition-opacity duration-150">
-              <div class="flex items-start justify-between gap-4">
-                <div>
-                  <p class="text-xs font-semibold tracking-widest text-slate-500">IN-DEPTH</p>
-
-                  <div class="mt-4 flex justify-center">
-                    <img
-                      id="ssc-detail-icon"
-                      src=""
-                      alt="Step icon"
-                      class="h-16 w-16 object-contain"
-                      onerror="this.style.opacity='0.25'; this.style.filter='grayscale(1)';"
-                    />
+                <div class="mt-5 grid grid-cols-3 gap-3 hidden">
+                  <div class="rounded-xl border border-slate-200 bg-slate-50 px-3 py-3 text-center">
+                    <div class="text-[28px] font-medium tracking-tight text-slate-900">
+                      <span class="ssc-counter" data-target="80" data-suffix="%">0</span>
+                    </div>
+                    <div class="mt-1 text-[10px] font-semibold tracking-widest text-slate-500">EFFICIENCY</div>
                   </div>
 
-                  <h3 id="ssc-title" class="mt-4 text-xl font-semibold text-slate-900">
-                    Field Mapping & Plot Registration
-                  </h3>
+                  <div class="rounded-xl border border-slate-200 bg-slate-50 px-3 py-3 text-center">
+                    <div class="text-[28px] font-medium tracking-tight text-slate-900">
+                      <span class="ssc-counter" data-target="23" data-suffix="x">0</span>
+                    </div>
+                    <div class="mt-1 text-[10px] font-semibold tracking-widest text-slate-500">FASTER</div>
+                  </div>
 
-                  <p id="ssc-desc" class="mt-3 text-sm leading-relaxed text-slate-600">
-                    Identify and map farmland growing the target crop using satellite data, historical records,
-                    and local inputs. This creates the initial dataset of candidate fields to monitor and analyze.
-                  </p>
+                  <div class="rounded-xl border border-slate-200 bg-slate-50 px-3 py-3 text-center">
+                    <div class="text-[28px] font-medium tracking-tight text-slate-900">
+                      <span class="ssc-counter" data-target="45" data-suffix="x">0</span>
+                    </div>
+                    <div class="mt-1 text-[10px] font-semibold tracking-widest text-slate-500">SAVING</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- mobile detail -->
+              <div id="ssc-mobile-detail" class="hidden h-[44vh] min-h-[320px] max-h-[420px] border-t border-slate-200 flex-col">
+                <div class="flex items-center justify-between gap-3 border-b border-slate-200 px-4 py-3">
+                  <div class="min-w-0">
+                    <div class="text-[11px] font-semibold tracking-widest text-slate-500">IN-DEPTH</div>
+                    <div id="ssc-mobile-step" class="mt-1 text-xs font-semibold text-slate-600">Step 1 / 8</div>
+                  </div>
+
+                  <button
+                    id="ssc-mobile-close"
+                    type="button"
+                    class="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-slate-200 bg-white text-lg font-semibold text-slate-700"
+                    aria-label="Close details"
+                  >
+                    ×
+                  </button>
                 </div>
 
-                <span
-                  id="ssc-step"
-                  class="shrink-0 rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-700"
-                >
-                  Step 1 / 8
-                </span>
-              </div>
+                <div id="ssc-mobile-scroll" class="flex-1 overflow-y-auto px-4 py-4">
+                  <div class="flex items-start gap-4">
+  <img
+    id="ssc-mobile-icon"
+    src=""
+    alt="Step icon"
+    class="h-12 w-12 object-contain shrink-0"
+  />
 
-              <div class="mt-6">
-                <div class="text-sm font-semibold text-slate-800">What happens here</div>
-                <ul id="ssc-bullets" class="mt-3 space-y-2 text-sm text-slate-600"></ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+  <div class="flex-1">
+    <h3 id="ssc-mobile-title" class="text-lg font-semibold text-slate-900">
+      Field Mapping & Plot Registration
+    </h3>
+
+    <p id="ssc-mobile-desc" class="mt-2 text-sm leading-relaxed text-slate-600">
+      Identify and map farmland growing the target crop using satellite data...
+    </p>
+
+    <div class="mt-4">
+            <ul id="ssc-mobile-bullets" class="mt-2 space-y-2 text-sm text-slate-600"></ul>
     </div>
   </div>
+</div>
+                    
+                  <div class="mt-6">
+                    
+                    <ul id="ssc-mobile-bullets" class="mt-3 space-y-2 text-sm text-slate-600"></ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-  <script>
-    (function () {
-      const section = document.getElementById("shunah-satellite-circle");
-      if (!section) return;
+        <!-- RIGHT: DESKTOP TEXT BOX -->
+        <div class="hidden min-h-0 lg:col-span-3 lg:flex lg:items-start lg:self-stretch lg:pt-16">
+          <div
+            <div
+  id="ssc-panel"
+  class="relative overflow-hidden rounded-[18px] border border-slate-200/80 bg-white/80 p-7 shadow-[0_12px_40px_rgba(15,23,42,0.06)] backdrop-blur-md sm:p-7 lg:w-full lg:max-h-[420px]"
+>
+            <div class="relative min-h-[420px] lg:min-h-[500px] overflow-auto">
+              <div id="ssc-intro" class="absolute inset-0 pr-2 opacity-100 transition-opacity duration-150">
+                <p class="text-xs font-semibold tracking-widest text-slate-500">OVERVIEW</p>
+                <h3 class="mt-2 text-xl font-semibold text-slate-900">Remote Crop Identification</h3>
 
-      const steps = [
-  {
-    short: "Coordinate<br>Collection",
-    mobileShort: "Coordinate Collection",
-    title: "Field Mapping & Plot Registration",
-    desc: "Identify and map farmland growing the target crop using satellite data, historical records, and local inputs. This creates the initial dataset of candidate fields to monitor and analyze.",
-    icon: "product/RCI-step-1.png",
-    bullets: ["Register plots + ownership associations", "Capture GPS boundaries", "Build baseline plot index"]
-  },
-  {
-    short: "Image<br>Analysis",
-    mobileShort: "Image Analysis",
-    title: "Image Capture",
-    desc: "Continuously capture satellite imagery of these fields at defined intervals. Analyze temporal changes in color, texture, and growth patterns.",
-    icon: "product/RCI-step-2.png",
-    bullets: ["Schedule image windows", "Index imagery by time", "Normalize for analysis"]
-  },
-  {
-    short: "Train<br>Model",
-    mobileShort: "Train Model",
-    title: "Machine Learning",
-    desc: "Train classification models using labeled imagery and validated field-level examples.",
-    icon: "product/RCI-step-3.png",
-    bullets: ["Prepare training set", "Learn crop signatures", "Validate model accuracy"]
-  },
-  {
-    short: "Model<br>Expansion",
-    mobileShort: "Expand Model",
-    title: "Model Enhancement",
-    desc: "Deploy the trained model across broader geographies while refining performance for edge cases like mixed crops, weather variation, and lower-resolution imagery.",
-    icon: "product/RCI-step-4.png",
-    bullets: ["Detect target crop", "Assign confidence score", "Flag uncertainty"]
-  },
-  {
-    short: "Operator<br>Verification",
-    mobileShort: "Verify",
-    title: "Field Verification",
-    desc: "On-ground verification confirms detections and transforms model predictions into trusted ground-truth data.",
-    icon: "product/RCI-step-5.png",
-    bullets: ["Verify flagged plots", "Confirm crop + stage", "Collect ground evidence"]
-  },
-  {
-    short: "Feedback<br>Collection",
-    mobileShort: "Correct",
-    title: "Feedback Integration",
-    desc: "Integrate field corrections and discrepancies into the dataset to continuously improve data quality.",
-    icon: "product/RCI-step-6.png",
-    bullets: ["Log corrections", "Update metadata", "Prepare clean datasets"]
-  },
-  {
-    short: "Model<br>Retraining",
-    mobileShort: "Retrain",
-    title: "Model Retraining",
-    desc: "Retrain the model using integrated feedback to improve accuracy across regions and seasons.",
-    icon: "product/RCI-step-7.png",
-    bullets: ["Retrain on new data", "Validate performance", "Deploy improved version"]
-  },
-  {
-    short: "User<br>Access",
-    mobileShort: "Access",
-    title: "User Access",
-    desc: "Provide controlled dashboard access to stakeholders with live crop visibility and performance insights.",
-    icon: "product/RCI-step-8.png",
-    bullets: ["Grant role-based access", "Display live results", "Support decision workflows"]
-  }
-];
+                <p class="mt-3 text-sm leading-relaxed text-slate-600">
+                  Satellite crop identification has many use cases; crop identification, yield estimation,
+                  and even crop management — but for now we are focusing on crop identification.
+                </p>
+              </div>
 
-      const stage = document.getElementById("ssc-stage");
-      const nodesWrap = document.getElementById("ssc-nodes");
-      const arc = document.getElementById("ssc-arc");
+<div id="ssc-detail" class="pointer-events-none absolute inset-0 pr-2 opacity-0 transition-opacity duration-150">
+ <div class="flex items-center justify-between gap-4">
+  <p class="text-[12px] font-semibold tracking-[0.18em] uppercase text-slate-500">In-Depth</p>
 
-      const intro = document.getElementById("ssc-intro");
-      const detail = document.getElementById("ssc-detail");
+  <span
+    id="ssc-step"
+    class="shrink-0 rounded-full border border-slate-200 bg-slate-50 px-4 py-1.5 text-[13px] font-semibold text-slate-600"
+  >
+    Step 1 / 8
+  </span>
+</div>
 
-      const tTitle = document.getElementById("ssc-title");
-      const tDesc = document.getElementById("ssc-desc");
-      const tStep = document.getElementById("ssc-step");
-      const bullets = document.getElementById("ssc-bullets");
-      const detailIcon = document.getElementById("ssc-detail-icon");
+  <div class="mt-4 flex items-start gap-4">
+    <img
+      id="ssc-detail-icon"
+      src=""
+      alt="Step icon"
+      class="h-12 w-12 object-contain shrink-0"
+    />
 
-      const mobileIntro = document.getElementById("ssc-mobile-intro");
-      const mobileDetail = document.getElementById("ssc-mobile-detail");
+    <h3 id="ssc-title" class="min-w-0 flex-1 text-xl font-semibold text-slate-900">
+      Field Mapping & Plot Registration
+    </h3>
+  </div>
 
-      const mobileTitle = document.getElementById("ssc-mobile-title");
-      const mobileDesc = document.getElementById("ssc-mobile-desc");
-      const mobileStep = document.getElementById("ssc-mobile-step");
-      const mobileBullets = document.getElementById("ssc-mobile-bullets");
-      const mobileIcon = document.getElementById("ssc-mobile-icon");
-      const mobileClose = document.getElementById("ssc-mobile-close");
-      const mobileScroll = document.getElementById("ssc-mobile-scroll");
+  <p id="ssc-desc" class="mt-4 w-full text-sm leading-relaxed text-slate-600">
+    Identify and map farmland growing the target crop using satellite data, historical records,
+    and local inputs. This creates the initial dataset of candidate fields to monitor and analyze.
+  </p>
 
-      const header = document.getElementById("ssc-header");
-      const leftCol = document.getElementById("ssc-left-col");
-      const stageWrap = document.getElementById("ssc-stageWrap");
+  <div class="mt-6 w-full">
+    <div class="text-sm font-semibold text-slate-800">What happens here</div>
+    <ul id="ssc-bullets" class="mt-3 w-full space-y-2 text-sm text-slate-600"></ul>
+  </div>
+</div>
+            </div>
+          </div>
+        </div>
 
-      const helper = document.getElementById("ssc-mobile-helper");
-      const helperHand = document.getElementById("ssc-helper-hand");
-      const helperBubble = document.getElementById("ssc-helper-bubble");
+      </div>
+    </div>
 
-      const pulse = document.getElementById("ssc-pulse");
-      const pulse2 = document.getElementById("ssc-pulse2");
-      const centerImg = document.getElementById("ssc-center-img");
+    <script>
+      (function () {
+        const section = document.getElementById("shunah-satellite-circle");
+        if (!section) return;
 
-      const counters = Array.from(section.querySelectorAll(".ssc-counter"));
-
-      const dashTotal = 226.2;
-      const nodeRadiusPercent = 36;
-      const nodeCount = steps.length;
-
-      let active = 0;
-      let timer = null;
-      let autoplay = false;
-      let countersRan = false;
-      let helperTimer = null;
-
-      const isReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      const hasHover = window.matchMedia("(hover: hover)").matches;
-      const mobileMq = window.matchMedia("(max-width: 1023px)");
-
-      function isMobileView() {
-        return mobileMq.matches;
-      }
-
-      function buildBullets(target, list) {
-        if (!target) return;
-        target.innerHTML = "";
-
-        list.forEach((text) => {
-          const li = document.createElement("li");
-          li.className = "flex gap-2";
-          li.innerHTML =
-            '<span class="mt-2 h-1.5 w-1.5 rounded-full bg-[#0E2A47]"></span>' +
-            `<span>${text}</span>`;
-          target.appendChild(li);
-        });
-      }
-
-      function updateDesktopPanelOnly(i) {
-        const s = steps[i];
-        if (tTitle) tTitle.textContent = s.title;
-        if (tDesc) tDesc.textContent = s.desc;
-        if (tStep) tStep.textContent = `Step ${i + 1} / ${nodeCount}`;
-        buildBullets(bullets, s.bullets);
-        if (detailIcon) detailIcon.src = s.icon;
-      }
-
-      function updateMobilePanelOnly(i) {
-        const s = steps[i];
-        if (mobileTitle) mobileTitle.textContent = s.title;
-        if (mobileDesc) mobileDesc.textContent = s.desc;
-        if (mobileStep) mobileStep.textContent = `Step ${i + 1} / ${nodeCount}`;
-        buildBullets(mobileBullets, s.bullets);
-        if (mobileIcon) mobileIcon.src = s.icon;
-      }
-
-      function updateAllPanels(i) {
-        updateDesktopPanelOnly(i);
-        updateMobilePanelOnly(i);
-      }
-
-      function showDesktopIntro() {
-        if (!intro || !detail) return;
-        intro.classList.add("opacity-100");
-        intro.classList.remove("opacity-0");
-
-        detail.classList.add("opacity-0", "pointer-events-none");
-        detail.classList.remove("opacity-100");
-      }
-
-      function showDesktopDetail() {
-        if (!intro || !detail) return;
-        intro.classList.add("opacity-0");
-        intro.classList.remove("opacity-100");
-
-        detail.classList.add("opacity-100");
-        detail.classList.remove("opacity-0", "pointer-events-none");
-      }
-
-     function openMobileDetail(i) {
-  updateMobilePanelOnly(i);
-
-  if (mobileIntro) mobileIntro.classList.add("hidden");
-
-  if (mobileDetail) {
-    mobileDetail.classList.remove("hidden");
-    mobileDetail.classList.add("flex");
-  }
-
-  if (header) header.classList.add("ssc-mobile-hidden");
-  if (leftCol) leftCol.classList.add("ssc-mobile-open");
-  if (stageWrap) stageWrap.classList.add("ssc-mobile-sticky-wrap");
-
-  if (mobileScroll) mobileScroll.scrollTop = 0;
-
-requestAnimationFrame(() => {
-  stageWrap?.scrollIntoView({ block: "start", behavior: "auto" });
-});
-
-  lockMobilePageScroll();
-  stopHelper();
-}
-
-  function closeMobileDetail() {
-  if (mobileDetail) {
-    mobileDetail.classList.add("hidden");
-    mobileDetail.classList.remove("flex");
-  }
-
-  if (mobileIntro) mobileIntro.classList.remove("hidden");
-  if (header) header.classList.remove("ssc-mobile-hidden");
-  if (leftCol) leftCol.classList.remove("ssc-mobile-open");
-  if (stageWrap) stageWrap.classList.remove("ssc-mobile-sticky-wrap");
-
-  unlockMobilePageScroll();
-}
-      function animateCounter(el, to, suffix) {
-        if (isReducedMotion) {
-          el.textContent = String(to) + (suffix || "");
-          return;
-        }
-
-        const duration = 900;
-        const start = performance.now();
-
-        function tick(now) {
-          const p = Math.min(1, (now - start) / duration);
-          const eased = 1 - Math.pow(1 - p, 3);
-          const value = Math.round(to * eased);
-          el.textContent = String(value) + (suffix || "");
-          if (p < 1) requestAnimationFrame(tick);
-        }
-
-        requestAnimationFrame(tick);
-      }
-
-      function runCountersOnce() {
-        if (countersRan) return;
-        countersRan = true;
-
-        counters.forEach((el) => {
-          const to = Number(el.getAttribute("data-target") || "0");
-          const suffix = el.getAttribute("data-suffix") || "";
-          animateCounter(el, to, suffix);
-        });
-      }
-
-      function setArcProgress(stepIndex, instant = false) {
-        const progress = stepIndex / nodeCount;
-        const offset = dashTotal * (1 - progress);
-
-        if (instant) {
-          arc.classList.remove("transition-[stroke-dashoffset]", "duration-700", "ease-out");
-          arc.style.strokeDashoffset = String(offset);
-          arc.getBoundingClientRect();
-          arc.classList.add("transition-[stroke-dashoffset]", "duration-700", "ease-out");
-        } else {
-          arc.style.strokeDashoffset = String(offset);
-        }
-      }
-
-      function blinkCenter() {
-        if (!centerImg || isReducedMotion) return;
-
-        centerImg.animate(
-          [
-            { transform: "scale(1)", opacity: 0.94 },
-            { transform: "scale(1.03)", opacity: 1 },
-            { transform: "scale(1)", opacity: 0.94 }
-          ],
-          { duration: 520, easing: "ease-in-out" }
-        );
-      }
-
-      function updateAutoplayVisuals(i) {
-        setArcProgress(i, false);
-
-        if (!isReducedMotion) {
-          pulse.animate(
-            [
-              { transform: "scale(0.98)", opacity: 0 },
-              { transform: "scale(1.06)", opacity: 0.30 },
-              { transform: "scale(1.10)", opacity: 0 }
-            ],
-            { duration: 900, easing: "ease-out" }
-          );
-
-          pulse2.animate(
-            [
-              { transform: "scale(0.98)", opacity: 0 },
-              { transform: "scale(1.06)", opacity: 0.20 },
-              { transform: "scale(1.10)", opacity: 0 }
-            ],
-            { duration: 1100, easing: "ease-out" }
-          );
-        }
-
-        blinkCenter();
-      }
-
-      function setActive(i, isAutoplayTick = false) {
-        const prev = active;
-        active = i;
-
-        const btns = nodesWrap.querySelectorAll("button[data-step]");
-
-        btns.forEach((btn) => {
-          const idx = Number(btn.getAttribute("data-step"));
-          const isOn = idx === i;
-
-          const ring = btn.querySelector(".ssc-ring");
-          const dot = btn.querySelector(".ssc-dot");
-          const label = btn.querySelector(".ssc-label");
-          const icon = btn.querySelector(".ssc-icon");
-
-          if (isOn) {
-            ring.className = "ssc-ring absolute inset-0 rounded-full border border-slate-200 bg-white shadow-sm outline outline-2 outline-[#0E2A47]";
-            dot.className = "ssc-dot absolute -right-2 -top-2 grid h-6 w-6 place-items-center rounded-full bg-[#0E2A47] text-[10px] font-semibold text-white";
-            label.className = "ssc-label absolute left-1/2 top-full mt-2 w-[5.5rem] -translate-x-1/2 text-center text-[9px] font-semibold leading-[1.15] text-[#0E2A47] sm:w-[9rem] sm:text-xs";
-            if (icon) icon.classList.add("ssc-pulse-on");
-          } else {
-            ring.className = "ssc-ring absolute inset-0 rounded-full border border-slate-200 bg-white";
-            dot.className = "ssc-dot absolute -right-2 -top-2 grid h-6 w-6 place-items-center rounded-full bg-slate-200 text-[10px] font-semibold text-slate-700";
-            label.className = "ssc-label absolute left-1/2 top-full mt-2 w-[5.5rem] -translate-x-1/2 text-center text-[9px] font-semibold leading-[1.15] text-[#0E2A47] sm:w-[9rem] sm:text-xs";
-            if (icon) icon.classList.remove("ssc-pulse-on");
+        const steps = [
+          {
+            short: "Coordinate<br>Collection",
+            mobileShort: "Coordinate Collection",
+            title: "Field Mapping & Plot Registration",
+            desc: "Identify and map farmland growing the target crop using satellite data, historical records, and local inputs. This creates the initial dataset of candidate fields to monitor and analyze.",
+            icon: "product/RCI-step-1.png",
+            bullets: ["Register plots + ownership associations", "Capture GPS boundaries", "Build baseline plot index"]
+          },
+          {
+            short: "Image<br>Analysis",
+            mobileShort: "Image Analysis",
+            title: "Image Capture",
+            desc: "Continuously capture satellite imagery of these fields at defined intervals. Analyze temporal changes in color, texture, and growth patterns.",
+            icon: "product/RCI-step-2.png",
+            bullets: ["Schedule image windows", "Index imagery by time", "Normalize for analysis"]
+          },
+          {
+            short: "Train<br>Model",
+            mobileShort: "Train Model",
+            title: "Machine Learning",
+            desc: "Train classification models using labeled imagery and validated field-level examples.",
+            icon: "product/RCI-step-3.png",
+            bullets: ["Prepare training set", "Learn crop signatures", "Validate model accuracy"]
+          },
+          {
+            short: "Model<br>Expansion",
+            mobileShort: "Expand Model",
+            title: "Model Enhancement",
+            desc: "Deploy the trained model across broader geographies while refining performance for edge cases like mixed crops, weather variation, and lower-resolution imagery.",
+            icon: "product/RCI-step-4.png",
+            bullets: ["Detect target crop", "Assign confidence score", "Flag uncertainty"]
+          },
+          {
+            short: "Operator<br>Verification",
+            mobileShort: "Verify",
+            title: "Field Verification",
+            desc: "On-ground verification confirms detections and transforms model predictions into trusted ground-truth data.",
+            icon: "product/RCI-step-5.png",
+            bullets: ["Verify flagged plots", "Confirm crop + stage", "Collect ground evidence"]
+          },
+          {
+            short: "Feedback<br>Collection",
+            mobileShort: "Correct",
+            title: "Feedback Integration",
+            desc: "Integrate field corrections and discrepancies into the dataset to continuously improve data quality.",
+            icon: "product/RCI-step-6.png",
+            bullets: ["Log corrections", "Update metadata", "Prepare clean datasets"]
+          },
+          {
+            short: "Model<br>Retraining",
+            mobileShort: "Retrain",
+            title: "Model Retraining",
+            desc: "Retrain the model using integrated feedback to improve accuracy across regions and seasons.",
+            icon: "product/RCI-step-7.png",
+            bullets: ["Retrain on new data", "Validate performance", "Deploy improved version"]
+          },
+          {
+            short: "User<br>Access",
+            mobileShort: "Access",
+            title: "User Access",
+            desc: "Provide controlled dashboard access to stakeholders with live crop visibility and performance insights.",
+            icon: "product/RCI-step-8.png",
+            bullets: ["Grant role-based access", "Display live results", "Support decision workflows"]
           }
-        });
+        ];
 
-        if (isAutoplayTick && prev === nodeCount - 1 && i === 0) {
-          setArcProgress(0, true);
+        const stage = document.getElementById("ssc-stage");
+        const nodesWrap = document.getElementById("ssc-nodes");
+        const arc = document.getElementById("ssc-arc");
+
+        const intro = document.getElementById("ssc-intro");
+        const detail = document.getElementById("ssc-detail");
+
+        const tTitle = document.getElementById("ssc-title");
+        const tDesc = document.getElementById("ssc-desc");
+        const tStep = document.getElementById("ssc-step");
+        const bullets = document.getElementById("ssc-bullets");
+        const detailIcon = document.getElementById("ssc-detail-icon");
+
+        const mobileIntro = document.getElementById("ssc-mobile-intro");
+        const mobileDetail = document.getElementById("ssc-mobile-detail");
+
+        const mobileTitle = document.getElementById("ssc-mobile-title");
+        const mobileDesc = document.getElementById("ssc-mobile-desc");
+        const mobileStep = document.getElementById("ssc-mobile-step");
+        const mobileBullets = document.getElementById("ssc-mobile-bullets");
+        const mobileIcon = document.getElementById("ssc-mobile-icon");
+        const mobileClose = document.getElementById("ssc-mobile-close");
+        const mobileScroll = document.getElementById("ssc-mobile-scroll");
+
+        const header = document.getElementById("ssc-header");
+        const leftCol = document.getElementById("ssc-left-col");
+        const stageWrap = document.getElementById("ssc-stageWrap");
+
+        const helper = document.getElementById("ssc-mobile-helper");
+        const helperHand = document.getElementById("ssc-helper-hand");
+        const helperBubble = document.getElementById("ssc-helper-bubble");
+
+        const pulse = document.getElementById("ssc-pulse");
+        const pulse2 = document.getElementById("ssc-pulse2");
+        const centerImg = document.getElementById("ssc-center-img");
+
+        const counters = Array.from(section.querySelectorAll(".ssc-counter"));
+
+        const dashTotal = 235.6;
+        const nodeRadiusPercent = 37.5;
+        const nodeCount = steps.length;
+
+        let active = 0;
+        let timer = null;
+        let autoplay = false;
+        let countersRan = false;
+        let helperTimer = null;
+
+        const isReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const hasHover = window.matchMedia("(hover: hover)").matches;
+        const mobileMq = window.matchMedia("(max-width: 1023px)");
+
+        function isMobileView() {
+          return mobileMq.matches;
         }
 
-        updateAutoplayVisuals(i);
-      }
+        function buildBullets(target, list) {
+          if (!target) return;
+          target.innerHTML = "";
 
-      function nodeAngle(i) {
-        const start = -90;
-        return start + (360 / nodeCount) * i;
-      }
+          list.forEach((text) => {
+            const li = document.createElement("li");
+            li.className = "flex gap-2";
+            li.innerHTML =
+              '<span class="mt-2 h-1.5 w-1.5 rounded-full bg-[#0E2A47]"></span>' +
+              `<span>${text}</span>`;
+            target.appendChild(li);
+          });
+        }
 
-      function createNodeMarkup(step, i) {
-        return `
-          <span class="relative block h-14 w-14 sm:h-16 sm:w-16">
-            <span class="ssc-ring absolute inset-0 rounded-full border border-slate-200 bg-white transition-all duration-300 will-change-transform"></span>
+        function updateDesktopPanelOnly(i) {
+          const s = steps[i];
+          if (tTitle) tTitle.textContent = s.title;
+          if (tDesc) tDesc.textContent = s.desc;
+          if (tStep) tStep.textContent = `Step ${i + 1} / ${nodeCount}`;
+          buildBullets(bullets, s.bullets);
+          if (detailIcon) detailIcon.src = s.icon;
+        }
 
-            <span class="ssc-dot absolute -right-2 -top-2 grid h-6 w-6 place-items-center rounded-full bg-slate-200 text-[10px] font-semibold text-slate-700">
-              ${i + 1}
-            </span>
+        function updateMobilePanelOnly(i) {
+          const s = steps[i];
+          if (mobileTitle) mobileTitle.textContent = s.title;
+          if (mobileDesc) mobileDesc.textContent = s.desc;
+          if (mobileStep) mobileStep.textContent = `Step ${i + 1} / ${nodeCount}`;
+          buildBullets(mobileBullets, s.bullets);
+          if (mobileIcon) mobileIcon.src = s.icon;
+        }
 
-            <span class="absolute inset-0 grid place-items-center">
-              <img
-                class="ssc-icon h-[70%] w-[70%] object-contain opacity-90 transition-transform duration-300 will-change-transform"
-                src="${step.icon}"
-                alt="${step.short} icon"
-                onerror="this.style.opacity='0.25'; this.style.filter='grayscale(1)';"
-              />
-            </span>
+        function updateAllPanels(i) {
+          updateDesktopPanelOnly(i);
+          updateMobilePanelOnly(i);
+        }
 
-            <span class="ssc-label absolute left-1/2 top-full mt-2 w-[5.5rem] -translate-x-1/2 text-center text-[9px] font-semibold leading-[1.15] text-[#0E2A47] sm:w-[9rem] sm:text-xs">
-  ${isMobileView() ? (step.mobileShort || step.short) : step.short}
-</span>
-        `;
-      }
+        function showDesktopIntro() {
+          if (!intro || !detail) return;
+          intro.classList.add("opacity-100");
+          intro.classList.remove("opacity-0");
 
-      function buildNodes() {
-        nodesWrap.innerHTML = "";
+          detail.classList.add("opacity-0", "pointer-events-none");
+          detail.classList.remove("opacity-100");
+        }
 
-        for (let i = 0; i < nodeCount; i++) {
-          const angle = nodeAngle(i);
-          const rad = (Math.PI / 180) * angle;
+        function showDesktopDetail() {
+          if (!intro || !detail) return;
+          intro.classList.add("opacity-0");
+          intro.classList.remove("opacity-100");
 
-          const x = 50 + nodeRadiusPercent * Math.cos(rad);
-          const y = 50 + nodeRadiusPercent * Math.sin(rad);
+          detail.classList.add("opacity-100");
+          detail.classList.remove("opacity-0", "pointer-events-none");
+        }
 
-          const btn = document.createElement("button");
-          btn.type = "button";
-          btn.setAttribute("data-step", String(i));
-          btn.setAttribute("aria-label", steps[i].title);
+        function openMobileDetail(i) {
+          updateMobilePanelOnly(i);
 
-          btn.className = "group absolute cursor-pointer focus:outline-none";
-          btn.style.left = `${x}%`;
-          btn.style.top = `${y}%`;
-          btn.style.transform = "translate(-50%, -50%)";
+          if (mobileIntro) mobileIntro.classList.add("hidden");
 
-          btn.innerHTML = createNodeMarkup(steps[i], i);
+          if (mobileDetail) {
+            mobileDetail.classList.remove("hidden");
+            mobileDetail.classList.add("flex");
+          }
 
-          btn.addEventListener("mouseenter", () => {
-            if (!hasHover || isMobileView()) return;
-            showDesktopDetail();
-            updateDesktopPanelOnly(i);
+          if (header) header.classList.add("ssc-mobile-hidden");
+          if (leftCol) leftCol.classList.add("ssc-mobile-open");
+          if (stageWrap) stageWrap.classList.add("ssc-mobile-sticky-wrap");
+
+          if (mobileScroll) mobileScroll.scrollTop = 0;
+
+          requestAnimationFrame(() => {
+            stageWrap?.scrollIntoView({ block: "start", behavior: "auto" });
           });
 
-        btn.addEventListener("click", () => {
-  if (!isMobileView()) return;
-
-  updateMobilePanelOnly(i);
-  openMobileDetail(i);
-});
-
-          nodesWrap.appendChild(btn);
-        }
-      }
-
-   function startAutoplay() {
-  if (isReducedMotion) return;
-  if (autoplay) return;
-
-  autoplay = true;
-
-  let i = active < 0 ? 0 : active;
-
-  timer = setInterval(() => {
-    const next = (i + 1) % nodeCount;
-    setActive(next, true);
-    i = next;
-  }, 1800);
-}
-function lockMobilePageScroll() {
-  if (!isMobileView()) return;
-  document.body.style.overflow = "hidden";
-  document.documentElement.style.overflow = "hidden";
-}
-
-function unlockMobilePageScroll() {
-  document.body.style.overflow = "";
-  document.documentElement.style.overflow = "";
-}
-
-      function stopAutoplay() {
-        autoplay = false;
-        if (timer) clearInterval(timer);
-        timer = null;
-      }
-
-      function stopHelper() {
-        if (helperTimer) clearTimeout(helperTimer);
-        helperTimer = null;
-        if (helper) helper.classList.add("hidden");
-        if (helperHand) helperHand.classList.remove("ssc-helper-run");
-        if (helperBubble) helperBubble.classList.remove("ssc-helper-text-in");
-      }
-
-      function runMobileHelper() {
-        if (!isMobileView() || !helper || isReducedMotion) return;
-
-        stopHelper();
-        helper.classList.remove("hidden");
-
-        requestAnimationFrame(() => {
-          helperHand.classList.add("ssc-helper-run");
-          helperBubble.classList.add("ssc-helper-text-in");
-        });
-
-        helperTimer = setTimeout(() => {
+          lockMobilePageScroll();
           stopHelper();
-        }, 2800);
-      }
+        }
 
-      function setupScrollTrigger() {
-        const io = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-                            if (entry.isIntersecting) {
-                runCountersOnce();
-
-            if (isMobileView()) {
-  if (!section.dataset.mobileAnimated) {
-    runMobileIntro();
-    section.dataset.mobileAnimated = "true";
-  }
-
-  runMobileHelper();
-
-  if (!autoplay) startAutoplay();
-} else {
-  if (!section.dataset.desktopAnimated) {
-    runDesktopIntro();
-    section.dataset.desktopAnimated = "true";
-  }
-
-  if (!autoplay) startAutoplay();
-}
-              } else {
-                stopAutoplay();
-                stopHelper();
-                if (!isMobileView() && hasHover) showDesktopIntro();
-              }
-            });
-          },
-          { threshold: 0.35 }
-        );
-
-        io.observe(section);
-      }
-
-      if (stage) {
-        stage.addEventListener("mouseleave", () => {
-          if (hasHover && !isMobileView()) {
-            showDesktopIntro();
-            runCountersOnce();
-            updateDesktopPanelOnly(active);
+        function closeMobileDetail() {
+          if (mobileDetail) {
+            mobileDetail.classList.add("hidden");
+            mobileDetail.classList.remove("flex");
           }
+
+          if (mobileIntro) mobileIntro.classList.remove("hidden");
+          if (header) header.classList.remove("ssc-mobile-hidden");
+          if (leftCol) leftCol.classList.remove("ssc-mobile-open");
+          if (stageWrap) stageWrap.classList.remove("ssc-mobile-sticky-wrap");
+
+          unlockMobilePageScroll();
+        }
+
+        function animateCounter(el, to, suffix) {
+          if (isReducedMotion) {
+            el.textContent = String(to) + (suffix || "");
+            return;
+          }
+
+          const duration = 900;
+          const start = performance.now();
+
+          function tick(now) {
+            const p = Math.min(1, (now - start) / duration);
+            const eased = 1 - Math.pow(1 - p, 3);
+            const value = Math.round(to * eased);
+            el.textContent = String(value) + (suffix || "");
+            if (p < 1) requestAnimationFrame(tick);
+          }
+
+          requestAnimationFrame(tick);
+        }
+
+        function runCountersOnce() {
+          if (countersRan) return;
+          countersRan = true;
+
+          counters.forEach((el) => {
+            const to = Number(el.getAttribute("data-target") || "0");
+            const suffix = el.getAttribute("data-suffix") || "";
+            animateCounter(el, to, suffix);
+          });
+        }
+
+        function setArcProgress(stepIndex, instant = false) {
+          const progress = stepIndex / nodeCount;
+          const offset = dashTotal * (1 - progress);
+
+          if (instant) {
+            arc.classList.remove("transition-[stroke-dashoffset]", "duration-700", "ease-out");
+            arc.style.strokeDashoffset = String(offset);
+            arc.getBoundingClientRect();
+            arc.classList.add("transition-[stroke-dashoffset]", "duration-700", "ease-out");
+          } else {
+            arc.style.strokeDashoffset = String(offset);
+          }
+        }
+
+        function blinkCenter() {
+          if (!centerImg || isReducedMotion) return;
+
+          centerImg.animate(
+            [
+              { transform: "scale(1)", opacity: 0.94 },
+              { transform: "scale(1.03)", opacity: 1 },
+              { transform: "scale(1)", opacity: 0.94 }
+            ],
+            { duration: 520, easing: "ease-in-out" }
+          );
+        }
+
+        function updateAutoplayVisuals(i) {
+          setArcProgress(i, false);
+
+          if (!isReducedMotion) {
+            pulse.animate(
+              [
+                { transform: "scale(0.98)", opacity: 0 },
+                { transform: "scale(1.06)", opacity: 0.30 },
+                { transform: "scale(1.10)", opacity: 0 }
+              ],
+              { duration: 900, easing: "ease-out" }
+            );
+
+            pulse2.animate(
+              [
+                { transform: "scale(0.98)", opacity: 0 },
+                { transform: "scale(1.06)", opacity: 0.20 },
+                { transform: "scale(1.10)", opacity: 0 }
+              ],
+              { duration: 1100, easing: "ease-out" }
+            );
+          }
+
+          blinkCenter();
+        }
+
+        function setActive(i, isAutoplayTick = false) {
+          const prev = active;
+          active = i;
+
+          const btns = nodesWrap.querySelectorAll("button[data-step]");
+
+          btns.forEach((btn) => {
+            const idx = Number(btn.getAttribute("data-step"));
+            const isOn = idx === i;
+
+            const ring = btn.querySelector(".ssc-ring");
+            const dot = btn.querySelector(".ssc-dot");
+            const label = btn.querySelector(".ssc-label");
+            const icon = btn.querySelector(".ssc-icon");
+
+            if (isOn) {
+              ring.className = "ssc-ring absolute inset-0 rounded-full border border-slate-200 bg-white shadow-sm outline outline-2 outline-[#0E2A47]";
+              dot.className = "ssc-dot absolute -right-2 -top-2 grid h-6 w-6 place-items-center rounded-full bg-[#0E2A47] text-[10px] font-semibold text-white";
+              label.className = "ssc-label absolute left-1/2 top-full mt-2.5 w-[5.8rem] -translate-x-1/2 text-center text-[9px] font-medium leading-[1.2] text-slate-700 sm:w-[9.5rem] sm:text-[12px]";
+              if (icon) icon.classList.add("ssc-pulse-on");
+            } else {
+              ring.className = "ssc-ring absolute inset-0 rounded-full border border-slate-200 bg-white";
+              dot.className = "ssc-dot absolute -right-2 -top-2 grid h-6 w-6 place-items-center rounded-full bg-slate-200 text-[10px] font-semibold text-slate-700";
+              label.className = "ssc-label absolute left-1/2 top-full mt-2 w-[5.5rem] -translate-x-1/2 text-center text-[9px] font-semibold leading-[1.15] text-[#0E2A47] sm:w-[9rem] sm:text-xs";
+              if (icon) icon.classList.remove("ssc-pulse-on");
+            }
+          });
+
+          if (isAutoplayTick && prev === nodeCount - 1 && i === 0) {
+            setArcProgress(0, true);
+          }
+
+          updateAutoplayVisuals(i);
+        }
+
+        function nodeAngle(i) {
+          const start = -90;
+          return start + (360 / nodeCount) * i;
+        }
+
+        function createNodeMarkup(step, i) {
+          return `
+            <span class="relative block h-14 w-14 sm:h-16 sm:w-16">
+              <span class="ssc-ring absolute inset-0 rounded-full border border-slate-200 bg-white transition-all duration-300 will-change-transform"></span>
+
+              <span class="ssc-dot absolute -right-2 -top-2 grid h-6 w-6 place-items-center rounded-full bg-slate-200 text-[10px] font-semibold text-slate-700">
+                ${i + 1}
+              </span>
+
+              <span class="absolute inset-0 grid place-items-center">
+                <img
+                  class="ssc-icon h-[70%] w-[70%] object-contain opacity-90 transition-transform duration-300 will-change-transform"
+                  src="${step.icon}"
+                  alt="${step.short} icon"
+                  onerror="this.style.opacity='0.25'; this.style.filter='grayscale(1)';"
+                />
+              </span>
+
+              <span class="ssc-label absolute left-1/2 top-full mt-2.5 w-[5.8rem] -translate-x-1/2 text-center text-[9px] font-medium leading-[1.2] text-slate-700 sm:w-[9.5rem] sm:text-[12px]">
+                ${isMobileView() ? (step.mobileShort || step.short) : step.short}
+              </span>
+            </span>
+          `;
+        }
+
+        function buildNodes() {
+          nodesWrap.innerHTML = "";
+
+          for (let i = 0; i < nodeCount; i++) {
+            const angle = nodeAngle(i);
+            const rad = (Math.PI / 180) * angle;
+
+            const x = 50 + nodeRadiusPercent * Math.cos(rad);
+            const y = 50 + nodeRadiusPercent * Math.sin(rad);
+
+            const btn = document.createElement("button");
+            btn.type = "button";
+            btn.setAttribute("data-step", String(i));
+            btn.setAttribute("aria-label", steps[i].title);
+
+            btn.className = "group absolute cursor-pointer focus:outline-none";
+            btn.style.left = `${x}%`;
+            btn.style.top = `${y}%`;
+            btn.style.transform = "translate(-50%, -50%)";
+
+            btn.innerHTML = createNodeMarkup(steps[i], i);
+
+            btn.addEventListener("mouseenter", () => {
+              if (!hasHover || isMobileView()) return;
+              showDesktopDetail();
+              updateDesktopPanelOnly(i);
+            });
+
+            btn.addEventListener("click", () => {
+              if (!isMobileView()) return;
+              updateMobilePanelOnly(i);
+              openMobileDetail(i);
+            });
+
+            nodesWrap.appendChild(btn);
+          }
+        }
+
+        function startAutoplay() {
+          if (isReducedMotion) return;
+          if (autoplay) return;
+
+          autoplay = true;
+
+          let i = active < 0 ? 0 : active;
+
+          timer = setInterval(() => {
+            const next = (i + 1) % nodeCount;
+            setActive(next, true);
+            i = next;
+          }, 1800);
+        }
+
+        function lockMobilePageScroll() {
+          if (!isMobileView()) return;
+          document.body.style.overflow = "hidden";
+          document.documentElement.style.overflow = "hidden";
+        }
+
+        function unlockMobilePageScroll() {
+          document.body.style.overflow = "";
+          document.documentElement.style.overflow = "";
+        }
+
+        function stopAutoplay() {
+          autoplay = false;
+          if (timer) clearInterval(timer);
+          timer = null;
+        }
+
+        function stopHelper() {
+          if (helperTimer) clearTimeout(helperTimer);
+          helperTimer = null;
+          if (helper) helper.classList.add("hidden");
+          if (helperHand) helperHand.classList.remove("ssc-helper-run");
+          if (helperBubble) helperBubble.classList.remove("ssc-helper-text-in");
+        }
+
+        function runMobileHelper() {
+          if (!isMobileView() || !helper || isReducedMotion) return;
+
+          stopHelper();
+          helper.classList.remove("hidden");
+
+          requestAnimationFrame(() => {
+            helperHand.classList.add("ssc-helper-run");
+            helperBubble.classList.add("ssc-helper-text-in");
+          });
+
+          helperTimer = setTimeout(() => {
+            stopHelper();
+          }, 2800);
+        }
+
+        function setupScrollTrigger() {
+          const io = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  runCountersOnce();
+
+                  if (isMobileView()) {
+                    if (!section.dataset.mobileAnimated) {
+                      runMobileIntro();
+                      section.dataset.mobileAnimated = "true";
+                    }
+
+                    runMobileHelper();
+
+                    if (!autoplay) startAutoplay();
+                  } else {
+                    if (!section.dataset.desktopAnimated) {
+                      runDesktopIntro();
+                      section.dataset.desktopAnimated = "true";
+                    }
+
+                    if (!autoplay) startAutoplay();
+                  }
+                } else {
+                  stopAutoplay();
+                  stopHelper();
+                  if (!isMobileView() && hasHover) showDesktopIntro();
+                }
+              });
+            },
+            { threshold: 0.35 }
+          );
+
+          io.observe(section);
+        }
+
+        if (stage) {
+          stage.addEventListener("mouseleave", () => {
+            if (hasHover && !isMobileView()) {
+              showDesktopIntro();
+              runCountersOnce();
+              updateDesktopPanelOnly(active);
+            }
+          });
+        }
+
+        if (mobileClose) {
+          mobileClose.addEventListener("click", () => {
+            closeMobileDetail();
+          });
+        }
+
+        mobileMq.addEventListener("change", () => {
+          stopAutoplay();
+          stopHelper();
+          unlockMobilePageScroll();
+
+          if (isMobileView()) {
+            closeMobileDetail();
+            runMobileHelper();
+            setArcProgress(active < 0 ? 0 : active, true);
+            setActive(active < 0 ? 0 : active, false);
+          } else {
+            closeMobileDetail();
+            showDesktopIntro();
+            setArcProgress(active < 0 ? 0 : active, true);
+            setActive(active < 0 ? 0 : active, false);
+          }
+
+          startAutoplay();
         });
+
+        function runDesktopIntro() {
+          if (isMobileView() || isReducedMotion) return;
+
+          section.classList.add("ssc-desktop-intro");
+
+          setTimeout(() => {
+            section.classList.remove("ssc-desktop-intro");
+          }, 1800);
+        }
+
+        function runMobileIntro() {
+          if (!isMobileView() || isReducedMotion) return;
+
+          const nodes = document.querySelectorAll("#ssc-nodes > button");
+
+          if (stageWrap) {
+            stageWrap.style.opacity = "0";
+            requestAnimationFrame(() => {
+              stageWrap.style.transition = "opacity 0.6s ease";
+              stageWrap.style.opacity = "1";
+            });
+          }
+
+          nodes.forEach((node, i) => {
+            node.style.opacity = "0";
+            node.style.transform = "translate(-50%, -50%) scale(0.82)";
+
+            setTimeout(() => {
+              node.style.transition = "all 0.4s ease";
+              node.style.opacity = "1";
+              node.style.transform = "translate(-50%, -50%) scale(1)";
+            }, 120 + i * 60);
+          });
+        }
+
+        updateAllPanels(0);
+        showDesktopIntro();
+        buildNodes();
+
+        if (isMobileView()) {
+          setArcProgress(0, true);
+          active = -1;
+          setActive(0, false);
+        } else {
+          setArcProgress(0, true);
+          setActive(0, true);
+        }
+
+        setupScrollTrigger();
+      })();
+    </script>
+
+    <style>
+      #shunah-satellite-circle .group:hover .ssc-ring {
+        border-color: #0E2A47;
+        box-shadow:
+          0 0 0 2px rgba(14, 42, 71, 0.18),
+          0 0 18px rgba(14, 42, 71, 0.35),
+          0 0 38px rgba(14, 42, 71, 0.22);
+        transform: scale(1.08);
       }
 
-      if (mobileClose) {
-        mobileClose.addEventListener("click", () => {
-          closeMobileDetail();
-        });
-      }
-
-      mobileMq.addEventListener("change", () => {
-  stopAutoplay();
-  stopHelper();
-  unlockMobilePageScroll();
-
-  if (isMobileView()) {
-    closeMobileDetail();
-    runMobileHelper();
-    setArcProgress(active < 0 ? 0 : active, true);
-    setActive(active < 0 ? 0 : active, false);
-  } else {
-    closeMobileDetail();
-    showDesktopIntro();
-    setArcProgress(active < 0 ? 0 : active, true);
-    setActive(active < 0 ? 0 : active, false);
-  }
-
-  startAutoplay();
-});
-      function runDesktopIntro() {
-
-        if (isMobileView() || isReducedMotion) return;
-
-        section.classList.add("ssc-desktop-intro");
-
-        setTimeout(() => {
-          section.classList.remove("ssc-desktop-intro");
-        }, 1800);
-      }
-// 🔥 PASTE THIS RIGHT HERE
-function runMobileIntro() {
-  if (!isMobileView() || isReducedMotion) return;
-
-  const nodes = document.querySelectorAll("#ssc-nodes > button");
-
-  if (stageWrap) {
-  stageWrap.style.opacity = "0";
-  requestAnimationFrame(() => {
-    stageWrap.style.transition = "opacity 0.6s ease";
-    stageWrap.style.opacity = "1";
-  });
-}
-
-  nodes.forEach((node, i) => {
-    node.style.opacity = "0";
-    node.style.transform = "translate(-50%, -50%) scale(0.82)";
-
-    setTimeout(() => {
-      node.style.transition = "all 0.4s ease";
-      node.style.opacity = "1";
-      node.style.transform = "translate(-50%, -50%) scale(1)";
-    }, 120 + i * 60);
-  });
-}
-     updateAllPanels(0);
-showDesktopIntro();
-buildNodes();
-
-if (isMobileView()) {
-  setArcProgress(0, true);
-  active = -1;
-  setActive(0, false);
-} else {
-  setArcProgress(0, true);
-  setActive(0, true);
-}
-
-setupScrollTrigger();
-    })();
-  </script>
-
-  <style>
-    #shunah-satellite-circle .group:hover .ssc-ring {
-      border-color: #0E2A47;
-      box-shadow:
-        0 0 0 2px rgba(14, 42, 71, 0.18),
-        0 0 18px rgba(14, 42, 71, 0.35),
-        0 0 38px rgba(14, 42, 71, 0.22);
-      transform: scale(1.08);
-    }
-
-    #shunah-satellite-circle .group:hover .ssc-icon {
-      transform: scale(1.12);
-    }
-
-    #shunah-satellite-circle .ssc-pulse-on {
-      animation: sscIconPulse 1.1s ease-in-out infinite;
-    }
-
-    @keyframes sscIconPulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.06); }
-    }
-
-    /* DESKTOP INTRO ANIMATION */
-    @media (min-width: 1024px) {
-
-      #shunah-satellite-circle.ssc-desktop-intro #ssc-header {
-        opacity: 0;
-        transform: translateY(24px);
-        animation: sscDesktopFadeUp 0.7s ease forwards;
-      }
-
-      #shunah-satellite-circle.ssc-desktop-intro #ssc-stageWrap {
-        opacity: 0;
-        transform: scale(0.94);
-        animation: sscDesktopStageIn 0.9s ease forwards 0.12s;
-      }
-
-      #shunah-satellite-circle.ssc-desktop-intro #ssc-panel {
-        opacity: 0;
-        transform: translateX(28px);
-        animation: sscDesktopPanelIn 0.75s ease forwards 0.22s;
-      }
-
-      #shunah-satellite-circle.ssc-desktop-intro #ssc-nodes > button {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(0.82);
-        animation: sscDesktopNodeIn 0.45s ease forwards;
-      }
-
-      #shunah-satellite-circle.ssc-desktop-intro #ssc-nodes > button:nth-child(1) { animation-delay: 0.18s; }
-      #shunah-satellite-circle.ssc-desktop-intro #ssc-nodes > button:nth-child(2) { animation-delay: 0.24s; }
-      #shunah-satellite-circle.ssc-desktop-intro #ssc-nodes > button:nth-child(3) { animation-delay: 0.30s; }
-      #shunah-satellite-circle.ssc-desktop-intro #ssc-nodes > button:nth-child(4) { animation-delay: 0.36s; }
-      #shunah-satellite-circle.ssc-desktop-intro #ssc-nodes > button:nth-child(5) { animation-delay: 0.42s; }
-      #shunah-satellite-circle.ssc-desktop-intro #ssc-nodes > button:nth-child(6) { animation-delay: 0.48s; }
-      #shunah-satellite-circle.ssc-desktop-intro #ssc-nodes > button:nth-child(7) { animation-delay: 0.54s; }
-      #shunah-satellite-circle.ssc-desktop-intro #ssc-nodes > button:nth-child(8) { animation-delay: 0.60s; }
-
-
-      @keyframes sscDesktopFadeUp {
-        from { opacity: 0; transform: translateY(24px); }
-        to   { opacity: 1; transform: translateY(0); }
-      }
-
-      @keyframes sscDesktopStageIn {
-        from { opacity: 0; transform: scale(0.94); }
-        to   { opacity: 1; transform: scale(1); }
-      }
-
-      @keyframes sscDesktopPanelIn {
-        from { opacity: 0; transform: translateX(28px); }
-        to   { opacity: 1; transform: translateX(0); }
-      }
-
-      @keyframes sscDesktopNodeIn {
-        from { opacity: 0; transform: translate(-50%, -50%) scale(0.82); }
-        to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-      }
-    }
-    @media (max-width: 1023px) {
-  #shunah-satellite-circle {
-    height: auto !important;
-    min-height: 100dvh;
-  }
-
-  #shunah-satellite-circle #ssc-shell {
-    min-height: 100dvh;
-  }
-
-      #shunah-satellite-circle #ssc-header.ssc-mobile-hidden {
-        opacity: 0;
-        max-height: 0;
-        margin: 0;
-        overflow: hidden;
-        pointer-events: none;
-        transform: translateY(-10px);
-      }
-
-   #shunah-satellite-circle #ssc-left-col.ssc-mobile-open {
-  display: flex;
-  flex-direction: column;
-  padding-top: 0.25rem;
-}
-
-#shunah-satellite-circle #ssc-stageWrap.ssc-mobile-sticky-wrap {
-  position: sticky;
-  top: 2.1rem;
-  z-index: 15;
-  padding-top: 0.5rem;
-}
-
-#shunah-satellite-circle #ssc-stage {
-  overflow: visible !important;
-}
-
-#shunah-satellite-circle #ssc-left-col.ssc-mobile-open #ssc-stage {
-  max-width: min(360px, 88vw);
-}
-
-#shunah-satellite-circle #ssc-mobile-panel {
-  overflow: hidden;
-}
-
-#shunah-satellite-circle #ssc-mobile-detail {
-  height: 44vh;
-  min-height: 320px;
-  max-height: 420px;
-}
-
-#shunah-satellite-circle #ssc-mobile-scroll {
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior: contain;
-}
-
-      #shunah-satellite-circle .group:hover .ssc-ring,
       #shunah-satellite-circle .group:hover .ssc-icon {
-        transform: none;
-        box-shadow: none;
+        transform: scale(1.12);
       }
 
-      #shunah-satellite-circle .ssc-ring,
-      #shunah-satellite-circle .ssc-icon {
-        transition: all 0.25s ease;
+      #shunah-satellite-circle .ssc-pulse-on {
+        animation: sscIconPulse 1.1s ease-in-out infinite;
       }
 
-      #shunah-satellite-circle #ssc-mobile-scroll {
-        -webkit-overflow-scrolling: touch;
+      @keyframes sscIconPulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.06); }
       }
 
-      #shunah-satellite-circle #ssc-helper-hand.ssc-helper-run {
-        animation: sscHandTap 2.2s ease-in-out 1 forwards;
-      }
-
-      #shunah-satellite-circle #ssc-helper-bubble.ssc-helper-text-in {
-        animation: sscBubbleIn 2.2s ease-in-out 1 forwards;
-      }
-
-      @keyframes sscBubbleIn {
-        0%, 12% { opacity: 0; transform: translateX(-50%) translateY(8px); }
-        18%, 82% { opacity: 1; transform: translateX(-50%) translateY(0); }
-        100% { opacity: 0; transform: translateX(-50%) translateY(-4px); }
-      }
-
-      @keyframes sscHandTap {
-        0% {
+      @media (min-width: 1024px) {
+        #shunah-satellite-circle.ssc-desktop-intro #ssc-header {
           opacity: 0;
-          transform: translate(-50%, -50%) scale(0.9);
+          transform: translateY(24px);
+          animation: sscDesktopFadeUp 0.7s ease forwards;
         }
-        10% {
-          opacity: 1;
-          transform: translate(-50%, -50%) scale(1);
-        }
-        35% {
-          transform: translate(-18%, -120%) scale(1);
-        }
-        45% {
-          transform: translate(-18%, -120%) scale(0.9);
-        }
-        55% {
-          transform: translate(-18%, -120%) scale(1);
-        }
-        85% {
-          opacity: 1;
-          transform: translate(-18%, -120%) scale(1);
-        }
-        100% {
+
+        #shunah-satellite-circle.ssc-desktop-intro #ssc-stageWrap {
           opacity: 0;
-          transform: translate(-18%, -120%) scale(0.95);
+          transform: scale(0.94);
+          animation: sscDesktopStageIn 0.9s ease forwards 0.12s;
         }
 
-      }
-#shunah-satellite-circle #ssc-stageWrap {
-  transform: none !important;
-    }
-  </style>
-</section>
+        #shunah-satellite-circle.ssc-desktop-intro #ssc-panel {
+          opacity: 0;
+          transform: translateX(28px);
+          animation: sscDesktopPanelIn 0.75s ease forwards 0.22s;
+        }
 
+        #shunah-satellite-circle.ssc-desktop-intro #ssc-nodes > button {
+          opacity: 0;
+          transform: translate(-50%, -50%) scale(0.82);
+          animation: sscDesktopNodeIn 0.45s ease forwards;
+        }
+
+        #shunah-satellite-circle.ssc-desktop-intro #ssc-nodes > button:nth-child(1) { animation-delay: 0.18s; }
+        #shunah-satellite-circle.ssc-desktop-intro #ssc-nodes > button:nth-child(2) { animation-delay: 0.24s; }
+        #shunah-satellite-circle.ssc-desktop-intro #ssc-nodes > button:nth-child(3) { animation-delay: 0.30s; }
+        #shunah-satellite-circle.ssc-desktop-intro #ssc-nodes > button:nth-child(4) { animation-delay: 0.36s; }
+        #shunah-satellite-circle.ssc-desktop-intro #ssc-nodes > button:nth-child(5) { animation-delay: 0.42s; }
+        #shunah-satellite-circle.ssc-desktop-intro #ssc-nodes > button:nth-child(6) { animation-delay: 0.48s; }
+        #shunah-satellite-circle.ssc-desktop-intro #ssc-nodes > button:nth-child(7) { animation-delay: 0.54s; }
+        #shunah-satellite-circle.ssc-desktop-intro #ssc-nodes > button:nth-child(8) { animation-delay: 0.60s; }
+
+        @keyframes sscDesktopFadeUp {
+          from { opacity: 0; transform: translateY(24px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes sscDesktopStageIn {
+          from { opacity: 0; transform: scale(0.94); }
+          to   { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes sscDesktopPanelIn {
+          from { opacity: 0; transform: translateX(28px); }
+          to   { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes sscDesktopNodeIn {
+          from { opacity: 0; transform: translate(-50%, -50%) scale(0.82); }
+          to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        }
+      }
+
+      @media (max-width: 1023px) {
+        #shunah-satellite-circle {
+          height: auto !important;
+          min-height: 100dvh;
+        }
+
+        #shunah-satellite-circle #ssc-shell {
+          min-height: 100dvh;
+        }
+
+        #shunah-satellite-circle #ssc-header.ssc-mobile-hidden {
+          opacity: 0;
+          max-height: 0;
+          margin: 0;
+          overflow: hidden;
+          pointer-events: none;
+          transform: translateY(-10px);
+        }
+
+        #shunah-satellite-circle #ssc-left-col.ssc-mobile-open {
+          display: flex;
+          flex-direction: column;
+          padding-top: 0.25rem;
+        }
+
+        #shunah-satellite-circle #ssc-stageWrap.ssc-mobile-sticky-wrap {
+          position: sticky;
+          top: 2.1rem;
+          z-index: 15;
+          padding-top: 0.5rem;
+        }
+
+        #shunah-satellite-circle #ssc-stage {
+          overflow: visible !important;
+        }
+
+        #shunah-satellite-circle #ssc-left-col.ssc-mobile-open #ssc-stage {
+          max-width: min(360px, 88vw);
+        }
+
+        #shunah-satellite-circle #ssc-mobile-panel {
+          overflow: hidden;
+        }
+
+        #shunah-satellite-circle #ssc-mobile-detail {
+          height: 44vh;
+          min-height: 320px;
+          max-height: 420px;
+        }
+
+        #shunah-satellite-circle #ssc-mobile-scroll {
+          -webkit-overflow-scrolling: touch;
+          overscroll-behavior: contain;
+        }
+
+        #shunah-satellite-circle .group:hover .ssc-ring,
+        #shunah-satellite-circle .group:hover .ssc-icon {
+          transform: none;
+          box-shadow: none;
+        }
+
+        #shunah-satellite-circle .ssc-ring,
+        #shunah-satellite-circle .ssc-icon {
+          transition: all 0.25s ease;
+        }
+
+        #shunah-satellite-circle #ssc-mobile-scroll {
+          -webkit-overflow-scrolling: touch;
+        }
+
+        #shunah-satellite-circle #ssc-helper-hand.ssc-helper-run {
+          animation: sscHandTap 2.2s ease-in-out 1 forwards;
+        }
+
+        #shunah-satellite-circle #ssc-helper-bubble.ssc-helper-text-in {
+          animation: sscBubbleIn 2.2s ease-in-out 1 forwards;
+        }
+
+        @keyframes sscBubbleIn {
+          0%, 12% { opacity: 0; transform: translateX(-50%) translateY(8px); }
+          18%, 82% { opacity: 1; transform: translateX(-50%) translateY(0); }
+          100% { opacity: 0; transform: translateX(-50%) translateY(-4px); }
+        }
+
+        @keyframes sscHandTap {
+          0% {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.9);
+          }
+          10% {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+          }
+          35% {
+            transform: translate(-18%, -120%) scale(1);
+          }
+          45% {
+            transform: translate(-18%, -120%) scale(0.9);
+          }
+          55% {
+            transform: translate(-18%, -120%) scale(1);
+          }
+          85% {
+            opacity: 1;
+            transform: translate(-18%, -120%) scale(1);
+          }
+          100% {
+            opacity: 0;
+            transform: translate(-18%, -120%) scale(0.95);
+          }
+        }
+
+        #shunah-satellite-circle #ssc-stageWrap {
+          transform: none !important;
+        }
+      }
+    </style>
+  </section>
 </body>
 </html>
