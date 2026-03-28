@@ -15,6 +15,7 @@
       clip-path: polygon(0 0, 100% 50%, 0 100%);
     }
 
+
     .nav-hidden {
       transform: translateY(-115%);
     }
@@ -37,14 +38,37 @@
         0 10px 30px rgba(15, 23, 42, 0.06);
     }
 
-    .soft-card {
-      box-shadow: 0 8px 26px rgba(15,23,42,0.05);
-      transition:
-        transform 0.42s cubic-bezier(.22,.9,.29,1),
-        box-shadow 0.35s ease,
-        opacity 0.35s ease,
-        filter 0.35s ease;
-    }
+.soft-card {
+  position: relative;
+  overflow: hidden;
+}
+
+/* DEFAULT = MOBILE → BLUE */
+.soft-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: #225AB4; /* blue by default */
+  border-top-left-radius: 18px;
+  border-top-right-radius: 18px;
+  transition: background 0.3s ease;
+  z-index: 2;
+}
+
+/* DESKTOP = GREY */
+@media (min-width: 768px) {
+  .soft-card::before {
+    background: #e5e7eb;
+  }
+
+  /* DESKTOP HOVER → BLUE */
+  .soft-card:hover::before {
+    background: #225AB4;
+  }
+}
 
     .soft-card:hover {
       transform: translateY(-5px);
@@ -77,12 +101,41 @@
       filter: blur(0);
       pointer-events: auto;
     }
-  </style>
+.case-top-patch {
+  position: absolute;
+  top: 10px;
+  left: 14px;
+  width: calc(100% - 28px);
+  height: 4px;
+  background: #e5e7eb;
+  border-radius: 999px;
+  transition: background 0.35s ease;
+  z-index: 0;
+}
+
+.soft-card > *:not(.case-top-patch) {
+  position: relative;
+  z-index: 1;
+}
+
+.soft-card:hover .case-top-patch {
+  background: #225AB4;
+}
+
+@media (min-width: 768px) {
+  .case-top-patch {
+    background: #225AB4;
+  }
+}  
+
+</style>
 </head>
 <body class="bg-white text-slate-900">
 
- <!-- TOP NAV -->
-<nav id="site-navbar" class="fixed top-0 left-0 right-0 z-50 h-12 bg-white transition-transform duration-300">
+ 
+<!-- NAV -->
+<nav id="site-navbar" class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-black/10 shadow-sm h-12">
+
   <div class="relative max-w-7xl mx-auto h-12 px-6 md:px-10 flex items-center justify-between">
 
     <!-- LEFT: Logo -->
@@ -91,55 +144,25 @@
     </a>
 
     <!-- DESKTOP MENU -->
-    <div class="mx-auto hidden md:flex items-center">
-      <div id="nav-track" class="relative flex items-center gap-1">
-        
-        <span
-  id="nav-pill"
-  class="absolute left-0 top-1/2 -translate-y-1/2 h-[32px] rounded-full bg-[#f1f3f5] border border-black/6 transition-all duration-300 ease-out pointer-events-none">
-</span>
+    <div class="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-6 text-[12.5px] font-medium text-[#0b1a2d]/80">
 
-        <a href="index.html"
-           class="nav-link relative z-[2] px-4 h-[32px] inline-flex items-center rounded-full text-[12.5px] font-medium text-[#4b5563] transition-colors duration-200">
-          Home
-        </a>
+      <a href="index.html#home" class="hover:text-[#0b1a2d] transition">Home</a>
+   <a href="technology.html" class="hover:text-[#0b1a2d] transition">Product Suite</a>
 
-        <a href="technology.html"
-           class="nav-link relative z-[2] px-4 h-[32px] inline-flex items-center rounded-full text-[12.5px] font-medium text-[#4b5563] transition-colors duration-200">
-          Product Suite
-        </a>
+      <!-- ACTIVE -->
+      <a href="usecases.html."
+         class="text-[#0b1a2d] font-semibold rounded-full px-4 py-1 bg-[#0b1a2d]/6 ring-1 ring-[#0b1a2d]/15">
+        Use Cases
+      </a>
 
-        <a href="#use-cases"
-           class="nav-link relative z-[2] px-4 h-[32px] inline-flex items-center rounded-full text-[12.5px] font-medium text-[#111827] transition-colors duration-200"
-           data-current="true">
-          Use Cases
-        </a>
-
-        <a href="focus.html"
-           class="nav-link relative z-[2] px-4 h-[32px] inline-flex items-center rounded-full text-[12.5px] font-medium text-[#4b5563] transition-colors duration-200">
-          Our Focus
-        </a>
-
-        <a href="rfq.html"
-           class="nav-link relative z-[2] px-4 h-[32px] inline-flex items-center rounded-full text-[12.5px] font-medium text-[#4b5563] transition-colors duration-200">
-          RFQ
-        </a>
-
-        <a href="contact.html"
-           class="nav-link relative z-[2] px-4 h-[32px] inline-flex items-center rounded-full text-[12.5px] font-medium text-[#4b5563] transition-colors duration-200">
-          Contact Us
-        </a>
-      </div>
+      <a href="focus.html" class="hover:text-[#0b1a2d] transition">Our Focus</a>
+      <a href="rfq.html" class="hover:text-[#0b1a2d] transition">RFQ</a>
+      <a href="contact.html" class="hover:text-[#0b1a2d] transition">Contact Us</a>
     </div>
 
     <!-- MOBILE BUTTON -->
-    <button
-      id="mobile-menu-button"
-      type="button"
-      aria-label="Toggle menu"
-      aria-expanded="false"
-      class="md:hidden w-10 h-10 flex items-center justify-center text-[#0b1a2d]"
-    >
+    <button id="mobile-menu-button" class="md:hidden w-10 h-10 flex items-center justify-center text-[#0b1a2d]">
+
       <!-- hamburger -->
       <svg id="menu-open-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.8">
         <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
@@ -149,144 +172,393 @@
       <svg id="menu-close-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" stroke="currentColor" stroke-width="1.8">
         <path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/>
       </svg>
+
     </button>
+
   </div>
 
-  <!-- MOBILE DROPDOWN -->
+  <!-- MOBILE MENU -->
   <div id="mobile-menu" class="hidden md:hidden border-t border-black/10 bg-white">
+
     <div class="px-6 py-4 flex flex-col gap-2 text-[14px] font-medium text-[#0b1a2d]">
-      <a href="index.html">Home</a>
-      <a href="technology.html">Product Suite</a>
-      <a href="#use-cases" class="font-semibold">Use Cases</a>
+
+      <a href="index.html#home">Home</a>
+      <a href="technology.html" class="font-semibold">Product Suite</a>
+      <a href="usecases.html">Use Cases</a>
       <a href="focus.html">Our Focus</a>
       <a href="rfq.html">RFQ</a>
       <a href="contact.html">Contact Us</a>
+
     </div>
+
   </div>
+
 </nav>
 
 
-  <!-- USE CASES SECTION -->
-  <section id="use-cases" class="bg-white pt-12">
 
-<!-- PART 1: HERO -->
-<div class="bg-[#dfeaf7]">
-  <div class="max-w-[1240px] mx-auto px-6 md:px-10 py-14 md:py-20">
-    <div class="grid lg:grid-cols-[1.02fr_1fr] gap-12 items-center min-h-[430px]">
+<!-- =======================
+SHUNAH – Use Cases Hero
+======================= -->
+<section id="tech-hero" class="bg-white min-h-screen flex items-center overflow-visible">
+  <div class="max-w-7xl mx-auto w-full px-6 md:px-10 py-16">
+    <div class="grid lg:grid-cols-12 gap-10 lg:gap-14 items-center">
 
-      <!-- LEFT (UNCHANGED) -->
-      <div class="max-w-[540px] text-[#0b1a2d]">
-        <div class="inline-flex items-center rounded-full border border-[#0b1a2d]/10 bg-white/55 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] mb-5">
-          Seller.Buyers.Savers.Investors
-        </div>
-
-        <h1 class="text-[clamp(2.2rem,4vw,4.6rem)] font-semibold tracking-[-0.055em] leading-[0.92]">
-          Use Cases
+      <!-- LEFT TEXT -->
+      <div class="lg:col-span-5 max-w-xl">
+        <h1 class="text-4xl md:text-5xl font-semibold tracking-tight text-[#0b1a2d] leading-[0.95]">
+          Unique <span class="text-[#225AB4]">Use Cases </span> for Everyone to Partake
         </h1>
 
-        <p class="mt-5 max-w-[460px] text-[15px] md:text-[16px] leading-7 text-[#0b1a2d]/72">
-         Shunah is building the digital infrastructure layer for the dry crops economy — connecting stakeholders, integrating new participants, and enabling trade, capital, and data to move seamlessly across the network.
-
-From farmers and aggregators to traders, processors, financiers, and entirely new entrants, the system becomes accessible, visible, and executable.
+        <p class="mt-6 text-[17px] md:text-lg text-slate-600 leading-relaxed max-w-lg">
+          Shunah is building the digital infrastructure layer for the dry crops economy — connecting stakeholders, integrating new participants, and enabling trade, capital, and data to move seamlessly across the network.
         </p>
+
+        <div class="mt-8 flex gap-10 md:gap-14">
+          <div>
+            <div class="text-[#225AB4] text-3xl md:text-4xl font-bold leading-none">37K+</div>
+            <div class="mt-2 text-[12px] md:text-[13px] text-slate-500 font-medium tracking-wide">Farmers</div>
+          </div>
+
+          <div>
+            <div class="text-[#225AB4] text-3xl md:text-4xl font-bold leading-none">155K+</div>
+            <div class="mt-2 text-[12px] md:text-[13px] text-slate-500 font-medium tracking-wide">Acres of Land</div>
+          </div>
+
+<div>
+            <div class="text-[#225AB4] text-3xl md:text-4xl font-bold leading-none">950K+</div>
+            <div class="mt-2 text-[12px] md:text-[13px] text-slate-500 font-medium tracking-wide">Crop Tons</div>
+          </div>
+        </div>
       </div>
 
-<!-- RIGHT (SEPARATE DESKTOP / MOBILE) -->
-<div class="relative flex justify-center lg:justify-end">
+      <!-- RIGHT COLLAGE -->
+      <div class="lg:col-span-7">
+        <div class="tech-collage-wrap">
+          <div class="tech-collage">
 
-  <!-- DESKTOP -->
-  <div class="hidden md:grid w-full max-w-[680px] grid-cols-4 gap-5 h-[360px]">
-    
-    <!-- BOX 1 -->
-    <div class="relative rounded-[18px] border border-white/18 bg-[#FFD400] shadow-[0_18px_30px_rgba(8,39,84,0.28),inset_0_1px_0_rgba(255,255,255,0.22),inset_0_-10px_24px_rgba(7,33,74,0.16)] backdrop-blur-[10px] overflow-visible">
-      <div class="absolute inset-[1px] rounded-[17px] bg-white/[0.03] pointer-events-none"></div>
-      <div class="absolute top-0 right-[10%] w-[70%] h-[42%] bg-gradient-to-b from-white/30 to-transparent skew-x-[-16deg] pointer-events-none"></div>
-      <div class="absolute inset-x-[12%] bottom-3 h-5 rounded-full bg-black/12 blur-md pointer-events-none"></div>
-      <div class="absolute inset-0 z-[2] pointer-events-none overflow-visible">
-        <img src="images/usecase-hero-1.png" alt="" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 scale-[1.28]" />
+            <!-- accent behind top image -->
+            <div class="tech-accent-top"></div>
+
+            <!-- PHONE -->
+            <div class="tech-phone">
+              <img src="images/phone-mock.png" alt="Phone mockup" />
+            </div>
+
+            <!-- TOP IMAGE -->
+            <div class="tech-top">
+              <img src="usecases/use_1.png" alt="Top image" loading="lazy">
+            </div>
+
+            <!-- BOTTOM ROW -->
+            <div class="tech-bottom">
+              <div class="tech-card tech-card-left">
+                <img src="usecases/use_1.png" alt="Bottom left image" loading="lazy">
+              </div>
+
+              <div class="tech-card tech-card-mid">
+                <img src="usecases/use_1.png" alt="Bottom middle image" loading="lazy">
+              </div>
+
+              <div class="tech-card tech-card-right">
+                <img src="usecases/use_1.png" alt="Bottom right image" loading="lazy">
+              </div>
+            </div>
+
+            <!-- accent behind right card -->
+            <div class="tech-accent-right"></div>
+
+            <!-- center badge -->
+            <div class="tech-badge">
+              <img src="usecases/use_1.png" alt="Center badge" loading="lazy">
+            </div>
+
+            <!-- stars -->
+            <div class="tech-star tech-star-sm"></div>
+            <div class="tech-star tech-star-lg"></div>
+
+          </div>
+        </div>
       </div>
-    </div>
 
-    <!-- BOX 2 -->
-    <div class="relative rounded-[18px] border border-white/18 bg-[#FFD400] shadow-[0_18px_30px_rgba(8,39,84,0.28),inset_0_1px_0_rgba(255,255,255,0.22),inset_0_-10px_24px_rgba(7,33,74,0.16)] backdrop-blur-[10px] overflow-visible">
-      <div class="absolute inset-[1px] rounded-[17px] bg-white/[0.03] pointer-events-none"></div>
-      <div class="absolute top-0 right-[10%] w-[70%] h-[42%] bg-gradient-to-b from-white/30 to-transparent skew-x-[-16deg] pointer-events-none"></div>
-      <div class="absolute inset-x-[12%] bottom-3 h-5 rounded-full bg-black/12 blur-md pointer-events-none"></div>
-      <div class="absolute inset-0 z-[2] pointer-events-none overflow-visible">
-        <img src="images/usecase-hero-3-white.png" alt="" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 scale-[1.28]" />
-      </div>
-    </div>
-
-    <!-- BOX 3 -->
-    <div class="relative rounded-[18px] border border-white/18 bg-[#FFD400] shadow-[0_18px_30px_rgba(8,39,84,0.28),inset_0_1px_0_rgba(255,255,255,0.22),inset_0_-10px_24px_rgba(7,33,74,0.16)] backdrop-blur-[10px] overflow-visible">
-      <div class="absolute inset-[1px] rounded-[17px] bg-white/[0.03] pointer-events-none"></div>
-      <div class="absolute top-0 right-[10%] w-[70%] h-[42%] bg-gradient-to-b from-white/30 to-transparent skew-x-[-16deg] pointer-events-none"></div>
-      <div class="absolute inset-x-[12%] bottom-3 h-5 rounded-full bg-black/12 blur-md pointer-events-none"></div>
-      <div class="absolute inset-0 z-[2] pointer-events-none overflow-visible">
-        <img src="images/usecase-hero-2-white.png" alt="" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 scale-[1.36]" />
-      </div>
-    </div>
-
-    <!-- BOX 4 -->
-    <div class="relative rounded-[18px] border border-white/18 bg-[#FFD400] shadow-[0_18px_30px_rgba(8,39,84,0.28),inset_0_1px_0_rgba(255,255,255,0.22),inset_0_-10px_24px_rgba(7,33,74,0.16)] backdrop-blur-[10px] overflow-visible">
-      <div class="absolute inset-[1px] rounded-[17px] bg-white/[0.03] pointer-events-none"></div>
-      <div class="absolute top-0 right-[10%] w-[70%] h-[42%] bg-gradient-to-b from-white/30 to-transparent skew-x-[-16deg] pointer-events-none"></div>
-      <div class="absolute inset-x-[12%] bottom-3 h-5 rounded-full bg-black/12 blur-md pointer-events-none"></div>
-      <div class="absolute inset-0 z-[2] pointer-events-none overflow-visible">
-        <img src="images/usecase-hero-4-white.png" alt="" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 scale-[1.2]" />
-      </div>
-    </div>
-  </div>
-
-  <!-- MOBILE -->
-  <div class="grid md:hidden w-full max-w-[340px] grid-cols-4 gap-3 h-[230px] -mt-6 md:mt-0">
-    
-    <!-- BOX 1 -->
-    <div class="relative rounded-[16px] border border-white/18 bg-[#FFD400] shadow-[0_14px_24px_rgba(8,39,84,0.22),inset_0_1px_0_rgba(255,255,255,0.22),inset_0_-10px_24px_rgba(7,33,74,0.12)] overflow-visible">
-      <div class="absolute inset-[1px] rounded-[15px] bg-white/[0.03] pointer-events-none"></div>
-      <div class="absolute top-0 right-[10%] w-[70%] h-[42%] bg-gradient-to-b from-white/30 to-transparent skew-x-[-16deg] pointer-events-none"></div>
-      <div class="absolute inset-x-[12%] bottom-2 h-4 rounded-full bg-black/12 blur-md pointer-events-none"></div>
-    <div class="absolute inset-0 z-[2] pointer-events-none overflow-visible">
-        <img src="images/usecase-hero-1.png" alt="" class="absolute left-1/2 bottom-[10px] -translate-x-1/2 scale-[1.25]" />
-      </div>
-    </div>
-
-    <!-- BOX 2 -->
-    <div class="relative rounded-[16px] border border-white/18 bg-[#FFD400] shadow-[0_14px_24px_rgba(8,39,84,0.22),inset_0_1px_0_rgba(255,255,255,0.22),inset_0_-10px_24px_rgba(7,33,74,0.12)] overflow-visible">
-      <div class="absolute inset-[1px] rounded-[15px] bg-white/[0.03] pointer-events-none"></div>
-      <div class="absolute top-0 right-[10%] w-[70%] h-[42%] bg-gradient-to-b from-white/30 to-transparent skew-x-[-16deg] pointer-events-none"></div>
-      <div class="absolute inset-x-[12%] bottom-2 h-4 rounded-full bg-black/12 blur-md pointer-events-none"></div>
-     <div class="absolute inset-0 z-[2] pointer-events-none overflow-visible">
-        <img src="images/usecase-hero-3-white.png" alt="" class="absolute left-1/2 bottom-0 -translate-x-1/2 scale-[1.2]" />
-      </div>
-    </div>
-
-    <!-- BOX 3 -->
-    <div class="relative rounded-[16px] border border-white/18 bg-[#FFD400] shadow-[0_14px_24px_rgba(8,39,84,0.22),inset_0_1px_0_rgba(255,255,255,0.22),inset_0_-10px_24px_rgba(7,33,74,0.12)] overflow-visible">
-      <div class="absolute inset-[1px] rounded-[15px] bg-white/[0.03] pointer-events-none"></div>
-      <div class="absolute top-0 right-[10%] w-[70%] h-[42%] bg-gradient-to-b from-white/30 to-transparent skew-x-[-16deg] pointer-events-none"></div>
-      <div class="absolute inset-x-[12%] bottom-2 h-4 rounded-full bg-black/12 blur-md pointer-events-none"></div>
-    <div class="absolute inset-0 z-[2] pointer-events-none overflow-visible">
-        <img src="images/usecase-hero-2-white.png" alt="" class="absolute left-1/2 bottom-[12px] -translate-x-1/2 scale-[1.35]" />
-      </div>
-    </div>
-
-    <!-- BOX 4 -->
-    <div class="relative rounded-[16px] border border-white/18 bg-[#FFD400] shadow-[0_14px_24px_rgba(8,39,84,0.22),inset_0_1px_0_rgba(255,255,255,0.22),inset_0_-10px_24px_rgba(7,33,74,0.12)] overflow-visible">
-      <div class="absolute inset-[1px] rounded-[15px] bg-white/[0.03] pointer-events-none"></div>
-      <div class="absolute top-0 right-[10%] w-[70%] h-[42%] bg-gradient-to-b from-white/30 to-transparent skew-x-[-16deg] pointer-events-none"></div>
-      <div class="absolute inset-x-[12%] bottom-2 h-4 rounded-full bg-black/12 blur-md pointer-events-none"></div>
-     <div class="absolute inset-0 z-[2] pointer-events-none overflow-visible">
-        <img src="images/usecase-hero-4-white.png" alt="" class="absolute left-1/2 bottom-0 -translate-x-1/2 scale-[1.20]" />
-      </div>
-    </div>
-
-  </div>
-</div>
     </div>
   </div>
-</div>
-    <!-- PART 2: MIDDLE STRIP -->
+
+  <style>
+    #tech-hero .tech-collage-wrap{
+      position: relative;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      overflow: visible;
+    }
+
+    #tech-hero .tech-collage{
+      position: relative;
+      width: min(620px, 100%);
+      padding-left: 78px; /* space for overlapping phone */
+      overflow: visible;
+    }
+
+    #tech-hero .tech-top{
+      position: relative;
+      z-index: 3;
+      height: 275px;
+      border-radius: 26px;
+      border-top-left-radius: 84px;
+      overflow: hidden;
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+      background: #eef2ff;
+    }
+
+    #tech-hero .tech-top img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    #tech-hero .tech-bottom{
+      position: relative;
+      z-index: 3;
+      margin-top: 14px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 14px;
+      height: 210px;
+    }
+
+    #tech-hero .tech-card{
+      position: relative;
+      overflow: hidden;
+      border-radius: 18px;
+      background: #eef2ff;
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+    }
+
+    #tech-hero .tech-card-left{
+      border-bottom-left-radius: 54px;
+    }
+
+    #tech-hero .tech-card-right{
+      border-bottom-right-radius: 54px;
+    }
+
+    #tech-hero .tech-card img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    #tech-hero .tech-phone{
+      position: absolute;
+      left: 0;
+      top: 74px;
+      width: 185px;
+      height: 355px;
+      z-index: 5;
+    }
+
+    #tech-hero .tech-phone img{
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      filter: drop-shadow(0 12px 22px rgba(0,0,0,0.22));
+    }
+
+    #tech-hero .tech-accent-top{
+      position: absolute;
+      top: -10px;
+      left: 58px;
+      width: calc(100% - 78px);
+      height: 275px;
+      border-radius: 26px;
+      border-top-left-radius: 84px;
+      background: linear-gradient(135deg, #5f79ff, #5b6dff);
+      z-index: 1;
+    }
+
+    #tech-hero .tech-accent-right{
+      position: absolute;
+      right: -12px;
+      bottom: -8px;
+      width: 28%;
+      height: 185px;
+      border-radius: 18px;
+      border-bottom-right-radius: 54px;
+      background: #3d4b78;
+      z-index: 1;
+    }
+
+    #tech-hero .tech-badge{
+      position: absolute;
+      left: 64%;
+      top: 54%;
+      transform: translate(-50%, -50%);
+      width: 72px;
+      height: 72px;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 6px solid #fff;
+      background: #fff;
+      z-index: 6;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.16);
+    }
+
+    #tech-hero .tech-badge img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    #tech-hero .tech-star{
+      position: absolute;
+      background-color: #4c6fff;
+      z-index: 2;
+      -webkit-mask-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg"><path d="M70 4 C60 42 42 60 4 70 C42 80 60 98 70 136 C80 98 98 80 136 70 C98 60 80 42 70 4Z"/></svg>');
+      mask-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg"><path d="M70 4 C60 42 42 60 4 70 C42 80 60 98 70 136 C80 98 98 80 136 70 C98 60 80 42 70 4Z"/></svg>');
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      -webkit-mask-size: contain;
+      mask-size: contain;
+    }
+
+    #tech-hero .tech-star-sm{
+      width: 30px;
+      height: 30px;
+      left: 52px;
+      bottom: -18px;
+    }
+
+    #tech-hero .tech-star-lg{
+      width: 56px;
+      height: 56px;
+      left: 102px;
+      bottom: -34px;
+    }
+
+    @media (max-width: 1023px){
+      #tech-hero{
+        min-height: auto;
+      }
+
+      #tech-hero .tech-collage{
+        width: min(520px, 100%);
+        padding-left: 64px;
+      }
+
+      #tech-hero .tech-top{
+        height: 230px;
+      }
+
+      #tech-hero .tech-bottom{
+        height: 175px;
+      }
+
+      #tech-hero .tech-phone{
+        width: 145px;
+        height: 290px;
+        top: 72px;
+      }
+
+      #tech-hero .tech-accent-top{
+        left: 46px;
+        width: calc(100% - 64px);
+        height: 230px;
+      }
+
+      #tech-hero .tech-accent-right{
+        height: 150px;
+      }
+
+      #tech-hero .tech-badge{
+        width: 62px;
+        height: 62px;
+        border-width: 5px;
+      }
+    }
+
+    @media (max-width: 640px){
+      #tech-hero .tech-collage{
+        width: 100%;
+        padding-left: 28px;
+      }
+
+      #tech-hero .tech-top{
+        height: 180px;
+        border-radius: 20px;
+        border-top-left-radius: 56px;
+      }
+
+      #tech-hero .tech-bottom{
+        margin-top: 10px;
+        gap: 10px;
+        height: 126px;
+      }
+
+      #tech-hero .tech-card{
+        border-radius: 14px;
+      }
+
+      #tech-hero .tech-card-left{
+        border-bottom-left-radius: 34px;
+      }
+
+      #tech-hero .tech-card-right{
+        border-bottom-right-radius: 34px;
+      }
+
+      #tech-hero .tech-phone{
+        width: 108px;
+        height: 215px;
+        top: 50px;
+        left: -4px;
+      }
+
+      #tech-hero .tech-accent-top{
+        left: 18px;
+        width: calc(100% - 28px);
+        height: 180px;
+        border-radius: 20px;
+        border-top-left-radius: 56px;
+      }
+
+      #tech-hero .tech-accent-right{
+        width: 34%;
+        height: 108px;
+        border-bottom-right-radius: 34px;
+      }
+
+      #tech-hero .tech-badge{
+        width: 52px;
+        height: 52px;
+        border-width: 4px;
+        left: 63%;
+        top: 53%;
+      }
+
+      #tech-hero .tech-star-sm{
+        width: 24px;
+        height: 24px;
+        left: 24px;
+        bottom: -14px;
+      }
+
+      #tech-hero .tech-star-lg{
+        width: 42px;
+        height: 42px;
+        left: 58px;
+        bottom: -24px;
+      }
+    }
+  </style>
+</section>
+
+
+  <!-- PART 2: MIDDLE STRIP -->
     <div class="bg-[#eef1f4]">
       <div class="max-w-[1240px] mx-auto px-6 md:px-10 py-14 md:py-16">
         <div class="grid lg:grid-cols-[0.95fr_1.15fr] gap-10 items-center">
@@ -314,7 +586,7 @@ From farmers and aggregators to traders, processors, financiers, and entirely ne
   Shunah is building the operating layer for Africa’s dry crops market — connecting supply, infrastructure, and capital in one integrated system.
 </p>
             <div class="mt-4 text-[13px] text-slate-500">
-              Shunah Platform · Use Cases
+              Fredrick Sans · Cargil
             </div>
 
             <div class="mt-7 flex flex-wrap gap-3">
@@ -347,7 +619,8 @@ From farmers and aggregators to traders, processors, financiers, and entirely ne
           <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-5">
 
             <!-- CARD 1 -->
-            <article class="soft-card rounded-[18px] border border-black/8 bg-[#f8fafc] p-6">
+            <article class="soft-card relative overflow-hidden rounded-[18px] border border-black/8 bg-[#f8fafc] p-6">
+
               <div class="mb-5 h-[160px] rounded-[14px] overflow-hidden bg-[#eef2f7]">
                 <img src="images/usecase-1.png" alt="Control Supply" class="w-full h-full object-cover" />
               </div>
@@ -364,13 +637,14 @@ From farmers and aggregators to traders, processors, financiers, and entirely ne
                 Directly locate crops, secure volumes, and transact with farmers and aggregators — without layers in between.
               </p>
 
-              <button class="know-more mt-6 inline-flex items-center justify-center rounded-full border border-[#0b1f47] bg-white px-4 h-10 text-[12.5px] font-semibold text-[#0b1f47] transition hover:bg-[#0b1f47] hover:text-white" data-key="source">
+              <button class="know-more mt-6 inline-flex items-center justify-center rounded-full border border-[#225AB4] bg-white px-[16px] py-[8px] text-[13px] leading-none font-semibold text-[#225AB4] transition-all duration-300 hover:bg-[#225AB4] hover:text-white" data-key="source">
                 Explore
               </button>
             </article>
 
                       <!-- CARD 2 -->
-            <article class="soft-card rounded-[18px] border border-black/8 bg-[#f8fafc] p-6">
+            <article class="soft-card relative overflow-hidden rounded-[18px] border border-black/8 bg-[#f8fafc] p-6">
+
               <div class="mb-5 h-[160px] rounded-[14px] overflow-hidden bg-[#eef2f7]">
                 <img src="images/usecase-3.png" alt="Own the Asset" class="w-full h-full object-cover" />
               </div>
@@ -387,13 +661,14 @@ From farmers and aggregators to traders, processors, financiers, and entirely ne
                 Deploy capital into real crop positions. Shunah manages sourcing, storage, and exit — you capture the upside.
               </p>
 
-              <button class="know-more mt-6 inline-flex items-center justify-center rounded-full border border-[#0b1f47] bg-white px-4 h-10 text-[12.5px] font-semibold text-[#0b1f47] transition hover:bg-[#0b1f47] hover:text-white" data-key="invest">
+              <button class="know-more mt-6 inline-flex items-center justify-center rounded-full border border-[#225AB4] bg-white px-[16px] py-[8px] text-[13px] leading-none font-semibold text-[#225AB4] transition-all duration-300 hover:bg-[#225AB4] hover:text-white" data-key="invest">
                 Explore
               </button>
             </article>
 
             <!-- CARD 3 -->
-            <article class="soft-card rounded-[18px] border border-black/8 bg-[#f8fafc] p-6">
+           <article class="soft-card relative overflow-hidden rounded-[18px] border border-black/8 bg-[#f8fafc] p-6">
+
               <div class="mb-5 h-[160px] rounded-[14px] overflow-hidden bg-[#eef2f7]">
                 <img src="images/usecase-2.png" alt="Activate Infrastructure" class="w-full h-full object-cover" />
               </div>
@@ -410,13 +685,14 @@ From farmers and aggregators to traders, processors, financiers, and entirely ne
                 Plug warehouses, silos, and processing lines into live trade flows — and earn from every transaction moving through them.
               </p>
 
-              <button class="know-more mt-6 inline-flex items-center justify-center rounded-full border border-[#0b1f47] bg-white px-4 h-10 text-[12.5px] font-semibold text-[#0b1f47] transition hover:bg-[#0b1f47] hover:text-white" data-key="infra">
+              <button class="know-more mt-6 inline-flex items-center justify-center rounded-full border border-[#225AB4] bg-white px-[16px] py-[8px] text-[13px] leading-none font-semibold text-[#225AB4] transition-all duration-300 hover:bg-[#225AB4] hover:text-white" data-key="infra">
                 Explore
               </button>
             </article>
 
             <!-- CARD 4 -->
-            <article class="soft-card rounded-[18px] border border-black/8 bg-[#f8fafc] p-6">
+            <article class="soft-card relative overflow-hidden rounded-[18px] border border-black/8 bg-[#f8fafc] p-6">
+
               <div class="mb-5 h-[160px] rounded-[14px] overflow-hidden bg-[#eef2f7]">
                 <img src="images/usecase-4.png" alt="Fund the Flow" class="w-full h-full object-cover" />
               </div>
@@ -433,7 +709,7 @@ From farmers and aggregators to traders, processors, financiers, and entirely ne
                 Finance secured crop transactions across the network. Short cycles, real assets, disciplined returns.
               </p>
 
-              <button class="know-more mt-6 inline-flex items-center justify-center rounded-full border border-[#0b1f47] bg-white px-4 h-10 text-[12.5px] font-semibold text-[#0b1f47] transition hover:bg-[#0b1f47] hover:text-white" data-key="finance">
+              <button class="know-more mt-6 inline-flex items-center justify-center rounded-full border border-[#225AB4] bg-white px-[16px] py-[8px] text-[13px] leading-none font-semibold text-[#225AB4] transition-all duration-300 hover:bg-[#225AB4] hover:text-white" data-key="finance">
                 Explore
               </button>
             </article>
@@ -650,11 +926,11 @@ if (document.fonts && document.fonts.ready) {
             expandedView.classList.add('view-shown');
           });
         }, 220);
-       setTimeout(() => {
-    const section = document.getElementById('use-cases-grid');
-    const y = section.getBoundingClientRect().top + window.scrollY - 60;
-    window.scrollTo({ top: y, behavior: 'smooth' });
-  }, 250);
+      setTimeout(() => {
+  const expandedPanel = document.getElementById('usecases-expanded-view');
+  const y = expandedPanel.getBoundingClientRect().top + window.scrollY - 40;
+  window.scrollTo({ top: y, behavior: 'smooth' });
+}, 250);
 }
 
       function closeUseCase() {
