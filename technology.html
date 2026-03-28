@@ -526,11 +526,11 @@ SHUNAH – Technology Cards
 
 
             <div class="mt-2 text-[18px] leading-[1.15] font-semibold text-[#0b1a2d]">
-              Workflow & Market Layer
+              Market Intelligence
             </div>
 
             <p class="mt-1 text-[13px] leading-[1.45] text-slate-600">
-              Coordinate data, decisions, and market-facing execution in one layer.
+              From raw market data to confident, actionable intelligence.
             </p>
 
             <div class="mt-3 suiteMedia suiteMediaFill relative">
@@ -767,8 +767,8 @@ color: #225AB4;
   }
 
   .techHeader{
-    position: sticky;
-    top: 3rem;
+    position: relative;
+    top: 0;
     z-index: 20;
     background: rgba(255,255,255,0.96);
     backdrop-filter: blur(8px);
@@ -951,76 +951,19 @@ color: #225AB4;
 
 <script>
 (function () {
+  const navbar = document.getElementById('site-navbar');
   const mobileMenuButton = document.getElementById('mobile-menu-button');
   const mobileMenu = document.getElementById('mobile-menu');
   const openIcon = document.getElementById('menu-open-icon');
   const closeIcon = document.getElementById('menu-close-icon');
 
-  if (!mobileMenuButton || !mobileMenu) return;
-
-  let scrollCloseTimer;
-
-  function openMobileMenu() {
-    mobileMenu.classList.remove('hidden');
-    mobileMenuButton.setAttribute('aria-expanded', 'true');
-    if (openIcon) openIcon.classList.add('hidden');
-    if (closeIcon) closeIcon.classList.remove('hidden');
-  }
-
-  function closeMobileMenu() {
-    mobileMenu.classList.add('hidden');
-    mobileMenuButton.setAttribute('aria-expanded', 'false');
-    if (openIcon) openIcon.classList.remove('hidden');
-    if (closeIcon) closeIcon.classList.add('hidden');
-  }
-
-  function isMobileView() {
-    return window.innerWidth < 768;
-  }
-
-  function toggleMobileMenu() {
-    if (mobileMenu.classList.contains('hidden')) {
-      openMobileMenu();
-    } else {
-      closeMobileMenu();
-    }
-  }
-
-  mobileMenuButton.addEventListener('click', toggleMobileMenu);
-
-  window.addEventListener(
-    'scroll',
-    function () {
-      if (!isMobileView()) return;
-      if (!mobileMenu.classList.contains('hidden')) {
-        closeMobileMenu();
-      }
-
-      clearTimeout(scrollCloseTimer);
-      scrollCloseTimer = setTimeout(() => {
-        if (!isMobileView()) return;
-        closeMobileMenu();
-      }, 120);
-    },
-    { passive: true }
-  );
-
-  window.addEventListener('resize', function () {
-    closeMobileMenu();
-  });
-})();
-</script>
-
-<script>
-(function () {
-  const navbar = document.getElementById('site-navbar');
-  if (!navbar) return;
+  if (!navbar || !mobileMenuButton || !mobileMenu) return;
 
   let lastScrollY = window.scrollY;
-  let scrollStopTimer;
+  let idleTimer = null;
 
-  function isDesktop() {
-    return window.innerWidth >= 768;
+  function isSmallScreen() {
+    return window.innerWidth < 768;
   }
 
   function showNav() {
@@ -1031,19 +974,66 @@ color: #225AB4;
     navbar.classList.add('nav-hidden');
   }
 
-  window.addEventListener('scroll', function () {
-    if (!isDesktop()) {
-      showNav();
-      return;
-    }
+  function openMobileMenu() {
+    mobileMenu.classList.remove('hidden');
+    mobileMenuButton.setAttribute('aria-expanded', 'true');
+    if (openIcon) openIcon.classList.add('hidden');
+    if (closeIcon) closeIcon.classList.remove('hidden');
+    showNav();
+  }
 
+  function closeMobileMenu() {
+    mobileMenu.classList.add('hidden');
+    mobileMenuButton.setAttribute('aria-expanded', 'false');
+    if (openIcon) openIcon.classList.remove('hidden');
+    if (closeIcon) closeIcon.classList.add('hidden');
+  }
+
+  function toggleMobileMenu() {
+    if (!isSmallScreen()) return;
+
+    if (mobileMenu.classList.contains('hidden')) {
+      openMobileMenu();
+    } else {
+      closeMobileMenu();
+    }
+  }
+
+  function resetIdleHide() {
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(() => {
+      if (window.scrollY <= 0) {
+        showNav();
+        return;
+      }
+
+      if (!isSmallScreen()) {
+        hideNav();
+        return;
+      }
+
+      if (!mobileMenu.classList.contains('hidden')) {
+        closeMobileMenu();
+      }
+
+      hideNav();
+    }, 3000);
+  }
+
+  mobileMenuButton.addEventListener('click', toggleMobileMenu);
+
+  window.addEventListener('scroll', function () {
     const currentScrollY = window.scrollY;
 
     if (currentScrollY <= 0) {
       showNav();
       lastScrollY = currentScrollY;
-      clearTimeout(scrollStopTimer);
+      resetIdleHide();
       return;
+    }
+
+    if (isSmallScreen() && !mobileMenu.classList.contains('hidden')) {
+      closeMobileMenu();
     }
 
     if (currentScrollY > lastScrollY) {
@@ -1052,18 +1042,27 @@ color: #225AB4;
       showNav();
     }
 
-    clearTimeout(scrollStopTimer);
-    scrollStopTimer = setTimeout(() => {
-      if (isDesktop()) hideNav();
-    }, 2400);
-
     lastScrollY = currentScrollY;
+    resetIdleHide();
   }, { passive: true });
 
   window.addEventListener('resize', function () {
-    if (!isDesktop()) showNav();
+    clearTimeout(idleTimer);
+    closeMobileMenu();
+    showNav();
+    lastScrollY = window.scrollY;
+    resetIdleHide();
   });
+
+  document.addEventListener('click', function (e) {
+    if (!isSmallScreen()) return;
+    if (!navbar.contains(e.target)) {
+      closeMobileMenu();
+    }
+  });
+
+  showNav();
+  resetIdleHide();
 })();
-</script>
-</body>
+</script></body>
 </html>
