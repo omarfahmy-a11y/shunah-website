@@ -10,10 +10,12 @@
 
   <style>
     html { scroll-behavior: smooth; }
+
     body {
       font-family: 'Inter', sans-serif;
       scrollbar-width: none;
     }
+
     body::-webkit-scrollbar { display: none; }
 
     @media (min-width: 1024px) {
@@ -22,56 +24,28 @@
       }
     }
 
-    .field-dark {
-      width: 100%;
-      border-bottom: 1px solid rgba(255,255,255,.22);
-      padding: 9px 0;
-      outline: none;
-      background: transparent;
-      color: rgba(255,255,255,.92);
-      font-size: 14px;
+    .contact-page-shell {
+      min-height: auto;
     }
 
-    .field-dark::placeholder {
-      color: rgba(255,255,255,.35);
+    .form-field.field-error {
+      border-color: rgba(220, 38, 38, 0.35) !important;
+      box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.08);
     }
 
-    .field-dark:focus {
-      border-bottom-color: rgba(111,208,74,.78);
+    #form-error {
+      animation: fadeSlideDown 0.28s ease;
     }
 
-    .ta-dark {
-      width: 100%;
-      border: 1px solid rgba(255,255,255,.16);
-      border-radius: 14px;
-      padding: 12px 14px;
-      outline: none;
-      background: rgba(255,255,255,.06);
-      color: rgba(255,255,255,.92);
-      box-shadow: 0 10px 30px rgba(0,0,0,.10);
-      resize: vertical;
-      min-height: 100px;
-      font-size: 14px;
-    }
-
-    .ta-dark::placeholder {
-      color: rgba(255,255,255,.35);
-    }
-
-    .ta-dark:focus {
-      border-color: rgba(111,208,74,.55);
-      box-shadow: 0 0 0 6px rgba(111,208,74,.10), 0 12px 32px rgba(0,0,0,.14);
-    }
-
-    .fog-fade {
-      background: linear-gradient(
-        90deg,
-        rgba(255,255,255,1) 0%,
-        rgba(255,255,255,.96) 18%,
-        rgba(255,255,255,.86) 34%,
-        rgba(255,255,255,.55) 52%,
-        rgba(255,255,255,0) 70%
-      );
+    @keyframes fadeSlideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
@@ -130,191 +104,146 @@
     </div>
   </nav>
 
-  <!-- CONTACT -->
-  <section id="contact" class="relative bg-white min-h-[calc(100dvh-48px)] lg:min-h-[calc(100dvh-48px)]">
-
-    <!-- DESKTOP IMAGE -->
-    <div class="hidden lg:block absolute inset-y-0 right-0 left-1/3">
-      <img
-        src="images/contact-agri-network.jpg"
-        alt="Agricultural network"
-        class="absolute inset-0 h-full w-full object-cover"
-      />
-      <div class="absolute inset-0 bg-[#0b1a2d]/10"></div>
-
-      <div class="absolute inset-0 opacity-90 bg-[radial-gradient(circle_at_20%_22%,rgba(111,208,74,.16),transparent_45%),radial-gradient(circle_at_78%_14%,rgba(255,255,255,.10),transparent_55%)]"></div>
-
-      <div class="absolute inset-y-0 left-0 w-[46%] fog-fade"></div>
+  <!-- CONTACT SECTION -->
+  <section class="contact-page-shell relative overflow-hidden py-4 md:py-6 px-4 sm:px-6 lg:px-[clamp(2.5rem,4vw,4.5rem)] 2xl:px-[clamp(4.5rem,6vw,7rem)]">
+    <!-- subtle premium background accents -->
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="absolute left-[-120px] top-[80px] w-[280px] h-[280px] rounded-full bg-[#225AB4]/[0.05] blur-3xl"></div>
+      <div class="absolute right-[8%] top-[18%] w-[360px] h-[360px] rounded-full bg-[#225AB4]/[0.08] blur-3xl"></div>
     </div>
 
-    <!-- CONTENT -->
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 md:px-10 py-5 sm:py-6 lg:py-5">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 lg:gap-8 items-start">
+    <div class="relative mx-auto max-w-7xl xl:max-w-[1380px] 2xl:max-w-[1520px] grid lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] gap-10 lg:gap-[clamp(3.25rem,5vw,5rem)] 2xl:gap-[clamp(4.5rem,6vw,6.5rem)] items-start">
 
-        <!-- LEFT --><!-- LEFT -->
-<div class="col-span-12 lg:col-span-6 w-full min-w-0 flex flex-col justify-start">
-  <h1 class="text-[24px] sm:text-[34px] lg:text-[48px] font-semibold tracking-tight text-[#0b1a2d] leading-[1.05]">
-    Contact Shunah
-  </h1>
+      <!-- LEFT SIDE -->
+      <div class="max-w-[560px] xl:max-w-[600px]">
+        <h1 class="text-[clamp(38px,3.3vw,48px)] leading-[0.98] font-semibold tracking-[-0.04em] text-[#0b1a2d] mb-[clamp(1.25rem,2vw,1.5rem)]">
+          Get in <span class="text-[#225AB4]">Touch</span>
+        </h1>
 
-  <p class="mt-3 text-[13px] sm:text-[14px] text-[#0b1a2d]/70 leading-6 sm:leading-relaxed w-full max-w-full sm:max-w-lg">
-    For sourcing, partnerships, or infrastructure access, reach our team directly.
-  </p>
+        <p class="text-[clamp(16px,1.2vw,17px)] leading-[1.75] text-[#0b1a2d]/65 max-w-[540px] xl:max-w-[580px] mb-[clamp(2rem,3vw,2.5rem)]">
+          Whether you need sourcing, crop quality assessment, or want to explore working with Shunah,
+          our team is ready to support you.
+        </p>
 
-  <div class="mt-5 sm:mt-6 space-y-3 sm:space-y-4 w-full max-w-full sm:max-w-xl">
+        <div class="space-y-[clamp(0.9rem,1.2vw,1rem)]">
+          <div class="group rounded-2xl border border-black/8 bg-white/70 backdrop-blur-sm px-[clamp(1.1rem,1.4vw,1.3rem)] py-[clamp(0.95rem,1.3vw,1rem)] shadow-[0_10px_30px_rgba(11,26,45,0.04)] hover:shadow-[0_16px_40px_rgba(11,26,45,0.07)] transition">
+            <div class="text-[11px] uppercase tracking-[0.18em] text-[#0b1a2d]/40 mb-1">Email</div>
+            <div class="text-[18px] font-medium tracking-[-0.02em] text-[#0b1a2d]">
+              contact@shunah.net
+            </div>
+          </div>
 
-    <div class="w-full rounded-2xl border border-[#6fd04a]/30 bg-[#f3f5f7] shadow-sm p-4 sm:p-5">
-      <div class="flex items-start gap-3 sm:gap-4">
-        <div class="shrink-0 mt-0.5">
-          <div class="h-9 w-9 sm:h-10 sm:w-10 rounded-xl bg-white border border-black/10 flex items-center justify-center">
-            <svg class="h-4 w-4 sm:h-5 sm:w-5 text-[#0b1a2d]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M4 7l8 6 8-6"></path>
-              <path d="M4 7v10h16V7"></path>
-            </svg>
+          <div class="group rounded-2xl border border-black/8 bg-white/70 backdrop-blur-sm px-[clamp(1.1rem,1.4vw,1.3rem)] py-[clamp(0.95rem,1.3vw,1rem)] shadow-[0_10px_30px_rgba(11,26,45,0.04)] hover:shadow-[0_16px_40px_rgba(11,26,45,0.07)] transition">
+            <div class="text-[11px] uppercase tracking-[0.18em] text-[#0b1a2d]/40 mb-1">Address</div>
+            <div class="text-[18px] font-medium tracking-[-0.02em] text-[#0b1a2d]">
+              Cairo, Egypt
+            </div>
+          </div>
+
+          <div class="group rounded-2xl border border-black/8 bg-white/70 backdrop-blur-sm px-[clamp(1.1rem,1.4vw,1.3rem)] py-[clamp(0.95rem,1.3vw,1rem)] shadow-[0_10px_30px_rgba(11,26,45,0.04)] hover:shadow-[0_16px_40px_rgba(11,26,45,0.07)] transition">
+            <div class="text-[11px] uppercase tracking-[0.18em] text-[#0b1a2d]/40 mb-1">Phone</div>
+            <div class="text-[18px] font-medium tracking-[-0.02em] text-[#0b1a2d]">
+              +20 100 000 0000
+            </div>
+            <div class="text-[13px] text-[#0b1a2d]/45 mt-1">
+              Sunday – Thursday, 9 AM – 6 PM (Cairo Time)
+            </div>
           </div>
         </div>
-        <div class="flex-1 min-w-0">
-          <div class="text-[11px] sm:text-xs tracking-[0.18em] uppercase text-[#0b1a2d]/55">Email</div>
-          <div class="mt-1 font-semibold text-[#0b1a2d] text-[15px] sm:text-base break-words">info@shunah.net</div>
-          <div class="mt-1 text-[13px] sm:text-sm text-[#0b1a2d]/65 break-words">Or Downalod our App</div>
-        </div>
       </div>
-    </div>
 
-    <div class="w-full rounded-2xl border border-black/15 bg-[#f3f5f7] shadow-sm p-4 sm:p-5">
-      <div class="flex items-start gap-3 sm:gap-4">
-        <div class="shrink-0 mt-0.5">
-          <div class="h-9 w-9 sm:h-10 sm:w-10 rounded-xl bg-white border border-black/10 flex items-center justify-center">
-            <svg class="h-4 w-4 sm:h-5 sm:w-5 text-[#0b1a2d]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 16v3a2 2 0 0 1-2 2 18 18 0 0 1-8-3 18 18 0 0 1-6-6 18 18 0 0 1-3-8 2 2 0 0 1 2-2h3"></path>
-              <path d="M7 5a12 12 0 0 0 2 5l-2 2"></path>
-            </svg>
+      <!-- RIGHT SIDE FORM -->
+      <div class="relative w-full">
+        <!-- blue glow -->
+        <div class="absolute inset-0 scale-[0.96] rounded-[34px] bg-[#225AB4]/10 blur-3xl pointer-events-none"></div>
+
+        <div class="relative rounded-[30px] border border-black/8 bg-white/80 backdrop-blur-xl p-5 sm:p-6 lg:p-[clamp(1.5rem,2vw,1.75rem)] shadow-[0_25px_80px_rgba(11,26,45,0.10)]">
+          <div class="flex items-center justify-between mb-[clamp(1rem,1.8vw,1.25rem)]">
+            <div>
+              <h2 class="text-[24px] md:text-[28px] font-semibold tracking-[-0.03em] text-[#0b1a2d]">
+                Let’s start the conversation
+              </h2>
+              <p class="text-sm md:text-[15px] text-[#0b1a2d]/50 mt-1">
+                Tell us what you need and our team will get back to you.
+              </p>
+            </div>
           </div>
-        </div>
-        <div class="flex-1 min-w-0">
-          <div class="text-[11px] sm:text-xs tracking-[0.18em] uppercase text-[#0b1a2d]/55">Phone</div>
-          <div class="mt-1 font-semibold text-[#0b1a2d] text-[15px] sm:text-base">+201092412224</div>
-          <div class="mt-1 text-[13px] sm:text-sm text-[#0b1a2d]/65">Sun–Thu From CLT9am-5pm</div>
-        </div>
-      </div>
-    </div>
 
-    <div class="w-full rounded-2xl border border-black/15 bg-[#f3f5f7] shadow-sm p-4 sm:p-5">
-      <div class="flex items-start gap-3 sm:gap-4">
-        <div class="shrink-0 mt-0.5">
-          <div class="h-9 w-9 sm:h-10 sm:w-10 rounded-xl bg-white border border-black/10 flex items-center justify-center">
-            <svg class="h-4 w-4 sm:h-5 sm:w-5 text-[#ef4444]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M12 21s7-4.44 7-11a7 7 0 0 0-14 0c0 6.56 7 11 7 11Z"></path>
-              <path d="M12 10.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"></path>
-            </svg>
-          </div>
-        </div>
-        <div class="flex-1 min-w-0">
-          <div class="text-[11px] sm:text-xs tracking-[0.18em] uppercase text-[#0b1a2d]/55">Location</div>
-          <div class="mt-1 font-semibold text-[#0b1a2d] text-[15px] sm:text-base">Cairo, Egypt</div>
-          <div class="mt-1 text-[13px] sm:text-sm text-[#0b1a2d]/65">Operations: Behira, Menofia, Alexandria, Kafr El Sheikh</div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
-        <!-- RIGHT -->
-        <div class="col-span-12 lg:col-span-6 flex items-start mt-1 sm:mt-2 lg:mt-0">
-          <div class="w-full max-w-none sm:max-w-md mx-auto lg:ml-auto rounded-[22px] sm:rounded-[26px] border border-white/14 bg-[#0b1a2d]/55 shadow-[0_18px_60px_rgba(0,0,0,.22)] px-5 sm:px-7 py-5 sm:py-6 text-white">
-
-            <div class="text-[18px] font-semibold text-white">Send a message</div>
-
-            <div class="mt-2 text-[13px] text-white/70 leading-6">
-              Looking for supply?
-              <a href="rfq.html" class="text-[#6fd04a] font-semibold hover:opacity-90 transition">
-                Submit an RFQ →
-              </a>
+          <form id="contact-form" class="space-y-[clamp(0.9rem,1.3vw,1rem)]" novalidate>
+            <div id="form-error" class="hidden rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-[14px] text-red-700">
+              Please complete all required fields before sending your message.
             </div>
 
-            <div class="mt-4 space-y-3">
+            <div class="grid md:grid-cols-2 gap-[clamp(0.9rem,1.3vw,1rem)]">
               <div>
-                <label class="block text-[13px] font-medium text-white/90 mb-1">Name</label>
-                <input id="cName" class="field-dark" type="text" placeholder="your name" />
+                <label class="text-[12px] font-medium text-[#0b1a2d]/55 mb-2 block">First Name</label>
+                <input
+                  id="first-name"
+                  type="text"
+                  placeholder="Enter your first name"
+                  class="form-field w-full rounded-2xl border border-black/8 bg-white px-4 py-3.5 text-[15px] text-[#0b1a2d] placeholder:text-[#0b1a2d]/30 outline-none transition focus:border-[#225AB4]/35 focus:shadow-[0_0_0_4px_rgba(34,90,180,0.08)]"
+                >
               </div>
 
               <div>
-                <label class="block text-[13px] font-medium text-white/90 mb-1">Email</label>
-                <input id="cEmail" class="field-dark" type="email" placeholder="you@company.com" />
-              </div>
-
-              <div>
-                <label class="block text-[13px] font-medium text-white/90 mb-1">Phone</label>
-                <input id="cPhone" class="field-dark" type="tel" placeholder="+20 ..." />
-              </div>
-
-              <div>
-                <label class="block text-[13px] font-medium text-white/90 mb-1">Message</label>
-                <textarea id="cMsg" rows="4" class="ta-dark" placeholder="Tell us what you need..."></textarea>
+                <label class="text-[12px] font-medium text-[#0b1a2d]/55 mb-2 block">Last Name</label>
+                <input
+                  id="last-name"
+                  type="text"
+                  placeholder="Enter your last name"
+                  class="form-field w-full rounded-2xl border border-black/8 bg-white px-4 py-3.5 text-[15px] text-[#0b1a2d] placeholder:text-[#0b1a2d]/30 outline-none transition focus:border-[#225AB4]/35 focus:shadow-[0_0_0_4px_rgba(34,90,180,0.08)]"
+                >
               </div>
             </div>
 
-            <div class="mt-5 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-              <a
-                href="rfq.html"
-                class="rounded-full px-5 py-2 text-[13px] font-semibold ring-1 ring-white/25 hover:bg-white/10 transition text-center"
+            <div>
+              <label class="text-[12px] font-medium text-[#0b1a2d]/55 mb-2 block">Email</label>
+              <input
+                id="email"
+                type="email"
+                placeholder="Enter your email address"
+                class="form-field w-full rounded-2xl border border-black/8 bg-white px-4 py-3.5 text-[15px] text-[#0b1a2d] placeholder:text-[#0b1a2d]/30 outline-none transition focus:border-[#225AB4]/35 focus:shadow-[0_0_0_4px_rgba(34,90,180,0.08)]"
               >
-                Go to RFQ
-              </a>
+            </div>
 
+            <div>
+              <label class="text-[12px] font-medium text-[#0b1a2d]/55 mb-2 block">How can we help?</label>
+              <textarea
+                id="help-message"
+                placeholder="Tell us about your sourcing, quality assessment, or partnership needs"
+                class="form-field w-full rounded-2xl border border-black/8 bg-white px-4 py-4 text-[15px] text-[#0b1a2d] placeholder:text-[#0b1a2d]/30 min-h-[110px] md:min-h-[120px] resize-none outline-none transition focus:border-[#225AB4]/35 focus:shadow-[0_0_0_4px_rgba(34,90,180,0.08)]"
+              ></textarea>
+            </div>
+
+            <div class="pt-2 flex flex-col items-end gap-3">
               <button
-                id="cSend"
-                class="rounded-full bg-[#0b1a2d] text-white px-6 py-2 text-[13px] font-semibold hover:bg-[#142a4a] transition shadow-sm ring-1 ring-white/10 w-full sm:w-auto"
+                type="submit"
+                id="submit-btn"
+                class="group inline-flex items-center gap-3 rounded-full border border-[#0b1a2d] bg-white px-6 py-3 text-sm font-semibold text-[#0b1a2d] transition hover:bg-[#225AB4] hover:text-white hover:border-[#225AB4]"
               >
-                Send →
+                <span>Send Message</span>
+                <span class="flex h-7 w-7 items-center justify-center rounded-full bg-white text-[#0b1a2d] transition group-hover:translate-x-[2px]">→</span>
               </button>
             </div>
+          </form>
 
-            <div id="cSuccess" class="mt-4 hidden rounded-xl border border-[#22c55e]/25 bg-[#22c55e]/10 p-4 text-white">
-              <div class="flex items-start gap-3">
-                <div class="shrink-0 mt-0.5">
-                  <svg class="w-6 h-6 text-[#6fd04a]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M20 6L9 17l-5-5" />
-                  </svg>
-                </div>
-                <div>
-                  <div class="font-semibold">Message sent</div>
-                  <div class="text-sm text-white/70 mt-1">We’ll get back to you shortly.</div>
-                </div>
-              </div>
+          <div id="success-state" class="hidden min-h-[420px] sm:min-h-[450px] md:min-h-[470px] flex items-center justify-center">
+            <div class="text-center max-w-[320px] mx-auto">
+              <img
+                src="images/letter.png"
+                alt="Letter illustration"
+                class="w-32 h-32 md:w-40 md:h-40 mx-auto mb-5 object-contain"
+              />
+              <p class="text-[22px] md:text-[26px] font-semibold tracking-[-0.03em] text-[#0b1a2d] leading-[1.25]">
+                Thank you, we’ll contact you shortly.
+              </p>
             </div>
-
-            <div class="mt-4 text-center text-[12.5px] text-white/75 leading-snug">
-              We respond within 24 hours.
-            </div>
-
           </div>
         </div>
-
       </div>
+
     </div>
   </section>
-
-  <script>
-    (function () {
-      const btn = document.getElementById("cSend");
-      const ok = document.getElementById("cSuccess");
-      const name = document.getElementById("cName");
-      const email = document.getElementById("cEmail");
-      const msg = document.getElementById("cMsg");
-
-      if (btn && ok && name && email && msg) {
-        btn.addEventListener("click", () => {
-          const n = (name.value || "").trim();
-          const e = (email.value || "").trim();
-          const m = (msg.value || "").trim();
-
-          if (!n || !e || !m) return;
-          ok.classList.remove("hidden");
-        });
-      }
-    })();
-  </script>
 
   <script>
     (function () {
@@ -376,6 +305,59 @@
       window.addEventListener("resize", function () {
         closeMobileMenu();
       });
+
+      const contactForm = document.getElementById("contact-form");
+      const formError = document.getElementById("form-error");
+      const successState = document.getElementById("success-state");
+      const formFields = document.querySelectorAll(".form-field");
+
+      if (contactForm && formError && successState) {
+        contactForm.addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          let hasError = false;
+
+          formFields.forEach((field) => {
+            const isEmpty = !field.value.trim();
+            field.classList.remove("field-error");
+
+            if (isEmpty) {
+              hasError = true;
+              field.classList.add("field-error");
+            }
+          });
+
+          if (hasError) {
+            formError.classList.remove("hidden");
+            return;
+          }
+
+          formError.classList.add("hidden");
+          formFields.forEach((field) => field.classList.remove("field-error"));
+
+          contactForm.classList.add("hidden");
+          successState.classList.remove("hidden");
+
+          setTimeout(() => {
+            successState.classList.add("hidden");
+            contactForm.classList.remove("hidden");
+            contactForm.reset();
+          }, 5000);
+        });
+
+        formFields.forEach((field) => {
+          field.addEventListener("input", function () {
+            if (field.value.trim()) {
+              field.classList.remove("field-error");
+            }
+
+            const anyEmpty = Array.from(formFields).some((item) => !item.value.trim());
+            if (!anyEmpty) {
+              formError.classList.add("hidden");
+            }
+          });
+        });
+      }
     })();
   </script>
 
