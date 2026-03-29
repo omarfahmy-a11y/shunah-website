@@ -351,6 +351,42 @@
               id="ssc-mobile-panel"
               class="mt-5 overflow-hidden rounded-xl border border-[#0E2A47]/15 bg-white lg:hidden"
             >
+<div id="ssc-mobile-features" class="hidden p-5">
+  <div class="grid grid-cols-3 gap-3 text-center items-start">
+    <div class="flex flex-col items-center">
+      <img
+        src="RCI/locate-crops.png"
+        alt="Locate Crops"
+        class="h-10 w-10 object-contain"
+      />
+      <h3 class="mt-2 text-[11px] font-semibold leading-tight text-black">
+        Locate Dry Crops
+      </h3>
+    </div>
+
+    <div class="flex flex-col items-center">
+      <img
+        src="RCI/supply-intelligence.png"
+        alt="Supply Intelligence"
+        class="h-10 w-10 object-contain"
+      />
+      <h3 class="mt-2 text-[11px] font-semibold leading-tight text-black">
+        Supply Intelligence
+      </h3>
+    </div>
+
+    <div class="flex flex-col items-center">
+      <img
+        src="RCI/procurement-planning.png"
+        alt="Procurement Planning"
+        class="h-10 w-10 object-contain"
+      />
+      <h3 class="mt-2 text-[11px] font-semibold leading-tight text-black">
+        Procurement Planning
+      </h3>
+    </div>
+  </div>
+</div>
               <div id="ssc-mobile-intro" class="p-5">
                 <p class="text-[11px] font-semibold tracking-widest text-slate-500">OVERVIEW</p>
                 <h3 class="mt-2 text-lg font-semibold text-slate-900">Remote Crop Identification</h3>
@@ -605,6 +641,7 @@
       const featuresPanel = document.getElementById("ssc-features-panel");
 const featureAppBox = document.getElementById("ssc-feature-app-box");
 const panel = document.getElementById("ssc-panel");
+const mobilePanel = document.getElementById("ssc-mobile-panel");
 const intro = document.getElementById("ssc-intro");
         const detail = document.getElementById("ssc-detail");
 
@@ -613,7 +650,7 @@ const intro = document.getElementById("ssc-intro");
         const tStep = document.getElementById("ssc-step");
         const bullets = document.getElementById("ssc-bullets");
         const detailIcon = document.getElementById("ssc-detail-icon");
-
+const mobileFeatures = document.getElementById("ssc-mobile-features");
         const mobileIntro = document.getElementById("ssc-mobile-intro");
         const mobileDetail = document.getElementById("ssc-mobile-detail");
         const mobileTitle = document.getElementById("ssc-mobile-title");
@@ -765,7 +802,14 @@ const intro = document.getElementById("ssc-intro");
 
 featureAppBox?.classList.remove("hidden");
 featureAppBox?.classList.add("block");
-
+mobilePanel?.classList.remove("mt-5");
+mobilePanel?.classList.add("mt-32");
+if (mobileFeatures) mobileFeatures.classList.remove("hidden");
+if (mobileIntro) mobileIntro.classList.add("hidden");
+if (mobileDetail) {
+  mobileDetail.classList.add("hidden");
+  mobileDetail.classList.remove("flex");
+}
     showDesktopFeatures();
 
   } else {
@@ -786,7 +830,15 @@ featureAppBox?.classList.add("block");
 
    featureAppBox?.classList.add("hidden");
 featureAppBox?.classList.remove("block");
+mobilePanel?.classList.remove("mt-32");
+mobilePanel?.classList.add("mt-5");
 
+if (mobileFeatures) mobileFeatures.classList.add("hidden");
+if (mobileIntro) mobileIntro.classList.remove("hidden");
+if (mobileDetail) {
+  mobileDetail.classList.add("hidden");
+  mobileDetail.classList.remove("flex");
+}
     showDesktopIntro();
   }
 }
