@@ -6,7 +6,10 @@
   <title>Shunah | RCI</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
 
   <style>
     body { font-family: 'Inter', sans-serif; }
@@ -29,12 +32,142 @@
     #site-navbar.nav-hidden {
       transform: translateY(-100%);
     }
+
+    #shunah-satellite-circle .group:hover .ssc-ring {
+      border-color: #0E2A47;
+      box-shadow:
+        0 0 0 2px rgba(14, 42, 71, 0.18),
+        0 0 18px rgba(14, 42, 71, 0.35),
+        0 0 38px rgba(14, 42, 71, 0.22);
+      transform: scale(1.08);
+    }
+
+    #shunah-satellite-circle .group:hover .ssc-icon {
+      transform: scale(1.12);
+    }
+
+    #shunah-satellite-circle .ssc-pulse-on {
+      animation: sscIconPulse 1.1s ease-in-out infinite;
+    }
+
+    @keyframes sscIconPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.06); }
+    }
+
+@keyframes phoneFloat {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+  100% { transform: translateY(0); }
+}
+
+.phone-float {
+  animation: phoneFloat 6s ease-in-out infinite;
+}
+    .ssc-helper-run {
+      animation: sscHelperTap 0.9s ease forwards;
+    }
+
+    .ssc-helper-text-in {
+      animation: sscHelperTextIn 0.45s ease forwards;
+    }
+
+    @keyframes sscHelperTap {
+      0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+      20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+      55% { opacity: 1; transform: translate(-42%, -42%) scale(0.95); }
+      100% { opacity: 0; transform: translate(-42%, -42%) scale(0.92); }
+    }
+
+    @keyframes sscHelperTextIn {
+      0% { opacity: 0; transform: translateX(-50%) translateY(10px); }
+      100% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    }
+
+    @media (min-width: 1024px) {
+      #shunah-satellite-circle.ssc-desktop-intro #ssc-header {
+        opacity: 0;
+        transform: translateY(24px);
+        animation: sscDesktopFadeUp 0.7s ease forwards;
+      }
+
+      #shunah-satellite-circle.ssc-desktop-intro #ssc-stageWrap {
+        opacity: 0;
+        transform: scale(0.94);
+        animation: sscDesktopStageIn 0.9s ease forwards 0.12s;
+      }
+
+      #shunah-satellite-circle.ssc-desktop-intro #ssc-panel {
+        opacity: 0;
+        transform: translateX(28px);
+        animation: sscDesktopPanelIn 0.75s ease forwards 0.22s;
+      }
+
+      #shunah-satellite-circle.ssc-desktop-intro #ssc-nodes > button {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.82);
+        animation: sscDesktopNodeIn 0.45s ease forwards;
+      }
+
+      #shunah-satellite-circle.ssc-desktop-intro #ssc-nodes > button:nth-child(1) { animation-delay: 0.18s; }
+      #shunah-satellite-circle.ssc-desktop-intro #ssc-nodes > button:nth-child(2) { animation-delay: 0.24s; }
+      #shunah-satellite-circle.ssc-desktop-intro #ssc-nodes > button:nth-child(3) { animation-delay: 0.30s; }
+      #shunah-satellite-circle.ssc-desktop-intro #ssc-nodes > button:nth-child(4) { animation-delay: 0.36s; }
+      #shunah-satellite-circle.ssc-desktop-intro #ssc-nodes > button:nth-child(5) { animation-delay: 0.42s; }
+      #shunah-satellite-circle.ssc-desktop-intro #ssc-nodes > button:nth-child(6) { animation-delay: 0.48s; }
+      #shunah-satellite-circle.ssc-desktop-intro #ssc-nodes > button:nth-child(7) { animation-delay: 0.54s; }
+      #shunah-satellite-circle.ssc-desktop-intro #ssc-nodes > button:nth-child(8) { animation-delay: 0.60s; }
+    }
+
+    @keyframes sscDesktopFadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes sscDesktopStageIn {
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes sscDesktopPanelIn {
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes sscDesktopNodeIn {
+      to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+    }
+
+    @media (max-width: 1023px) {
+      #ssc-header.ssc-mobile-hidden {
+        display: none;
+      }
+
+      #ssc-left-col.ssc-mobile-open {
+        width: 100%;
+      }
+
+      #ssc-stageWrap.ssc-mobile-sticky-wrap {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: white;
+      }
+    }
   </style>
 </head>
 
 <body class="bg-white text-slate-900 min-h-screen overflow-y-auto">
 
-  <!-- SEPARATE NAV BAR ABOVE THE SECTION -->
   <nav id="satellite-top-nav" class="w-full bg-white border-b border-slate-200">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-6">
       <div class="flex h-10 items-center">
@@ -57,85 +190,119 @@
       id="ssc-shell"
       class="relative z-10 mx-auto flex h-full max-w-7xl flex-col justify-start gap-6 px-4 pt-2 pb-8 sm:gap-8 sm:px-6 sm:pt-4 lg:gap-10 lg:px-6 lg:pt-6 lg:pb-10"
     >
-      <!-- MAIN LAYOUT -->
       <div class="grid min-h-0 flex-1 items-start gap-6 lg:grid-cols-12 lg:gap-8">
 
-        <!-- LEFT: HEADER / PARAGRAPH / METRICS -->
+        <!-- LEFT -->
         <div id="ssc-header" class="transition-all duration-300 lg:col-span-4 lg:pt-2">
-<div class="w-10 h-[2px] bg-[#2F5DA8] mb-5 rounded-full"></div>        
- <h2 class="text-[44px] leading-[1.05] font-semibold tracking-[-0.02em] text-[#0F172A]">
-  Remote <span class="text-[#2F5DA8]">Crop Identification</span>
-</h2>
+          <div class="w-10 h-[2px] bg-[#2F5DA8] mb-5 rounded-full"></div>
+
+          <h2 class="text-[44px] leading-[1.05] font-semibold tracking-[-0.02em] text-[#0F172A]">
+            Remote <span class="text-[#2F5DA8]">Crop Identification</span>
+          </h2>
 
           <p class="mt-6 max-w-[540px] text-[16px] leading-[1.75] text-slate-600">
-  Remote crop identification allows us to detect and map target crops at scale, build a reliable digital layer of field-level visibility, and create a stronger foundation for procurement, planning, and supply intelligence. It transforms fragmented agricultural information into a more traceable, structured, and decision-ready system.
-</p>
+            Remote crop identification allows us to detect and map target crops at scale, build a reliable digital
+            layer of field-level visibility, and create a stronger foundation for procurement, planning, and supply
+            intelligence. It transforms fragmented agricultural information into a more traceable, structured, and
+            decision-ready system.
+          </p>
+<div class="mt-6 mb-4 max-w-[540px] mx-auto" style="padding-left: 50px;">
+  <div class="relative inline-flex rounded-full border border-slate-200 bg-slate-100 p-1">
+    <button
+      id="toggle-features"
+      class="toggle-btn relative z-10 rounded-full px-5 py-1.5 text-sm font-semibold transition-all duration-300 bg-white text-[#0E2A47] shadow"
+    >
+      Features
+    </button>
 
-         <div class="mt-8 mb-6 h-px w-[88%] bg-slate-200 hidden lg:block"></div>
+    <button
+      id="toggle-backend"
+      class="toggle-btn relative z-10 rounded-full px-5 py-1.5 text-sm font-semibold text-slate-500 transition-all duration-300"
+    >
+      Backend
+    </button>
+  </div>
+</div>
 
-<div class="grid grid-cols-3 gap-6 lg:gap-8 items-start mt-5 lg:mt-0">
+          <div class="mt-8 mb-6 h-px w-[88%] bg-slate-200 hidden lg:block"></div>
+
+          <div class="grid grid-cols-3 gap-6 lg:gap-8 items-start mt-5 lg:mt-0">
             <div class="flex flex-col gap-1 text-left">
-  <div class="text-[40px] leading-none font-semibold tracking-[-0.03em] text-[#2F5DA8]">
-    <span class="ssc-counter" data-target="80" data-suffix="%">0</span>
-  </div>
-  <div class="text-[12px] font-semibold tracking-[0.16em] uppercase text-slate-500">Efficiency</div>
-</div>
+              <div class="text-[40px] leading-none font-semibold tracking-[-0.03em] text-[#2F5DA8]">
+                <span class="ssc-counter" data-target="80" data-suffix="%">0</span>
+              </div>
+              <div class="text-[12px] font-semibold tracking-[0.16em] uppercase text-slate-500">Efficiency</div>
+            </div>
 
-<div class="flex flex-col gap-1 text-left">
-  <div class="text-[40px] leading-none font-semibold tracking-[-0.03em] text-[#2F5DA8]">
-    <span class="ssc-counter" data-target="23" data-suffix="x">0</span>
-  </div>
-  <div class="text-[12px] font-semibold tracking-[0.16em] uppercase text-slate-500">Faster</div>
-</div>
+            <div class="flex flex-col gap-1 text-left">
+              <div class="text-[40px] leading-none font-semibold tracking-[-0.03em] text-[#2F5DA8]">
+                <span class="ssc-counter" data-target="23" data-suffix="x">0</span>
+              </div>
+              <div class="text-[12px] font-semibold tracking-[0.16em] uppercase text-slate-500">Faster</div>
+            </div>
 
-<div class="flex flex-col gap-1 text-left">
-  <div class="text-[40px] leading-none font-semibold tracking-[-0.03em] text-[#2F5DA8]">
-    <span class="ssc-counter" data-target="45" data-suffix="x">0</span>
-  </div>
-  <div class="text-[12px] font-semibold tracking-[0.16em] uppercase text-slate-500">Saving</div>
-</div>
+            <div class="flex flex-col gap-1 text-left">
+              <div class="text-[40px] leading-none font-semibold tracking-[-0.03em] text-[#2F5DA8]">
+                <span class="ssc-counter" data-target="45" data-suffix="x">0</span>
+              </div>
+              <div class="text-[12px] font-semibold tracking-[0.16em] uppercase text-slate-500">Saving</div>
+            </div>
           </div>
         </div>
 
-        <!-- CENTER: CIRCLES + MOBILE PANEL -->
-        <div id="ssc-left-col" class="min-h-0 lg:col-span-5 lg:pt-12">
+        <!-- CENTER -->
+        <div id="ssc-left-col" class="min-h-0 lg:col-span-5 lg:pt-16">
           <div class="relative h-full min-h-0 overflow-visible">
-            <div
-              id="ssc-stageWrap"
-              class="relative mx-auto transition-opacity duration-300"
-            >
-              <div
-                id="ssc-stage"
+
+           
+
+<div id="ssc-stageWrap" class="relative mx-auto transition-opacity duration-300">
+
+  <div
+    id="ssc-feature-app-box"
+    class="absolute left-1/2 top-[65%] lg:top-[54%] z-30 hidden h-[480px] w-[550px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-[28px] bg-white"
+  >
+<div class="absolute inset-0 -z-10 bg-[radial-gradient(circle,rgba(47,93,168,0.18)_0%,transparent_70%)] blur-2xl"></div>
+  
+     <img
+  src="RCI/app2.png"
+  class="h-[110%] w-[110%] object-contain mx-auto"
+      onerror="this.style.opacity='0'; this.parentElement.style.background='white';"
+    />
+  </div>
+
+  <div
+    id="ssc-stage"
                 class="relative mx-auto aspect-square w-full max-w-[min(360px,88vw)] sm:max-w-[min(460px,68vh)] lg:max-w-[min(680px,82vh)] max-h-[70vh] overflow-visible"
                 style="background: none;"
               >
-<div class="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
-  <div class="h-[72%] w-[72%] rounded-full bg-[radial-gradient(circle,rgba(47,93,168,0.10)_0%,rgba(47,93,168,0.05)_34%,transparent_72%)] blur-3xl"></div>
-</div>
-                <!-- Ring -->
+                <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
+                  <div class="h-[72%] w-[72%] rounded-full bg-[radial-gradient(circle,rgba(47,93,168,0.10)_0%,rgba(47,93,168,0.05)_34%,transparent_72%)] blur-3xl"></div>
+                </div>
+
                 <svg class="absolute inset-0 h-full w-full" viewBox="0 0 100 100" aria-hidden="true">
                   <circle
-  cx="50" cy="50" r="37.5"
-  fill="none"
-  stroke="#dbeafe"
-  stroke-width="2"
-  stroke-dasharray="212 40"
-  transform="rotate(-90 50 50)"
-  stroke-linecap="round"
-/>
+                    cx="50" cy="50" r="37.5"
+                    fill="none"
+                    stroke="#dbeafe"
+                    stroke-width="2"
+                    stroke-dasharray="212 40"
+                    transform="rotate(-90 50 50)"
+                    stroke-linecap="round"
+                  />
 
-<circle
-  id="ssc-arc"
-  cx="50" cy="50" r="37.5"
-  fill="none"
-  stroke="#0E2A47"
-  stroke-width="2"
-  stroke-linecap="round"
-  stroke-dasharray="235.6"
-  stroke-dashoffset="235.6"
-  transform="rotate(-90 50 50)"
-  class="transition-[stroke-dashoffset] duration-700 ease-out"
-/>
+                  <circle
+                    id="ssc-arc"
+                    cx="50" cy="50" r="37.5"
+                    fill="none"
+                    stroke="#0E2A47"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-dasharray="235.6"
+                    stroke-dashoffset="235.6"
+                    transform="rotate(-90 50 50)"
+                    class="transition-[stroke-dashoffset] duration-700 ease-out"
+                  />
 
                   <g opacity="0.12" stroke="#0E2A47" stroke-width="0.6">
                     <line x1="50" y1="10" x2="50" y2="13" />
@@ -145,7 +312,6 @@
                   </g>
                 </svg>
 
-                <!-- Center -->
                 <div class="absolute inset-0 grid place-items-center">
                   <div id="ssc-pulse" class="pointer-events-none absolute h-[62%] w-[62%] rounded-full border border-slate-200 opacity-0"></div>
                   <div id="ssc-pulse2" class="pointer-events-none absolute h-[46%] w-[46%] rounded-full border border-slate-200 opacity-0"></div>
@@ -159,10 +325,8 @@
                   />
                 </div>
 
-                <!-- Nodes -->
                 <div id="ssc-nodes" class="absolute inset-0"></div>
 
-                <!-- Mobile helper -->
                 <div
                   id="ssc-mobile-helper"
                   class="pointer-events-none absolute inset-0 z-20 hidden lg:hidden"
@@ -182,12 +346,11 @@
               </div>
             </div>
 
-            <!-- MOBILE PANEL ONLY -->
+            <!-- MOBILE PANEL -->
             <div
               id="ssc-mobile-panel"
               class="mt-5 overflow-hidden rounded-xl border border-[#0E2A47]/15 bg-white lg:hidden"
             >
-              <!-- mobile intro -->
               <div id="ssc-mobile-intro" class="p-5">
                 <p class="text-[11px] font-semibold tracking-widest text-slate-500">OVERVIEW</p>
                 <h3 class="mt-2 text-lg font-semibold text-slate-900">Remote Crop Identification</h3>
@@ -196,32 +359,8 @@
                   Satellite crop identification has many use cases; crop identification, yield estimation,
                   and even crop management — but for now we are focusing on crop identification.
                 </p>
-
-                <div class="mt-5 grid grid-cols-3 gap-3 hidden">
-                  <div class="rounded-xl border border-slate-200 bg-slate-50 px-3 py-3 text-center">
-                    <div class="text-[28px] font-medium tracking-tight text-slate-900">
-                      <span class="ssc-counter" data-target="80" data-suffix="%">0</span>
-                    </div>
-                    <div class="mt-1 text-[10px] font-semibold tracking-widest text-slate-500">EFFICIENCY</div>
-                  </div>
-
-                  <div class="rounded-xl border border-slate-200 bg-slate-50 px-3 py-3 text-center">
-                    <div class="text-[28px] font-medium tracking-tight text-slate-900">
-                      <span class="ssc-counter" data-target="23" data-suffix="x">0</span>
-                    </div>
-                    <div class="mt-1 text-[10px] font-semibold tracking-widest text-slate-500">FASTER</div>
-                  </div>
-
-                  <div class="rounded-xl border border-slate-200 bg-slate-50 px-3 py-3 text-center">
-                    <div class="text-[28px] font-medium tracking-tight text-slate-900">
-                      <span class="ssc-counter" data-target="45" data-suffix="x">0</span>
-                    </div>
-                    <div class="mt-1 text-[10px] font-semibold tracking-widest text-slate-500">SAVING</div>
-                  </div>
-                </div>
               </div>
 
-              <!-- mobile detail -->
               <div id="ssc-mobile-detail" class="hidden h-[44vh] min-h-[320px] max-h-[420px] border-t border-slate-200 flex-col">
                 <div class="flex items-center justify-between gap-3 border-b border-slate-200 px-4 py-3">
                   <div class="min-w-0">
@@ -241,47 +380,100 @@
 
                 <div id="ssc-mobile-scroll" class="flex-1 overflow-y-auto px-4 py-4">
                   <div class="flex items-start gap-4">
-  <img
-    id="ssc-mobile-icon"
-    src=""
-    alt="Step icon"
-    class="h-12 w-12 object-contain shrink-0"
-  />
+                    <img
+                      id="ssc-mobile-icon"
+                      src=""
+                      alt="Step icon"
+                      class="h-12 w-12 object-contain shrink-0"
+                    />
 
-  <div class="flex-1">
-    <h3 id="ssc-mobile-title" class="text-lg font-semibold text-slate-900">
-      Field Mapping & Plot Registration
-    </h3>
+                    <div class="flex-1">
+                      <h3 id="ssc-mobile-title" class="text-lg font-semibold text-slate-900">
+                        Field Mapping
+                      </h3>
 
-    <p id="ssc-mobile-desc" class="mt-2 text-sm leading-relaxed text-slate-600">
-      Identify and map farmland growing the target crop using satellite data...
-    </p>
+                      <p id="ssc-mobile-desc" class="mt-2 text-sm leading-relaxed text-slate-600">
+                        Identify and map farmland growing the target crop using satellite data...
+                      </p>
 
-    <div class="mt-4">
-            <ul id="ssc-mobile-bullets" class="mt-2 space-y-2 text-sm text-slate-600"></ul>
-    </div>
-  </div>
-</div>
-                    
-                  <div class="mt-6">
-                    
-                    <ul id="ssc-mobile-bullets" class="mt-3 space-y-2 text-sm text-slate-600"></ul>
+                      <div class="mt-4">
+                        <ul id="ssc-mobile-bullets" class="mt-2 space-y-2 text-sm text-slate-600"></ul>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+
           </div>
         </div>
 
-        <!-- RIGHT: DESKTOP TEXT BOX -->
-        <div class="hidden min-h-0 lg:col-span-3 lg:flex lg:items-start lg:self-stretch lg:pt-16">
+        <!-- RIGHT -->
+        <div class="hidden min-h-0 lg:col-span-3 lg:flex lg:items-start lg:self-stretch lg:pt-24">
           <div
-            <div
   id="ssc-panel"
-  class="relative overflow-hidden rounded-[18px] border border-slate-200/80 bg-white/80 p-7 shadow-[0_12px_40px_rgba(15,23,42,0.06)] backdrop-blur-md sm:p-7 lg:w-full lg:max-h-[420px]"
+  class="relative overflow-hidden rounded-[22px] border border-slate-200/60 bg-white/70 p-8 shadow-[0_20px_60px_rgba(15,23,42,0.08)] backdrop-blur-xl lg:w-full lg:max-h-[420px]"
 >
             <div class="relative min-h-[420px] lg:min-h-[500px] overflow-auto">
-              <div id="ssc-intro" class="absolute inset-0 pr-2 opacity-100 transition-opacity duration-150">
+
+              <div id="ssc-features-panel" class="absolute inset-0 pr-2 opacity-100 transition-opacity duration-150">
+                <div class="flex min-h-[420px] lg:min-h-[500px] flex-col justify-start pt-2 gap-6">
+
+<div class="flex items-start gap-4">
+  <img
+    src="RCI/locate-crops.png"
+    alt="Locate Crops"
+    class="h-16 w-16 object-contain shrink-0"
+  />
+
+  <div class="flex flex-col text-left pt-1">
+    <h3 class="text-[15px] font-semibold text-black">
+      Locate Dry Crops
+    </h3>
+    <p class="text-[13px] text-slate-500 leading-snug">
+      Identify crop locations across regions instantly.
+    </p>
+  </div>
+</div>
+
+                <div class="flex items-start gap-4">
+  <img
+    src="RCI/supply-intelligence.png"
+    alt="Supply Intelligence"
+    class="h-16 w-16 object-contain shrink-0"
+  />
+
+  <div class="flex flex-col text-left pt-1">
+    <h3 class="text-[15px] font-semibold text-black">
+      Supply Intelligence
+    </h3>
+    <p class="text-[13px] text-slate-500 leading-snug">
+      Real-time insights on supply, availability, and volumes.
+    </p>
+  </div>
+</div>
+
+                  <div class="flex items-start gap-4">
+  <img
+    src="RCI/procurement-planning.png"
+    alt="Procurement Planning"
+    class="h-16 w-16 object-contain shrink-0"
+  />
+
+  <div class="flex flex-col text-left pt-1">
+    <h3 class="text-[15px] font-semibold text-black">
+      Procurement Planning
+    </h3>
+    <p class="text-[13px] text-slate-500 leading-snug">
+      Plan sourcing with precision across regions and timelines.
+    </p>
+  </div>
+</div>
+
+                </div>
+              </div>
+
+              <div id="ssc-intro" class="pointer-events-none absolute inset-0 pr-2 opacity-0 transition-opacity duration-150">
                 <p class="text-xs font-semibold tracking-widest text-slate-500">OVERVIEW</p>
                 <h3 class="mt-2 text-xl font-semibold text-slate-900">Remote Crop Identification</h3>
 
@@ -291,41 +483,42 @@
                 </p>
               </div>
 
-<div id="ssc-detail" class="pointer-events-none absolute inset-0 pr-2 opacity-0 transition-opacity duration-150">
- <div class="flex items-center justify-between gap-4">
-  <p class="text-[12px] font-semibold tracking-[0.18em] uppercase text-slate-500">In-Depth</p>
+              <div id="ssc-detail" class="pointer-events-none absolute inset-0 pr-2 opacity-0 transition-opacity duration-150">
+                <div class="flex items-center justify-between gap-4">
+                  <p class="text-[12px] font-semibold tracking-[0.18em] uppercase text-slate-500">In-Depth</p>
 
-  <span
-    id="ssc-step"
-    class="shrink-0 rounded-full border border-slate-200 bg-slate-50 px-4 py-1.5 text-[13px] font-semibold text-slate-600"
-  >
-    Step 1 / 8
-  </span>
-</div>
+                  <span
+                    id="ssc-step"
+                    class="shrink-0 rounded-full border border-slate-200 bg-slate-50 px-4 py-1.5 text-[13px] font-semibold text-slate-600"
+                  >
+                    Step 1 / 8
+                  </span>
+                </div>
 
-  <div class="mt-4 flex items-start gap-4">
-    <img
-      id="ssc-detail-icon"
-      src=""
-      alt="Step icon"
-      class="h-12 w-12 object-contain shrink-0"
-    />
+                <div class="mt-4 flex items-start gap-4">
+                  <img
+                    id="ssc-detail-icon"
+                    src=""
+                    alt="Step icon"
+                    class="h-12 w-12 object-contain shrink-0"
+                  />
 
-    <h3 id="ssc-title" class="min-w-0 flex-1 text-xl font-semibold text-slate-900">
-      Field Mapping & Plot Registration
-    </h3>
-  </div>
+                  <h3 id="ssc-title" class="min-w-0 flex-1 text-xl font-semibold text-slate-900">
+                    Field Mapping & Plot Registration
+                  </h3>
+                </div>
 
-  <p id="ssc-desc" class="mt-4 w-full text-sm leading-relaxed text-slate-600">
-    Identify and map farmland growing the target crop using satellite data, historical records,
-    and local inputs. This creates the initial dataset of candidate fields to monitor and analyze.
-  </p>
+                <p id="ssc-desc" class="mt-4 w-full text-sm leading-relaxed text-slate-600">
+                  Identify and map farmland growing the target crop using satellite data, historical records,
+                  and local inputs. This creates the initial dataset of candidate fields to monitor and analyze.
+                </p>
 
-  <div class="mt-6 w-full">
-    <div class="text-sm font-semibold text-slate-800">What happens here</div>
-    <ul id="ssc-bullets" class="mt-3 w-full space-y-2 text-sm text-slate-600"></ul>
-  </div>
-</div>
+                <div class="mt-6 w-full">
+                  <div class="text-sm font-semibold text-slate-800">What happens here</div>
+                  <ul id="ssc-bullets" class="mt-3 w-full space-y-2 text-sm text-slate-600"></ul>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
@@ -409,7 +602,10 @@
         const nodesWrap = document.getElementById("ssc-nodes");
         const arc = document.getElementById("ssc-arc");
 
-        const intro = document.getElementById("ssc-intro");
+      const featuresPanel = document.getElementById("ssc-features-panel");
+const featureAppBox = document.getElementById("ssc-feature-app-box");
+const panel = document.getElementById("ssc-panel");
+const intro = document.getElementById("ssc-intro");
         const detail = document.getElementById("ssc-detail");
 
         const tTitle = document.getElementById("ssc-title");
@@ -420,7 +616,6 @@
 
         const mobileIntro = document.getElementById("ssc-mobile-intro");
         const mobileDetail = document.getElementById("ssc-mobile-detail");
-
         const mobileTitle = document.getElementById("ssc-mobile-title");
         const mobileDesc = document.getElementById("ssc-mobile-desc");
         const mobileStep = document.getElementById("ssc-mobile-step");
@@ -443,6 +638,9 @@
 
         const counters = Array.from(section.querySelectorAll(".ssc-counter"));
 
+        const btnFeatures = document.getElementById("toggle-features");
+        const btnBackend = document.getElementById("toggle-backend");
+
         const dashTotal = 235.6;
         const nodeRadiusPercent = 37.5;
         const nodeCount = steps.length;
@@ -452,6 +650,7 @@
         let autoplay = false;
         let countersRan = false;
         let helperTimer = null;
+        let currentMode = "features";
 
         const isReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         const hasHover = window.matchMedia("(hover: hover)").matches;
@@ -498,10 +697,36 @@
           updateMobilePanelOnly(i);
         }
 
+        function showDesktopFeatures() {
+          if (featuresPanel) {
+            featuresPanel.classList.add("opacity-100");
+            featuresPanel.classList.remove("opacity-0", "pointer-events-none");
+          }
+
+          if (intro) {
+            intro.classList.add("opacity-0", "pointer-events-none");
+            intro.classList.remove("opacity-100");
+          }
+
+          if (detail) {
+            detail.classList.add("opacity-0", "pointer-events-none");
+            detail.classList.remove("opacity-100");
+          }
+        }
+
+        function hideDesktopFeatures() {
+          if (!featuresPanel) return;
+          featuresPanel.classList.add("opacity-0", "pointer-events-none");
+          featuresPanel.classList.remove("opacity-100");
+        }
+
         function showDesktopIntro() {
           if (!intro || !detail) return;
+
+          hideDesktopFeatures();
+
           intro.classList.add("opacity-100");
-          intro.classList.remove("opacity-0");
+          intro.classList.remove("opacity-0", "pointer-events-none");
 
           detail.classList.add("opacity-0", "pointer-events-none");
           detail.classList.remove("opacity-100");
@@ -509,12 +734,62 @@
 
         function showDesktopDetail() {
           if (!intro || !detail) return;
-          intro.classList.add("opacity-0");
+
+          hideDesktopFeatures();
+
+          intro.classList.add("opacity-0", "pointer-events-none");
           intro.classList.remove("opacity-100");
 
           detail.classList.add("opacity-100");
           detail.classList.remove("opacity-0", "pointer-events-none");
         }
+
+ function setToggle(mode) {
+  currentMode = mode;
+
+  if (mode === "features") {
+    btnFeatures?.classList.add("bg-white", "text-[#0E2A47]", "shadow");
+    btnFeatures?.classList.remove("text-slate-500");
+
+    btnBackend?.classList.remove("bg-white", "text-[#0E2A47]", "shadow");
+    btnBackend?.classList.add("text-slate-500");
+
+    panel?.classList.remove(
+      "border",
+      "border-slate-200/80",
+      "shadow-[0_12px_40px_rgba(15,23,42,0.06)]",
+      "bg-white/80",
+      "backdrop-blur-md"
+    );
+    panel?.classList.add("bg-transparent");
+
+featureAppBox?.classList.remove("hidden");
+featureAppBox?.classList.add("block");
+
+    showDesktopFeatures();
+
+  } else {
+    btnBackend?.classList.add("bg-white", "text-[#0E2A47]", "shadow");
+    btnBackend?.classList.remove("text-slate-500");
+
+    btnFeatures?.classList.remove("bg-white", "text-[#0E2A47]", "shadow");
+    btnFeatures?.classList.add("text-slate-500");
+
+    panel?.classList.add(
+      "border",
+      "border-slate-200/80",
+      "shadow-[0_12px_40px_rgba(15,23,42,0.06)]",
+      "bg-white/80",
+      "backdrop-blur-md"
+    );
+    panel?.classList.remove("bg-transparent");
+
+   featureAppBox?.classList.add("hidden");
+featureAppBox?.classList.remove("block");
+
+    showDesktopIntro();
+  }
+}
 
         function openMobileDetail(i) {
           updateMobilePanelOnly(i);
@@ -616,7 +891,7 @@
           setArcProgress(i, false);
 
           if (!isReducedMotion) {
-            pulse.animate(
+            pulse?.animate(
               [
                 { transform: "scale(0.98)", opacity: 0 },
                 { transform: "scale(1.06)", opacity: 0.30 },
@@ -625,7 +900,7 @@
               { duration: 900, easing: "ease-out" }
             );
 
-            pulse2.animate(
+            pulse2?.animate(
               [
                 { transform: "scale(0.98)", opacity: 0 },
                 { transform: "scale(1.06)", opacity: 0.20 },
@@ -691,7 +966,7 @@
                 <img
                   class="ssc-icon h-[70%] w-[70%] object-contain opacity-90 transition-transform duration-300 will-change-transform"
                   src="${step.icon}"
-                  alt="${step.short} icon"
+                  alt="${step.mobileShort || step.title} icon"
                   onerror="this.style.opacity='0.25'; this.style.filter='grayscale(1)';"
                 />
               </span>
@@ -726,9 +1001,9 @@
             btn.innerHTML = createNodeMarkup(steps[i], i);
 
             btn.addEventListener("mouseenter", () => {
-              if (!hasHover || isMobileView()) return;
-              showDesktopDetail();
+              if (!hasHover || isMobileView() || currentMode !== "backend") return;
               updateDesktopPanelOnly(i);
+              showDesktopDetail();
             });
 
             btn.addEventListener("click", () => {
@@ -746,7 +1021,6 @@
           if (autoplay) return;
 
           autoplay = true;
-
           let i = active < 0 ? 0 : active;
 
           timer = setInterval(() => {
@@ -754,6 +1028,12 @@
             setActive(next, true);
             i = next;
           }, 1800);
+        }
+
+        function stopAutoplay() {
+          autoplay = false;
+          if (timer) clearInterval(timer);
+          timer = null;
         }
 
         function lockMobilePageScroll() {
@@ -767,18 +1047,12 @@
           document.documentElement.style.overflow = "";
         }
 
-        function stopAutoplay() {
-          autoplay = false;
-          if (timer) clearInterval(timer);
-          timer = null;
-        }
-
         function stopHelper() {
           if (helperTimer) clearTimeout(helperTimer);
           helperTimer = null;
-          if (helper) helper.classList.add("hidden");
-          if (helperHand) helperHand.classList.remove("ssc-helper-run");
-          if (helperBubble) helperBubble.classList.remove("ssc-helper-text-in");
+          helper?.classList.add("hidden");
+          helperHand?.classList.remove("ssc-helper-run");
+          helperBubble?.classList.remove("ssc-helper-text-in");
         }
 
         function runMobileHelper() {
@@ -788,8 +1062,8 @@
           helper.classList.remove("hidden");
 
           requestAnimationFrame(() => {
-            helperHand.classList.add("ssc-helper-run");
-            helperBubble.classList.add("ssc-helper-text-in");
+            helperHand?.classList.add("ssc-helper-run");
+            helperBubble?.classList.add("ssc-helper-text-in");
           });
 
           helperTimer = setTimeout(() => {
@@ -797,93 +1071,15 @@
           }, 2800);
         }
 
-        function setupScrollTrigger() {
-          const io = new IntersectionObserver(
-            (entries) => {
-              entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                  runCountersOnce();
-
-                  if (isMobileView()) {
-                    if (!section.dataset.mobileAnimated) {
-                      runMobileIntro();
-                      section.dataset.mobileAnimated = "true";
-                    }
-
-                    runMobileHelper();
-
-                    if (!autoplay) startAutoplay();
-                  } else {
-                    if (!section.dataset.desktopAnimated) {
-                      runDesktopIntro();
-                      section.dataset.desktopAnimated = "true";
-                    }
-
-                    if (!autoplay) startAutoplay();
-                  }
-                } else {
-                  stopAutoplay();
-                  stopHelper();
-                  if (!isMobileView() && hasHover) showDesktopIntro();
-                }
-              });
-            },
-            { threshold: 0.35 }
-          );
-
-          io.observe(section);
-        }
-
-        if (stage) {
-          stage.addEventListener("mouseleave", () => {
-            if (hasHover && !isMobileView()) {
-              showDesktopIntro();
-              runCountersOnce();
-              updateDesktopPanelOnly(active);
-            }
-          });
-        }
-
-        if (mobileClose) {
-          mobileClose.addEventListener("click", () => {
-            closeMobileDetail();
-          });
-        }
-
-        mobileMq.addEventListener("change", () => {
-          stopAutoplay();
-          stopHelper();
-          unlockMobilePageScroll();
-
-          if (isMobileView()) {
-            closeMobileDetail();
-            runMobileHelper();
-            setArcProgress(active < 0 ? 0 : active, true);
-            setActive(active < 0 ? 0 : active, false);
-          } else {
-            closeMobileDetail();
-            showDesktopIntro();
-            setArcProgress(active < 0 ? 0 : active, true);
-            setActive(active < 0 ? 0 : active, false);
-          }
-
-          startAutoplay();
-        });
-
         function runDesktopIntro() {
-          if (isMobileView() || isReducedMotion) return;
-
           section.classList.add("ssc-desktop-intro");
-
           setTimeout(() => {
             section.classList.remove("ssc-desktop-intro");
-          }, 1800);
+          }, 1600);
         }
 
         function runMobileIntro() {
-          if (!isMobileView() || isReducedMotion) return;
-
-          const nodes = document.querySelectorAll("#ssc-nodes > button");
+          const nodes = nodesWrap.querySelectorAll("button[data-step]");
 
           if (stageWrap) {
             stageWrap.style.opacity = "0";
@@ -905,8 +1101,51 @@
           });
         }
 
+        function setupScrollTrigger() {
+          const io = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  runCountersOnce();
+
+                  if (isMobileView()) {
+                    if (!section.dataset.mobileAnimated) {
+                      runMobileIntro();
+                      section.dataset.mobileAnimated = "true";
+                    }
+
+                    runMobileHelper();
+                    if (!autoplay) startAutoplay();
+                  } else {
+                    if (!section.dataset.desktopAnimated) {
+                      runDesktopIntro();
+                      section.dataset.desktopAnimated = "true";
+                    }
+
+                    if (!autoplay) startAutoplay();
+                  }
+                } else {
+                  stopAutoplay();
+                  stopHelper();
+
+                  if (!isMobileView() && hasHover && currentMode === "backend") {
+                    showDesktopIntro();
+                  }
+                }
+              });
+            },
+            { threshold: 0.35 }
+          );
+
+          io.observe(section);
+        }
+
+        mobileClose?.addEventListener("click", closeMobileDetail);
+
+        btnFeatures?.addEventListener("click", () => setToggle("features"));
+        btnBackend?.addEventListener("click", () => setToggle("backend"));
+
         updateAllPanels(0);
-        showDesktopIntro();
         buildNodes();
 
         if (isMobileView()) {
@@ -918,205 +1157,26 @@
           setActive(0, true);
         }
 
+        setToggle("features");
         setupScrollTrigger();
+
+        mobileMq.addEventListener?.("change", () => {
+          buildNodes();
+          setActive(active, false);
+
+          if (!isMobileView()) {
+            unlockMobilePageScroll();
+            closeMobileDetail();
+            if (currentMode === "features") {
+              showDesktopFeatures();
+            } else {
+              showDesktopIntro();
+            }
+          }
+        });
       })();
     </script>
-
-    <style>
-      #shunah-satellite-circle .group:hover .ssc-ring {
-        border-color: #0E2A47;
-        box-shadow:
-          0 0 0 2px rgba(14, 42, 71, 0.18),
-          0 0 18px rgba(14, 42, 71, 0.35),
-          0 0 38px rgba(14, 42, 71, 0.22);
-        transform: scale(1.08);
-      }
-
-      #shunah-satellite-circle .group:hover .ssc-icon {
-        transform: scale(1.12);
-      }
-
-      #shunah-satellite-circle .ssc-pulse-on {
-        animation: sscIconPulse 1.1s ease-in-out infinite;
-      }
-
-      @keyframes sscIconPulse {
-        0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.06); }
-      }
-
-      @media (min-width: 1024px) {
-        #shunah-satellite-circle.ssc-desktop-intro #ssc-header {
-          opacity: 0;
-          transform: translateY(24px);
-          animation: sscDesktopFadeUp 0.7s ease forwards;
-        }
-
-        #shunah-satellite-circle.ssc-desktop-intro #ssc-stageWrap {
-          opacity: 0;
-          transform: scale(0.94);
-          animation: sscDesktopStageIn 0.9s ease forwards 0.12s;
-        }
-
-        #shunah-satellite-circle.ssc-desktop-intro #ssc-panel {
-          opacity: 0;
-          transform: translateX(28px);
-          animation: sscDesktopPanelIn 0.75s ease forwards 0.22s;
-        }
-
-        #shunah-satellite-circle.ssc-desktop-intro #ssc-nodes > button {
-          opacity: 0;
-          transform: translate(-50%, -50%) scale(0.82);
-          animation: sscDesktopNodeIn 0.45s ease forwards;
-        }
-
-        #shunah-satellite-circle.ssc-desktop-intro #ssc-nodes > button:nth-child(1) { animation-delay: 0.18s; }
-        #shunah-satellite-circle.ssc-desktop-intro #ssc-nodes > button:nth-child(2) { animation-delay: 0.24s; }
-        #shunah-satellite-circle.ssc-desktop-intro #ssc-nodes > button:nth-child(3) { animation-delay: 0.30s; }
-        #shunah-satellite-circle.ssc-desktop-intro #ssc-nodes > button:nth-child(4) { animation-delay: 0.36s; }
-        #shunah-satellite-circle.ssc-desktop-intro #ssc-nodes > button:nth-child(5) { animation-delay: 0.42s; }
-        #shunah-satellite-circle.ssc-desktop-intro #ssc-nodes > button:nth-child(6) { animation-delay: 0.48s; }
-        #shunah-satellite-circle.ssc-desktop-intro #ssc-nodes > button:nth-child(7) { animation-delay: 0.54s; }
-        #shunah-satellite-circle.ssc-desktop-intro #ssc-nodes > button:nth-child(8) { animation-delay: 0.60s; }
-
-        @keyframes sscDesktopFadeUp {
-          from { opacity: 0; transform: translateY(24px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes sscDesktopStageIn {
-          from { opacity: 0; transform: scale(0.94); }
-          to   { opacity: 1; transform: scale(1); }
-        }
-
-        @keyframes sscDesktopPanelIn {
-          from { opacity: 0; transform: translateX(28px); }
-          to   { opacity: 1; transform: translateX(0); }
-        }
-
-        @keyframes sscDesktopNodeIn {
-          from { opacity: 0; transform: translate(-50%, -50%) scale(0.82); }
-          to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-        }
-      }
-
-      @media (max-width: 1023px) {
-        #shunah-satellite-circle {
-          height: auto !important;
-          min-height: 100dvh;
-        }
-
-        #shunah-satellite-circle #ssc-shell {
-          min-height: 100dvh;
-        }
-
-        #shunah-satellite-circle #ssc-header.ssc-mobile-hidden {
-          opacity: 0;
-          max-height: 0;
-          margin: 0;
-          overflow: hidden;
-          pointer-events: none;
-          transform: translateY(-10px);
-        }
-
-        #shunah-satellite-circle #ssc-left-col.ssc-mobile-open {
-          display: flex;
-          flex-direction: column;
-          padding-top: 0.25rem;
-        }
-
-        #shunah-satellite-circle #ssc-stageWrap.ssc-mobile-sticky-wrap {
-          position: sticky;
-          top: 2.1rem;
-          z-index: 15;
-          padding-top: 0.5rem;
-        }
-
-        #shunah-satellite-circle #ssc-stage {
-          overflow: visible !important;
-        }
-
-        #shunah-satellite-circle #ssc-left-col.ssc-mobile-open #ssc-stage {
-          max-width: min(360px, 88vw);
-        }
-
-        #shunah-satellite-circle #ssc-mobile-panel {
-          overflow: hidden;
-        }
-
-        #shunah-satellite-circle #ssc-mobile-detail {
-          height: 44vh;
-          min-height: 320px;
-          max-height: 420px;
-        }
-
-        #shunah-satellite-circle #ssc-mobile-scroll {
-          -webkit-overflow-scrolling: touch;
-          overscroll-behavior: contain;
-        }
-
-        #shunah-satellite-circle .group:hover .ssc-ring,
-        #shunah-satellite-circle .group:hover .ssc-icon {
-          transform: none;
-          box-shadow: none;
-        }
-
-        #shunah-satellite-circle .ssc-ring,
-        #shunah-satellite-circle .ssc-icon {
-          transition: all 0.25s ease;
-        }
-
-        #shunah-satellite-circle #ssc-mobile-scroll {
-          -webkit-overflow-scrolling: touch;
-        }
-
-        #shunah-satellite-circle #ssc-helper-hand.ssc-helper-run {
-          animation: sscHandTap 2.2s ease-in-out 1 forwards;
-        }
-
-        #shunah-satellite-circle #ssc-helper-bubble.ssc-helper-text-in {
-          animation: sscBubbleIn 2.2s ease-in-out 1 forwards;
-        }
-
-        @keyframes sscBubbleIn {
-          0%, 12% { opacity: 0; transform: translateX(-50%) translateY(8px); }
-          18%, 82% { opacity: 1; transform: translateX(-50%) translateY(0); }
-          100% { opacity: 0; transform: translateX(-50%) translateY(-4px); }
-        }
-
-        @keyframes sscHandTap {
-          0% {
-            opacity: 0;
-            transform: translate(-50%, -50%) scale(0.9);
-          }
-          10% {
-            opacity: 1;
-            transform: translate(-50%, -50%) scale(1);
-          }
-          35% {
-            transform: translate(-18%, -120%) scale(1);
-          }
-          45% {
-            transform: translate(-18%, -120%) scale(0.9);
-          }
-          55% {
-            transform: translate(-18%, -120%) scale(1);
-          }
-          85% {
-            opacity: 1;
-            transform: translate(-18%, -120%) scale(1);
-          }
-          100% {
-            opacity: 0;
-            transform: translate(-18%, -120%) scale(0.95);
-          }
-        }
-
-        #shunah-satellite-circle #ssc-stageWrap {
-          transform: none !important;
-        }
-      }
-    </style>
   </section>
+
 </body>
 </html>
