@@ -11,7 +11,7 @@
     html { scroll-behavior: smooth; }
     body { font-family: 'Inter', sans-serif; }
 
-    .tri-right {
+    .tri-right {												
       clip-path: polygon(0 0, 100% 50%, 0 100%);
     }
 
@@ -183,8 +183,8 @@
     <div class="px-6 py-4 flex flex-col gap-2 text-[14px] font-medium text-[#0b1a2d]">
 
       <a href="index.html#home">Home</a>
-      <a href="technology.html" class="font-semibold">Product Suite</a>
-      <a href="usecases.html">Use Cases</a>
+      <a href="technology.html">Product Suite</a>
+      <a href="usecases.html" class="font-semibold">Use Cases</a>
       <a href="focus.html">Our Focus</a>
       <a href="rfq.html">RFQ</a>
       <a href="contact.html">Contact Us</a>
@@ -268,11 +268,7 @@ SHUNAH – Use Cases Hero
             <!-- accent behind right card -->
             <div class="tech-accent-right"></div>
 
-            <!-- center badge -->
-            <div class="tech-badge">
-              <img src="usecases/use_1.png" alt="Center badge" loading="lazy">
-            </div>
-
+            
             <!-- stars -->
             <div class="tech-star tech-star-sm"></div>
             <div class="tech-star tech-star-lg"></div>
@@ -295,7 +291,7 @@ SHUNAH – Use Cases Hero
 
     #tech-hero .tech-collage{
       position: relative;
-      width: min(620px, 100%);
+      width: min(580px, 100%);
       padding-left: 78px; /* space for overlapping phone */
       overflow: visible;
     }
@@ -303,7 +299,7 @@ SHUNAH – Use Cases Hero
     #tech-hero .tech-top{
       position: relative;
       z-index: 3;
-      height: 275px;
+      height: 220px;
       border-radius: 26px;
       border-top-left-radius: 84px;
       overflow: hidden;
@@ -354,9 +350,9 @@ SHUNAH – Use Cases Hero
     #tech-hero .tech-phone{
       position: absolute;
       left: -100px;
-      top: -80px;
-      width: 340px;
-      height: 652px;
+      top: -95px;
+      width: 330px;
+      height: 632px;
       z-index: 5;
     }
 
@@ -370,27 +366,28 @@ SHUNAH – Use Cases Hero
 
     #tech-hero .tech-accent-top{
       position: absolute;
-      top: -10px;
-      left: 58px;
-      width: calc(100% - 78px);
-      height: 275px;
+      top: -6px;
+      left: 70px;
+      width: calc(95% - 78px);
+      height: 215px;
       border-radius: 26px;
       border-top-left-radius: 84px;
-      background: linear-gradient(135deg, #5f79ff, #5b6dff);
+      background: #4a6cf7;
       z-index: 1;
     }
 
     #tech-hero .tech-accent-right{
       position: absolute;
-      right: -12px;
-      bottom: -8px;
+      right: -8px;
+      bottom: -7px;
       width: 28%;
       height: 185px;
       border-radius: 18px;
       border-bottom-right-radius: 54px;
-      background: #3d4b78;
+      background: #0a1128;
       z-index: 1;
     }
+
 
     #tech-hero .tech-badge{
       position: absolute;
@@ -417,7 +414,7 @@ SHUNAH – Use Cases Hero
     #tech-hero .tech-star{
       position: absolute;
       background-color: #4c6fff;
-      z-index: 2;
+      z-index: 9;
       -webkit-mask-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg"><path d="M70 4 C60 42 42 60 4 70 C42 80 60 98 70 136 C80 98 98 80 136 70 C98 60 80 42 70 4Z"/></svg>');
       mask-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg"><path d="M70 4 C60 42 42 60 4 70 C42 80 60 98 70 136 C80 98 98 80 136 70 C98 60 80 42 70 4Z"/></svg>');
       -webkit-mask-repeat: no-repeat;
@@ -483,8 +480,8 @@ SHUNAH – Use Cases Hero
 
     @media (max-width: 640px){
       #tech-hero .tech-collage{
-        width: 100%;
-        padding-left: 28px;
+        width: 88%;
+        padding-left: 22px;
       }
 
       #tech-hero .tech-top{
@@ -521,14 +518,15 @@ SHUNAH – Use Cases Hero
       #tech-hero .tech-accent-top{
         left: 18px;
         width: calc(100% - 28px);
-        height: 180px;
+        height: 185px;
         border-radius: 20px;
         border-top-left-radius: 56px;
       }
 
       #tech-hero .tech-accent-right{
-        width: 34%;
-        height: 108px;
+        right: -5px;
+	width: 28%;
+        height: 128px;
         border-bottom-right-radius: 34px;
       }
 
@@ -610,7 +608,7 @@ SHUNAH – Use Cases Hero
 
         <div class="mb-10">
           <h2 class="text-[clamp(1.9rem,3vw,3rem)] font-semibold tracking-[-0.04em] text-slate-900">
-            Use Cases
+            Core Use Cases
           </h2>
         </div>
 
@@ -1022,4 +1020,4 @@ if (document.fonts && document.fonts.ready) {
   })();
 </script>
 </body>
-</html>
+</html>	
