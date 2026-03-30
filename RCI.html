@@ -193,7 +193,7 @@
       <div class="grid min-h-0 flex-1 items-start gap-6 lg:grid-cols-12 lg:gap-8">
 
         <!-- LEFT -->
-        <div id="ssc-header" class="transition-all duration-300 lg:col-span-4 lg:pt-2">
+        <div id="ssc-header" class="relative transition-all duration-300 lg:col-span-4 lg:pt-2">
           <div class="w-10 h-[2px] bg-[#2F5DA8] mb-5 rounded-full"></div>
 
           <h2 class="text-[44px] leading-[1.05] font-semibold tracking-[-0.02em] text-[#0F172A]">
@@ -206,7 +206,11 @@
             intelligence. It transforms fragmented agricultural information into a more traceable, structured, and
             decision-ready system.
           </p>
-<div class="mt-6 mb-4 max-w-[540px] mx-auto" style="padding-left: 50px;">
+<div class="
+  absolute z-20
+  left-1/2 -translate-x-1/2 top-[490px]        /* 📱 mobile */
+  lg:left-[60px] lg:translate-x-0 lg:top-[360px]  /* 💻 desktop */
+">
   <div class="relative inline-flex rounded-full border border-slate-200 bg-slate-100 p-1">
     <button
       id="toggle-features"
@@ -224,7 +228,7 @@
   </div>
 </div>
 
-          <div class="mt-8 mb-6 h-px w-[88%] bg-slate-200 hidden lg:block"></div>
+          <div class="mt-20 mb-6 h-px w-[88%] bg-slate-200 hidden lg:block"></div>
 
           <div class="grid grid-cols-3 gap-6 lg:gap-8 items-start mt-5 lg:mt-0">
             <div class="flex flex-col gap-1 text-left">
@@ -251,7 +255,7 @@
         </div>
 
         <!-- CENTER -->
-        <div id="ssc-left-col" class="min-h-0 lg:col-span-5 lg:pt-16">
+        <div id="ssc-left-col" class="min-h-0 pt-10 lg:col-span-5 lg:pt-16">
           <div class="relative h-full min-h-0 overflow-visible">
 
            
@@ -260,7 +264,7 @@
 
   <div
     id="ssc-feature-app-box"
-    class="absolute left-1/2 top-[65%] lg:top-[54%] z-30 hidden h-[480px] w-[550px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-[28px] bg-white"
+    class="absolute left-1/2 top-[75%] lg:top-[54%] z-30 hidden h-[500px] w-[550px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-[28px] bg-white"
   >
 <div class="absolute inset-0 -z-10 bg-[radial-gradient(circle,rgba(47,93,168,0.18)_0%,transparent_70%)] blur-2xl"></div>
   
@@ -359,8 +363,8 @@
         alt="Locate Crops"
         class="h-10 w-10 object-contain"
       />
-      <h3 class="mt-2 text-[11px] font-semibold leading-tight text-black">
-        Locate Dry Crops
+      <h3 class="mt-2 text-[11px] font-semibold leading-tight text-[#64748B] lg:text-black">
+        Locate<Br>Dry Crops
       </h3>
     </div>
 
@@ -370,8 +374,8 @@
         alt="Supply Intelligence"
         class="h-10 w-10 object-contain"
       />
-      <h3 class="mt-2 text-[11px] font-semibold leading-tight text-black">
-        Supply Intelligence
+      <h3 class="mt-2 text-[11px] font-semibold leading-tight text-[#64748B] lg:text-black">
+        Analyze<Br>Supply
       </h3>
     </div>
 
@@ -381,8 +385,8 @@
         alt="Procurement Planning"
         class="h-10 w-10 object-contain"
       />
-      <h3 class="mt-2 text-[11px] font-semibold leading-tight text-black">
-        Procurement Planning
+      <h3 class="mt-2 text-[11px] font-semibold leading-tight text-[#64748B] lg:text-black">
+        Optimize Procurement
       </h3>
     </div>
   </div>
@@ -397,7 +401,7 @@
                 </p>
               </div>
 
-              <div id="ssc-mobile-detail" class="hidden h-[44vh] min-h-[320px] max-h-[420px] border-t border-slate-200 flex-col">
+              <div id="ssc-mobile-detail" class="hidden h-[34vh] min-h-[200px] max-h-[420px] border-t border-slate-200 flex-col">
                 <div class="flex items-center justify-between gap-3 border-b border-slate-200 px-4 py-3">
                   <div class="min-w-0">
                     <div class="text-[11px] font-semibold tracking-widest text-slate-500">IN-DEPTH</div>
@@ -481,7 +485,7 @@
 
   <div class="flex flex-col text-left pt-1">
     <h3 class="text-[15px] font-semibold text-black">
-      Supply Intelligence
+      Analyze Supply
     </h3>
     <p class="text-[13px] text-slate-500 leading-snug">
       Real-time insights on supply, availability, and volumes.
@@ -498,7 +502,7 @@
 
   <div class="flex flex-col text-left pt-1">
     <h3 class="text-[15px] font-semibold text-black">
-      Procurement Planning
+      Plan Procurement
     </h3>
     <p class="text-[13px] text-slate-500 leading-snug">
       Plan sourcing with precision across regions and timelines.
@@ -786,6 +790,9 @@ const mobileFeatures = document.getElementById("ssc-mobile-features");
 
   if (mode === "features") {
     btnFeatures?.classList.add("bg-white", "text-[#0E2A47]", "shadow");
+  // 👇 ADD THIS
+  mobilePanel?.classList.remove("border-[#0E2A47]/15", "border-slate-200");
+  mobilePanel?.classList.add("border-transparent");
     btnFeatures?.classList.remove("text-slate-500");
 
     btnBackend?.classList.remove("bg-white", "text-[#0E2A47]", "shadow");
@@ -800,16 +807,19 @@ const mobileFeatures = document.getElementById("ssc-mobile-features");
     );
     panel?.classList.add("bg-transparent");
 
-featureAppBox?.classList.remove("hidden");
-featureAppBox?.classList.add("block");
-mobilePanel?.classList.remove("mt-5");
-mobilePanel?.classList.add("mt-32");
-if (mobileFeatures) mobileFeatures.classList.remove("hidden");
-if (mobileIntro) mobileIntro.classList.add("hidden");
-if (mobileDetail) {
-  mobileDetail.classList.add("hidden");
-  mobileDetail.classList.remove("flex");
-}
+    featureAppBox?.classList.remove("hidden");
+    featureAppBox?.classList.add("block");
+
+    mobilePanel?.classList.remove("mt-5", "mt-12", "mt-32", "mt-44");
+    mobilePanel?.classList.add("mt-44");
+
+    if (mobileFeatures) mobileFeatures.classList.remove("hidden");
+    if (mobileIntro) mobileIntro.classList.add("hidden");
+    if (mobileDetail) {
+      mobileDetail.classList.add("hidden");
+      mobileDetail.classList.remove("flex");
+    }
+
     showDesktopFeatures();
 
   } else {
@@ -828,17 +838,19 @@ if (mobileDetail) {
     );
     panel?.classList.remove("bg-transparent");
 
-   featureAppBox?.classList.add("hidden");
-featureAppBox?.classList.remove("block");
-mobilePanel?.classList.remove("mt-32");
-mobilePanel?.classList.add("mt-5");
+    featureAppBox?.classList.add("hidden");
+    featureAppBox?.classList.remove("block");
 
-if (mobileFeatures) mobileFeatures.classList.add("hidden");
-if (mobileIntro) mobileIntro.classList.remove("hidden");
-if (mobileDetail) {
-  mobileDetail.classList.add("hidden");
-  mobileDetail.classList.remove("flex");
-}
+    mobilePanel?.classList.remove("mt-5", "mt-12", "mt-32", "mt-44");
+    mobilePanel?.classList.add("mt-12");
+
+    if (mobileFeatures) mobileFeatures.classList.add("hidden");
+    if (mobileIntro) mobileIntro.classList.remove("hidden");
+    if (mobileDetail) {
+      mobileDetail.classList.add("hidden");
+      mobileDetail.classList.remove("flex");
+    }
+
     showDesktopIntro();
   }
 }
