@@ -206,11 +206,9 @@
             intelligence. It transforms fragmented agricultural information into a more traceable, structured, and
             decision-ready system.
           </p>
-<div class="
-  absolute z-20
-  left-1/2 -translate-x-1/2 top-[490px]        /* 📱 mobile */
-  lg:left-[60px] lg:translate-x-0 lg:top-[360px]  /* 💻 desktop */
-">
+  <!-- DESKTOP TOGGLE: ABOVE METRICS -->
+<div class="hidden lg:flex mt-4 mb-4 ml-7">
+
   <div class="relative inline-flex rounded-full border border-slate-200 bg-slate-100 p-1">
     <button
       id="toggle-features"
@@ -228,34 +226,82 @@
   </div>
 </div>
 
-          <div class="mt-20 mb-6 h-px w-[88%] bg-slate-200 hidden lg:block"></div>
+<!-- MOBILE METRICS -->
+<div class="relative mt-8 lg:hidden">
+  <div class="grid grid-cols-3 gap-4 items-start">
+    <div class="flex flex-col gap-1 text-left">
+      <div class="text-[30px] leading-none font-semibold tracking-[-0.03em] text-[#2F5DA8]">
+        <span class="ssc-counter" data-target="80" data-suffix="%">0</span>
+      </div>
+      <div class="text-[10px] font-semibold tracking-[0.14em] uppercase text-slate-500">Efficiency</div>
+    </div>
 
-          <div class="grid grid-cols-3 gap-6 lg:gap-8 items-start mt-5 lg:mt-0">
-            <div class="flex flex-col gap-1 text-left">
-              <div class="text-[40px] leading-none font-semibold tracking-[-0.03em] text-[#2F5DA8]">
-                <span class="ssc-counter" data-target="80" data-suffix="%">0</span>
-              </div>
-              <div class="text-[12px] font-semibold tracking-[0.16em] uppercase text-slate-500">Efficiency</div>
-            </div>
+    <div class="flex flex-col gap-1 text-left">
+      <div class="text-[30px] leading-none font-semibold tracking-[-0.03em] text-[#2F5DA8]">
+        <span class="ssc-counter" data-target="23" data-suffix="x">0</span>
+      </div>
+      <div class="text-[10px] font-semibold tracking-[0.14em] uppercase text-slate-500">Faster</div>
+    </div>
 
-            <div class="flex flex-col gap-1 text-left">
-              <div class="text-[40px] leading-none font-semibold tracking-[-0.03em] text-[#2F5DA8]">
-                <span class="ssc-counter" data-target="23" data-suffix="x">0</span>
-              </div>
-              <div class="text-[12px] font-semibold tracking-[0.16em] uppercase text-slate-500">Faster</div>
-            </div>
+    <div class="flex flex-col gap-1 text-left">
+      <div class="text-[30px] leading-none font-semibold tracking-[-0.03em] text-[#2F5DA8]">
+        <span class="ssc-counter" data-target="45" data-suffix="x">0</span>
+      </div>
+      <div class="text-[10px] font-semibold tracking-[0.14em] uppercase text-slate-500">Saving</div>
+    </div>
+  </div>
+</div>
 
-            <div class="flex flex-col gap-1 text-left">
-              <div class="text-[40px] leading-none font-semibold tracking-[-0.03em] text-[#2F5DA8]">
-                <span class="ssc-counter" data-target="45" data-suffix="x">0</span>
-              </div>
-              <div class="text-[12px] font-semibold tracking-[0.16em] uppercase text-slate-500">Saving</div>
-            </div>
-          </div>
-        </div>
+<!-- MOBILE TOGGLE: BELOW METRICS -->
+<div class="relative flex flex-col items-center mt-6 lg:hidden">
+  <div class="relative inline-flex rounded-full border border-slate-200 bg-slate-100 p-1">
+    <button
+      id="toggle-features-mobile"
+      class="toggle-btn relative z-10 rounded-full px-5 py-1.5 text-sm font-semibold transition-all duration-300 bg-white text-[#0E2A47] shadow"
+    >
+      Features
+    </button>
 
+    <button
+      id="toggle-backend-mobile"
+      class="toggle-btn relative z-10 rounded-full px-5 py-1.5 text-sm font-semibold text-slate-500 transition-all duration-300"
+    >
+      Backend
+    </button>
+  </div>
+</div>
+
+<!-- DESKTOP DIVIDER -->
+<div class="mt-6 mb-3 h-px w-[88%] bg-slate-200 hidden lg:block"></div>
+
+<!-- DESKTOP METRICS -->
+<div class="relative hidden lg:block">
+  <div class="grid grid-cols-3 gap-8 items-start">
+    <div class="flex flex-col gap-1 text-left">
+      <div class="text-[40px] leading-none font-semibold tracking-[-0.03em] text-[#2F5DA8]">
+        <span class="ssc-counter" data-target="80" data-suffix="%">0</span>
+      </div>
+      <div class="text-[12px] font-semibold tracking-[0.16em] uppercase text-slate-500">Efficiency</div>
+    </div>
+
+    <div class="flex flex-col gap-1 text-left">
+      <div class="text-[40px] leading-none font-semibold tracking-[-0.03em] text-[#2F5DA8]">
+        <span class="ssc-counter" data-target="23" data-suffix="x">0</span>
+      </div>
+      <div class="text-[12px] font-semibold tracking-[0.16em] uppercase text-slate-500">Faster</div>
+    </div>
+
+    <div class="flex flex-col gap-1 text-left">
+      <div class="text-[40px] leading-none font-semibold tracking-[-0.03em] text-[#2F5DA8]">
+        <span class="ssc-counter" data-target="45" data-suffix="x">0</span>
+      </div>
+      <div class="text-[12px] font-semibold tracking-[0.16em] uppercase text-slate-500">Saving</div>
+    </div>
+  </div>
+</div>
+</div>
         <!-- CENTER -->
-        <div id="ssc-left-col" class="min-h-0 pt-10 lg:col-span-5 lg:pt-16">
+       <div id="ssc-left-col" class="min-h-0 pt-1 lg:pt-16 lg:col-span-5">
           <div class="relative h-full min-h-0 overflow-visible">
 
            
@@ -264,7 +310,7 @@
 
   <div
     id="ssc-feature-app-box"
-    class="absolute left-1/2 top-[75%] lg:top-[54%] z-30 hidden h-[500px] w-[550px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-[28px] bg-white"
+    class="absolute left-1/2 top-[68%] lg:top-[54%] z-30 hidden h-[500px] w-[550px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-[28px] bg-white"
   >
 <div class="absolute inset-0 -z-10 bg-[radial-gradient(circle,rgba(47,93,168,0.18)_0%,transparent_70%)] blur-2xl"></div>
   
@@ -682,6 +728,14 @@ const mobileFeatures = document.getElementById("ssc-mobile-features");
         const btnFeatures = document.getElementById("toggle-features");
         const btnBackend = document.getElementById("toggle-backend");
 
+const btnFeaturesMobile = document.getElementById("toggle-features-mobile");
+const btnBackendMobile = document.getElementById("toggle-backend-mobile");
+
+btnFeatures?.addEventListener("click", () => setToggle("features"));
+btnBackend?.addEventListener("click", () => setToggle("backend"));
+
+btnFeaturesMobile?.addEventListener("click", () => setToggle("features"));
+btnBackendMobile?.addEventListener("click", () => setToggle("backend"));
         const dashTotal = 235.6;
         const nodeRadiusPercent = 37.5;
         const nodeCount = steps.length;
@@ -794,8 +848,14 @@ const mobileFeatures = document.getElementById("ssc-mobile-features");
   mobilePanel?.classList.remove("border-[#0E2A47]/15", "border-slate-200");
   mobilePanel?.classList.add("border-transparent");
     btnFeatures?.classList.remove("text-slate-500");
+btnFeaturesMobile?.classList.add("bg-white", "text-[#0E2A47]", "shadow");
+btnFeaturesMobile?.classList.remove("text-slate-500");
 
-    btnBackend?.classList.remove("bg-white", "text-[#0E2A47]", "shadow");
+btnBackendMobile?.classList.remove("bg-white", "text-[#0E2A47]", "shadow");
+btnBackendMobile?.classList.add("text-slate-500");
+    
+
+btnBackend?.classList.remove("bg-white", "text-[#0E2A47]", "shadow");
     btnBackend?.classList.add("text-slate-500");
 
     panel?.classList.remove(
@@ -828,6 +888,15 @@ const mobileFeatures = document.getElementById("ssc-mobile-features");
 
     btnFeatures?.classList.remove("bg-white", "text-[#0E2A47]", "shadow");
     btnFeatures?.classList.add("text-slate-500");
+
+btnBackendMobile?.classList.add("bg-white", "text-[#0E2A47]", "shadow");
+btnBackendMobile?.classList.remove("text-slate-500");
+
+btnFeaturesMobile?.classList.remove("bg-white", "text-[#0E2A47]", "shadow");
+btnFeaturesMobile?.classList.add("text-slate-500");
+
+mobilePanel?.classList.remove("border-transparent");
+mobilePanel?.classList.add("border", "border-[#0E2A47]/15");
 
     panel?.classList.add(
       "border",
