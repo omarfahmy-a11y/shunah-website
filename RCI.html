@@ -402,14 +402,22 @@
               class="mt-5 overflow-hidden rounded-xl border border-[#0E2A47]/15 bg-white lg:hidden"
             >
 <div id="ssc-mobile-features" class="hidden p-5">
-  <div class="grid grid-cols-3 gap-3 text-center items-start">
+
+  <!-- TITLE -->
+  <div class="text-center mb-4">
+    <div class="text-[11px] font-semibold tracking-[0.18em] uppercase text-slate-400">
+      Features
+    </div>
+    <div class="mt-1 h-[2px] w-8 mx-auto bg-[#2F5DA8] rounded-full"></div>
+  </div>
+  <div class="grid grid-cols-3 gap-4 text-center items-start">
     <div class="flex flex-col items-center">
       <img
         src="RCI/locate-crops.png"
         alt="Locate Crops"
-        class="h-10 w-10 object-contain"
+        class="h-14 w-14 object-contain"
       />
-      <h3 class="mt-2 text-[11px] font-semibold leading-tight text-[#64748B] lg:text-black">
+      <h3 class="mt-2 text-[13px] font-semibold leading-tight text-[#64748B] lg:text-black">
         Locate<Br>Dry Crops
       </h3>
     </div>
@@ -418,9 +426,9 @@
       <img
         src="RCI/supply-intelligence.png"
         alt="Supply Intelligence"
-        class="h-10 w-10 object-contain"
+        class="h-14 w-14 object-contain"
       />
-      <h3 class="mt-2 text-[11px] font-semibold leading-tight text-[#64748B] lg:text-black">
+      <h3 class="mt-2 text-[13px] font-semibold leading-tight text-[#64748B] lg:text-black">
         Analyze<Br>Supply
       </h3>
     </div>
@@ -429,9 +437,9 @@
       <img
         src="RCI/procurement-planning.png"
         alt="Procurement Planning"
-        class="h-10 w-10 object-contain"
+        class="h-14 w-14 object-contain"
       />
-      <h3 class="mt-2 text-[11px] font-semibold leading-tight text-[#64748B] lg:text-black">
+      <h3 class="mt-2 text-[13px] font-semibold leading-tight text-[#64748B] lg:text-black">
         Optimize Procurement
       </h3>
     </div>
@@ -1127,23 +1135,29 @@ mobilePanel?.classList.add("border", "border-[#0E2A47]/15");
             btn.setAttribute("aria-label", steps[i].title);
 
             btn.className = "group absolute cursor-pointer focus:outline-none";
+btn.style.pointerEvents = "auto";
             btn.style.left = `${x}%`;
             btn.style.top = `${y}%`;
             btn.style.transform = "translate(-50%, -50%)";
 
             btn.innerHTML = createNodeMarkup(steps[i], i);
 
-            btn.addEventListener("mouseenter", () => {
-              if (!hasHover || isMobileView() || currentMode !== "backend") return;
-              updateDesktopPanelOnly(i);
-              showDesktopDetail();
-            });
+           btn.addEventListener("mouseenter", () => {
+  if (!hasHover || isMobileView() || currentMode !== "backend") return;
+  updateDesktopPanelOnly(i);
+  showDesktopDetail();
+});
 
-            btn.addEventListener("click", () => {
-              if (!isMobileView()) return;
-              updateMobilePanelOnly(i);
-              openMobileDetail(i);
-            });
+btn.addEventListener("mouseleave", () => {
+  if (!hasHover || isMobileView() || currentMode !== "backend") return;
+  showDesktopIntro();
+});
+
+btn.addEventListener("click", () => {
+  if (!isMobileView()) return;
+  updateMobilePanelOnly(i);
+  openMobileDetail(i);
+});
 
             nodesWrap.appendChild(btn);
           }
