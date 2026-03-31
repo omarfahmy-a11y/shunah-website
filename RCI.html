@@ -331,14 +331,16 @@
                 </div>
 
                 <svg class="absolute inset-0 h-full w-full" viewBox="0 0 100 100" aria-hidden="true">
-                  <circle
-                    cx="50" cy="50" r="37.5"
-                    fill="none"
-                    stroke="#dbeafe"
+                 <circle
+  id="ssc-bg-ring"
+  cx="50" cy="50" r="37.5"
+  fill="none"
+  stroke="#dbeafe"
                     stroke-width="2"
                     stroke-dasharray="212 40"
                     transform="rotate(-90 50 50)"
                     stroke-linecap="round"
+class="opacity-0 transition-opacity duration-500"
                   />
 
                   <circle
@@ -630,13 +632,13 @@
             short: "Coordinate<br>Collection",
             mobileShort: "Coordinate Collection",
             title: "Field Mapping & Plot Registration",
-            desc: "Identify and map farmland growing the target crop using satellite data, historical records, and local inputs. This creates the initial dataset of candidate fields to monitor and analyze.",
+            desc: "Map farmland growing the target crop creating the initial dataset of candidate fields to monitor and analyze.",
             icon: "product/RCI-step-1.png",
             bullets: ["Register plots + ownership associations", "Capture GPS boundaries", "Build baseline plot index"]
           },
           {
             short: "Image<br>Analysis",
-            mobileShort: "Image Analysis",
+            mobileShort: "Image<br>Analysis",
             title: "Image Capture",
             desc: "Continuously capture satellite imagery of these fields at defined intervals. Analyze temporal changes in color, texture, and growth patterns.",
             icon: "product/RCI-step-2.png",
@@ -695,6 +697,7 @@
         const stage = document.getElementById("ssc-stage");
         const nodesWrap = document.getElementById("ssc-nodes");
         const arc = document.getElementById("ssc-arc");
+const bgRing = document.getElementById("ssc-bg-ring");
 
       const featuresPanel = document.getElementById("ssc-features-panel");
 const featureAppBox = document.getElementById("ssc-feature-app-box");
@@ -847,23 +850,27 @@ btnBackendMobile?.addEventListener("click", () => setToggle("backend"));
           detail.classList.remove("opacity-0", "pointer-events-none");
         }
 
- function setToggle(mode) {
+function setToggle(mode) {
   currentMode = mode;
 
   if (mode === "features") {
+    stopAutoplay();
+
     btnFeatures?.classList.add("bg-white", "text-[#0E2A47]", "shadow");
-  // 👇 ADD THIS
-  mobilePanel?.classList.remove("border-[#0E2A47]/15", "border-slate-200");
-  mobilePanel?.classList.add("border-transparent");
+    mobilePanel?.classList.remove("border-[#0E2A47]/15", "border-slate-200");
+    mobilePanel?.classList.add("border-transparent");
     btnFeatures?.classList.remove("text-slate-500");
-btnFeaturesMobile?.classList.add("bg-white", "text-[#0E2A47]", "shadow");
-btnFeaturesMobile?.classList.remove("text-slate-500");
 
-btnBackendMobile?.classList.remove("bg-white", "text-[#0E2A47]", "shadow");
-btnBackendMobile?.classList.add("text-slate-500");
-    
+    btnFeaturesMobile?.classList.add("bg-white", "text-[#0E2A47]", "shadow");
+    btnFeaturesMobile?.classList.remove("text-slate-500");
 
-btnBackend?.classList.remove("bg-white", "text-[#0E2A47]", "shadow");
+    btnBackendMobile?.classList.remove("bg-white", "text-[#0E2A47]", "shadow");
+    btnBackendMobile?.classList.add("text-slate-500");
+
+    bgRing?.classList.add("opacity-0");
+    bgRing?.classList.remove("opacity-100");
+
+    btnBackend?.classList.remove("bg-white", "text-[#0E2A47]", "shadow");
     btnBackend?.classList.add("text-slate-500");
 
     panel?.classList.remove(
@@ -889,22 +896,32 @@ btnBackend?.classList.remove("bg-white", "text-[#0E2A47]", "shadow");
     }
 
     showDesktopFeatures();
-
   } else {
+    if (isMobileView()) {
+      runMobileIntro();
+    } else {
+      section.classList.remove("ssc-desktop-intro");
+      void section.offsetWidth;
+      runDesktopIntro();
+    }
+
     btnBackend?.classList.add("bg-white", "text-[#0E2A47]", "shadow");
     btnBackend?.classList.remove("text-slate-500");
+
+    bgRing?.classList.remove("opacity-0");
+    bgRing?.classList.add("opacity-100");
 
     btnFeatures?.classList.remove("bg-white", "text-[#0E2A47]", "shadow");
     btnFeatures?.classList.add("text-slate-500");
 
-btnBackendMobile?.classList.add("bg-white", "text-[#0E2A47]", "shadow");
-btnBackendMobile?.classList.remove("text-slate-500");
+    btnBackendMobile?.classList.add("bg-white", "text-[#0E2A47]", "shadow");
+    btnBackendMobile?.classList.remove("text-slate-500");
 
-btnFeaturesMobile?.classList.remove("bg-white", "text-[#0E2A47]", "shadow");
-btnFeaturesMobile?.classList.add("text-slate-500");
+    btnFeaturesMobile?.classList.remove("bg-white", "text-[#0E2A47]", "shadow");
+    btnFeaturesMobile?.classList.add("text-slate-500");
 
-mobilePanel?.classList.remove("border-transparent");
-mobilePanel?.classList.add("border", "border-[#0E2A47]/15");
+    mobilePanel?.classList.remove("border-transparent");
+    mobilePanel?.classList.add("border", "border-[#0E2A47]/15");
 
     panel?.classList.add(
       "border",
@@ -929,6 +946,7 @@ mobilePanel?.classList.add("border", "border-[#0E2A47]/15");
     }
 
     showDesktopIntro();
+    startAutoplay();
   }
 }
 
@@ -1164,18 +1182,19 @@ btn.addEventListener("click", () => {
         }
 
         function startAutoplay() {
-          if (isReducedMotion) return;
-          if (autoplay) return;
+  if (isReducedMotion) return;
+  if (autoplay) return;
+  if (currentMode !== "backend") return;
 
-          autoplay = true;
-          let i = active < 0 ? 0 : active;
+  autoplay = true;
+  let i = active < 0 ? 0 : active;
 
-          timer = setInterval(() => {
-            const next = (i + 1) % nodeCount;
-            setActive(next, true);
-            i = next;
-          }, 1800);
-        }
+  timer = setInterval(() => {
+    const next = (i + 1) % nodeCount;
+    setActive(next, true);
+    i = next;
+  }, 1800);
+}
 
         function stopAutoplay() {
           autoplay = false;
@@ -1249,43 +1268,34 @@ btn.addEventListener("click", () => {
         }
 
         function setupScrollTrigger() {
-          const io = new IntersectionObserver(
-            (entries) => {
-              entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                  runCountersOnce();
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          runCountersOnce();
 
-                  if (isMobileView()) {
-                    if (!section.dataset.mobileAnimated) {
-                      runMobileIntro();
-                      section.dataset.mobileAnimated = "true";
-                    }
+          if (isMobileView()) {
+            runMobileHelper();
+          }
 
-                    runMobileHelper();
-                    if (!autoplay) startAutoplay();
-                  } else {
-                    if (!section.dataset.desktopAnimated) {
-                      runDesktopIntro();
-                      section.dataset.desktopAnimated = "true";
-                    }
+          if (currentMode === "backend" && !autoplay) {
+            startAutoplay();
+          }
+        } else {
+          stopAutoplay();
+          stopHelper();
 
-                    if (!autoplay) startAutoplay();
-                  }
-                } else {
-                  stopAutoplay();
-                  stopHelper();
-
-                  if (!isMobileView() && hasHover && currentMode === "backend") {
-                    showDesktopIntro();
-                  }
-                }
-              });
-            },
-            { threshold: 0.35 }
-          );
-
-          io.observe(section);
+          if (!isMobileView() && hasHover && currentMode === "backend") {
+            showDesktopIntro();
+          }
         }
+      });
+    },
+    { threshold: 0.35 }
+  );
+
+  io.observe(section);
+}
 
         mobileClose?.addEventListener("click", closeMobileDetail);
 
