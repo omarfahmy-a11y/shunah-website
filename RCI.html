@@ -1239,6 +1239,13 @@ btn.addEventListener("click", () => {
 
         function runDesktopIntro() {
           section.classList.add("ssc-desktop-intro");
+if (!section.classList.contains("ssc-intro-done")) {
+  section.classList.add("ssc-desktop-intro")
+
+  setTimeout(() => {
+    section.classList.add("ssc-intro-done")
+  }, 1000)
+}
           setTimeout(() => {
             section.classList.remove("ssc-desktop-intro");
           }, 1600);
