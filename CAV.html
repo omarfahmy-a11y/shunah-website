@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Shunah | RCI</title>
+  <title>Shunah | Aided Vision </title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link
@@ -64,25 +64,35 @@
 .phone-float {
   animation: phoneFloat 6s ease-in-out infinite;
 }
-    .ssc-helper-run {
-      animation: sscHelperTap 0.9s ease forwards;
-    }
+   .ssc-helper-run {
+  animation: sscHelperTap 3.6s ease forwards;
+}
 
-    .ssc-helper-text-in {
-      animation: sscHelperTextIn 0.45s ease forwards;
-    }
+.ssc-helper-text-in {
+  animation: sscHelperTextIn 0.45s ease forwards;
+}
 
-    @keyframes sscHelperTap {
-      0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
-      20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-      55% { opacity: 1; transform: translate(-42%, -42%) scale(0.95); }
-      100% { opacity: 0; transform: translate(-42%, -42%) scale(0.92); }
-    }
+.ssc-helper-pulse {
+  animation: sscHelperPulse 1.6s ease-out infinite;
+}
 
-    @keyframes sscHelperTextIn {
-      0% { opacity: 0; transform: translateX(-50%) translateY(10px); }
-      100% { opacity: 1; transform: translateX(-50%) translateY(0); }
-    }
+@keyframes sscHelperTap {
+  0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.82); }
+  18%  { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  58%  { opacity: 1; transform: translate(-42%, -42%) scale(0.96); }
+  100% { opacity: 0; transform: translate(-42%, -42%) scale(0.92); }
+}
+
+@keyframes sscHelperTextIn {
+  0%   { opacity: 0; transform: translateX(-50%) translateY(10px); }
+  100% { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+@keyframes sscHelperPulse {
+  0%   { transform: translate(-50%, -50%) scale(0.92); opacity: 0; }
+  25%  { opacity: 0.55; }
+  100% { transform: translate(-50%, -50%) scale(1.38); opacity: 0; }
+}
 
     @media (min-width: 1024px) {
       #shunah-satellite-circle.ssc-desktop-intro #ssc-header {
@@ -197,10 +207,10 @@
           <div class="w-10 h-[2px] bg-[#2F5DA8] mb-5 rounded-full"></div>
 
           <h2 class="text-[44px] leading-[1.05] font-semibold tracking-[-0.02em] text-[#0F172A]">
-            Computer <span class="text-[#2F5DA8]">Aided Vision</span>
+              Computer <span class="text-[#2F5DA8]">Aided Vision</span>
           </h2>
 
-          <p class="mt-6 max-w-[540px] text-[16px] leading-[1.75] text-slate-600">
+        <p class="mt-6 max-w-[540px] text-[16px] leading-[1.75] text-slate-600">
             Computer-aided vision digitizes crop quality at the farm gate—removing subjectivity, standardizing grading, and enabling traceability. Each interaction builds a dynamic quality profile for every farmer, creating a digital identity of the grower and their land.
           </p>
   <!-- DESKTOP TOGGLE: ABOVE METRICS -->
@@ -228,23 +238,23 @@
   <div class="grid grid-cols-3 gap-4 items-start">
     <div class="flex flex-col gap-1 text-left">
       <div class="text-[30px] leading-none font-semibold tracking-[-0.03em] text-[#2F5DA8]">
-        <span class="ssc-counter" data-target="80" data-suffix="%">0</span>
+        <span class="ssc-counter" data-target="85" data-suffix="%">0</span>
       </div>
       <div class="text-[10px] font-semibold tracking-[0.14em] uppercase text-slate-500">Efficiency</div>
     </div>
 
     <div class="flex flex-col gap-1 text-left">
       <div class="text-[30px] leading-none font-semibold tracking-[-0.03em] text-[#2F5DA8]">
-        <span class="ssc-counter" data-target="23" data-suffix="x">0</span>
+        <span class="ssc-counter" data-target="12" data-suffix="x">0</span>
       </div>
-      <div class="text-[10px] font-semibold tracking-[0.14em] uppercase text-slate-500">Faster</div>
+      <div class="text-[10px] font-semibold tracking-[0.14em] uppercase text-slate-500">Savings</div>
     </div>
 
     <div class="flex flex-col gap-1 text-left">
       <div class="text-[30px] leading-none font-semibold tracking-[-0.03em] text-[#2F5DA8]">
-        <span class="ssc-counter" data-target="45" data-suffix="x">0</span>
+        <span class="ssc-counter" data-target="10" data-suffix="x">0</span>
       </div>
-      <div class="text-[10px] font-semibold tracking-[0.14em] uppercase text-slate-500">Saving</div>
+      <div class="text-[10px] font-semibold tracking-[0.14em] uppercase text-slate-500">Faster</div>
     </div>
   </div>
 </div>
@@ -276,23 +286,23 @@
   <div class="grid grid-cols-3 gap-8 items-start">
     <div class="flex flex-col gap-1 text-left">
       <div class="text-[40px] leading-none font-semibold tracking-[-0.03em] text-[#2F5DA8]">
-        <span class="ssc-counter" data-target="80" data-suffix="%">0</span>
+        <span class="ssc-counter" data-target="85" data-suffix="%">0</span>
       </div>
       <div class="text-[12px] font-semibold tracking-[0.16em] uppercase text-slate-500">Efficiency</div>
     </div>
 
     <div class="flex flex-col gap-1 text-left">
       <div class="text-[40px] leading-none font-semibold tracking-[-0.03em] text-[#2F5DA8]">
-        <span class="ssc-counter" data-target="23" data-suffix="x">0</span>
+        <span class="ssc-counter" data-target="12" data-suffix="x">0</span>
       </div>
-      <div class="text-[12px] font-semibold tracking-[0.16em] uppercase text-slate-500">Faster</div>
+      <div class="text-[12px] font-semibold tracking-[0.16em] uppercase text-slate-500">Saving</div>
     </div>
 
     <div class="flex flex-col gap-1 text-left">
       <div class="text-[40px] leading-none font-semibold tracking-[-0.03em] text-[#2F5DA8]">
-        <span class="ssc-counter" data-target="45" data-suffix="x">0</span>
+        <span class="ssc-counter" data-target="10" data-suffix="x">0</span>
       </div>
-      <div class="text-[12px] font-semibold tracking-[0.16em] uppercase text-slate-500">Saving</div>
+      <div class="text-[12px] font-semibold tracking-[0.16em] uppercase text-slate-500">Faster</div>
     </div>
   </div>
 </div>
@@ -312,7 +322,7 @@
 <div class="absolute inset-0 -z-10 bg-[radial-gradient(circle,rgba(47,93,168,0.18)_0%,transparent_70%)] blur-2xl"></div>
   
      <img
-  src="RCI/app2.png"
+  src="CAD/app2.png"
   class="h-[110%] w-[110%] object-contain mx-auto"
       onerror="this.style.opacity='0'; this.parentElement.style.background='white';"
     />
@@ -377,21 +387,34 @@ class="opacity-0 transition-opacity duration-500"
                 <div id="ssc-nodes" class="absolute inset-0"></div>
 
                 <div
-                  id="ssc-mobile-helper"
-                  class="pointer-events-none absolute inset-0 z-20 hidden lg:hidden"
-                  aria-hidden="true"
-                >
-                  <div id="ssc-helper-hand" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-4xl opacity-0">
-                    👆
-                  </div>
+<div
+  id="ssc-mobile-helper"
+  class="pointer-events-none absolute inset-0 z-20 hidden lg:hidden"
+  aria-hidden="true"
+>
+  <div
+    id="ssc-helper-pulse-ring"
+    class="ssc-helper-pulse absolute left-1/2 top-[28%] h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[#2F5DA8] opacity-0"
+  ></div>
 
-                  <div
-                    id="ssc-helper-bubble"
-                    class="absolute left-1/2 top-[72%] w-[220px] -translate-x-1/2 rounded-full bg-white/95 px-4 py-2 text-center text-xs font-semibold text-slate-700 shadow-lg opacity-0"
-                  >
-                    Click on the circle to know more
-                  </div>
-                </div>
+  <div
+    id="ssc-helper-hand"
+    class="absolute left-1/2 top-[28%] -translate-x-1/2 -translate-y-1/2 opacity-0 drop-shadow-[0_8px_20px_rgba(14,42,71,0.35)]"
+  >
+    <img
+      src="CAD/tap-icon.png"
+      class="w-16 h-16 object-contain opacity-100"
+    />
+  </div>
+
+  <div
+    id="ssc-helper-bubble"
+    class="absolute left-1/2 top-[68%] w-[250px] -translate-x-1/2 rounded-xl border border-white/10 bg-[#0E2A47] px-5 py-3 text-center text-sm font-semibold text-white shadow-[0_12px_34px_rgba(14,42,71,0.28)] opacity-0"
+  >
+    <div class="absolute inset-0 -z-10 rounded-xl bg-[#2F5DA8]/20 blur-xl"></div>
+    Tap A Circle To Explore
+  </div>
+</div>
               </div>
             </div>
 
@@ -412,34 +435,34 @@ class="opacity-0 transition-opacity duration-500"
   <div class="grid grid-cols-3 gap-4 text-center items-start">
     <div class="flex flex-col items-center">
       <img
-        src="RCI/locate-crops.png"
-        alt="Locate Crops"
+        src="CAD/detect-quality.png"
+        alt="Detect Quality"
         class="h-14 w-14 object-contain"
       />
       <h3 class="mt-2 text-[13px] font-semibold leading-tight text-[#64748B] lg:text-black">
-        Locate<Br>Dry Crops
+        Detect<Br>Quality
       </h3>
     </div>
 
     <div class="flex flex-col items-center">
       <img
-        src="RCI/supply-intelligence.png"
-        alt="Supply Intelligence"
+        src="CAD/standardize-grading.png"
+        alt="Standardize Grading"
         class="h-14 w-14 object-contain"
       />
       <h3 class="mt-2 text-[13px] font-semibold leading-tight text-[#64748B] lg:text-black">
-        Analyze<Br>Supply
+        Standardize<Br>Grading
       </h3>
     </div>
 
     <div class="flex flex-col items-center">
       <img
-        src="RCI/procurement-planning.png"
-        alt="Procurement Planning"
+        src="CAD/build-intelligence.png"
+        alt="Build Intelligence"
         class="h-14 w-14 object-contain"
       />
       <h3 class="mt-2 text-[13px] font-semibold leading-tight text-[#64748B] lg:text-black">
-        Optimize Procurement
+        Build Intelligence
       </h3>
     </div>
   </div>
@@ -513,51 +536,51 @@ class="opacity-0 transition-opacity duration-500"
 
 <div class="flex items-start gap-4">
   <img
-    src="RCI/locate-crops.png"
-    alt="Locate Crops"
+    src="CAD/detect-quality.png"
+    alt="Detect Quality"
     class="h-16 w-16 object-contain shrink-0"
   />
 
   <div class="flex flex-col text-left pt-1">
     <h3 class="text-[15px] font-semibold text-black">
-      Locate Dry Crops
+     Detect Quality
     </h3>
     <p class="text-[13px] text-slate-500 leading-snug">
-      Identify crop locations across regions instantly.
+     Assess crop quality instantly at farm gate, reducing losses
     </p>
   </div>
 </div>
 
                 <div class="flex items-start gap-4">
   <img
-    src="RCI/supply-intelligence.png"
-    alt="Supply Intelligence"
+    src="CAD/standardize-grading.png"
+    alt="Standardize Grading"
     class="h-16 w-16 object-contain shrink-0"
   />
 
   <div class="flex flex-col text-left pt-1">
     <h3 class="text-[15px] font-semibold text-black">
-      Analyze Supply
+      Standardize Grading
     </h3>
     <p class="text-[13px] text-slate-500 leading-snug">
-      Real-time insights on supply, availability, and volumes.
+    Consistent grading eliminating human variability
     </p>
   </div>
 </div>
 
                   <div class="flex items-start gap-4">
   <img
-    src="RCI/procurement-planning.png"
-    alt="Procurement Planning"
+    src="CAD/build-intelligence.png"
+    alt="Build Intelligence"
     class="h-16 w-16 object-contain shrink-0"
   />
 
   <div class="flex flex-col text-left pt-1">
     <h3 class="text-[15px] font-semibold text-black">
-      Plan Procurement
+      Build Intelligence
     </h3>
     <p class="text-[13px] text-slate-500 leading-snug">
-      Plan sourcing with precision across regions and timelines.
+     Create data library linking quality to farmer and region
     </p>
   </div>
 </div>
@@ -622,8 +645,9 @@ class="opacity-0 transition-opacity duration-500"
         const section = document.getElementById("shunah-satellite-circle");
         if (!section) return;
 
-       const steps = [
-  {
+        const steps = [
+         
+ {
     short: "Build<br>Model",
     mobileShort: "Build Model",
     title: "Build Model",
@@ -689,6 +713,7 @@ class="opacity-0 transition-opacity duration-500"
   }
 ];
 
+
         const stage = document.getElementById("ssc-stage");
         const nodesWrap = document.getElementById("ssc-nodes");
         const arc = document.getElementById("ssc-arc");
@@ -721,9 +746,10 @@ const mobileFeatures = document.getElementById("ssc-mobile-features");
         const leftCol = document.getElementById("ssc-left-col");
         const stageWrap = document.getElementById("ssc-stageWrap");
 
-        const helper = document.getElementById("ssc-mobile-helper");
-        const helperHand = document.getElementById("ssc-helper-hand");
-        const helperBubble = document.getElementById("ssc-helper-bubble");
+      const helper = document.getElementById("ssc-mobile-helper");
+const helperHand = document.getElementById("ssc-helper-hand");
+const helperBubble = document.getElementById("ssc-helper-bubble");
+const helperPulseRing = document.getElementById("ssc-helper-pulse-ring");
 
         const pulse = document.getElementById("ssc-pulse");
         const pulse2 = document.getElementById("ssc-pulse2");
@@ -741,7 +767,13 @@ btnFeatures?.addEventListener("click", () => setToggle("features"));
 btnBackend?.addEventListener("click", () => setToggle("backend"));
 
 btnFeaturesMobile?.addEventListener("click", () => setToggle("features"));
-btnBackendMobile?.addEventListener("click", () => setToggle("backend"));
+btnBackendMobile?.addEventListener("click", () => {
+  setToggle("backend");
+
+  if (isMobileView()) {
+    runMobileHelper();
+  }
+});
         const dashTotal = 235.6;
         const nodeRadiusPercent = 37.5;
         const nodeCount = steps.length;
@@ -849,7 +881,8 @@ function setToggle(mode) {
   currentMode = mode;
 
   if (mode === "features") {
-    stopAutoplay();
+    stopHelper();
+stopAutoplay();
 
     btnFeatures?.classList.add("bg-white", "text-[#0E2A47]", "shadow");
     mobilePanel?.classList.remove("border-[#0E2A47]/15", "border-slate-200");
@@ -1208,29 +1241,41 @@ btn.addEventListener("click", () => {
           document.documentElement.style.overflow = "";
         }
 
-        function stopHelper() {
-          if (helperTimer) clearTimeout(helperTimer);
-          helperTimer = null;
-          helper?.classList.add("hidden");
-          helperHand?.classList.remove("ssc-helper-run");
-          helperBubble?.classList.remove("ssc-helper-text-in");
-        }
+       function stopHelper() {
+  if (helperTimer) clearTimeout(helperTimer);
+  helperTimer = null;
 
-        function runMobileHelper() {
-          if (!isMobileView() || !helper || isReducedMotion) return;
+  helper?.classList.add("hidden");
 
-          stopHelper();
-          helper.classList.remove("hidden");
+  helperHand?.classList.remove("ssc-helper-run");
+  helperBubble?.classList.remove("ssc-helper-text-in");
+  helperPulseRing?.classList.remove("ssc-helper-pulse");
 
-          requestAnimationFrame(() => {
-            helperHand?.classList.add("ssc-helper-run");
-            helperBubble?.classList.add("ssc-helper-text-in");
-          });
+  if (helperHand) helperHand.style.opacity = "";
+  if (helperBubble) helperBubble.style.opacity = "";
+  if (helperPulseRing) helperPulseRing.style.opacity = "";
+}
 
-          helperTimer = setTimeout(() => {
-            stopHelper();
-          }, 2800);
-        }
+function runMobileHelper() {
+  if (!isMobileView() || !helper || isReducedMotion) return;
+
+  stopHelper();
+  helper.classList.remove("hidden");
+
+  if (helperHand) helperHand.style.opacity = "1";
+  if (helperBubble) helperBubble.style.opacity = "1";
+  if (helperPulseRing) helperPulseRing.style.opacity = "1";
+
+  requestAnimationFrame(() => {
+    helperHand?.classList.add("ssc-helper-run");
+    helperBubble?.classList.add("ssc-helper-text-in");
+    helperPulseRing?.classList.add("ssc-helper-pulse");
+  });
+
+  helperTimer = setTimeout(() => {
+    stopHelper();
+  }, 4200);
+}
 
    function runDesktopIntro() {
   if (section.classList.contains("ssc-intro-done")) return;
@@ -1273,10 +1318,7 @@ btn.addEventListener("click", () => {
         if (entry.isIntersecting) {
           runCountersOnce();
 
-          if (isMobileView()) {
-            runMobileHelper();
-          }
-
+         
           if (currentMode === "backend" && !autoplay) {
             startAutoplay();
           }
