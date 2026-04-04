@@ -180,10 +180,15 @@
     }
 
     @media (max-width: 1023px) {
-      .ssc-hotspot {
-        width: 64px;
-        height: 64px;
-      }
+  .ssc-hide-stage {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+  }
+}
 
       #ssc-header.ssc-mobile-hidden {
         display: none;
@@ -347,21 +352,21 @@
         </div>
 
         <!-- CENTER -->
-        <div id="ssc-left-col" class="min-h-0 pt-1 lg:pt-16 lg:col-span-5">
+        <div id="ssc-left-col" class="min-h-0 pt-0 lg:pt-16 lg:col-span-5">
           <div class="relative h-full min-h-0 overflow-visible">
-            <div id="ssc-stageWrap" class="relative mx-auto transition-opacity duration-300">
-
-             <div
+            <div id="ssc-stageWrap" class="relative mx-auto mt-0 pt-0transition-opacity duration-300">
+ 
+            <div
   id="ssc-feature-app-box"
-  class="relative mx-auto w-full max-w-[320px] h-[380px] overflow-hidden rounded-[28px] bg-white z-30 lg:absolute lg:left-1/2 lg:top-[95%] lg:h-[500px] lg:w-[550px] lg:max-w-none lg:-translate-x-1/2 lg:-translate-y-1/2"
+  class="relative mx-auto w-full max-w-[260px] h-auto flex items-center justify-center overflow-hidden rounded-[28px] bg-white z-30 lg:absolute lg:left-1/2 lg:top-[95%] lg:h-[500px] lg:w-[550px] lg:max-w-none lg:-translate-x-1/2 lg:-translate-y-1/2"
 >
                 <div class="absolute inset-0 -z-10 bg-[radial-gradient(circle,rgba(47,93,168,0.18)_0%,transparent_70%)] blur-2xl"></div>
 
-                <img
-                  src="IOT/app2.png"
-                  class="h-[110%] w-[110%] object-contain mx-auto"
-                  onerror="this.style.opacity='0'; this.parentElement.style.background='white';"
-                />
+         <img
+  src="IOT/app2.png"
+  class="h-full w-full object-contain mx-auto"
+  onerror="this.style.opacity='0'; this.parentElement.style.background='white';"
+/>
               </div>
 
               <div
@@ -420,28 +425,28 @@
           </radialGradient>
 
           <clipPath id="circleOneClip">
-  <circle cx="320" cy="150" r="40" />
-</clipPath>
+            <circle cx="360" cy="180" r="40" />
+          </clipPath>
 
-<clipPath id="circleTwoClip">
-  <circle cx="810" cy="240" r="55" />
-</clipPath>
+          <clipPath id="circleTwoClip">
+            <circle cx="770" cy="250" r="55" />
+          </clipPath>
 
-<clipPath id="circleThreeClip">
-  <circle cx="280" cy="430" r="45" />
-</clipPath>
+          <clipPath id="circleThreeClip">
+            <circle cx="320" cy="410" r="45" />
+          </clipPath>
 
-<clipPath id="circleFourClip">
-  <circle cx="820" cy="390" r="32" />
-</clipPath>
+          <clipPath id="circleFourClip">
+            <circle cx="790" cy="380" r="32" />
+          </clipPath>
 
-<clipPath id="circleFiveClip">
-  <circle cx="740" cy="130" r="48" />
-</clipPath>
+          <clipPath id="circleFiveClip">
+            <circle cx="700" cy="150" r="48" />
+          </clipPath>
 
-<clipPath id="circleSixClip">
-  <circle cx="235" cy="280" r="56" />
-</clipPath>
+          <clipPath id="circleSixClip">
+            <circle cx="280" cy="290" r="56" />
+          </clipPath>
         </defs>
 
         <!-- background -->
@@ -480,111 +485,110 @@
         <!-- big circles as image placeholders -->
         <!-- ========================= -->
 
-       <!-- 1 -->
-<circle cx="320" cy="150" r="40" fill="#ffffff" stroke="#88ffcc" stroke-width="2" filter="url(#softGlow)" />
-<image
-  href="IOT/IOT-step-1.png"
-  x="280"
-  y="110"
-  width="80"
-  height="80"
-  preserveAspectRatio="xMidYMid slice"
-  clip-path="url(#circleOneClip)"
-/>
+        <!-- 1 -->
+        <circle cx="360" cy="180" r="40" fill="#ffffff" stroke="#88ffcc" stroke-width="2" filter="url(#softGlow)" />
+        <image
+          href="IOT/IOT-step-1.png"
+          x="320"
+          y="140"
+          width="80"
+          height="80"
+          preserveAspectRatio="xMidYMid slice"
+          clip-path="url(#circleOneClip)"
+        />
 
-<!-- 2 -->
-<circle cx="810" cy="240" r="55" fill="#ffffff" stroke="#8ad4ff" stroke-width="1.5" filter="url(#softGlow)" />
-<image
-  href="IOT/IOT-step-2.png"
-  x="755"
-  y="185"
-  width="110"
-  height="110"
-  preserveAspectRatio="xMidYMid slice"
-  clip-path="url(#circleTwoClip)"
-/>
+        <!-- 2 -->
+        <circle cx="770" cy="250" r="55" fill="#ffffff" stroke="#8ad4ff" stroke-width="1.5" filter="url(#softGlow)" />
+        <image
+          href="IOT/IOT-step-2.png"
+          x="715"
+          y="195"
+          width="110"
+          height="110"
+          preserveAspectRatio="xMidYMid slice"
+          clip-path="url(#circleTwoClip)"
+        />
 
-<!-- 3 -->
-<circle cx="280" cy="430" r="45" fill="#ffffff" stroke="#70e0ff" stroke-width="2" filter="url(#softGlow)" />
-<image
-  href="IOT/IOT-step-3.png"
-  x="235"
-  y="385"
-  width="90"
-  height="90"
-  preserveAspectRatio="xMidYMid slice"
-  clip-path="url(#circleThreeClip)"
-/>
+        <!-- 3 -->
+        <circle cx="320" cy="410" r="45" fill="#ffffff" stroke="#70e0ff" stroke-width="2" filter="url(#softGlow)" />
+        <image
+          href="IOT/IOT-step-3.png"
+          x="275"
+          y="365"
+          width="90"
+          height="90"
+          preserveAspectRatio="xMidYMid slice"
+          clip-path="url(#circleThreeClip)"
+        />
 
-<!-- 4 -->
-<circle cx="820" cy="390" r="32" fill="#ffffff" stroke="#44ffc2" stroke-width="2.2" filter="url(#softGlow)" />
-<image
-  href="IOT/IOT-step-4.png"
-  x="788"
-  y="358"
-  width="64"
-  height="64"
-  preserveAspectRatio="xMidYMid slice"
-  clip-path="url(#circleFourClip)"
-/>
+        <!-- 4 -->
+        <circle cx="790" cy="380" r="32" fill="#ffffff" stroke="#44ffc2" stroke-width="2.2" filter="url(#softGlow)" />
+        <image
+          href="IOT/IOT-step-4.png"
+          x="758"
+          y="348"
+          width="64"
+          height="64"
+          preserveAspectRatio="xMidYMid slice"
+          clip-path="url(#circleFourClip)"
+        />
 
-<!-- 5 -->
-<circle cx="740" cy="130" r="48" fill="#ffffff" stroke="#ffd966" stroke-width="2" filter="url(#softGlow)" />
-<image
-  href="IOT/IOT-step-5.png"
-  x="692"
-  y="82"
-  width="96"
-  height="96"
-  preserveAspectRatio="xMidYMid slice"
-  clip-path="url(#circleFiveClip)"
-/>
+        <!-- 5 -->
+        <circle cx="700" cy="150" r="48" fill="#ffffff" stroke="#ffd966" stroke-width="2" filter="url(#softGlow)" />
+        <image
+          href="IOT/IOT-step-5.png"
+          x="652"
+          y="102"
+          width="96"
+          height="96"
+          preserveAspectRatio="xMidYMid slice"
+          clip-path="url(#circleFiveClip)"
+        />
 
-<!-- 6 -->
-<circle cx="235" cy="280" r="56" fill="#ffffff" stroke="#5fc3ff" stroke-width="1.8" filter="url(#softGlow)" />
-<image
-  href="IOT/IOT-step-6.png"
-  x="179"
-  y="224"
-  width="112"
-  height="112"
-  preserveAspectRatio="xMidYMid slice"
-  clip-path="url(#circleSixClip)"
-/>
-
+        <!-- 6 -->
+        <circle cx="280" cy="290" r="56" fill="#ffffff" stroke="#5fc3ff" stroke-width="1.8" filter="url(#softGlow)" />
+        <image
+          href="IOT/IOT-step-6.png"
+          x="224"
+          y="234"
+          width="112"
+          height="112"
+          preserveAspectRatio="xMidYMid slice"
+          clip-path="url(#circleSixClip)"
+        />
 
         <!-- main connections -->
-        <line x1="550" y1="310" x2="320" y2="150" stroke="url(#ringGrad)" stroke-width="1.8" stroke-dasharray="6 4" opacity="0.7">
-  <animate attributeName="stroke-dashoffset" values="0;20" dur="2.5s" repeatCount="indefinite" />
-</line>
+        <line x1="550" y1="310" x2="360" y2="180" stroke="url(#ringGrad)" stroke-width="1.8" stroke-dasharray="6 4" opacity="0.7">
+          <animate attributeName="stroke-dashoffset" values="0;20" dur="2.5s" repeatCount="indefinite" />
+        </line>
 
-<line x1="550" y1="310" x2="810" y2="240" stroke="url(#ringGrad)" stroke-width="1.8" stroke-dasharray="6 4" opacity="0.7">
-  <animate attributeName="stroke-dashoffset" values="0;20" dur="2.2s" repeatCount="indefinite" />
-</line>
+        <line x1="550" y1="310" x2="770" y2="250" stroke="url(#ringGrad)" stroke-width="1.8" stroke-dasharray="6 4" opacity="0.7">
+          <animate attributeName="stroke-dashoffset" values="0;20" dur="2.2s" repeatCount="indefinite" />
+        </line>
 
-<line x1="550" y1="310" x2="280" y2="430" stroke="url(#ringGrad)" stroke-width="1.8" stroke-dasharray="6 4" opacity="0.7">
-  <animate attributeName="stroke-dashoffset" values="0;20" dur="2.8s" repeatCount="indefinite" />
-</line>
+        <line x1="550" y1="310" x2="320" y2="410" stroke="url(#ringGrad)" stroke-width="1.8" stroke-dasharray="6 4" opacity="0.7">
+          <animate attributeName="stroke-dashoffset" values="0;20" dur="2.8s" repeatCount="indefinite" />
+        </line>
 
-<line x1="550" y1="310" x2="820" y2="390" stroke="url(#ringGrad)" stroke-width="1.8" stroke-dasharray="6 4" opacity="0.7">
-  <animate attributeName="stroke-dashoffset" values="0;20" dur="2.3s" repeatCount="indefinite" />
-</line>
+        <line x1="550" y1="310" x2="790" y2="380" stroke="url(#ringGrad)" stroke-width="1.8" stroke-dasharray="6 4" opacity="0.7">
+          <animate attributeName="stroke-dashoffset" values="0;20" dur="2.3s" repeatCount="indefinite" />
+        </line>
 
-<line x1="550" y1="310" x2="740" y2="130" stroke="url(#ringGrad)" stroke-width="1.6" stroke-dasharray="5 5" opacity="0.65">
-  <animate attributeName="stroke-dashoffset" values="0;15" dur="2s" repeatCount="indefinite" />
-</line>
+        <line x1="550" y1="310" x2="700" y2="150" stroke="url(#ringGrad)" stroke-width="1.6" stroke-dasharray="5 5" opacity="0.65">
+          <animate attributeName="stroke-dashoffset" values="0;15" dur="2s" repeatCount="indefinite" />
+        </line>
 
-<line x1="550" y1="310" x2="235" y2="280" stroke="url(#ringGrad)" stroke-width="1.6" stroke-dasharray="5 5" opacity="0.65">
-  <animate attributeName="stroke-dashoffset" values="0;15" dur="2.6s" repeatCount="indefinite" />
-</line>
+        <line x1="550" y1="310" x2="280" y2="290" stroke="url(#ringGrad)" stroke-width="1.6" stroke-dasharray="5 5" opacity="0.65">
+          <animate attributeName="stroke-dashoffset" values="0;15" dur="2.6s" repeatCount="indefinite" />
+        </line>
 
         <!-- mesh connections -->
-    <line x1="320" y1="150" x2="235" y2="280" stroke="#58bef0" stroke-width="1.4" stroke-dasharray="4 3" opacity="0.55" />
-<line x1="810" y1="240" x2="740" y2="130" stroke="#58bef0" stroke-width="1.4" stroke-dasharray="4 3" opacity="0.55" />
-<line x1="820" y1="390" x2="810" y2="240" stroke="#58bef0" stroke-width="1.4" stroke-dasharray="4 3" opacity="0.55" />
-<line x1="280" y1="430" x2="235" y2="280" stroke="#4ab0ef" stroke-width="1.3" stroke-dasharray="3 4" opacity="0.5" />
-<line x1="320" y1="150" x2="412" y2="387" stroke="#70c8ff" stroke-width="1.2" stroke-dasharray="3 5" opacity="0.6" />
-<line x1="688" y1="387" x2="810" y2="240" stroke="#70c8ff" stroke-width="1.2" stroke-dasharray="3 5" opacity="0.6" />
+        <line x1="360" y1="180" x2="280" y2="290" stroke="#58bef0" stroke-width="1.4" stroke-dasharray="4 3" opacity="0.55" />
+        <line x1="770" y1="250" x2="700" y2="150" stroke="#58bef0" stroke-width="1.4" stroke-dasharray="4 3" opacity="0.55" />
+        <line x1="790" y1="380" x2="770" y2="250" stroke="#58bef0" stroke-width="1.4" stroke-dasharray="4 3" opacity="0.55" />
+        <line x1="320" y1="410" x2="280" y2="290" stroke="#4ab0ef" stroke-width="1.3" stroke-dasharray="3 4" opacity="0.5" />
+        <line x1="360" y1="180" x2="412" y2="387" stroke="#70c8ff" stroke-width="1.2" stroke-dasharray="3 5" opacity="0.6" />
+        <line x1="688" y1="387" x2="770" y2="250" stroke="#70c8ff" stroke-width="1.2" stroke-dasharray="3 5" opacity="0.6" />
 
         <!-- floating particles -->
         <circle cx="340" cy="295" r="3" fill="#94f0ff">
@@ -644,8 +648,9 @@
           </circle>
         </g>
 
-      </svg> </svg>
-                  </div>
+      </svg>
+    </div>
+
                 </div>
 
                 <div id="ssc-nodes" class="absolute inset-0 z-20"></div>
@@ -657,22 +662,22 @@
                 >
                   <div
                     id="ssc-helper-pulse-ring"
-                    class="absolute left-[20.9%] top-[35.5%] h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[#2F5DA8] opacity-0"
+                    class="absolute left-[32.9%] top-[35.5%] h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[#2F5DA8] opacity-0"
                   ></div>
 
                   <div
                     id="ssc-helper-hand"
-                    class="absolute left-[20.9%] top-[35.5%] -translate-x-1/2 -translate-y-1/2 opacity-0 drop-shadow-[0_8px_20px_rgba(14,42,71,0.35)]"
+                    class="absolute left-[32.9%] top-[35.5%] -translate-x-1/2 -translate-y-1/2 opacity-0 drop-shadow-[0_8px_20px_rgba(14,42,71,0.35)]"
                   >
                     <img
                       src="IOT/tap-icon.png"
-                      class="w-16 h-16 object-contain opacity-100"
+                      class="w-12 h-12 object-contain opacity-100"
                     />
                   </div>
 
                   <div
                     id="ssc-helper-bubble"
-                    class="absolute left-1/2 top-[82%] w-[250px] -translate-x-1/2 rounded-xl border border-white/10 bg-[#0E2A47] px-5 py-3 text-center text-sm font-semibold text-white shadow-[0_12px_34px_rgba(14,42,71,0.28)] opacity-0"
+                    class="absolute left-1/2 top-[50%] w-fit -translate-x-1/2 rounded-sm border border-white/10 bg-[#0E2A47] text-[10px] px-2 py-[2px] text-white text-center whitespace-nowrap opacity-0"
                   >
                     <div class="absolute inset-0 -z-10 rounded-xl bg-[#2F5DA8]/20 blur-xl"></div>
                     Tap A Circle To Explore
@@ -681,10 +686,10 @@
               </div>
 
               <!-- MOBILE PANEL -->
-              <div
-                id="ssc-mobile-panel"
-                class="mt-0 overflow-hidden rounded-xl border border-[#0E2A47]/15 bg-white lg:hidden"
-              >
+             <div
+  id="ssc-mobile-panel"
+  class="mt-0 overflow-hidden rounded-xl border-0 bg-white lg:hidden"
+>
                 <div id="ssc-mobile-features" class="hidden p-5">
                   <div class="text-center mb-4">
                     <div class="text-[11px] font-semibold tracking-[0.18em] uppercase text-slate-400">
@@ -994,6 +999,8 @@ if (btnFeaturesMobile && stage && featureAppBox) {
   btnFeaturesMobile.addEventListener("click", () => {
     stage.classList.add("ssc-hide-stage");
     featureAppBox.classList.remove("hidden");
+    mobilePanel.classList.remove("border", "border-[#0E2A47]/15");
+    mobilePanel.classList.add("border-0");
   });
 }
 
@@ -1001,6 +1008,8 @@ if (btnBackendMobile && stage && featureAppBox) {
   btnBackendMobile.addEventListener("click", () => {
     stage.classList.remove("ssc-hide-stage");
     featureAppBox.classList.add("hidden");
+mobilePanel.classList.remove("border-0");
+mobilePanel.classList.add("border", "border-[#0E2A47]/15");
   });
 }
 
@@ -1022,6 +1031,8 @@ if (btnFeaturesMobile && stage && featureAppBox) {
   btnFeaturesMobile.addEventListener("click", () => {
     stage.classList.add("ssc-hide-stage");
     featureAppBox.classList.remove("hidden");
+    mobilePanel.classList.remove("border", "border-[#0E2A47]/15");
+    mobilePanel.classList.add("border-0");
   });
 }
 
@@ -1029,6 +1040,8 @@ if (btnBackendMobile && stage && featureAppBox) {
   btnBackendMobile.addEventListener("click", () => {
     stage.classList.remove("ssc-hide-stage");
     featureAppBox.classList.add("hidden");
+mobilePanel.classList.remove("border-0");
+mobilePanel.classList.add("border", "border-[#0E2A47]/15");
   });
 }
 
