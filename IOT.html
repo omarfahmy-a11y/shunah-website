@@ -24,7 +24,9 @@
       min-height: 100dvh;
     }
 
-    #site-navbar {
+    
+
+#site-navbar {
       transition: transform 0.25s ease;
       will-change: transform;
     }
@@ -217,6 +219,19 @@
   pointer-events: none !important;
 }
 
+ @media (min-width: 1024px) {
+  .ssc-big-node {
+    transition: transform 0.25s ease;
+    transform-box: fill-box;
+    transform-origin: center;
+    cursor: pointer;
+  }
+
+  .ssc-big-node:hover {
+    transform: scale(1.08);
+  }
+}
+
   </style>
 </head>
 
@@ -281,23 +296,23 @@
             <div class="grid grid-cols-3 gap-4 items-start">
               <div class="flex flex-col gap-1 text-left">
                 <div class="text-[30px] leading-none font-semibold tracking-[-0.03em] text-[#2F5DA8]">
-                  <span class="ssc-counter" data-target="85" data-suffix="%">0</span>
+                  <span class="ssc-counter" data-target="20" data-suffix="%">0</span>
                 </div>
-                <div class="text-[10px] font-semibold tracking-[0.14em] uppercase text-slate-500">Efficiency</div>
+                <div class="text-[10px] font-semibold tracking-[0.14em] uppercase text-slate-500">Uplift in Utilization</div>
               </div>
 
               <div class="flex flex-col gap-1 text-left">
                 <div class="text-[30px] leading-none font-semibold tracking-[-0.03em] text-[#2F5DA8]">
-                  <span class="ssc-counter" data-target="12" data-suffix="x">0</span>
+                  <span class="ssc-counter" data-target="123" data-suffix="+">0</span>
                 </div>
-                <div class="text-[10px] font-semibold tracking-[0.14em] uppercase text-slate-500">Savings</div>
+                <div class="text-[10px] font-semibold tracking-[0.14em] uppercase text-slate-500">Nodes Connected</div>
               </div>
 
               <div class="flex flex-col gap-1 text-left">
                 <div class="text-[30px] leading-none font-semibold tracking-[-0.03em] text-[#2F5DA8]">
-                  <span class="ssc-counter" data-target="10" data-suffix="x">0</span>
+                  <span class="ssc-counter" data-target="12" data-suffix="KT">0</span>
                 </div>
-                <div class="text-[10px] font-semibold tracking-[0.14em] uppercase text-slate-500">Faster</div>
+                <div class="text-[10px] font-semibold tracking-[0.14em] uppercase text-slate-500">Tons Orchestrated</div>
               </div>
             </div>
           </div>
@@ -329,23 +344,23 @@
             <div class="grid grid-cols-3 gap-8 items-start">
               <div class="flex flex-col gap-1 text-left">
                 <div class="text-[40px] leading-none font-semibold tracking-[-0.03em] text-[#2F5DA8]">
-                  <span class="ssc-counter" data-target="85" data-suffix="%">0</span>
+                  <span class="ssc-counter" data-target="20" data-suffix="%">0</span>
                 </div>
-                <div class="text-[12px] font-semibold tracking-[0.16em] uppercase text-slate-500">Efficiency</div>
+                <div class="text-[12px] font-semibold tracking-[0.16em] uppercase text-slate-500">Uplift in Utilization</div>
               </div>
 
               <div class="flex flex-col gap-1 text-left">
                 <div class="text-[40px] leading-none font-semibold tracking-[-0.03em] text-[#2F5DA8]">
-                  <span class="ssc-counter" data-target="12" data-suffix="x">0</span>
+                  <span class="ssc-counter" data-target="123" data-suffix="+">0</span>
                 </div>
-                <div class="text-[12px] font-semibold tracking-[0.16em] uppercase text-slate-500">Saving</div>
+                <div class="text-[12px] font-semibold tracking-[0.16em] uppercase text-slate-500">Nodes Connected</div>
               </div>
 
               <div class="flex flex-col gap-1 text-left">
                 <div class="text-[40px] leading-none font-semibold tracking-[-0.03em] text-[#2F5DA8]">
-                  <span class="ssc-counter" data-target="10" data-suffix="x">0</span>
+                  <span class="ssc-counter" data-target="12" data-suffix="KT">0</span>
                 </div>
-                <div class="text-[12px] font-semibold tracking-[0.16em] uppercase text-slate-500">Faster</div>
+                <div class="text-[12px] font-semibold tracking-[0.16em] uppercase text-slate-500">Tons Orchestrated</div>
               </div>
             </div>
           </div>
@@ -462,8 +477,8 @@
 
         <circle cx="550" cy="310" r="68" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-opacity="0.3" />
 
-        <text x="550" y="325" text-anchor="middle" fill="#ffffff" font-size="24" font-weight="600" letter-spacing="2" filter="url(#softGlow)">IoT</text>
-        <text x="550" y="358" text-anchor="middle" fill="#ccf4ff" font-size="12" font-weight="300">HUB</text>
+        
+      
 
         <!-- orbit ring -->
         <g id="orbitNodes">
@@ -486,7 +501,7 @@
         <!-- ========================= -->
 
         <!-- 1 -->
-        <circle cx="360" cy="180" r="40" fill="#ffffff" stroke="#88ffcc" stroke-width="2" filter="url(#softGlow)" />
+        <circle class="ssc-big-node" cx="360" cy="180" r="40" fill="#ffffff" stroke="#88ffcc" stroke-width="2" filter="url(#softGlow)" />
         <image
           href="IOT/IOT-step-1.png"
           x="320"
@@ -498,7 +513,7 @@
         />
 
         <!-- 2 -->
-        <circle cx="770" cy="250" r="55" fill="#ffffff" stroke="#8ad4ff" stroke-width="1.5" filter="url(#softGlow)" />
+        <circle class="ssc-big-node" cx="770" cy="250" r="55" fill="#ffffff" stroke="#8ad4ff" stroke-width="1.5" filter="url(#softGlow)" />
         <image
           href="IOT/IOT-step-2.png"
           x="715"
@@ -510,7 +525,7 @@
         />
 
         <!-- 3 -->
-        <circle cx="320" cy="410" r="45" fill="#ffffff" stroke="#70e0ff" stroke-width="2" filter="url(#softGlow)" />
+        <circle class="ssc-big-node" cx="320" cy="410" r="45" fill="#ffffff" stroke="#70e0ff" stroke-width="2" filter="url(#softGlow)" />
         <image
           href="IOT/IOT-step-3.png"
           x="275"
@@ -522,7 +537,7 @@
         />
 
         <!-- 4 -->
-        <circle cx="790" cy="380" r="32" fill="#ffffff" stroke="#44ffc2" stroke-width="2.2" filter="url(#softGlow)" />
+        <circle class="ssc-big-node" cx="790" cy="380" r="32" fill="#ffffff" stroke="#5fc3ff" stroke-width="2.2" filter="url(#softGlow)" />
         <image
           href="IOT/IOT-step-4.png"
           x="758"
@@ -534,7 +549,7 @@
         />
 
         <!-- 5 -->
-        <circle cx="700" cy="150" r="48" fill="#ffffff" stroke="#ffd966" stroke-width="2" filter="url(#softGlow)" />
+        <circle class="ssc-big-node" cx="700" cy="150" r="48" fill="#ffffff" stroke="#5fc3ff" stroke-width="2" filter="url(#softGlow)" />
         <image
           href="IOT/IOT-step-5.png"
           x="652"
@@ -546,7 +561,7 @@
         />
 
         <!-- 6 -->
-        <circle cx="280" cy="290" r="56" fill="#ffffff" stroke="#5fc3ff" stroke-width="1.8" filter="url(#softGlow)" />
+        <circle class="ssc-big-node" cx="280" cy="290" r="56" fill="#ffffff" stroke="#5fc3ff" stroke-width="1.8" filter="url(#softGlow)" />
         <image
           href="IOT/IOT-step-6.png"
           x="224"
@@ -647,7 +662,7 @@
             <animate attributeName="r" values="2.1;4;2.1" dur="1.3s" repeatCount="indefinite" />
           </circle>
         </g>
-
+<text x="550" y="325" text-anchor="middle" fill="#ffffff" font-size="24" font-weight="600" letter-spacing="2" filter="url(#softGlow)">Shunah</text>
       </svg>
     </div>
 
@@ -734,17 +749,17 @@
                   <div class="flex items-center justify-between gap-3 border-b border-slate-200 px-4 py-3">
                     <div class="min-w-0">
                       <div class="text-[11px] font-semibold tracking-widest text-slate-500">IN-DEPTH</div>
-                      <div id="ssc-mobile-step" class="mt-1 text-xs font-semibold text-slate-600">Step 1 / 6</div>
+                      <div id="ssc-mobile-step" class="mt-1 text-xs font-semibold text-slate-600">Node 1 / 6</div>
                     </div>
 
                     <button
-                      id="ssc-mobile-close"
-                      type="button"
-                      class="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-slate-200 bg-white text-lg font-semibold text-slate-700"
-                      aria-label="Close details"
-                    >
-                      ×
-                    </button>
+  id="ssc-mobile-close"
+  type="button"
+  class="relative z-[80] pointer-events-auto grid h-9 w-9 shrink-0 place-items-center rounded-full border border-slate-200 bg-white text-lg font-semibold text-slate-700"
+  aria-label="Close details"
+>
+  ×
+</button>
                   </div>
 
                   <div id="ssc-mobile-scroll" class="flex-1 overflow-y-auto px-4 py-4">
@@ -840,7 +855,7 @@
                     id="ssc-step"
                     class="shrink-0 rounded-full border border-slate-200 bg-slate-50 px-4 py-1.5 text-[13px] font-semibold text-slate-600"
                   >
-                    Step 1 / 6
+                    Node 1 / 6
                   </span>
                 </div>
 
@@ -879,56 +894,56 @@
         const section = document.getElementById("shunah-satellite-circle");
         if (!section) return;
 
-        const steps = [
-          {
-            short: "Processing<br>Stations",
-            mobileShort: "Processing Stations",
-            title: "Processing Stations",
-            desc: "Establish a high-performance vision model trained on structured crop data.",
-            icon: "IOT/IOT-step-1.png",
-            bullets: ["Define model architecture", "Initialize training pipeline", "Set performance baseline"]
-          },
-          {
-            short: "Storage<br>Space",
-            mobileShort: "Storage Space",
-            title: "Storage Spaces",
-            desc: "Collect large-scale, multi-angle imagery of harvested crops.",
-            icon: "IOT/IOT-step-2.png",
-            bullets: ["Capture field imagery", "Ensure multi-angle coverage", "Store raw datasets"]
-          },
-          {
-            short: "Vehicles",
-            mobileShort: "Vehicles",
-            title: "Vehicles",
-            desc: "Generate precise, expert-labeled datasets for model accuracy.",
-            icon: "IOT/IOT-step-3.png",
-            bullets: ["Label crop types", "Grade quality", "Structure datasets"]
-          },
-          {
-            short: "Scales",
-            mobileShort: "Scales",
-            title: "Scales",
-            desc: "Continuously refine the model using new and enriched datasets.",
-            icon: "IOT/IOT-step-4.png",
-            bullets: ["Train on labeled data", "Optimize parameters", "Improve accuracy"]
-          },
-          {
-            short: "Freight Forwarders",
-            mobileShort: "Freight Forwarders",
-            title: "Freight Forwarders",
-            desc: "Reuse the core engineering stack to rapidly deploy across new crop types.",
-            icon: "IOT/IOT-step-5.png",
-            bullets: ["Replicate pipeline", "Adapt to new crops", "Deploy quickly"]
-          },
-          {
-            short: "Labs & Testing",
-            mobileShort: "Labs & Testing",
-            title: "Labs & Testing",
-            desc: "Enable continuous learning as data flows through the system.",
-            icon: "IOT/IOT-step-6.png",
-            bullets: ["Ingest new data", "Auto-improve model", "Maintain performance"]
-          }
-        ];
+      const steps = [
+  {
+    short: "Processing<br>Stations",
+    mobileShort: "Processing Stations",
+    title: "Processing Stations",
+    desc: "Digitize processing capacity and make stations available on-demand across the network.",
+    icon: "IOT/IOT-step-1.png",
+    bullets: ["List available capacity", "Enable booking slots", "Track processing output"]
+  },
+  {
+    short: "Storage<br>Space",
+    mobileShort: "Storage Space",
+    title: "Storage Spaces",
+    desc: "Unlock underutilized storage and make inventory visible and allocatable in real time.",
+    icon: "IOT/IOT-step-2.png",
+    bullets: ["Map storage locations", "Monitor occupancy levels", "Allocate space dynamically"]
+  },
+  {
+    short: "Vehicles",
+    mobileShort: "Vehicles",
+    title: "Vehicles",
+    desc: "Connect transport supply to demand and enable real-time dispatch and routing.",
+    icon: "IOT/IOT-step-3.png",
+    bullets: ["List available vehicles", "Match with demand", "Track movement live"]
+  },
+  {
+    short: "Scales",
+    mobileShort: "Scales",
+    title: "Scales",
+    desc: "Standardize weighing operations and capture verified transaction data at every point.",
+    icon: "IOT/IOT-step-4.png",
+    bullets: ["Digitize weigh-ins", "Ensure data accuracy", "Log transactions instantly"]
+  },
+  {
+    short: "Freight Forwarders",
+    mobileShort: "Freight Forwarders",
+    title: "Freight Forwarders",
+    desc: "Coordinate export logistics and integrate forwarding into the operational flow.",
+    icon: "IOT/IOT-step-5.png",
+    bullets: ["Connect forwarding partners", "Schedule shipments", "Track export flow"]
+  },
+  {
+    short: "Labs & Testing",
+    mobileShort: "Labs & Testing",
+    title: "Labs & Testing",
+    desc: "Integrate quality verification into the network to enable trusted transactions.",
+    icon: "IOT/IOT-step-6.png",
+    bullets: ["Link testing labs", "Attach quality results", "Standardize certification"]
+  }
+];
 
         const hotspotPositions = [
           { x: 20.9, y: 35.5 },
@@ -1079,7 +1094,7 @@ mobilePanel.classList.add("border", "border-[#0E2A47]/15");
           const s = steps[i];
           if (tTitle) tTitle.textContent = s.title;
           if (tDesc) tDesc.textContent = s.desc;
-          if (tStep) tStep.textContent = `Step ${i + 1} / ${nodeCount}`;
+          if (tStep) tStep.textContent = `Node ${i + 1} / ${nodeCount}`;
           buildBullets(bullets, s.bullets);
           if (detailIcon) detailIcon.src = s.icon;
         }
@@ -1088,7 +1103,7 @@ mobilePanel.classList.add("border", "border-[#0E2A47]/15");
           const s = steps[i];
           if (mobileTitle) mobileTitle.textContent = s.title;
           if (mobileDesc) mobileDesc.textContent = s.desc;
-          if (mobileStep) mobileStep.textContent = `Step ${i + 1} / ${nodeCount}`;
+          if (mobileStep) mobileStep.textContent = `Node ${i + 1} / ${nodeCount}`;
           buildBullets(mobileBullets, s.bullets);
           if (mobileIcon) mobileIcon.src = s.icon;
         }
@@ -1169,24 +1184,28 @@ mobilePanel.classList.add("border", "border-[#0E2A47]/15");
           lockMobilePageScroll();
         }
 
-        function closeMobileDetail() {
-          if (!isMobileView()) return;
+       function closeMobileDetail(e) {
+  e?.preventDefault();
+  e?.stopPropagation();
+  e?.stopImmediatePropagation?.();
 
-          if (mobileDetail) {
-            mobileDetail.classList.add("hidden");
-            mobileDetail.classList.remove("flex");
-          }
+  if (!isMobileView()) return;
 
-          if (currentMode === "features") {
-            mobileFeatures?.classList.remove("hidden");
-            mobileIntro?.classList.add("hidden");
-          } else {
-            mobileFeatures?.classList.add("hidden");
-            mobileIntro?.classList.remove("hidden");
-          }
+  active = -1;
+  clearNodePulse();
+  stopHelper();
 
-          unlockMobilePageScroll();
-        }
+  mobileDetail?.classList.add("hidden");
+  mobileDetail?.classList.remove("flex");
+
+  mobileFeatures?.classList.add("hidden");
+  mobileIntro?.classList.remove("hidden");
+
+  if (mobileScroll) mobileScroll.scrollTop = 0;
+  unlockMobilePageScroll();
+
+  return false;
+}
 
         function clearNodePulse() {
           const nodes = nodesWrap?.querySelectorAll("button[data-step]") || [];
@@ -1479,7 +1498,8 @@ mobilePanel.classList.add("border", "border-[#0E2A47]/15");
           if (isMobileView()) runMobileHelper();
         });
 
-        mobileClose?.addEventListener("click", closeMobileDetail);
+mobileClose?.addEventListener("click", closeMobileDetail, true);
+mobileClose?.addEventListener("touchend", closeMobileDetail, { passive: false, capture: true });
 
         updateAllPanels(0);
         buildNodes();
