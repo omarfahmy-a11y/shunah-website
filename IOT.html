@@ -255,6 +255,25 @@
   }
 }
 
+@media (min-width: 1024px) {
+  #ssc-backend-static-box.show-backend-box {
+    display: block !important;
+  }
+}
+
+@media (max-width: 1023px) {
+  #ssc-backend-static-box {
+    display: none !important;
+  }
+}
+
+.ssc-big-node {
+  pointer-events: visible !important;
+}
+
+#ssc-stage svg image {
+  pointer-events: none;
+}
 
   </style>
 </head>
@@ -417,7 +436,10 @@
                   <div class="h-[78%] w-[78%] rounded-full bg-[radial-gradient(circle,rgba(47,93,168,0.10)_0%,rgba(47,93,168,0.05)_34%,transparent_72%)] blur-3xl"></div>
                 </div>
 
-  <div class="showcase">
+
+
+
+ <div class="showcase" style="position: relative;">
     <div class="svg-container">
       <svg viewBox="0 0 1100 620" xmlns="http://www.w3.org/2000/svg">
 
@@ -502,7 +524,7 @@
         <circle cx="550" cy="310" r="68" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-opacity="0.3" />
 
         
-      
+        
 
         <!-- orbit ring -->
         <g id="orbitNodes">
@@ -525,8 +547,9 @@
         <!-- ========================= -->
 
         <!-- 1 -->
-<circle id="ssc-big-node-0" class="ssc-big-node" cx="360" cy="180" r="40" fill="#ffffff" stroke="#88ffcc" stroke-width="2" filter="url(#softGlow)" />
+<circle id="ssc-big-node-0" class="ssc-big-node" cx="360" cy="180" r="40" fill="#ffffff" stroke="#8ad4ff" stroke-width="2" filter="url(#softGlow)" />
 <image
+  class="ssc-node-img"
   href="IOT/IOT-step-1.png"
   x="320"
   y="140"
@@ -534,74 +557,72 @@
   height="80"
   preserveAspectRatio="xMidYMid slice"
   clip-path="url(#circleOneClip)"
-  pointer-events="none"
 />
 
+<!-- 2 -->
+<circle id="ssc-big-node-1" class="ssc-big-node" cx="770" cy="250" r="55" fill="#ffffff" stroke="#8ad4ff" stroke-width="1.5" filter="url(#softGlow)" />
+<image
+  class="ssc-node-img"
+  href="IOT/IOT-step-2.png"
+  x="715"
+  y="195"
+  width="110"
+  height="110"
+  preserveAspectRatio="xMidYMid slice"
+  clip-path="url(#circleTwoClip)"
+/>
 
-        <!-- 2 -->
-        <circle id="ssc-big-node-1" class="ssc-big-node" cx="770" cy="250" r="55" fill="#ffffff" stroke="#8ad4ff" stroke-width="1.5" filter="url(#softGlow)" />
-        <image
-          href="IOT/IOT-step-2.png"
-          x="715"
-          y="195"
-          width="110"
-          height="110"
-          preserveAspectRatio="xMidYMid slice"
-          clip-path="url(#circleTwoClip)"
-pointer-events="none"
-        />
+<!-- 3 -->
+<circle id="ssc-big-node-2" class="ssc-big-node" cx="320" cy="410" r="45" fill="#ffffff" stroke="#70e0ff" stroke-width="2" filter="url(#softGlow)" />
+<image
+  class="ssc-node-img"
+  href="IOT/IOT-step-3.png"
+  x="275"
+  y="365"
+  width="90"
+  height="90"
+  preserveAspectRatio="xMidYMid slice"
+  clip-path="url(#circleThreeClip)"
+/>
 
-        <!-- 3 -->
-        <circle id="ssc-big-node-2" class="ssc-big-node" cx="320" cy="410" r="45" fill="#ffffff" stroke="#70e0ff" stroke-width="2" filter="url(#softGlow)" />
-        <image
-          href="IOT/IOT-step-3.png"
-          x="275"
-          y="365"
-          width="90"
-          height="90"
-          preserveAspectRatio="xMidYMid slice"
-          clip-path="url(#circleThreeClip)"
-pointer-events="none"
-        />
+<!-- 4 -->
+<circle id="ssc-big-node-3" class="ssc-big-node" cx="790" cy="380" r="32" fill="#ffffff" stroke="#5fc3ff" stroke-width="2.2" filter="url(#softGlow)" />
+<image
+  class="ssc-node-img"
+  href="IOT/IOT-step-4.png"
+  x="758"
+  y="348"
+  width="64"
+  height="64"
+  preserveAspectRatio="xMidYMid slice"
+  clip-path="url(#circleFourClip)"
+/>
 
-        <!-- 4 -->
-        <circle id="ssc-big-node-3" class="ssc-big-node" cx="790" cy="380" r="32" fill="#ffffff" stroke="#5fc3ff" stroke-width="2.2" filter="url(#softGlow)" />
-        <image
-          href="IOT/IOT-step-4.png"
-          x="758"
-          y="348"
-          width="64"
-          height="64"
-          preserveAspectRatio="xMidYMid slice"
-          clip-path="url(#circleFourClip)"
-pointer-events="none"
-        />
+<!-- 5 -->
+<circle id="ssc-big-node-4" class="ssc-big-node" cx="700" cy="150" r="48" fill="#ffffff" stroke="#5fc3ff" stroke-width="1.8" filter="url(#softGlow)" />
+<image
+  class="ssc-node-img"
+  href="IOT/IOT-step-5.png"
+  x="652"
+  y="102"
+  width="96"
+  height="96"
+  preserveAspectRatio="xMidYMid slice"
+  clip-path="url(#circleFiveClip)"
+/>
 
-        <!-- 5 -->
-        <circle id="ssc-big-node-4" class="ssc-big-node" cx="700" cy="150" r="48" fill="#ffffff" stroke="#5fc3ff" stroke-width="2" filter="url(#softGlow)" />
-        <image
-          href="IOT/IOT-step-5.png"
-          x="652"
-          y="102"
-          width="96"
-          height="96"
-          preserveAspectRatio="xMidYMid slice"
-          clip-path="url(#circleFiveClip)"
-pointer-events="none"
-        />
-
-        <!-- 6 -->
-        <circle id="ssc-big-node-5" class="ssc-big-node" cx="280" cy="290" r="56" fill="#ffffff" stroke="#5fc3ff" stroke-width="1.8" filter="url(#softGlow)" />
-        <image
-          href="IOT/IOT-step-6.png"
-          x="224"
-          y="234"
-          width="112"
-          height="112"
-          preserveAspectRatio="xMidYMid slice"
-          clip-path="url(#circleSixClip)"
-pointer-events="none"
-        />
+<!-- 6 -->
+<circle id="ssc-big-node-5" class="ssc-big-node" cx="280" cy="290" r="56" fill="#ffffff" stroke="#5fc3ff" stroke-width="1.8" filter="url(#softGlow)" />
+<image
+  class="ssc-node-img"
+  href="IOT/IOT-step-6.png"
+  x="224"
+  y="234"
+  width="112"
+  height="112"
+  preserveAspectRatio="xMidYMid slice"
+  clip-path="url(#circleSixClip)"
+/>
 
         <!-- main connections -->
         <line x1="550" y1="310" x2="360" y2="180" stroke="url(#ringGrad)" stroke-width="1.8" stroke-dasharray="6 4" opacity="0.7">
@@ -694,8 +715,83 @@ pointer-events="none"
           </circle>
         </g>
 <text x="550" y="325" text-anchor="middle" fill="#ffffff" font-size="24" font-weight="600" letter-spacing="2" filter="url(#softGlow)">Shunah</text>
-      </svg>
+   
+<foreignObject id="ssc-backend-static-box" x="210" y="500" width="680" height="90">
+  <div xmlns="http://www.w3.org/1999/xhtml" style="
+    width: 680px;
+    height: 90px;
+    background: white;
+    border: 1px solid #d1d5db;
+    border-radius: 16px;
+    box-shadow: 0 12px 34px rgba(0,0,0,0.08);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    color: #0E2A47;
+  ">
+    <div id="ssc-fo-icon-wrap" style="
+      width: 54px;
+      height: 54px;
+      background: #f3f4f6;
+      border-radius: 12px;
+      flex-shrink: 0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+    ">
+      <img
+        id="ssc-fo-icon"
+        src="IOT/orchestrate-supply.png"
+        alt="IOT"
+        style="width:34px;height:34px;object-fit:contain;"
+      />
     </div>
+
+    <div id="ssc-fo-title" style="font-weight:700; font-size:15px; white-space:nowrap;">
+      IOT text box
+    </div>
+
+    <div style="width:1px; height:42px; background:#e5e7eb;"></div>
+
+    <div
+      id="ssc-fo-desc"
+      style="
+        width: 180px;
+        font-size: 13px;
+        color: #6b7280;
+        line-height: 1.35;
+      "
+    >
+      Real-time orchestration of processing, storage, transport, and quality across the network.
+    </div>
+
+    <div style="width:1px; height:42px; background:#e5e7eb;"></div>
+
+    <div style="display:flex; gap:18px; text-align:center;">
+      <div>
+        <div id="ssc-fo-metric-1-value" style="font-size:22px; font-weight:700; line-height:1;">+32%</div>
+        <div id="ssc-fo-metric-1-label" style="font-size:11px; color:#9ca3af; margin-top:4px;">Utilization</div>
+      </div>
+      <div>
+        <div id="ssc-fo-metric-2-value" style="font-size:22px; font-weight:700; line-height:1;">4.2x</div>
+        <div id="ssc-fo-metric-2-label" style="font-size:11px; color:#9ca3af; margin-top:4px;">Flow Speed</div>
+      </div>
+      <div>
+        <div id="ssc-fo-metric-3-value" style="font-size:22px; font-weight:700; line-height:1;">98%</div>
+        <div id="ssc-fo-metric-3-label" style="font-size:11px; color:#9ca3af; margin-top:4px;">Traceability</div>
+      </div>
+    </div>
+  </div>
+</foreignObject>
+
+   </svg>
+    </div>
+
+
 
                 </div>
 
@@ -879,6 +975,7 @@ pointer-events="none"
               </div>
 
               <div id="ssc-detail" class="pointer-events-none absolute inset-0 pr-2 opacity-0 transition-opacity duration-150">
+
                 <div class="flex items-center justify-between gap-4">
                   <p class="text-[12px] font-semibold tracking-[0.18em] uppercase text-slate-500">In-Depth</p>
 
@@ -912,7 +1009,23 @@ pointer-events="none"
                   <ul id="ssc-bullets" class="mt-3 w-full space-y-2 text-sm text-slate-600"></ul>
                 </div>
               </div>
+              </div>
 
+             <div
+  id="ssc-backend-static-box"
+  class="hidden absolute left-1/2 top-[108%] z-40 w-[420px] -translate-x-1/2 rounded-2xl border border-[#2F5DA8]/20 bg-white/95 px-5 py-4 shadow-[0_18px_45px_rgba(15,23,42,0.12)] backdrop-blur"
+>
+  <div id="ssc-backend-static-title" class="mb-1 text-[16px] font-semibold text-[#0E2A47]">
+    Social Infrastructure IOT
+  </div>
+  <div id="ssc-backend-static-desc" class="text-[14px] leading-[1.7] text-slate-600">
+    IoT connects every touchpoint—farms, assets, and logistics—making us the intelligence layer that processes and directs flow in real time.
+  </div>
+</div>
+
+            </div>
+          </div>
+        </div>
             </div>
           </div>
         </div>
@@ -932,7 +1045,12 @@ pointer-events="none"
     title: "Processing Stations",
     desc: "Digitize processing capacity and make stations available on-demand across the network.",
     icon: "IOT/IOT-step-1.png",
-    bullets: ["List available capacity", "Enable booking slots", "Track processing output"]
+    bullets: ["List available capacity", "Enable booking slots", "Track processing output"],
+    metrics: [
+      { value: "+32%", label: "Utilization" },
+      { value: "2.4x", label: "Turnover" },
+      { value: "96%", label: "Visibility" }
+    ]
   },
   {
     short: "Storage<br>Space",
@@ -940,7 +1058,12 @@ pointer-events="none"
     title: "Storage Spaces",
     desc: "Unlock underutilized storage and make inventory visible and allocatable in real time.",
     icon: "IOT/IOT-step-2.png",
-    bullets: ["Map storage locations", "Monitor occupancy levels", "Allocate space dynamically"]
+    bullets: ["Map storage locations", "Monitor occupancy levels", "Allocate space dynamically"],
+    metrics: [
+      { value: "+28%", label: "Occupancy" },
+      { value: "18h", label: "Response" },
+      { value: "94%", label: "Inventory" }
+    ]
   },
   {
     short: "Vehicles",
@@ -948,7 +1071,12 @@ pointer-events="none"
     title: "Vehicles",
     desc: "Connect transport supply to demand and enable real-time dispatch and routing.",
     icon: "IOT/IOT-step-3.png",
-    bullets: ["List available vehicles", "Match with demand", "Track movement live"]
+    bullets: ["List available vehicles", "Match with demand", "Track movement live"],
+    metrics: [
+      { value: "+41%", label: "Utilization" },
+      { value: "3.1x", label: "Flow Speed" },
+      { value: "97%", label: "Tracking" }
+    ]
   },
   {
     short: "Scales",
@@ -956,7 +1084,12 @@ pointer-events="none"
     title: "Scales",
     desc: "Standardize weighing operations and capture verified transaction data at every point.",
     icon: "IOT/IOT-step-4.png",
-    bullets: ["Digitize weigh-ins", "Ensure data accuracy", "Log transactions instantly"]
+    bullets: ["Digitize weigh-ins", "Ensure data accuracy", "Log transactions instantly"],
+    metrics: [
+      { value: "99.2%", label: "Accuracy" },
+      { value: "1.8x", label: "Throughput" },
+      { value: "100%", label: "Logged" }
+    ]
   },
   {
     short: "Freight Forwarders",
@@ -964,7 +1097,12 @@ pointer-events="none"
     title: "Freight Forwarders",
     desc: "Coordinate export logistics and integrate forwarding into the operational flow.",
     icon: "IOT/IOT-step-5.png",
-    bullets: ["Connect forwarding partners", "Schedule shipments", "Track export flow"]
+    bullets: ["Connect forwarding partners", "Schedule shipments", "Track export flow"],
+    metrics: [
+      { value: "+24%", label: "Speed" },
+      { value: "2.2x", label: "Coordination" },
+      { value: "95%", label: "Milestones" }
+    ]
   },
   {
     short: "Labs & Testing",
@@ -972,9 +1110,25 @@ pointer-events="none"
     title: "Labs & Testing",
     desc: "Integrate quality verification into the network to enable trusted transactions.",
     icon: "IOT/IOT-step-6.png",
-    bullets: ["Link testing labs", "Attach quality results", "Standardize certification"]
+    bullets: ["Link testing labs", "Attach quality results", "Standardize certification"],
+    metrics: [
+      { value: "98%", label: "Traceability" },
+      { value: "2.7x", label: "Confidence" },
+      { value: "91%", label: "Turnaround" }
+    ]
   }
 ];
+
+const backendBoxDefault = {
+  title: "IOT text box",
+  desc: "Real-time orchestration of processing, storage, transport, and quality across the network.",
+  icon: "IOT/orchestrate-supply.png",
+  metrics: [
+    { value: "+32%", label: "Utilization" },
+    { value: "4.2x", label: "Flow Speed" },
+    { value: "98%", label: "Traceability" }
+  ]
+};
 
         const hotspotPositions = [
           { x: 20.9, y: 35.5 },
@@ -1000,6 +1154,22 @@ pointer-events="none"
         const tStep = document.getElementById("ssc-step");
         const bullets = document.getElementById("ssc-bullets");
         const detailIcon = document.getElementById("ssc-detail-icon");
+
+
+const foIcon = document.getElementById("ssc-fo-icon");
+const foTitle = document.getElementById("ssc-fo-title");
+const foDesc = document.getElementById("ssc-fo-desc");
+
+const foMetric1Value = document.getElementById("ssc-fo-metric-1-value");
+const foMetric1Label = document.getElementById("ssc-fo-metric-1-label");
+const foMetric2Value = document.getElementById("ssc-fo-metric-2-value");
+const foMetric2Label = document.getElementById("ssc-fo-metric-2-label");
+const foMetric3Value = document.getElementById("ssc-fo-metric-3-value");
+const foMetric3Label = document.getElementById("ssc-fo-metric-3-label");
+
+
+
+
 
         const mobileFeatures = document.getElementById("ssc-mobile-features");
         const mobileIntro = document.getElementById("ssc-mobile-intro");
@@ -1277,6 +1447,32 @@ function glowNode(index) {
   }
 }
 
+
+function updateBackendForeignBox(data) {
+  if (!foIcon || !foTitle || !foDesc) return;
+
+  foIcon.src = data.icon || backendBoxDefault.icon;
+  foTitle.textContent = data.title || backendBoxDefault.title;
+  foDesc.textContent = data.desc || backendBoxDefault.desc;
+
+  const metrics = data.metrics || backendBoxDefault.metrics;
+
+  foMetric1Value.textContent = metrics[0]?.value || "";
+  foMetric1Label.textContent = metrics[0]?.label || "";
+
+  foMetric2Value.textContent = metrics[1]?.value || "";
+  foMetric2Label.textContent = metrics[1]?.label || "";
+
+  foMetric3Value.textContent = metrics[2]?.value || "";
+  foMetric3Label.textContent = metrics[2]?.label || "";
+}
+
+function resetBackendForeignBox() {
+  updateBackendForeignBox(backendBoxDefault);
+}
+
+resetBackendForeignBox();
+
 function bindBigNodeClicks() {
   for (let i = 0; i < steps.length; i++) {
     const node = document.getElementById(`ssc-big-node-${i}`);
@@ -1284,11 +1480,26 @@ function bindBigNodeClicks() {
 
     node.style.cursor = "pointer";
 
+    // DESKTOP HOVER → update the foreignObject box
+    node.addEventListener("mouseenter", function () {
+      if (!isMobileView()) {
+        updateBackendForeignBox(steps[i]);
+      }
+    });
+
+    // DESKTOP LEAVE → go back to default foreignObject state
+    node.addEventListener("mouseleave", function () {
+      if (!isMobileView()) {
+        resetBackendForeignBox();
+      }
+    });
+
+    // MOBILE CLICK → keep old behavior
     node.addEventListener("click", function (e) {
       e.preventDefault();
       e.stopPropagation();
 
-  glowNode(i); // 👈 ADD THIS LINE
+      glowNode(i);
 
       if (isMobileView()) {
         openMobileDetail(i);
@@ -1296,6 +1507,7 @@ function bindBigNodeClicks() {
         stopAutoplay();
         setActive(i, true);
         showDesktopDetail();
+        updateBackendForeignBox(steps[i]);
       }
     });
   }
@@ -1432,17 +1644,37 @@ btn.style.height = `${hotspotSizes[i]}px`;
 
             btn.addEventListener("mouseenter", () => {
   if (!hasHover || isMobileView() || currentMode !== "backend") return;
+
+  const box = document.getElementById("ssc-hover-box");
+  const title = document.getElementById("ssc-hover-title");
+  const desc = document.getElementById("ssc-hover-desc");
+
   glowNode(i);
   stopAutoplay();
   setActive(i, true);
   showDesktopDetail();
+
+  if (box && title && desc) {
+    title.textContent = steps[i].title;
+    desc.textContent = steps[i].desc;
+    box.style.opacity = "1";
+    box.style.transform = "translateX(-50%) translateY(16px)";
+  }
 });
 
-           btn.addEventListener("mouseleave", () => {
+          btn.addEventListener("mouseleave", () => {
   if (!hasHover || isMobileView() || currentMode !== "backend") return;
+
+  const box = document.getElementById("ssc-hover-box");
+
   clearNodeGlow();
   showDesktopIntro();
   startAutoplay();
+
+  if (box) {
+    box.style.opacity = "0";
+    box.style.transform = "translateX(-50%) translateY(6px)";
+  }
 });
 
             btn.addEventListener("click", () => {
@@ -1542,6 +1774,50 @@ btn.style.height = `${hotspotSizes[i]}px`;
           }
         }
 
+      function bindHoverBox() {
+  const staticBox = document.getElementById("ssc-backend-static-box");
+  const staticTitle = document.getElementById("ssc-backend-static-title");
+  const staticDesc = document.getElementById("ssc-backend-static-desc");
+
+  if (!staticBox || !staticTitle || !staticDesc) return;
+
+  function updateStaticBackendBox(index = 0) {
+    if (!steps[index]) return;
+    staticTitle.textContent = steps[index].title;
+    staticDesc.textContent = steps[index].desc;
+  }
+
+  function syncStaticBackendBox() {
+    if (window.innerWidth >= 1024 && currentMode === "backend") {
+      staticBox.classList.add("show-backend-box");
+      updateStaticBackendBox(0);
+    } else {
+      staticBox.classList.remove("show-backend-box");
+    }
+  }
+
+  for (let i = 0; i < steps.length; i++) {
+    const node = document.getElementById(`ssc-big-node-${i}`);
+    if (!node) continue;
+
+    node.addEventListener("mouseenter", () => {
+      if (window.innerWidth < 1024 || currentMode !== "backend") return;
+      updateStaticBackendBox(i);
+      glowNode(i);
+    });
+  }
+
+  syncStaticBackendBox();
+  window.addEventListener("resize", syncStaticBackendBox);
+
+  const originalSetToggle = setToggle;
+setToggle = function(mode) {
+  originalSetToggle(mode);
+  syncStaticBackendBox();
+};
+}
+
+
         function setupScrollTrigger() {
           const io = new IntersectionObserver(
             (entries) => {
@@ -1595,12 +1871,22 @@ mobileClose?.addEventListener("touchend", closeMobileDetail, { passive: false, c
           setActive(0, true);
         }
 
-        setToggle("features");
+             
+
+               setToggle("features");
         setupScrollTrigger();
+        bindBigNodeClicks();
+        bindHoverBox();
 
         mobileMq.addEventListener?.("change", () => {
           buildNodes();
           setActive(Math.max(active, 0), false);
+
+          const hoverBox = document.getElementById("ssc-hover-box");
+          if (hoverBox) {
+            hoverBox.style.opacity = "0";
+            hoverBox.style.transform = "translateX(-50%) translateY(6px)";
+          }
 
           if (!isMobileView()) {
             unlockMobilePageScroll();
@@ -1617,11 +1903,8 @@ mobileClose?.addEventListener("touchend", closeMobileDetail, { passive: false, c
             if (currentMode === "backend") {
               runMobileHelper();
             }
-
-
           }
         });
-bindBigNodeClicks();
       })();
 
     </script>
