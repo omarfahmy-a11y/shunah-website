@@ -12,7 +12,95 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
-    body { font-family: 'Inter', sans-serif; }
+    
+
+:root {
+  --gap: 14px;
+}
+
+/* container */
+.layout {
+  position: relative;
+  width: 560px;
+  height: 560px;
+}
+
+/* IMAGE QUARTERS */
+.quarter {
+  position: absolute;
+  overflow: hidden;
+  background: white;
+}
+
+.quarter img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+ display: block;
+}
+
+
+/* 1 — TOP LEFT */
+.quarter-1 {
+  top: calc(40px - var(--gap));
+  left: calc(70px - var(--gap));
+  width: 220px;
+  height: 220px;
+  border-top-left-radius: 220px;
+}
+
+/* 2 — BOTTOM LEFT */
+.quarter-2 {
+  top: calc(260px + var(--gap));
+  left: calc(35px - var(--gap));
+  width: 255px;
+  height: 255px;
+  border-bottom-left-radius: 255px;
+}
+
+/* 3 — BOTTOM RIGHT */
+.quarter-3 {
+  top: calc(260px + var(--gap));
+  left: calc(290px + var(--gap));
+  width: 205px;
+  height: 205px;
+  border-bottom-right-radius: 205px;
+}
+
+/* 4 — PALE BLUE */ .quarter-4 { position: absolute; top: 75px; left: 303px; /* SAME as circle 3 */ width: 185px; height: 185px; background: #cfe3ff; border-top-right-radius: 185px; } /* 5 — NAVY */ .quarter-5 { position: absolute; top: 115px; left: 303px; /* SAME as circle 3 */ width: 145px; height: 145px; background: #0e2a47; border-top-right-radius: 145px; }
+
+.center {
+  position: absolute;
+  top: 48%;
+  left: 52%;
+  width: 80px;
+  height: 80px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: white;
+  border: 2px solid white; /* 👈 thin clean edge */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.center img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+
+@media (max-width: 640px){
+  .center{
+    left: 70%;
+  }
+}
+
+
+
+
+body { font-family: 'Inter', sans-serif; }
 
     /* ===== Marquee (FIXED: true seamless infinite loop) =====
        The old -50% approach jumps when widths change (images/fonts/rounding).
@@ -48,25 +136,46 @@
       color: rgba(11,26,45,.75);
       white-space: nowrap;
     }
+/* When hovering anywhere in the ribbon */
+#cropsTrack:hover .chip{
+  opacity: 0.25;
+  transition: opacity 180ms ease;
+}
 
+/* Keep hovered chip fully visible */
+#cropsTrack .chip:hover{
+  opacity: 1;
+}
+
+
+#cropsTrack .chip{
+  transition: opacity 180ms ease, transform 220ms ease;
+}
+
+#cropsTrack .chip:hover{
+  transform: scale(1.04);
+}
     /* ===== SIMPLE: circle image -> pill on hover (NO SPLIT) ===== */
-    .pillWrap{
-      width: 72px;
-      height: 72px;
-      margin: 0 auto;
-      border-radius: 9999px;
-      background: rgba(255,255,255,.90);
-      border: 1px solid rgba(11,26,45,.12);
-      box-shadow: 0 8px 22px rgba(11,26,45,.10);
-      transition: width 260ms cubic-bezier(.2,.9,.2,1);
-      display: flex;
-      align-items: center;
-      padding: 6px;
-      overflow: hidden;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-    }
-    .chip:hover .pillWrap{ width: 320px; }
+   .pillWrap{
+  width: 72px;
+  height: 72px;
+  margin: 0;
+  position: relative;
+  left: 50%;
+  transform: translateX(-36px);
+  border-radius: 9999px;
+  background: rgba(255,255,255,.90);
+  border: 1px solid rgba(11,26,45,.12);
+  box-shadow: 0 8px 22px rgba(11,26,45,.10);
+  transition: width 260ms cubic-bezier(.2,.9,.2,1);
+  display: flex;
+  align-items: center;
+  padding: 6px;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.chip:hover .pillWrap{ width: 320px; }
 
     .circleImage{
       width: 60px;
@@ -141,10 +250,139 @@
       .chip:hover .pillWrap{ width: 280px; }
       .meta .name{ max-width: 140px; }
     }
+
+
+/* ===== MOBILE SKU DETAILS: reuse existing card, no nested box ===== */
+.sku-mobile-details{
+  display: none;
+}
+
+@media (max-width: 640px){
+  .sku-desktop-table{
+    display: none !important;
+  }
+
+#skuCards > [data-crop] .shrink-0{
+  display: block !important;
+  flex: 0 0 auto;
+}
+
+#skuCards > [data-crop] .shrink-0 > div{
+  width: 96px !important;
+  height: 96px !important;
+  border-radius: 20px !important;
+}
+
+#skuCards > [data-crop] .shrink-0 img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+  .sku-mobile-details{
+    display: block;
+    margin-top: 16px;
+    
+    padding-top: 14px;
+  }
+
+  .sku-mobile-toggle{
+    margin-top: 0px;
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: 0;
+    border-radius: 9999px;
+    background: #0b1a2d;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 800;
+    padding: 10px 14px;
+    cursor: pointer;
+  }
+
+  .sku-mobile-body{
+    display: none;
+    margin-top: 12px;
+  }
+
+  .sku-mobile-details.open .sku-mobile-body{
+    display: block;
+  }
+
+  .sku-mobile-list{
+    display: grid;
+    gap: 10px;
+  }
+
+  .sku-mobile-item{
+    padding: 0 0 10px 0;
+    border-bottom: 1px solid rgba(11,26,45,.08);
+  }
+
+  .sku-mobile-item:last-child{
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .sku-mobile-item-title{
+    font-size: 13px;
+    font-weight: 800;
+    color: #0b1a2d;
+    line-height: 1.25;
+    margin-bottom: 8px;
+  }
+
+  .sku-mobile-bullets{
+    margin: 0;
+    padding-left: 16px;
+    display: grid;
+    gap: 4px;
+  }
+
+  .sku-mobile-bullets li{
+    font-size: 12px;
+    line-height: 1.35;
+    color: rgba(11,26,45,.78);
+  }
+
+
+
+  .sku-mobile-bullets strong{
+    color: #0b1a2d;
+    font-weight: 700;
+  }
+}
+
+@media (min-width: 641px){
+  .sku-mobile-details{
+    display: none !important;
+  }
+}
+/* ===== CARD GLOW ===== */
+#skuCards > [data-crop]{
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+  box-shadow:
+    0 8px 24px rgba(11,26,45,0.10),
+    0 0 0 1px rgba(47,93,168,0.10),
+    0 0 12px rgba(47,93,168,0.12);
+}
+
+@media (hover: hover){
+  #skuCards > [data-crop]:hover{
+    transform: translateY(-2px);
+    box-shadow:
+      0 12px 28px rgba(11,26,45,0.12),
+      0 0 0 1px rgba(47,93,168,0.15),
+      0 0 20px rgba(47,93,168,0.20);
+  }
+}
+
   </style>
 </head>
 
-<body class="bg-[#f7f9fc] text-[#0b1a2d] pt-12">
+<body class="bg-[#f7f9fc] text-[#0b1a2d]">
 
 <!-- NAV --><!-- NAV -->
 <nav id="site-navbar" class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-black/10 shadow-sm h-12 transition-transform duration-300 ease-out translate-y-0">
@@ -152,7 +390,7 @@
 
     <!-- LEFT: Logo -->
     <a href="index.html" class="flex items-center">
-      <img src="images/shunah-logo.png" alt="Shunah Logo" class="h-7 w-auto" />
+      <img src="focus/shunah-logo.png" alt="Shunah Logo" class="h-7 w-auto" />
     </a>
 
     <!-- DESKTOP MENU -->
@@ -202,109 +440,92 @@
 </nav>
 
 <!-- HERO -->
-<section id="focus" class="relative overflow-hidden min-h-[calc(100dvh-3rem)] bg-[#0b1a2d]">
-  <div class="absolute inset-0">
-    <img src="images/small-farmers.jpg" alt="Small-scale farmers" class="h-full w-full object-cover" />
-    <div class="absolute inset-0 bg-[#0b1a2d]/55"></div>
-    <div class="absolute inset-0 bg-gradient-to-br from-[#18a34a]/20 via-transparent to-transparent"></div>
+<section id="focus" class="relative overflow-hidden py-0 md:min-h-[calc(100dvh-3rem)] bg-[#0b1a2d]">
+   
+   <div class="absolute inset-0 bg-white"></div>
+
+<div class="relative mx-auto max-w-7xl px-6 pt-20 pb-12 md:pl-11 md:py-16 md:h-full md:min-h-[calc(100dvh-3rem)] md:flex md:items-center">
+  <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+
+    <!-- LEFT COLUMN (ALL CONTENT) -->
+    <div class="max-w-3xl">
+
+     <h2 class="text-2xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-black leading-tight">
+        Dry crops are the <span class="text-[#225AB4]">most fragmented supply system </span> in agriculture
+      </h2>
+
+      <p class="mt-3 text-sm leading-relaxed text-slate-500 max-w-xl">
+  Shunah builds the infrastructure layer for dry crop supply — organizing fragmented production into structured, tradable flow through aggregation, quality standardization, and coordinated delivery.
+</p>
+
+      <!-- 4 boxes -->
+    <div class="mt-8 md:mt-10 space-y-5 max-w-xl">
+  <div class="flex items-start gap-4">
+    <div class="w-[5px] self-stretch bg-[#225AB4]"></div>
+    <p class="text-[14px] leading-6 text-slate-700">
+      <span class="font-bold text-[#225AB4]">Fragmented Supply Base</span>
+      <span class="text-slate-600"> — Millions of small-scale producers create a highly fragmented and unstructured supply layer.</span>
+    </p>
   </div>
 
-  <div class="relative mx-auto max-w-7xl px-6 h-full min-h-[calc(100dvh-3rem)] flex items-center">
-    <div class="w-full">
+  <div class="flex items-start gap-4">
+    <div class="w-[4px] self-stretch bg-[#225AB4]"></div>
+    <p class="text-[14px] leading-6 text-slate-700">
+      <span class="font-bold text-[#225AB4]">Unstructured Category</span>
+      <span class="text-slate-600"> — Dry crops dominate production — yet remain difficult to aggregate at scale.</span>
+    </p>
+  </div>
 
-      <!-- ✅ MOVED UP (only change: added a little more bottom spacing after it) -->
-      <div class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 shadow-sm backdrop-blur mb-4">
-        <span class="h-2 w-2 rounded-full bg-[#6fd04a]"></span>
-        <span class="text-sm font-medium text-white">Our Focus</span>
-        <span class="text-sm text-white/70">Dry crops • Small-scale farmers</span>
+  <div class="flex items-start gap-4">
+    <div class="w-[4px] self-stretch bg-[#225AB4]"></div>
+    <p class="text-[14px] leading-6 text-slate-700">
+      <span class="font-bold text-[#225AB4]">System at Scale</span>
+      <span class="text-slate-600"> — A multi-billion-ton supply system that cannot be efficiently traded without infrastructure.</span>
+    </p>
+  </div>
+
+  <div class="flex items-start gap-4">
+    <div class="w-[4px] self-stretch bg-[#225AB4]"></div>
+    <p class="text-[14px] leading-6 text-slate-700">
+      <span class="font-bold text-[#225AB4]">Disconnected Flow</span>
+      <span class="text-slate-600"> — Less than 2% of supply is connected to structured demand affecting the whole cylce.</span>
+    </p>
+  </div>
+
+</div>
+    </div>
+
+   <!-- RIGHT COLUMN (CUSTOM SHAPE) -->
+
+<div class="flex items-center justify-center w-full -mt-4 sm:-mt-2 md:mt-0 overflow-hidden order-last md:order-none">
+  <div class="h-[350px] sm:h-[504px] md:h-[560px] w-full flex justify-center">
+    <div class="layout scale-[0.65] sm:scale-[0.9] md:scale-[1] origin-top mx-auto -ml-20 sm:-ml-6 md:ml-0">
+      <div class="quarter quarter-1">
+        <img src="focus/your-image-1.png" />
       </div>
 
-      <div class="max-w-3xl">
-        <h2 class="text-4xl sm:text-5xl font-semibold tracking-tight text-white leading-tight">
-          Dry crops are the <span class="text-[#6fd04a]">small-scale farmer’s</span> game.
-        </h2>
+      <div class="quarter quarter-2">
+        <img src="focus/your-image-2.jpg" />
+      </div>
 
-        <p class="mt-5 text-lg leading-relaxed text-white/80">
-          Shunah is built around dry crops grown by small-scale farmers — resilient, storable, tradable,
-          and rooted in fragmented farm supply. We organize it end-to-end: aggregation, quality assessment, and delivery.
-        </p>
+      <div class="quarter quarter-3">
+        <img src="focus/your-image-4.jpg" />
+      </div>
 
-        <!-- ✅ NEW: 4 boxes (2x2), constrained to NOT exceed title width -->
-        <div class="mt-7 max-w-3xl">
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <!-- Box 1 -->
-            <div class="rounded-2xl border border-[#6fd04a]/60 bg-white/10 backdrop-blur px-4 py-4">
-              <div class="flex items-start gap-3">
-                <div class="shrink-0 mt-0.5">
-                  <!-- icon -->
-                  <svg class="h-5 w-5 text-[#6fd04a]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M3 7h18M6 7v12m12-12v12M3 19h18" />
-                  </svg>
-                </div>
-                <div class="min-w-0">
-                  <div class="font-semibold text-white">Smallholder Farmers</div>
-                  <div class="mt-1 text-sm text-white/75">
-                    450M+ smallholder farmers form the back backbone of African agriculture.
-                  </div>
-                </div>
-              </div>
-            </div>
+      <div class="arc quarter-4"></div>
+      <div class="arc quarter-5"></div>
 
-            <!-- Box 2 -->
-            <div class="rounded-2xl border border-[#6fd04a]/60 bg-white/10 backdrop-blur px-4 py-4">
-              <div class="flex items-start gap-3">
-                <div class="shrink-0 mt-0.5">
-                  <svg class="h-5 w-5 text-[#6fd04a]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M12 2l3 4 5 .8-3.6 3.4.9 5.2L12 13.9 6.7 15.4l.9-5.2L4 6.8 9 6l3-4Z" />
-                  </svg>
-                </div>
-                <div class="min-w-0">
-                  <div class="font-semibold text-white">Dry Crop Dominance</div>
-                  <div class="mt-1 text-sm text-white/75">
-                    85% of the production are legumes, grains, and oilseeds.
-                  </div>
-                </div>
-              </div>
-            </div>
+      <div class="center">
+        <img src="focus/shunah.png" />
+      </div>
+    </div>
+  </div>
+</div>
 
-            <!-- Box 3 -->
-            <div class="rounded-2xl border border-[#6fd04a]/60 bg-white/10 backdrop-blur px-4 py-4">
-              <div class="flex items-start gap-3">
-                <div class="shrink-0 mt-0.5">
-                  <svg class="h-5 w-5 text-[#6fd04a]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M4 12h6m4 0h6M12 4v6m0 4v6" />
-                  </svg>
-                </div>
-                <div class="min-w-0">
-                  <div class="font-semibold text-white">Massive Supply</div>
-                  <div class="mt-1 text-sm text-white/75">
-                    2,700 million tons of dry crops are produced annually across Africa.
-                  </div>
-                </div>
-              </div>
-            </div>
+    
 
-            <!-- Box 4 -->
-            <div class="rounded-2xl border border-[#6fd04a]/60 bg-white/10 backdrop-blur px-4 py-4">
-              <div class="flex items-start gap-3">
-                <div class="shrink-0 mt-0.5">
-                  <svg class="h-5 w-5 text-[#6fd04a]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M12 3v18M5 12h14" />
-                    <path d="M12 12l-4-4m4 4l4-4m-4 4l-4 4m4-4l4 4" />
-                  </svg>
-                </div>
-                <div class="min-w-0">
-                  <div class="font-semibold text-white">Structural Disconnect</div>
-                  <div class="mt-1 text-sm text-white/75">
-                    <2% of small scale farmers are connected with structured demand.
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-        <!-- /4 boxes -->
+  </div>
+</div>
 
       </div>
     </div>
@@ -313,16 +534,27 @@
 
 
 <!-- CROPS RIBBON -->
-<section class="relative bg-white border-y border-[#0b1a2d]/10">
-  <div class="mx-auto max-w-7xl px-6 py-6">
+<section class="relative bg-[#f6f9ff]">
+  <div class="mx-auto max-w-7xl px-6 py-12">
     <div class="flex items-center justify-between gap-6 flex-wrap">
-      <div>
-        <h4 class="text-sm font-semibold tracking-tight text-[#0b1a2d]">Our Crops</h4>
-        <p class="text-xs text-[#0b1a2d]/60 mt-1">Hover a crop — it opens and pins that SKU section below.</p>
+      <div class="max-w-2xl">
+        <span class="block text-[12px] font-semibold uppercase tracking-[0.22em] text-[#2F5DA8]">
+          Supply Network
+        </span>
+
+        <h2 class="mt-3 text-3xl md:text-4xl font-semibold tracking-[-0.03em] text-[#0b1a2d]">
+          Supply Coverage
+        </h2>
+
+        <div class="mt-4 h-[3px] w-14 rounded-full bg-[#2F5DA8]"></div>
+
+        <p class="mt-5 text-sm md:text-base text-[#0b1a2d]/65 leading-relaxed">
+          Crops currently structured within Shunah’s supply network.
+        </p>
       </div>
     </div>
 
-    <div class="mt-5 relative overflow-hidden">
+    <div class="mt-8 relative overflow-hidden">
       <div id="cropsMarquee" class="relative" aria-label="Crops ribbon">
         <div id="cropsTrack" class="flex items-stretch gap-7 marquee-track"></div>
       </div>
@@ -330,23 +562,22 @@
   </div>
 </section>
 
+
 <!-- MAIN SKUs -->
-<section id="skus" class="relative overflow-hidden bg-[#f6f9ff]">
+<section id="skus" class="relative overflow-hidden bg-white">
   <div class="relative mx-auto max-w-7xl px-6 py-14 lg:py-18">
 
     <div class="mt-2">
       <div class="flex items-end justify-between gap-6 flex-wrap">
         <div>
-          <h3 class="text-3xl sm:text-4xl font-semibold tracking-tight text-[#0b1a2d]">Main SKUs</h3>
+          <h3 class="text-3xl sm:text-4xl font-semibold tracking-tight text-[#0b1a2d]">Structured Supply Lines</h3>
           <p class="mt-2 text-[#0b1a2d]/70 max-w-2xl">
-            Standardized lines with clear specs and packaging options.
+            Standardized supply outputs with defined quality specifications, grading logic, and packaging formats.
           </p>
         </div>
       </div>
 
       <div class="mt-8 space-y-6" id="skuCards">
-
-        <!-- ✅ Your 14 SKU cards are unchanged below (keeps the green table format). -->
 
         <!-- 1) White Beans -->
         <div class="rounded-3xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="white-beans">
@@ -365,34 +596,40 @@
                     <p class="text-lg font-semibold text-[#0b1a2d]">White Beans</p>
                     <p class="text-sm text-[#0b1a2d]/60">Premium pulses for local and export markets</p>
                   </div>
-                  <span class="text-xs rounded-full bg-[#18a34a]/10 text-[#18a34a] px-3 py-1 font-semibold">Core SKU</span>
                 </div>
 
                 <div class="mt-4 overflow-hidden rounded-2xl border border-[#0b1a2d]/10">
-                  <div class="bg-[#6fd04a] text-[#0b1a2d]">
+                  <div class="bg-[#2F5DA8] text-white">
                     <div class="grid grid-cols-12 gap-2 px-4 py-3 text-xs font-semibold uppercase tracking-wide">
-                      <div class="col-span-4">SKU</div>
-                      <div class="col-span-2">Variety</div>
-                      <div class="col-span-2">Packaging</div>
-                      <div class="col-span-2">Spec</div>
-                      <div class="col-span-2 text-right">MOQ</div>
+                      <div class="col-span-4">Supply Output</div>
+                      <div class="col-span-2 text-center">Crop Type</div>
+                      <div class="col-span-2 text-center">Fulfillment Format</div>
+                      <div class="col-span-2 text-center">Quality Standard</div>
+                      <div class="col-span-2 text-center">Minimum Dispatch Unit</div>
                     </div>
                   </div>
 
                   <div class="divide-y divide-[#0b1a2d]/10 bg-white">
                     <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
                       <div class="col-span-4 font-semibold text-[#0b1a2d]">Egyptian White Beans</div>
-                      <div class="col-span-2">Navy / Redbeans</div>
-                      <div class="col-span-2">25kg / 50kg</div>
-                      <div class="col-span-2">Cleaned</div>
-                      <div class="col-span-2 text-right font-semibold">1 x 20’</div>
+                      <div class="col-span-2 text-center">Navy / Redbeans</div>
+                      <div class="col-span-2 text-center">25kg / 50kg</div>
+                      <div class="col-span-2 text-center">Cleaned</div>
+                      <div class="col-span-2 text-center font-semibold">1 x 20’</div>
                     </div>
                     <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
                       <div class="col-span-4 font-semibold text-[#0b1a2d]">Sorted White Beans</div>
-                      <div class="col-span-2">Red Beans</div>
-                      <div class="col-span-2">25kg</div>
-                      <div class="col-span-2">Export</div>
-                      <div class="col-span-2 text-right font-semibold">1 x 40’</div>
+                      <div class="col-span-2 text-center">Red Beans</div>
+                      <div class="col-span-2 text-center">25kg</div>
+                      <div class="col-span-2 text-center">Export</div>
+                      <div class="col-span-2 text-center font-semibold">1 x 40’</div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
+                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Additional SKU</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center font-semibold">—</div>
                     </div>
                   </div>
                 </div>
@@ -422,30 +659,37 @@
                 </div>
 
                 <div class="mt-4 overflow-hidden rounded-2xl border border-[#0b1a2d]/10">
-                  <div class="bg-[#6fd04a] text-[#0b1a2d]">
+                  <div class="bg-[#2F5DA8] text-white">
                     <div class="grid grid-cols-12 gap-2 px-4 py-3 text-xs font-semibold uppercase tracking-wide">
-                      <div class="col-span-4">SKU</div>
-                      <div class="col-span-2">Color</div>
-                      <div class="col-span-2">Packaging</div>
-                      <div class="col-span-2">Spec</div>
-                      <div class="col-span-2 text-right">MOQ</div>
+                      <div class="col-span-4">Supply Output</div>
+                      <div class="col-span-2 text-center">Crop Type</div>
+                      <div class="col-span-2 text-center">Fulfillment Format</div>
+                      <div class="col-span-2 text-center">Quality Standard</div>
+                      <div class="col-span-2 text-center">Minimum Dispatch Unit</div>
                     </div>
                   </div>
 
                   <div class="divide-y divide-[#0b1a2d]/10 bg-white">
                     <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
                       <div class="col-span-4 font-semibold text-[#0b1a2d]">Sesame Seeds</div>
-                      <div class="col-span-2">White</div>
-                      <div class="col-span-2">25kg</div>
-                      <div class="col-span-2">Cleaned</div>
-                      <div class="col-span-2 text-right font-semibold">1 x 20’</div>
+                      <div class="col-span-2 text-center">White</div>
+                      <div class="col-span-2 text-center">25kg</div>
+                      <div class="col-span-2 text-center">Cleaned</div>
+                      <div class="col-span-2 text-center font-semibold">1 x 20’</div>
                     </div>
                     <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
                       <div class="col-span-4 font-semibold text-[#0b1a2d]">Sesame Seeds</div>
-                      <div class="col-span-2">Golden</div>
-                      <div class="col-span-2">25kg</div>
-                      <div class="col-span-2">Export</div>
-                      <div class="col-span-2 text-right font-semibold">1 x 40’</div>
+                      <div class="col-span-2 text-center">Golden</div>
+                      <div class="col-span-2 text-center">25kg</div>
+                      <div class="col-span-2 text-center">Export</div>
+                      <div class="col-span-2 text-center font-semibold">1 x 40’</div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
+                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Additional SKU</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center font-semibold">—</div>
                     </div>
                   </div>
                 </div>
@@ -475,30 +719,37 @@
                 </div>
 
                 <div class="mt-4 overflow-hidden rounded-2xl border border-[#0b1a2d]/10">
-                  <div class="bg-[#6fd04a] text-[#0b1a2d]">
+                  <div class="bg-[#2F5DA8] text-white">
                     <div class="grid grid-cols-12 gap-2 px-4 py-3 text-xs font-semibold uppercase tracking-wide">
-                      <div class="col-span-4">SKU</div>
-                      <div class="col-span-2">Type</div>
-                      <div class="col-span-2">Packaging</div>
-                      <div class="col-span-2">Spec</div>
-                      <div class="col-span-2 text-right">MOQ</div>
+                      <div class="col-span-4">Supply Output</div>
+                      <div class="col-span-2 text-center">Crop Type</div>
+                      <div class="col-span-2 text-center">Fulfillment Format</div>
+                      <div class="col-span-2 text-center">Quality Standard</div>
+                      <div class="col-span-2 text-center">Minimum Dispatch Unit</div>
                     </div>
                   </div>
 
                   <div class="divide-y divide-[#0b1a2d]/10 bg-white">
                     <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
                       <div class="col-span-4 font-semibold text-[#0b1a2d]">Fava Beans</div>
-                      <div class="col-span-2">Whole</div>
-                      <div class="col-span-2">25kg / 50kg</div>
-                      <div class="col-span-2">Cleaned</div>
-                      <div class="col-span-2 text-right font-semibold">1 x 20’</div>
+                      <div class="col-span-2 text-center">Whole</div>
+                      <div class="col-span-2 text-center">25kg / 50kg</div>
+                      <div class="col-span-2 text-center">Cleaned</div>
+                      <div class="col-span-2 text-center font-semibold">1 x 20’</div>
                     </div>
                     <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
                       <div class="col-span-4 font-semibold text-[#0b1a2d]">Split Fava</div>
-                      <div class="col-span-2">Split</div>
-                      <div class="col-span-2">25kg</div>
-                      <div class="col-span-2">Standard</div>
-                      <div class="col-span-2 text-right font-semibold">1 x 40’</div>
+                      <div class="col-span-2 text-center">Split</div>
+                      <div class="col-span-2 text-center">25kg</div>
+                      <div class="col-span-2 text-center">Standard</div>
+                      <div class="col-span-2 text-center font-semibold">1 x 40’</div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
+                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Additional SKU</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center font-semibold">—</div>
                     </div>
                   </div>
                 </div>
@@ -528,30 +779,37 @@
                 </div>
 
                 <div class="mt-4 overflow-hidden rounded-2xl border border-[#0b1a2d]/10">
-                  <div class="bg-[#6fd04a] text-[#0b1a2d]">
+                  <div class="bg-[#2F5DA8] text-white">
                     <div class="grid grid-cols-12 gap-2 px-4 py-3 text-xs font-semibold uppercase tracking-wide">
-                      <div class="col-span-4">SKU</div>
-                      <div class="col-span-2">Type</div>
-                      <div class="col-span-2">Packaging</div>
-                      <div class="col-span-2">Spec</div>
-                      <div class="col-span-2 text-right">MOQ</div>
+                      <div class="col-span-4">Supply Output</div>
+                      <div class="col-span-2 text-center">Crop Type</div>
+                      <div class="col-span-2 text-center">Fulfillment Format</div>
+                      <div class="col-span-2 text-center">Quality Standard</div>
+                      <div class="col-span-2 text-center">Minimum Dispatch Unit</div>
                     </div>
                   </div>
 
                   <div class="divide-y divide-[#0b1a2d]/10 bg-white">
                     <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
                       <div class="col-span-4 font-semibold text-[#0b1a2d]">Yellow Corn</div>
-                      <div class="col-span-2">Grain</div>
-                      <div class="col-span-2">25kg / 50kg</div>
-                      <div class="col-span-2">Cleaned</div>
-                      <div class="col-span-2 text-right font-semibold">1 x 20’</div>
+                      <div class="col-span-2 text-center">Grain</div>
+                      <div class="col-span-2 text-center">25kg / 50kg</div>
+                      <div class="col-span-2 text-center">Cleaned</div>
+                      <div class="col-span-2 text-center font-semibold">1 x 20’</div>
                     </div>
                     <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
                       <div class="col-span-4 font-semibold text-[#0b1a2d]">White Corn</div>
-                      <div class="col-span-2">Grain</div>
-                      <div class="col-span-2">25kg / 50kg</div>
-                      <div class="col-span-2">Standard</div>
-                      <div class="col-span-2 text-right font-semibold">1 x 40’</div>
+                      <div class="col-span-2 text-center">Grain</div>
+                      <div class="col-span-2 text-center">25kg / 50kg</div>
+                      <div class="col-span-2 text-center">Standard</div>
+                      <div class="col-span-2 text-center font-semibold">1 x 40’</div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
+                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Additional SKU</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center font-semibold">—</div>
                     </div>
                   </div>
                 </div>
@@ -581,23 +839,37 @@
                 </div>
 
                 <div class="mt-4 overflow-hidden rounded-2xl border border-[#0b1a2d]/10">
-                  <div class="bg-[#6fd04a] text-[#0b1a2d]">
+                  <div class="bg-[#2F5DA8] text-white">
                     <div class="grid grid-cols-12 gap-2 px-4 py-3 text-xs font-semibold uppercase tracking-wide">
-                      <div class="col-span-4">SKU</div>
-                      <div class="col-span-2">Type</div>
-                      <div class="col-span-2">Packaging</div>
-                      <div class="col-span-2">Spec</div>
-                      <div class="col-span-2 text-right">MOQ</div>
+                      <div class="col-span-4">Supply Output</div>
+                      <div class="col-span-2 text-center">Crop Type</div>
+                      <div class="col-span-2 text-center">Fulfillment Format</div>
+                      <div class="col-span-2 text-center">Quality Standard</div>
+                      <div class="col-span-2 text-center">Minimum Dispatch Unit</div>
                     </div>
                   </div>
 
                   <div class="divide-y divide-[#0b1a2d]/10 bg-white">
                     <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
                       <div class="col-span-4 font-semibold text-[#0b1a2d]">Egyptian Rice</div>
-                      <div class="col-span-2">Milled</div>
-                      <div class="col-span-2">25kg / 50kg</div>
-                      <div class="col-span-2">Standard</div>
-                      <div class="col-span-2 text-right font-semibold">1 x 20’</div>
+                      <div class="col-span-2 text-center">Milled</div>
+                      <div class="col-span-2 text-center">25kg / 50kg</div>
+                      <div class="col-span-2 text-center">Standard</div>
+                      <div class="col-span-2 text-center font-semibold">1 x 20’</div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
+                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Additional SKU</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center font-semibold">—</div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
+                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Additional SKU</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center font-semibold">—</div>
                     </div>
                   </div>
                 </div>
@@ -627,30 +899,37 @@
                 </div>
 
                 <div class="mt-4 overflow-hidden rounded-2xl border border-[#0b1a2d]/10">
-                  <div class="bg-[#6fd04a] text-[#0b1a2d]">
+                  <div class="bg-[#2F5DA8] text-white">
                     <div class="grid grid-cols-12 gap-2 px-4 py-3 text-xs font-semibold uppercase tracking-wide">
-                      <div class="col-span-4">SKU</div>
-                      <div class="col-span-2">Type</div>
-                      <div class="col-span-2">Packaging</div>
-                      <div class="col-span-2">Spec</div>
-                      <div class="col-span-2 text-right">MOQ</div>
+                      <div class="col-span-4">Supply Output</div>
+                      <div class="col-span-2 text-center">Crop Type</div>
+                      <div class="col-span-2 text-center">Fulfillment Format</div>
+                      <div class="col-span-2 text-center">Quality Standard</div>
+                      <div class="col-span-2 text-center">Minimum Dispatch Unit</div>
                     </div>
                   </div>
 
                   <div class="divide-y divide-[#0b1a2d]/10 bg-white">
                     <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
                       <div class="col-span-4 font-semibold text-[#0b1a2d]">Red Lentils</div>
-                      <div class="col-span-2">Split</div>
-                      <div class="col-span-2">25kg</div>
-                      <div class="col-span-2">Cleaned</div>
-                      <div class="col-span-2 text-right font-semibold">1 x 20’</div>
+                      <div class="col-span-2 text-center">Split</div>
+                      <div class="col-span-2 text-center">25kg</div>
+                      <div class="col-span-2 text-center">Cleaned</div>
+                      <div class="col-span-2 text-center font-semibold">1 x 20’</div>
                     </div>
                     <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
                       <div class="col-span-4 font-semibold text-[#0b1a2d]">Brown Lentils</div>
-                      <div class="col-span-2">Whole</div>
-                      <div class="col-span-2">25kg / 50kg</div>
-                      <div class="col-span-2">Standard</div>
-                      <div class="col-span-2 text-right font-semibold">1 x 40’</div>
+                      <div class="col-span-2 text-center">Whole</div>
+                      <div class="col-span-2 text-center">25kg / 50kg</div>
+                      <div class="col-span-2 text-center">Standard</div>
+                      <div class="col-span-2 text-center font-semibold">1 x 40’</div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
+                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Additional SKU</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center font-semibold">—</div>
                     </div>
                   </div>
                 </div>
@@ -680,23 +959,37 @@
                 </div>
 
                 <div class="mt-4 overflow-hidden rounded-2xl border border-[#0b1a2d]/10">
-                  <div class="bg-[#6fd04a] text-[#0b1a2d]">
+                  <div class="bg-[#2F5DA8] text-white">
                     <div class="grid grid-cols-12 gap-2 px-4 py-3 text-xs font-semibold uppercase tracking-wide">
-                      <div class="col-span-4">SKU</div>
-                      <div class="col-span-2">Type</div>
-                      <div class="col-span-2">Packaging</div>
-                      <div class="col-span-2">Spec</div>
-                      <div class="col-span-2 text-right">MOQ</div>
+                      <div class="col-span-4">Supply Output</div>
+                      <div class="col-span-2 text-center">Crop Type</div>
+                      <div class="col-span-2 text-center">Fulfillment Format</div>
+                      <div class="col-span-2 text-center">Quality Standard</div>
+                      <div class="col-span-2 text-center">Minimum Dispatch Unit</div>
                     </div>
                   </div>
 
                   <div class="divide-y divide-[#0b1a2d]/10 bg-white">
                     <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
                       <div class="col-span-4 font-semibold text-[#0b1a2d]">Caraway Seeds</div>
-                      <div class="col-span-2">Whole</div>
-                      <div class="col-span-2">25kg</div>
-                      <div class="col-span-2">Cleaned</div>
-                      <div class="col-span-2 text-right font-semibold">1 x 20’</div>
+                      <div class="col-span-2 text-center">Whole</div>
+                      <div class="col-span-2 text-center">25kg</div>
+                      <div class="col-span-2 text-center">Cleaned</div>
+                      <div class="col-span-2 text-center font-semibold">1 x 20’</div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
+                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Additional SKU</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center font-semibold">—</div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
+                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Additional SKU</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center font-semibold">—</div>
                     </div>
                   </div>
                 </div>
@@ -726,23 +1019,37 @@
                 </div>
 
                 <div class="mt-4 overflow-hidden rounded-2xl border border-[#0b1a2d]/10">
-                  <div class="bg-[#6fd04a] text-[#0b1a2d]">
+                  <div class="bg-[#2F5DA8] text-white">
                     <div class="grid grid-cols-12 gap-2 px-4 py-3 text-xs font-semibold uppercase tracking-wide">
-                      <div class="col-span-4">SKU</div>
-                      <div class="col-span-2">Type</div>
-                      <div class="col-span-2">Packaging</div>
-                      <div class="col-span-2">Spec</div>
-                      <div class="col-span-2 text-right">MOQ</div>
+                      <div class="col-span-4">Supply Output</div>
+                      <div class="col-span-2 text-center">Crop Type</div>
+                      <div class="col-span-2 text-center">Fulfillment Format</div>
+                      <div class="col-span-2 text-center">Quality Standard</div>
+                      <div class="col-span-2 text-center">Minimum Dispatch Unit</div>
                     </div>
                   </div>
 
                   <div class="divide-y divide-[#0b1a2d]/10 bg-white">
                     <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
                       <div class="col-span-4 font-semibold text-[#0b1a2d]">Fennel Seeds</div>
-                      <div class="col-span-2">Whole</div>
-                      <div class="col-span-2">25kg</div>
-                      <div class="col-span-2">Cleaned</div>
-                      <div class="col-span-2 text-right font-semibold">1 x 20’</div>
+                      <div class="col-span-2 text-center">Whole</div>
+                      <div class="col-span-2 text-center">25kg</div>
+                      <div class="col-span-2 text-center">Cleaned</div>
+                      <div class="col-span-2 text-center font-semibold">1 x 20’</div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
+                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Additional SKU</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center font-semibold">—</div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
+                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Additional SKU</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center font-semibold">—</div>
                     </div>
                   </div>
                 </div>
@@ -772,23 +1079,37 @@
                 </div>
 
                 <div class="mt-4 overflow-hidden rounded-2xl border border-[#0b1a2d]/10">
-                  <div class="bg-[#6fd04a] text-[#0b1a2d]">
+                  <div class="bg-[#2F5DA8] text-white">
                     <div class="grid grid-cols-12 gap-2 px-4 py-3 text-xs font-semibold uppercase tracking-wide">
-                      <div class="col-span-4">SKU</div>
-                      <div class="col-span-2">Type</div>
-                      <div class="col-span-2">Packaging</div>
-                      <div class="col-span-2">Spec</div>
-                      <div class="col-span-2 text-right">MOQ</div>
+                      <div class="col-span-4">Supply Output</div>
+                      <div class="col-span-2 text-center">Crop Type</div>
+                      <div class="col-span-2 text-center">Fulfillment Format</div>
+                      <div class="col-span-2 text-center">Quality Standard</div>
+                      <div class="col-span-2 text-center">Minimum Dispatch Unit</div>
                     </div>
                   </div>
 
                   <div class="divide-y divide-[#0b1a2d]/10 bg-white">
                     <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
                       <div class="col-span-4 font-semibold text-[#0b1a2d]">Sunflower Seeds</div>
-                      <div class="col-span-2">Raw</div>
-                      <div class="col-span-2">25kg</div>
-                      <div class="col-span-2">Standard</div>
-                      <div class="col-span-2 text-right font-semibold">1 x 20’</div>
+                      <div class="col-span-2 text-center">Raw</div>
+                      <div class="col-span-2 text-center">25kg</div>
+                      <div class="col-span-2 text-center">Standard</div>
+                      <div class="col-span-2 text-center font-semibold">1 x 20’</div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
+                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Additional SKU</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center font-semibold">—</div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
+                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Additional SKU</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center font-semibold">—</div>
                     </div>
                   </div>
                 </div>
@@ -818,23 +1139,37 @@
                 </div>
 
                 <div class="mt-4 overflow-hidden rounded-2xl border border-[#0b1a2d]/10">
-                  <div class="bg-[#6fd04a] text-[#0b1a2d]">
+                  <div class="bg-[#2F5DA8] text-white">
                     <div class="grid grid-cols-12 gap-2 px-4 py-3 text-xs font-semibold uppercase tracking-wide">
-                      <div class="col-span-4">SKU</div>
-                      <div class="col-span-2">Type</div>
-                      <div class="col-span-2">Packaging</div>
-                      <div class="col-span-2">Spec</div>
-                      <div class="col-span-2 text-right">MOQ</div>
+                      <div class="col-span-4">Supply Output</div>
+                      <div class="col-span-2 text-center">Crop Type</div>
+                      <div class="col-span-2 text-center">Fulfillment Format</div>
+                      <div class="col-span-2 text-center">Quality Standard</div>
+                      <div class="col-span-2 text-center">Minimum Dispatch Unit</div>
                     </div>
                   </div>
 
                   <div class="divide-y divide-[#0b1a2d]/10 bg-white">
                     <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
                       <div class="col-span-4 font-semibold text-[#0b1a2d]">Soybeans</div>
-                      <div class="col-span-2">Whole</div>
-                      <div class="col-span-2">50kg</div>
-                      <div class="col-span-2">Standard</div>
-                      <div class="col-span-2 text-right font-semibold">1 x 20’</div>
+                      <div class="col-span-2 text-center">Whole</div>
+                      <div class="col-span-2 text-center">50kg</div>
+                      <div class="col-span-2 text-center">Standard</div>
+                      <div class="col-span-2 text-center font-semibold">1 x 20’</div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
+                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Additional SKU</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center font-semibold">—</div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
+                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Additional SKU</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center font-semibold">—</div>
                     </div>
                   </div>
                 </div>
@@ -864,23 +1199,37 @@
                 </div>
 
                 <div class="mt-4 overflow-hidden rounded-2xl border border-[#0b1a2d]/10">
-                  <div class="bg-[#6fd04a] text-[#0b1a2d]">
+                  <div class="bg-[#2F5DA8] text-white">
                     <div class="grid grid-cols-12 gap-2 px-4 py-3 text-xs font-semibold uppercase tracking-wide">
-                      <div class="col-span-4">SKU</div>
-                      <div class="col-span-2">Grade</div>
-                      <div class="col-span-2">Packaging</div>
-                      <div class="col-span-2">Spec</div>
-                      <div class="col-span-2 text-right">MOQ</div>
+                      <div class="col-span-4">Supply Output</div>
+                      <div class="col-span-2 text-center">Crop Type</div>
+                      <div class="col-span-2 text-center">Fulfillment Format</div>
+                      <div class="col-span-2 text-center">Quality Standard</div>
+                      <div class="col-span-2 text-center">Minimum Dispatch Unit</div>
                     </div>
                   </div>
 
                   <div class="divide-y divide-[#0b1a2d]/10 bg-white">
                     <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
                       <div class="col-span-4 font-semibold text-[#0b1a2d]">Peanuts</div>
-                      <div class="col-span-2">Kabuli</div>
-                      <div class="col-span-2">25kg</div>
-                      <div class="col-span-2">Cleaned</div>
-                      <div class="col-span-2 text-right font-semibold">1 x 20’</div>
+                      <div class="col-span-2 text-center">Kabuli</div>
+                      <div class="col-span-2 text-center">25kg</div>
+                      <div class="col-span-2 text-center">Cleaned</div>
+                      <div class="col-span-2 text-center font-semibold">1 x 20’</div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
+                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Additional SKU</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center font-semibold">—</div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
+                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Additional SKU</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center font-semibold">—</div>
                     </div>
                   </div>
                 </div>
@@ -910,23 +1259,37 @@
                 </div>
 
                 <div class="mt-4 overflow-hidden rounded-2xl border border-[#0b1a2d]/10">
-                  <div class="bg-[#6fd04a] text-[#0b1a2d]">
+                  <div class="bg-[#2F5DA8] text-white">
                     <div class="grid grid-cols-12 gap-2 px-4 py-3 text-xs font-semibold uppercase tracking-wide">
-                      <div class="col-span-4">SKU</div>
-                      <div class="col-span-2">Variety</div>
-                      <div class="col-span-2">Packaging</div>
-                      <div class="col-span-2">Spec</div>
-                      <div class="col-span-2 text-right">MOQ</div>
+                      <div class="col-span-4">Supply Output</div>
+                      <div class="col-span-2 text-center">Crop Type</div>
+                      <div class="col-span-2 text-center">Fulfillment Format</div>
+                      <div class="col-span-2 text-center">Quality Standard</div>
+                      <div class="col-span-2 text-center">Minimum Dispatch Unit</div>
                     </div>
                   </div>
 
                   <div class="divide-y divide-[#0b1a2d]/10 bg-white">
                     <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
                       <div class="col-span-4 font-semibold text-[#0b1a2d]">Red Beans</div>
-                      <div class="col-span-2">Red</div>
-                      <div class="col-span-2">25kg / 50kg</div>
-                      <div class="col-span-2">Standard</div>
-                      <div class="col-span-2 text-right font-semibold">1 x 20’</div>
+                      <div class="col-span-2 text-center">Red</div>
+                      <div class="col-span-2 text-center">25kg / 50kg</div>
+                      <div class="col-span-2 text-center">Standard</div>
+                      <div class="col-span-2 text-center font-semibold">1 x 20’</div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
+                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Additional SKU</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center font-semibold">—</div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
+                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Additional SKU</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center font-semibold">—</div>
                     </div>
                   </div>
                 </div>
@@ -956,23 +1319,37 @@
                 </div>
 
                 <div class="mt-4 overflow-hidden rounded-2xl border border-[#0b1a2d]/10">
-                  <div class="bg-[#6fd04a] text-[#0b1a2d]">
+                  <div class="bg-[#2F5DA8] text-white">
                     <div class="grid grid-cols-12 gap-2 px-4 py-3 text-xs font-semibold uppercase tracking-wide">
-                      <div class="col-span-4">SKU</div>
-                      <div class="col-span-2">Type</div>
-                      <div class="col-span-2">Packaging</div>
-                      <div class="col-span-2">Spec</div>
-                      <div class="col-span-2 text-right">MOQ</div>
+                      <div class="col-span-4">Supply Output</div>
+                      <div class="col-span-2 text-center">Crop Type</div>
+                      <div class="col-span-2 text-center">Fulfillment Format</div>
+                      <div class="col-span-2 text-center">Quality Standard</div>
+                      <div class="col-span-2 text-center">Minimum Dispatch Unit</div>
                     </div>
                   </div>
 
                   <div class="divide-y divide-[#0b1a2d]/10 bg-white">
                     <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
                       <div class="col-span-4 font-semibold text-[#0b1a2d]">Anise</div>
-                      <div class="col-span-2">Whole</div>
-                      <div class="col-span-2">25kg</div>
-                      <div class="col-span-2">Standard</div>
-                      <div class="col-span-2 text-right font-semibold">1 x 20’</div>
+                      <div class="col-span-2 text-center">Whole</div>
+                      <div class="col-span-2 text-center">25kg</div>
+                      <div class="col-span-2 text-center">Standard</div>
+                      <div class="col-span-2 text-center font-semibold">1 x 20’</div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
+                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Additional SKU</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center font-semibold">—</div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
+                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Additional SKU</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center font-semibold">—</div>
                     </div>
                   </div>
                 </div>
@@ -1002,23 +1379,37 @@
                 </div>
 
                 <div class="mt-4 overflow-hidden rounded-2xl border border-[#0b1a2d]/10">
-                  <div class="bg-[#6fd04a] text-[#0b1a2d]">
+                  <div class="bg-[#2F5DA8] text-white">
                     <div class="grid grid-cols-12 gap-2 px-4 py-3 text-xs font-semibold uppercase tracking-wide">
-                      <div class="col-span-4">SKU</div>
-                      <div class="col-span-2">Grade</div>
-                      <div class="col-span-2">Packaging</div>
-                      <div class="col-span-2">Spec</div>
-                      <div class="col-span-2 text-right">MOQ</div>
+                      <div class="col-span-4">Supply Output</div>
+                      <div class="col-span-2 text-center">Crop Type</div>
+                      <div class="col-span-2 text-center">Fulfillment Format</div>
+                      <div class="col-span-2 text-center">Quality Standard</div>
+                      <div class="col-span-2 text-center">Minimum Dispatch Unit</div>
                     </div>
                   </div>
 
                   <div class="divide-y divide-[#0b1a2d]/10 bg-white">
                     <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
                       <div class="col-span-4 font-semibold text-[#0b1a2d]">White Pulp</div>
-                      <div class="col-span-2">Milling</div>
-                      <div class="col-span-2">50kg</div>
-                      <div class="col-span-2">Standard</div>
-                      <div class="col-span-2 text-right font-semibold">1 x 20’</div>
+                      <div class="col-span-2 text-center">Milling</div>
+                      <div class="col-span-2 text-center">50kg</div>
+                      <div class="col-span-2 text-center">Standard</div>
+                      <div class="col-span-2 text-center font-semibold">1 x 20’</div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
+                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Additional SKU</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center font-semibold">—</div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
+                      <div class="col-span-4 font-semibold text-[#0b1a2d]">Additional SKU</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center">—</div>
+                      <div class="col-span-2 text-center font-semibold">—</div>
                     </div>
                   </div>
                 </div>
@@ -1027,8 +1418,6 @@
             </div>
           </div>
         </div>
-
-        <!-- (I’m not repeating them here to avoid altering anything in your tables.) -->
 
       </div><!-- /#skuCards -->
     </div>
@@ -1148,6 +1537,7 @@
   setTimeout(syncMarquee, 900);
 </script>
 
+
 <script>
   (function () {
     const navbar = document.getElementById("site-navbar");
@@ -1156,7 +1546,7 @@
     let lastScrollY = window.scrollY;
     let ticking = false;
     let idleTimer = null;
-    const hideAfterIdle = 180;
+    const hideAfterIdle = 3000;
 
     function showNav() {
       navbar.classList.remove("-translate-y-full");
@@ -1174,16 +1564,18 @@
 
       if (currentScrollY <= 10) {
         showNav();
+        clearTimeout(idleTimer);
       } else if (delta > 2) {
         hideNav(); // moving down
+        clearTimeout(idleTimer);
       } else if (delta < -2) {
         showNav(); // moving up
-      }
 
-      clearTimeout(idleTimer);
-      idleTimer = setTimeout(() => {
-        if (window.scrollY > 10) hideNav(); // stall = hide
-      }, hideAfterIdle);
+        clearTimeout(idleTimer);
+        idleTimer = setTimeout(() => {
+          if (window.scrollY > 10) hideNav();
+        }, hideAfterIdle);
+      }
 
       lastScrollY = currentScrollY;
       ticking = false;
@@ -1201,6 +1593,7 @@
     );
   })();
 </script>
+
 <script>
   (function () {
     const mobileMenuButton = document.getElementById('mobile-menu-button');
@@ -1253,6 +1646,7 @@
         clearTimeout(scrollCloseTimer);
         scrollCloseTimer = setTimeout(() => {
           if (!isMobileView()) return;
+
           closeMobileMenu();
         }, 120);
       },
@@ -1264,6 +1658,91 @@
       closeMobileMenu();
     });
   })();
+</script>
+
+<script>
+  function buildMobileSkuDetails() {
+    const cards = document.querySelectorAll('#skuCards > [data-crop]');
+
+    cards.forEach((card) => {
+      const existing = card.querySelector('.sku-mobile-details');
+      if (existing) existing.remove();
+
+      const tableWrap = card.querySelector('.mt-4.overflow-hidden.rounded-2xl.border');
+      const rows = tableWrap ? tableWrap.querySelectorAll('.divide-y > div') : [];
+
+      if (!tableWrap || !rows.length) return;
+
+      tableWrap.classList.add('sku-desktop-table');
+
+      const mobileDetails = document.createElement('div');
+      mobileDetails.className = 'sku-mobile-details';
+
+      const toggleBtn = document.createElement('button');
+      toggleBtn.type = 'button';
+      toggleBtn.className = 'sku-mobile-toggle';
+      toggleBtn.setAttribute('aria-expanded', 'false');
+      toggleBtn.innerHTML = `
+        Know more
+        <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 9l-7 7-7-7"></path>
+        </svg>
+      `;
+
+      const body = document.createElement('div');
+      body.className = 'sku-mobile-body';
+
+      const list = document.createElement('div');
+      list.className = 'sku-mobile-list';
+
+      rows.forEach((row) => {
+        const cols = row.querySelectorAll('div');
+        if (cols.length < 5) return;
+
+        const skuName = (cols[0]?.textContent || '').trim();
+        const cropType = (cols[1]?.textContent || '').trim();
+        const fulfillment = (cols[2]?.textContent || '').trim();
+        const quality = (cols[3]?.textContent || '').trim();
+        const dispatch = (cols[4]?.textContent || '').trim();
+
+        const item = document.createElement('div');
+        item.className = 'sku-mobile-item';
+        item.innerHTML = `
+          <div class="sku-mobile-item-title">${skuName}</div>
+          <ul class="sku-mobile-bullets">
+            <li><strong>Crop Type:</strong> ${cropType}</li>
+            <li><strong>Fulfillment Format:</strong> ${fulfillment}</li>
+            <li><strong>Quality Standard:</strong> ${quality}</li>
+            <li><strong>Minimum Dispatch Unit:</strong> ${dispatch}</li>
+          </ul>
+        `;
+        list.appendChild(item);
+      });
+
+      body.appendChild(list);
+      mobileDetails.appendChild(toggleBtn);
+      mobileDetails.appendChild(body);
+
+      tableWrap.parentNode.insertBefore(mobileDetails, tableWrap);
+
+      toggleBtn.addEventListener('click', () => {
+        const isOpen = mobileDetails.classList.contains('open');
+        mobileDetails.classList.toggle('open', !isOpen);
+        toggleBtn.setAttribute('aria-expanded', String(!isOpen));
+        toggleBtn.innerHTML = !isOpen
+          ? `Hide details
+              <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 15l7-7 7 7"></path>
+              </svg>`
+          : `Know more
+              <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 9l-7 7-7-7"></path>
+              </svg>`;
+      });
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', buildMobileSkuDetails);
 </script>
 </body>
 </html>
