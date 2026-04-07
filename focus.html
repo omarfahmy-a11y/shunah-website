@@ -228,21 +228,7 @@ body { font-family: 'Inter', sans-serif; }
       white-space: nowrap;
     }
 
-    .knowMore{
-      margin-left: auto;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11px;
-      font-weight: 800;
-      color: #fff;
-      background: #0b1a2d;
-      border-radius: 9999px;
-      padding: 7px 10px;
-      transition: opacity 150ms ease;
-      white-space: nowrap;
-      flex: 0 0 auto;
-    }
+
     .knowMore:hover{ opacity: .9; }
 
     @media (max-width: 640px){
@@ -262,45 +248,41 @@ body { font-family: 'Inter', sans-serif; }
     display: none !important;
   }
 
-#skuCards > [data-crop] .shrink-0{
-  display: block !important;
-  flex: 0 0 auto;
-}
-
-#skuCards > [data-crop] .shrink-0 > div{
-  width: 96px !important;
-  height: 96px !important;
-  border-radius: 20px !important;
-}
-
-#skuCards > [data-crop] .shrink-0 img{
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
   .sku-mobile-details{
     display: block;
-    margin-top: 16px;
+    margin-top: 4px;
     
-    padding-top: 14px;
+    padding-top: 4px;
   }
 
   .sku-mobile-toggle{
-    margin-top: 0px;
-    width: 100%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    border: 0;
-    border-radius: 9999px;
-    background: #0b1a2d;
-    color: #fff;
-    font-size: 12px;
-    font-weight: 800;
-    padding: 10px 14px;
-    cursor: pointer;
-  }
+  margin-top: 4px;
+  width: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #2F5DA8;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 0;
+  cursor: pointer;
+  box-shadow: none;
+}
+
+.sku-mobile-toggle svg{
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  flex: 0 0 auto;
+}
+
+.sku-mobile-toggle:hover{
+  opacity: .9;
+}
 
   .sku-mobile-body{
     display: none;
@@ -347,8 +329,6 @@ body { font-family: 'Inter', sans-serif; }
     color: rgba(11,26,45,.78);
   }
 
-
-
   .sku-mobile-bullets strong{
     color: #0b1a2d;
     font-weight: 700;
@@ -357,6 +337,11 @@ body { font-family: 'Inter', sans-serif; }
 
 @media (min-width: 641px){
   .sku-mobile-details{
+    display: none !important;
+  }
+}
+@media (min-width: 641px){
+  .sku-mobile-toggle{
     display: none !important;
   }
 }
@@ -380,6 +365,9 @@ body { font-family: 'Inter', sans-serif; }
 }
 
   </style>
+
+
+
 </head>
 
 <body class="bg-[#f7f9fc] text-[#0b1a2d]">
@@ -580,11 +568,20 @@ body { font-family: 'Inter', sans-serif; }
       <div class="mt-8 space-y-6" id="skuCards">
 
         <!-- 1) White Beans -->
-        <div class="rounded-3xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="white-beans">
-          <div class="p-5 sm:p-6">
-            <div class="flex items-start gap-4">
-              <div class="shrink-0">
-                <div class="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden">
+        <div class="rounded-xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="white-beans">
+
+
+
+          <div class="p-3 sm:p-4">
+            <div class="flex items-start gap-3">
+
+  <!-- BLUE LINE (mobile only) -->
+  <div class="hidden sm:block"></div>
+  <div class="block sm:hidden w-[3px] h-16 bg-[#2F5DA8] rounded-full mt-2"></div>
+
+  <!-- IMAGE -->
+  <div class="shrink-0">
+                <div class="h-20 w-20 sm:h-24 sm:w-24 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden shadow-[0_10px_20px_rgba(11,26,45,0.18)]">
                   <img src="images/sku-white-beans.jpg" alt="White Beans" class="h-full w-full object-cover"
                        onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=&quot;text-xs font-semibold text-[#0b1a2d]/60&quot;>IMG</span>'; ">
                 </div>
@@ -594,7 +591,7 @@ body { font-family: 'Inter', sans-serif; }
                 <div class="flex items-center justify-between gap-4 flex-wrap">
                   <div>
                     <p class="text-lg font-semibold text-[#0b1a2d]">White Beans</p>
-                    <p class="text-sm text-[#0b1a2d]/60">Premium pulses for local and export markets</p>
+                    <p class="text-sm text-[#0b1a2d]/60">Summer and Winter</p>
                   </div>
                 </div>
 
@@ -640,11 +637,18 @@ body { font-family: 'Inter', sans-serif; }
         </div>
 
         <!-- 2) Sesame -->
-        <div class="rounded-3xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="sesame">
-          <div class="p-5 sm:p-6">
-            <div class="flex items-start gap-4">
-              <div class="shrink-0">
-                <div class="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden">
+        <div class="rounded-xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="sesame">
+        <div class="p-3 sm:p-4">
+            <div class="flex items-start gap-3">
+
+  <!-- BLUE LINE (mobile only) -->
+  <div class="hidden sm:block"></div>
+  <div class="block sm:hidden w-[3px] h-16 bg-[#2F5DA8] rounded-full mt-2"></div>
+
+  <!-- IMAGE -->
+  <div class="shrink-0">
+
+               <div class="h-20 w-20 sm:h-24 sm:w-24 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden shadow-[0_10px_20px_rgba(11,26,45,0.18)]">
                   <img src="images/sku-sesame.jpg" alt="Sesame" class="h-full w-full object-cover"
                        onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=&quot;text-xs font-semibold text-[#0b1a2d]/60&quot;>IMG</span>'; ">
                 </div>
@@ -700,11 +704,18 @@ body { font-family: 'Inter', sans-serif; }
         </div>
 
         <!-- 3) Fava -->
-        <div class="rounded-3xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="fava">
-          <div class="p-5 sm:p-6">
-            <div class="flex items-start gap-4">
-              <div class="shrink-0">
-                <div class="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden">
+        <div class="rounded-xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="fava">
+       <div class="p-3 sm:p-4">
+             <div class="flex items-start gap-3">
+
+  <!-- BLUE LINE (mobile only) -->
+  <div class="hidden sm:block"></div>
+  <div class="block sm:hidden w-[3px] h-16 bg-[#2F5DA8] rounded-full mt-2"></div>
+
+  <!-- IMAGE -->
+  <div class="shrink-0">
+
+                <div class="h-20 w-20 sm:h-24 sm:w-24 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden shadow-[0_10px_20px_rgba(11,26,45,0.18)]">
                   <img src="images/sku-fava.jpg" alt="Fava Beans" class="h-full w-full object-cover"
                        onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=&quot;text-xs font-semibold text-[#0b1a2d]/60&quot;>IMG</span>'; ">
                 </div>
@@ -760,11 +771,18 @@ body { font-family: 'Inter', sans-serif; }
         </div>
 
         <!-- 4) Corn -->
-        <div class="rounded-3xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="corn">
-          <div class="p-5 sm:p-6">
-            <div class="flex items-start gap-4">
-              <div class="shrink-0">
-                <div class="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden">
+        <div class="rounded-xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="corn">
+        <div class="p-3 sm:p-4">
+             <div class="flex items-start gap-3">
+
+  <!-- BLUE LINE (mobile only) -->
+  <div class="hidden sm:block"></div>
+  <div class="block sm:hidden w-[3px] h-16 bg-[#2F5DA8] rounded-full mt-2"></div>
+
+  <!-- IMAGE -->
+  <div class="shrink-0">
+
+                <div class="h-20 w-20 sm:h-24 sm:w-24 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden shadow-[0_10px_20px_rgba(11,26,45,0.18)]">
                   <img src="images/sku-corn.jpg" alt="Corn" class="h-full w-full object-cover"
                        onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=&quot;text-xs font-semibold text-[#0b1a2d]/60&quot;>IMG</span>'; ">
                 </div>
@@ -820,11 +838,18 @@ body { font-family: 'Inter', sans-serif; }
         </div>
 
         <!-- 5) Rice -->
-        <div class="rounded-3xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="rice">
-          <div class="p-5 sm:p-6">
-            <div class="flex items-start gap-4">
-              <div class="shrink-0">
-                <div class="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden">
+        <div class="rounded-xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="rice">
+          <div class="p-3 sm:p-4">
+             <div class="flex items-start gap-3">
+
+  <!-- BLUE LINE (mobile only) -->
+  <div class="hidden sm:block"></div>
+  <div class="block sm:hidden w-[3px] h-16 bg-[#2F5DA8] rounded-full mt-2"></div>
+
+  <!-- IMAGE -->
+  <div class="shrink-0">
+
+<div class="h-20 w-20 sm:h-24 sm:w-24 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden shadow-[0_10px_20px_rgba(11,26,45,0.18)]">
                   <img src="images/sku-rice.jpg" alt="Rice" class="h-full w-full object-cover"
                        onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=&quot;text-xs font-semibold text-[#0b1a2d]/60&quot;>IMG</span>'; ">
                 </div>
@@ -880,11 +905,18 @@ body { font-family: 'Inter', sans-serif; }
         </div>
 
         <!-- 6) Lentils -->
-        <div class="rounded-3xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="lentils">
-          <div class="p-5 sm:p-6">
-            <div class="flex items-start gap-4">
-              <div class="shrink-0">
-                <div class="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden">
+        <div class="rounded-xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="lentils">
+        <div class="p-3 sm:p-4">
+             <div class="flex items-start gap-3">
+
+  <!-- BLUE LINE (mobile only) -->
+  <div class="hidden sm:block"></div>
+  <div class="block sm:hidden w-[3px] h-16 bg-[#2F5DA8] rounded-full mt-2"></div>
+
+  <!-- IMAGE -->
+  <div class="shrink-0">
+
+                <div class="h-20 w-20 sm:h-24 sm:w-24 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden shadow-[0_10px_20px_rgba(11,26,45,0.18)]">
                   <img src="images/sku-lentils.jpg" alt="Lentils" class="h-full w-full object-cover"
                        onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=&quot;text-xs font-semibold text-[#0b1a2d]/60&quot;>IMG</span>'; ">
                 </div>
@@ -940,11 +972,18 @@ body { font-family: 'Inter', sans-serif; }
         </div>
 
         <!-- 7) Caraway -->
-        <div class="rounded-3xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="caraway">
-          <div class="p-5 sm:p-6">
-            <div class="flex items-start gap-4">
-              <div class="shrink-0">
-                <div class="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden">
+        <div class="rounded-xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="caraway">
+         <div class="p-3 sm:p-4">
+             <div class="flex items-start gap-3">
+
+  <!-- BLUE LINE (mobile only) -->
+  <div class="hidden sm:block"></div>
+  <div class="block sm:hidden w-[3px] h-16 bg-[#2F5DA8] rounded-full mt-2"></div>
+
+  <!-- IMAGE -->
+  <div class="shrink-0">
+
+               <div class="h-20 w-20 sm:h-24 sm:w-24 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden shadow-[0_10px_20px_rgba(11,26,45,0.18)]">
                   <img src="images/sku-caraway.jpg" alt="Caraway" class="h-full w-full object-cover"
                        onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=&quot;text-xs font-semibold text-[#0b1a2d]/60&quot;>IMG</span>'; ">
                 </div>
@@ -1000,11 +1039,18 @@ body { font-family: 'Inter', sans-serif; }
         </div>
 
         <!-- 8) Fennel -->
-        <div class="rounded-3xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="fennel">
-          <div class="p-5 sm:p-6">
-            <div class="flex items-start gap-4">
-              <div class="shrink-0">
-                <div class="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden">
+        <div class="rounded-xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="fennel">
+          <div class="p-3 sm:p-4">
+             <div class="flex items-start gap-3">
+
+  <!-- BLUE LINE (mobile only) -->
+  <div class="hidden sm:block"></div>
+  <div class="block sm:hidden w-[3px] h-16 bg-[#2F5DA8] rounded-full mt-2"></div>
+
+  <!-- IMAGE -->
+  <div class="shrink-0">
+
+                <div class="h-20 w-20 sm:h-24 sm:w-24 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden shadow-[0_10px_20px_rgba(11,26,45,0.18)]">
                   <img src="images/sku-fennel.jpg" alt="Fennel" class="h-full w-full object-cover"
                        onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=&quot;text-xs font-semibold text-[#0b1a2d]/60&quot;>IMG</span>'; ">
                 </div>
@@ -1060,11 +1106,18 @@ body { font-family: 'Inter', sans-serif; }
         </div>
 
         <!-- 9) Sunflower Seeds -->
-        <div class="rounded-3xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="sunflower">
-          <div class="p-5 sm:p-6">
-            <div class="flex items-start gap-4">
-              <div class="shrink-0">
-                <div class="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden">
+        <div class="rounded-xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="sunflower">
+     <div class="p-3 sm:p-4">
+             <div class="flex items-start gap-3">
+
+  <!-- BLUE LINE (mobile only) -->
+  <div class="hidden sm:block"></div>
+  <div class="block sm:hidden w-[3px] h-16 bg-[#2F5DA8] rounded-full mt-2"></div>
+
+  <!-- IMAGE -->
+  <div class="shrink-0">
+
+               <div class="h-20 w-20 sm:h-24 sm:w-24 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden shadow-[0_10px_20px_rgba(11,26,45,0.18)]">
                   <img src="images/sku-sunflower.jpg" alt="Sunflower Seeds" class="h-full w-full object-cover"
                        onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=&quot;text-xs font-semibold text-[#0b1a2d]/60&quot;>IMG</span>'; ">
                 </div>
@@ -1120,11 +1173,18 @@ body { font-family: 'Inter', sans-serif; }
         </div>
 
         <!-- 10) Soybeans -->
-        <div class="rounded-3xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="soybean">
-          <div class="p-5 sm:p-6">
-            <div class="flex items-start gap-4">
-              <div class="shrink-0">
-                <div class="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden">
+        <div class="rounded-xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="soybean">
+         <div class="p-3 sm:p-4">
+             <div class="flex items-start gap-3">
+
+  <!-- BLUE LINE (mobile only) -->
+  <div class="hidden sm:block"></div>
+  <div class="block sm:hidden w-[3px] h-16 bg-[#2F5DA8] rounded-full mt-2"></div>
+
+  <!-- IMAGE -->
+  <div class="shrink-0">
+
+                <div class="h-20 w-20 sm:h-24 sm:w-24 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden shadow-[0_10px_20px_rgba(11,26,45,0.18)]">
                   <img src="images/sku-soybean.jpg" alt="Soybeans" class="h-full w-full object-cover"
                        onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=&quot;text-xs font-semibold text-[#0b1a2d]/60&quot;>IMG</span>'; ">
                 </div>
@@ -1180,11 +1240,18 @@ body { font-family: 'Inter', sans-serif; }
         </div>
 
         <!-- 11) Peanuts -->
-        <div class="rounded-3xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="peanuts">
-          <div class="p-5 sm:p-6">
-            <div class="flex items-start gap-4">
-              <div class="shrink-0">
-                <div class="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden">
+        <div class="rounded-xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="peanuts">
+         <div class="p-3 sm:p-4">
+            <div class="flex items-start gap-3">
+
+  <!-- BLUE LINE (mobile only) -->
+  <div class="hidden sm:block"></div>
+  <div class="block sm:hidden w-[3px] h-16 bg-[#2F5DA8] rounded-full mt-2"></div>
+
+  <!-- IMAGE -->
+  <div class="shrink-0">
+
+                <div class="h-20 w-20 sm:h-24 sm:w-24 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden shadow-[0_10px_20px_rgba(11,26,45,0.18)]">
                   <img src="images/sku-peanuts.jpg" alt="Peanuts" class="h-full w-full object-cover"
                        onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=&quot;text-xs font-semibold text-[#0b1a2d]/60&quot;>IMG</span>'; ">
                 </div>
@@ -1240,11 +1307,18 @@ body { font-family: 'Inter', sans-serif; }
         </div>
 
         <!-- 12) Red Beans -->
-        <div class="rounded-3xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="red-beans">
-          <div class="p-5 sm:p-6">
-            <div class="flex items-start gap-4">
-              <div class="shrink-0">
-                <div class="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden">
+        <div class="rounded-xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="red-beans">
+         <div class="p-3 sm:p-4">
+            <div class="flex items-start gap-3">
+
+  <!-- BLUE LINE (mobile only) -->
+  <div class="hidden sm:block"></div>
+  <div class="block sm:hidden w-[3px] h-16 bg-[#2F5DA8] rounded-full mt-2"></div>
+
+  <!-- IMAGE -->
+  <div class="shrink-0">
+
+<div class="h-20 w-20 sm:h-24 sm:w-24 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden shadow-[0_10px_20px_rgba(11,26,45,0.18)]">
                   <img src="images/sku-redbeans.jpg" alt="Red Beans" class="h-full w-full object-cover"
                        onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=&quot;text-xs font-semibold text-[#0b1a2d]/60&quot;>IMG</span>'; ">
                 </div>
@@ -1300,11 +1374,18 @@ body { font-family: 'Inter', sans-serif; }
         </div>
 
         <!-- 13) Anise -->
-        <div class="rounded-3xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="anise">
-          <div class="p-5 sm:p-6">
-            <div class="flex items-start gap-4">
-              <div class="shrink-0">
-                <div class="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden">
+        <div class="rounded-xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="anise">
+         <div class="p-3 sm:p-4">
+             <div class="flex items-start gap-3">
+
+  <!-- BLUE LINE (mobile only) -->
+  <div class="hidden sm:block"></div>
+  <div class="block sm:hidden w-[3px] h-16 bg-[#2F5DA8] rounded-full mt-2"></div>
+
+  <!-- IMAGE -->
+  <div class="shrink-0">
+
+                <div class="h-20 w-20 sm:h-24 sm:w-24 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden shadow-[0_10px_20px_rgba(11,26,45,0.18)]">
                   <img src="images/sku-anise.jpg" alt="Anise" class="h-full w-full object-cover"
                        onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=&quot;text-xs font-semibold text-[#0b1a2d]/60&quot;>IMG</span>'; ">
                 </div>
@@ -1360,11 +1441,18 @@ body { font-family: 'Inter', sans-serif; }
         </div>
 
         <!-- 14) White Pulp -->
-        <div class="rounded-3xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="whitepulp">
-          <div class="p-5 sm:p-6">
-            <div class="flex items-start gap-4">
-              <div class="shrink-0">
-                <div class="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden">
+        <div class="rounded-xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="whitepulp">
+      <div class="p-3 sm:p-4">
+            <div class="flex items-start gap-3">
+
+  <!-- BLUE LINE (mobile only) -->
+  <div class="hidden sm:block"></div>
+  <div class="block sm:hidden w-[3px] h-16 bg-[#2F5DA8] rounded-full mt-2"></div>
+
+  <!-- IMAGE -->
+  <div class="shrink-0">
+
+                <div class="h-20 w-20 sm:h-24 sm:w-24 rounded-2xl bg-[#0b1a2d]/[0.04] border border-[#0b1a2d]/10 overflow-hidden shadow-[0_10px_20px_rgba(11,26,45,0.18)]">
                   <img src="images/sku-whitepulp.jpg" alt="Whitepulp" class="h-full w-full object-cover"
                        onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=&quot;text-xs font-semibold text-[#0b1a2d]/60&quot;>IMG</span>'; ">
                 </div>
@@ -1671,6 +1759,8 @@ body { font-family: 'Inter', sans-serif; }
       const tableWrap = card.querySelector('.mt-4.overflow-hidden.rounded-2xl.border');
       const rows = tableWrap ? tableWrap.querySelectorAll('.divide-y > div') : [];
 
+const header = card.querySelector('.min-w-0.flex-1 > .flex.items-center.justify-between.gap-4.flex-wrap > div');
+
       if (!tableWrap || !rows.length) return;
 
       tableWrap.classList.add('sku-desktop-table');
@@ -1682,12 +1772,13 @@ body { font-family: 'Inter', sans-serif; }
       toggleBtn.type = 'button';
       toggleBtn.className = 'sku-mobile-toggle';
       toggleBtn.setAttribute('aria-expanded', 'false');
-      toggleBtn.innerHTML = `
-        Know more
-        <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M19 9l-7 7-7-7"></path>
-        </svg>
-      `;
+
+
+     toggleBtn.innerHTML = `Know more
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M5 12h14"></path>
+    <path d="M13 6l6 6-6 6"></path>
+  </svg>`;
 
       const body = document.createElement('div');
       body.className = 'sku-mobile-body';
@@ -1719,26 +1810,34 @@ body { font-family: 'Inter', sans-serif; }
         list.appendChild(item);
       });
 
-      body.appendChild(list);
-      mobileDetails.appendChild(toggleBtn);
-      mobileDetails.appendChild(body);
+     body.appendChild(list);
+mobileDetails.appendChild(body);
 
-      tableWrap.parentNode.insertBefore(mobileDetails, tableWrap);
+if (header) {
+  header.appendChild(toggleBtn);
+}
+
+tableWrap.parentNode.insertBefore(mobileDetails, tableWrap);
+
+
 
       toggleBtn.addEventListener('click', () => {
-        const isOpen = mobileDetails.classList.contains('open');
-        mobileDetails.classList.toggle('open', !isOpen);
-        toggleBtn.setAttribute('aria-expanded', String(!isOpen));
-        toggleBtn.innerHTML = !isOpen
-          ? `Hide details
-              <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M5 15l7-7 7 7"></path>
-              </svg>`
-          : `Know more
-              <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M19 9l-7 7-7-7"></path>
-              </svg>`;
-      });
+  const isOpen = mobileDetails.classList.contains('open');
+  mobileDetails.classList.toggle('open', !isOpen);
+  toggleBtn.setAttribute('aria-expanded', String(!isOpen));
+
+  toggleBtn.innerHTML = !isOpen
+    ? `Hide details
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5"></path>
+          <path d="M11 18l-6-6 6-6"></path>
+        </svg>`
+    : `Know more
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14"></path>
+          <path d="M13 6l6 6-6 6"></path>
+        </svg>`;
+});
     });
   }
 
