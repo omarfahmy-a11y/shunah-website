@@ -459,7 +459,7 @@ body { font-family: 'Inter', sans-serif; }
     <div class="w-9 h-9 rounded-full bg-white border border-white 
                 shadow-[0_4px_10px_rgba(0,0,0,0.12)] 
                 flex items-center justify-center shrink-0">
-      <img src="focus/circle1.png" class="w-3 h-3" />
+      <img src="focus/circle1.png" class="w-10 h-10" />
     </div>
 
     <p class="leading-[1.4] sm:leading-6">
@@ -494,7 +494,7 @@ body { font-family: 'Inter', sans-serif; }
     <div class="w-9 h-9 rounded-full bg-white border border-white 
                 shadow-[0_4px_10px_rgba(0,0,0,0.12)] 
                 flex items-center justify-center shrink-0">
-      <img src="focus/circle2.png" class="w-3 h-3" />
+      <img src="focus/circle2.png" class="w-10 h-10" />
     </div>
 
     <p class="leading-[1.4] sm:leading-6">
@@ -529,7 +529,7 @@ body { font-family: 'Inter', sans-serif; }
     <div class="w-9 h-9 rounded-full bg-white border border-white 
                 shadow-[0_4px_10px_rgba(0,0,0,0.12)] 
                 flex items-center justify-center shrink-0">
-      <img src="focus/circle3.png" class="w-3 h-3" />
+      <img src="focus/circle3.png" class="w-10 h-10" />
     </div>
 
     <p class="leading-[1.4] sm:leading-6">
@@ -564,7 +564,7 @@ body { font-family: 'Inter', sans-serif; }
     <div class="w-9 h-9 rounded-full bg-white border border-white 
                 shadow-[0_4px_10px_rgba(0,0,0,0.12)] 
                 flex items-center justify-center shrink-0">
-      <img src="focus/circle4.png" class="w-3 h-3" />
+      <img src="focus/circle4.png" class="w-10 h-10" />
     </div>
 
     <p class="leading-[1.4] sm:leading-6">
@@ -639,13 +639,13 @@ body { font-family: 'Inter', sans-serif; }
           Supply Network
         </span>
 
-        <h2 class="mt-3 text-3xl md:text-4xl font-semibold tracking-[-0.03em] text-[#0b1a2d]">
+        <h2 class="mt-2 text-3xl md:text-4xl font-semibold tracking-[-0.03em] text-[#0b1a2d]">
           Supply Coverage
         </h2>
 
-        <div class="mt-4 h-[3px] w-14 rounded-full bg-[#2F5DA8]"></div>
+        <div class="mt-3 h-[3px] w-14 rounded-full bg-[#2F5DA8]"></div>
 
-        <p class="mt-5 text-sm md:text-base text-[#0b1a2d]/65 leading-relaxed">
+        <p class="mt-3 text-sm md:text-base text-[#0b1a2d]/65 leading-relaxed">
           Crops currently structured within Shunah’s supply network.
         </p>
       </div>
@@ -676,8 +676,9 @@ body { font-family: 'Inter', sans-serif; }
 
       <div class="mt-8 space-y-6" id="skuCards">
 
-        <!-- 1) White Beans -->
-        <div class="rounded-xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="white-beans">
+     <!-- 1) White Beans -->
+    
+    <div class="rounded-xl border border-[#0b1a2d]/10 bg-white/80 shadow-sm overflow-hidden" data-crop="white-beans">
 
 
 
@@ -1908,14 +1909,14 @@ const header = card.querySelector('.min-w-0.flex-1 > .flex.items-center.justify-
         const item = document.createElement('div');
         item.className = 'sku-mobile-item';
         item.innerHTML = `
-          <div class="sku-mobile-item-title">${skuName}</div>
-          <ul class="sku-mobile-bullets">
-            <li><strong>Crop Type:</strong> ${cropType}</li>
-            <li><strong>Fulfillment Format:</strong> ${fulfillment}</li>
-            <li><strong>Quality Standard:</strong> ${quality}</li>
-            <li><strong>Minimum Dispatch Unit:</strong> ${dispatch}</li>
-          </ul>
-        `;
+ <div class="sku-mobile-item-title text-[#2F5DA8]">${skuName}</div>
+  <ul class="sku-mobile-bullets">
+    <li><strong>Crop:</strong> ${cropType}</li>
+    <li><strong>Format:</strong> ${fulfillment}</li>
+    <li><strong>Quality:</strong> ${quality}</li>
+    <li><strong>Dispatch:</strong> ${dispatch}</li>
+  </ul>
+`;
         list.appendChild(item);
       });
 
