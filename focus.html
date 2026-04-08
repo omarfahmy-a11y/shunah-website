@@ -93,7 +93,7 @@
 
 @media (max-width: 640px){
   .center{
-    left: 70%;
+    left: 71%;
   }
 }
 
@@ -112,6 +112,8 @@ body { font-family: 'Inter', sans-serif; }
       will-change: transform;
     }
     #cropsMarquee:hover .marquee-track{ animation-play-state: paused; }
+
+
 
     @keyframes marqueeX{
       from{ transform: translateX(0); }
@@ -175,7 +177,15 @@ body { font-family: 'Inter', sans-serif; }
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
-.chip:hover .pillWrap{ width: 320px; }
+.chip:hover .pillWrap{
+  width: 260px;
+
+  box-shadow:
+    0 12px 30px rgba(11,26,45,0.12),
+    0 0 0 1px rgba(47,93,168,0.15),
+    0 0 20px rgba(47,93,168,0.35),   /* blue glow */
+    0 0 40px rgba(47,93,168,0.20);   /* outer fade */
+}
 
     .circleImage{
       width: 60px;
@@ -229,7 +239,27 @@ body { font-family: 'Inter', sans-serif; }
     }
 
 
-    .knowMore:hover{ opacity: .9; }
+   .knowMore{
+  font-size: 11px;
+  font-weight: 700;
+  color: #2F5DA8;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  line-height: 1;
+}
+
+.knowMore svg{
+  width: 11px;
+  height: 11px;
+  stroke: currentColor;
+  flex: 0 0 auto;
+}
+
+.knowMore:hover{
+  opacity: .85;
+}
 
     @media (max-width: 640px){
       .chip{ width: 96px; }
@@ -347,11 +377,44 @@ body { font-family: 'Inter', sans-serif; }
 }
 /* ===== CARD GLOW ===== */
 #skuCards > [data-crop]{
+ position: relative; /* IMPORTANT */
   transition: box-shadow 0.3s ease, transform 0.2s ease;
   box-shadow:
     0 8px 24px rgba(11,26,45,0.10),
     0 0 0 1px rgba(47,93,168,0.10),
     0 0 12px rgba(47,93,168,0.12);
+}
+
+#skuCards > [data-crop]{
+  position: relative;
+  overflow: hidden; /* IMPORTANT → locks triangle inside */
+}
+
+/* DEFAULT: NO triangle */
+#skuCards > [data-crop]::after{
+  display: none;
+}
+
+/* ONLY SMALL SCREEN */
+@media (max-width: 640px){
+  #skuCards > [data-crop]::after{
+    content: "";
+    display: block;
+    position: absolute;
+
+    right: 0;
+    bottom: 0;
+
+    width: 150px;
+    height: 80px;
+
+    background: #f4f6fa;
+
+    clip-path: polygon(100% 30%, 0 100%, 100% 100%);
+
+    pointer-events: none;
+    z-index: 0;
+  }
 }
 
 @media (hover: hover){
@@ -362,6 +425,72 @@ body { font-family: 'Inter', sans-serif; }
       0 0 0 1px rgba(47,93,168,0.15),
       0 0 20px rgba(47,93,168,0.20);
   }
+}
+
+/* ===== STARS ===== */
+#focus .star {
+  position: absolute;
+  background-color: #3E70F4;
+
+  -webkit-mask-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg"><path d="M70 4 C60 42 42 60 4 70 C42 80 60 98 70 136 C80 98 98 80 136 70 C98 60 80 42 70 4Z"/></svg>');
+  mask-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg"><path d="M70 4 C60 42 42 60 4 70 C42 80 60 98 70 136 C80 98 98 80 136 70 C98 60 80 42 70 4Z"/></svg>');
+
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+
+  z-index: 10;
+}
+
+
+
+
+
+#focus .star-main {
+  width: 26px;
+  height: 26px;
+  top: 160px;
+  right: 150px;
+}
+
+#focus .star-top {
+  width: 24px;
+  height: 24px;
+  bottom: 500px;
+  right: 80px;
+}
+
+#focus .star-bottom {
+  width: 50px;
+  height: 50px;
+  bottom: 540px;
+  right: 90px;
+}
+
+@media (max-width: 640px) {
+
+  #focus .star-main {
+    width: 18px;
+    height: 18px;
+    top: 860px;
+    right: 30px;
+  }
+
+  #focus .star-top {
+    width: 16px;
+    height: 16px;
+    top: 830px;
+    right: 50px;
+  }
+
+  #focus .star-bottom {
+    width: 28px;
+    height: 28px;
+    top: 800px;
+    right: 70px;
+  }
+
 }
 
   </style>
@@ -430,7 +559,14 @@ body { font-family: 'Inter', sans-serif; }
 <!-- HERO -->
 <section id="focus" class="relative overflow-hidden py-0 md:min-h-[calc(100dvh-3rem)] bg-[#0b1a2d]">
    
-   <div class="absolute inset-0 bg-white"></div>
+ <div class="absolute inset-0 bg-white z-0"></div>
+
+<!-- STARS -->
+<div class="star star-main"></div>
+<div class="star star-top"></div>
+<div class="star star-bottom"></div>
+
+
 
 <div class="relative mx-auto max-w-7xl px-6 pt-20 pb-12 md:pl-11 md:py-16 md:h-full md:min-h-[calc(100dvh-3rem)] md:flex md:items-center">
   <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
@@ -456,11 +592,11 @@ body { font-family: 'Inter', sans-serif; }
 
     <div class="w-[4px] self-stretch bg-[#225AB4]"></div>
 
-    <div class="w-9 h-9 rounded-full bg-white border border-white 
-                shadow-[0_4px_10px_rgba(0,0,0,0.12)] 
-                flex items-center justify-center shrink-0">
-      <img src="focus/circle1.png" class="w-10 h-10" />
-    </div>
+    <div class="w-10 h-10 rounded-full bg-white border border-white 
+            shadow-[0_4px_10px_rgba(0,0,0,0.12)] 
+            flex items-center justify-center shrink-0 overflow-hidden">
+  <img src="focus/circle1.png" class="w-7 h-7 object-contain" />
+</div>
 
     <p class="leading-[1.4] sm:leading-6">
       <span class="block sm:hidden">
@@ -491,11 +627,11 @@ body { font-family: 'Inter', sans-serif; }
 
     <div class="w-[4px] self-stretch bg-[#225AB4]"></div>
 
-    <div class="w-9 h-9 rounded-full bg-white border border-white 
-                shadow-[0_4px_10px_rgba(0,0,0,0.12)] 
-                flex items-center justify-center shrink-0">
-      <img src="focus/circle2.png" class="w-10 h-10" />
-    </div>
+   <div class="w-10 h-10 rounded-full bg-white border border-white 
+            shadow-[0_4px_10px_rgba(0,0,0,0.12)] 
+            flex items-center justify-center shrink-0 overflow-hidden">
+  <img src="focus/circle2.png" class="w-7 h-7 object-contain" />
+</div>
 
     <p class="leading-[1.4] sm:leading-6">
       <span class="block sm:hidden">
@@ -526,11 +662,11 @@ body { font-family: 'Inter', sans-serif; }
 
     <div class="w-[4px] self-stretch bg-[#225AB4]"></div>
 
-    <div class="w-9 h-9 rounded-full bg-white border border-white 
-                shadow-[0_4px_10px_rgba(0,0,0,0.12)] 
-                flex items-center justify-center shrink-0">
-      <img src="focus/circle3.png" class="w-10 h-10" />
-    </div>
+  <div class="w-10 h-10 rounded-full bg-white border border-white 
+            shadow-[0_4px_10px_rgba(0,0,0,0.12)] 
+            flex items-center justify-center shrink-0 overflow-hidden">
+  <img src="focus/circle3.png" class="w-7 h-7 object-contain" />
+</div>
 
     <p class="leading-[1.4] sm:leading-6">
       <span class="block sm:hidden">
@@ -561,11 +697,11 @@ body { font-family: 'Inter', sans-serif; }
 
     <div class="w-[4px] self-stretch bg-[#225AB4]"></div>
 
-    <div class="w-9 h-9 rounded-full bg-white border border-white 
-                shadow-[0_4px_10px_rgba(0,0,0,0.12)] 
-                flex items-center justify-center shrink-0">
-      <img src="focus/circle4.png" class="w-10 h-10" />
-    </div>
+   <div class="w-10 h-10 rounded-full bg-white border border-white 
+            shadow-[0_4px_10px_rgba(0,0,0,0.12)] 
+            flex items-center justify-center shrink-0 overflow-hidden">
+  <img src="focus/circle4.png" class="w-7 h-7 object-contain" />
+</div>
 
     <p class="leading-[1.4] sm:leading-6">
       <span class="block sm:hidden">
@@ -632,7 +768,7 @@ body { font-family: 'Inter', sans-serif; }
 
 <!-- CROPS RIBBON -->
 <section class="relative bg-[#f6f9ff]">
-  <div class="mx-auto max-w-7xl px-6 py-12">
+  <div class="mx-auto max-w-7xl px-6 py-8">
     <div class="flex items-center justify-between gap-6 flex-wrap">
       <div class="max-w-2xl">
         <span class="block text-[12px] font-semibold uppercase tracking-[0.22em] text-[#2F5DA8]">
@@ -651,12 +787,11 @@ body { font-family: 'Inter', sans-serif; }
       </div>
     </div>
 
-    <div class="mt-8 relative overflow-hidden">
-      <div id="cropsMarquee" class="relative" aria-label="Crops ribbon">
-        <div id="cropsTrack" class="flex items-stretch gap-7 marquee-track"></div>
-      </div>
-    </div>
+<div class="mt-8 relative overflow-hidden">
+  <div id="cropsMarquee" class="relative overflow-hidden" aria-label="Crops ribbon">
+    <div id="cropsTrack" class="flex items-stretch gap-7 marquee-track"></div>
   </div>
+</div>  </div>
 </section>
 
 
@@ -969,7 +1104,7 @@ body { font-family: 'Inter', sans-serif; }
                 <div class="flex items-center justify-between gap-4 flex-wrap">
                   <div>
                     <p class="text-lg font-semibold text-[#0b1a2d]">Rice</p>
-                    <p class="text-sm text-[#0b1a2d]/60">Milled rice options for trade & distribution</p>
+                    <p class="text-sm text-[#0b1a2d]/60">Rice in husk and Milled</p>
                   </div>
                 </div>
 
@@ -1931,23 +2066,33 @@ tableWrap.parentNode.insertBefore(mobileDetails, tableWrap);
 
 
 
-      toggleBtn.addEventListener('click', () => {
+    toggleBtn.addEventListener('click', () => {
   const isOpen = mobileDetails.classList.contains('open');
-  mobileDetails.classList.toggle('open', !isOpen);
-  toggleBtn.setAttribute('aria-expanded', String(!isOpen));
 
-  toggleBtn.innerHTML = !isOpen
-    ? `Hide details
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M19 12H5"></path>
-          <path d="M11 18l-6-6 6-6"></path>
-        </svg>`
-    : `Know more
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M5 12h14"></path>
-          <path d="M13 6l6 6-6 6"></path>
-        </svg>`;
+  document.querySelectorAll('.sku-mobile-details').forEach((detail) => {
+    detail.classList.remove('open');
+  });
+
+  document.querySelectorAll('.sku-mobile-toggle').forEach((btn) => {
+    btn.setAttribute('aria-expanded', 'false');
+    btn.innerHTML = `Know more
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M5 12h14"></path>
+        <path d="M13 6l6 6-6 6"></path>
+      </svg>`;
+  });
+
+  if (!isOpen) {
+    mobileDetails.classList.add('open');
+    toggleBtn.setAttribute('aria-expanded', 'true');
+    toggleBtn.innerHTML = `Hide details
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M19 12H5"></path>
+        <path d="M11 18l-6-6 6-6"></path>
+      </svg>`;
+  }
 });
+
     });
   }
 
