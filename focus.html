@@ -181,12 +181,11 @@ body { font-family: 'Inter', sans-serif; }
   width: 260px;
 
   box-shadow:
-    0 12px 30px rgba(11,26,45,0.12),
-    0 0 0 1px rgba(47,93,168,0.15),
-    0 0 20px rgba(47,93,168,0.35),   /* blue glow */
-    0 0 40px rgba(47,93,168,0.20);   /* outer fade */
+    0 10px 24px rgba(11,26,45,0.12),
+    0 0 0 1px rgba(47,93,168,0.12),
+    0 8px 18px rgba(47,93,168,0.20),
+    0 16px 34px rgba(47,93,168,0.10);
 }
-
     .circleImage{
       width: 60px;
       height: 60px;
@@ -768,7 +767,7 @@ body { font-family: 'Inter', sans-serif; }
 
 <!-- CROPS RIBBON -->
 <section class="relative bg-[#f6f9ff]">
-  <div class="mx-auto max-w-7xl px-6 py-8">
+  <div class="mx-auto max-w-7xl px-6 py-4">
     <div class="flex items-center justify-between gap-6 flex-wrap">
       <div class="max-w-2xl">
         <span class="block text-[12px] font-semibold uppercase tracking-[0.22em] text-[#2F5DA8]">
@@ -787,9 +786,9 @@ body { font-family: 'Inter', sans-serif; }
       </div>
     </div>
 
-<div class="mt-8 relative overflow-hidden">
+<div class="mt-8 relative overflow-visible">
   <div id="cropsMarquee" class="relative overflow-hidden" aria-label="Crops ribbon">
-    <div id="cropsTrack" class="flex items-stretch gap-7 marquee-track"></div>
+    <div id="cropsTrack" class="flex items-stretch gap-7 marquee-track py-5"></div>
   </div>
 </div>  </div>
 </section>
