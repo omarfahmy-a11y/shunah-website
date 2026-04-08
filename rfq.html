@@ -11,163 +11,327 @@
   <style>
     body { font-family: 'Inter', sans-serif; }
     html { scroll-behavior: smooth; }
+
     .rfqField{
-  width:100%;
-  border:1px solid rgba(11,26,45,0.15);
-  padding:12px 14px;
-  border-radius:10px;
-  outline:none;
-  background:white;
-  color:#0b1a2d;
-  transition:border-color 200ms ease, box-shadow 200ms ease;
-}
+      width:100%;
+      border:1px solid rgba(11,26,45,0.15);
+      padding:12px 14px;
+      border-radius:10px;
+      outline:none;
+      background:white;
+      color:#0b1a2d;
+      transition:border-color 200ms ease, box-shadow 200ms ease;
+    }
 
-.rfqField:focus{
-  border-color:#0b1a2d;
-  box-shadow:0 0 0 2px rgba(11,26,45,0.08);
-}
+    .rfqField:focus{
+      border-color:#0b1a2d;
+      box-shadow:0 0 0 2px rgba(11,26,45,0.08);
+    }
 
-    .tCircleWrap{display:flex;flex-direction:column;align-items:center;gap:8px;position:relative;z-index:2;user-select:none;}
+    .rfqFieldWithIcon{
+      padding-left:44px;
+      padding-right:42px;
+      appearance:none;
+      -webkit-appearance:none;
+      -moz-appearance:none;
+    }
+
+    .rfqFieldIconWrap{
+      position:relative;
+      width:100%;
+    }
+
+    .rfqFieldLeftIcon{
+      position:absolute;
+      left:14px;
+      top:50%;
+      transform:translateY(-50%);
+      width:26px;
+      height:26px;
+      color:#5b84d7;
+      pointer-events:none;
+    }
+
+    .rfqFieldRightChevron{
+      position:absolute;
+      right:14px;
+      top:50%;
+      transform:translateY(-50%);
+      width:18px;
+      height:18px;
+      color:#0b1a2d;
+      pointer-events:none;
+    }
+
+    .tCircleWrap{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:8px;
+      position:relative;
+      z-index:2;
+      user-select:none;
+    }
+
     .tCircle{
-  width:56px;
-  height:56px;
-  border-radius:999px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:800;
-  font-size:15px;
+      width:56px;
+      height:56px;
+      border-radius:999px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:800;
+      font-size:15px;
+      background:#e5e7eb;
+      border:2px solid #ffffff;
+      color:#0b1a2d;
+      cursor:pointer;
+      transition:transform 750ms cubic-bezier(.19,1,.22,1), background 250ms ease;
+    }
 
-  background:#e5e7eb; /* default solid */
-  border:2px solid #ffffff; /* ← ALWAYS WHITE */
-
-  color:#0b1a2d;
-  cursor:pointer;
-
-  transition:transform 750ms cubic-bezier(.19,1,.22,1),
-             background 250ms ease;
-}
     .tCircle.done{
-  background:#22c55e;
+      background:#22c55e;
+      color:white;
+    }
+
+   .tCircle.active{
+  background:#0b1a2d; /* NAVY */
   color:white;
-  /* NO border-color here */
 }
-    .tCircle.active{
-  background:#0b1a2d;
-  color:white;
-  /* NO border-color here */
-}
+
     .tLabel{
-      font-size:11px;letter-spacing:.10em;text-transform:uppercase;
+      font-size:11px;
+      letter-spacing:.10em;
+      text-transform:uppercase;
       color:rgba(11,26,45,.55);
       transition:opacity 350ms ease,transform 350ms ease;
-      text-align:center;line-height:1.1;min-height:22px;
+      text-align:center;
+      line-height:1.1;
+      min-height:22px;
     }
-    .tLabel.hiddenLabel{opacity:0;transform:translateY(-4px);pointer-events:none;}
+.tLabel.activeLabel{
+  color:#0b1a2d;
+  font-weight:700;
+}
+    .tLabel.hiddenLabel{
+      opacity:0;
+      transform:translateY(-4px);
+      pointer-events:none;
+    }
 
-    /* 50% overlap: 56px / 2 = 28px */
-    .stack-1{ transform: translateX(-28px); }
-    .stack-2{ transform: translateX(-56px); }
-    .stack-3{ transform: translateX(-84px); }
-    .stack-4{ transform: translateX(-112px); }
-    .stack-5{ transform: translateX(-140px); }
-    .stack-6{ transform: translateX(-168px); }
-    .stack-7{ transform: translateX(-196px); }
-    .stack-8{ transform: translateX(-224px); }
+  
+
+    /* Mobile compact tracker */
+    .mTrackerOuter{
+      width:100%;
+    }
+
+    .mTrackerRow{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+    }
+
+    .mArrow{
+      width:32px;
+      height:32px;
+      min-width:32px;
+      border-radius:999px;
+      border:1px solid rgba(11,26,45,0.08);
+      background:#f3f4f6;
+      color:#6b7280;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:16px;
+      font-weight:700;
+      transition:all .2s ease;
+    }
+
+    .mArrow:disabled{
+      opacity:.45;
+      cursor:not-allowed;
+    }
+
+    .mSteps{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+    }
+
+    .mStepBubble{
+      width:34px;
+      height:34px;
+      min-width:34px;
+      border-radius:999px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:14px;
+      font-weight:700;
+      background:#e5e7eb;
+      color:#6b7280;
+      border:none;
+      transition:all .2s ease;
+    }
+
+    .mStepBubble.active{
+      background:#0b1a2d;
+      color:#fff;
+      box-shadow:0 8px 18px rgba(11,26,45,.18);
+    }
+
+    .mStepBubble.done{
+      background:#dbe7ff;
+      color:#2F5DA8;
+    }
+
+    .mStepEllipsis{
+      width:24px;
+      min-width:24px;
+      text-align:center;
+      color:#6b7280;
+      font-size:18px;
+      line-height:1;
+      transform:translateY(-1px);
+    }
+
+    .mStepLabel{
+      margin-top:10px;
+      text-align:center;
+      font-size:11px;
+      line-height:1.1;
+      letter-spacing:.10em;
+      text-transform:uppercase;
+      color:#0b1a2d;
+      font-weight:700;
+    }
+
+    .reviewItem{
+      border:1px solid rgba(11,26,45,0.08);
+      border-radius:14px;
+      padding:14px 15px;
+      background:white;
+    }
+
+    .reviewLabel{
+      font-size:12px;
+      line-height:1;
+      color:rgba(11,26,45,.50);
+    }
+
+    .reviewValue{
+      margin-top:8px;
+      font-size:14px;
+      line-height:1.35;
+      font-weight:600;
+      color:#0b1a2d;
+      word-break:break-word;
+    }
+
+    .reviewCheck{
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      border:1px solid rgba(47,93,168,0.10);
+      background:#f7faff;
+      border-radius:14px;
+      padding:14px;
+    }
+
+    .reviewCheckIcon{
+      width:18px;
+      height:18px;
+      color:#2F5DA8;
+      flex:0 0 auto;
+      margin-top:1px;
+    }
+
+    @media (min-width: 768px){
+      #rfqTrackerWrapMobile{
+        display:none !important;
+      }
+    }
   </style>
 </head>
 
 <body class="bg-white text-[#0b1a2d] min-h-screen overflow-y-auto">
 
   <!-- NAV -->
-<nav id="site-navbar" class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-black/10 h-12 shadow-[0_4px_14px_rgba(0,0,0,0.06)]">
+  <nav id="site-navbar" class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-black/10 h-12 shadow-[0_4px_14px_rgba(0,0,0,0.06)]">
+    <div class="relative max-w-7xl mx-auto h-12 px-6 md:px-10 flex items-center justify-between">
 
-  <div class="relative max-w-7xl mx-auto h-12 px-6 md:px-10 flex items-center justify-between">
-
-    <!-- LEFT: Logo -->
-    <a href="index.html" class="flex items-center">
-      <img src="images/shunah-logo.png" alt="Shunah Logo" class="h-7 w-auto" />
-    </a>
-
-    <!-- DESKTOP MENU -->
-    <div class="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-7 text-[12.5px] font-medium text-[#0b1a2d]/80">
-
-      <a href="index.html#home" class="hover:text-[#0b1a2d] transition">Home</a>
-      <a href="technology.html" class="hover:text-[#0b1a2d] transition">Product Suite</a>
-      <a href="usecases.html" class="hover:text-[#0b1a2d] transition">Use Cases</a>
-      <a href="focus.html" class="hover:text-[#0b1a2d] transition">Our Focus</a>
-
-      <!-- ACTIVE -->
-      <a href="rfq.html"
-         class="text-[#0b1a2d] font-semibold rounded-full px-4 py-1 bg-[#0b1a2d]/6 ring-1 ring-[#0b1a2d]/15">
-        RFQ
+      <a href="index.html" class="flex items-center">
+        <img src="images/shunah-logo.png" alt="Shunah Logo" class="h-7 w-auto" />
       </a>
 
-      <a href="contact.html" class="hover:text-[#0b1a2d] transition">Contact Us</a>
+      <div class="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-7 text-[12.5px] font-medium text-[#0b1a2d]/80">
+        <a href="index.html#home" class="hover:text-[#0b1a2d] transition">Home</a>
+        <a href="technology.html" class="hover:text-[#0b1a2d] transition">Product Suite</a>
+        <a href="usecases.html" class="hover:text-[#0b1a2d] transition">Use Cases</a>
+        <a href="focus.html" class="hover:text-[#0b1a2d] transition">Our Focus</a>
+
+        <a href="rfq.html"
+           class="text-[#0b1a2d] font-semibold rounded-full px-4 py-1 bg-[#0b1a2d]/6 ring-1 ring-[#0b1a2d]/15">
+          RFQ
+        </a>
+
+        <a href="contact.html" class="hover:text-[#0b1a2d] transition">Contact Us</a>
+      </div>
+
+      <button id="mobile-menu-button" class="md:hidden w-10 h-10 flex items-center justify-center">
+        <svg id="menu-open-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+
+        <svg id="menu-close-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/>
+        </svg>
+      </button>
     </div>
 
-    <!-- MOBILE BUTTON -->
-    <button id="mobile-menu-button" class="md:hidden w-10 h-10 flex items-center justify-center">
-      <!-- hamburger -->
-      <svg id="menu-open-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.8">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
-      </svg>
-
-      <!-- close -->
-      <svg id="menu-close-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" stroke="currentColor" stroke-width="1.8">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/>
-      </svg>
-    </button>
-
-  </div>
-
-  <!-- MOBILE MENU -->
-  <div id="mobile-menu" class="hidden md:hidden border-t border-black/10 bg-white">
-
-    <div class="px-6 py-4 flex flex-col gap-2 text-[14px] font-medium">
-
-      <a href="index.html#home">Home</a>
-      <a href="technology.html">Product Suite</a>
-      <a href="usecases.html">Use Cases</a>
-      <a href="focus.html">Our Focus</a>
-      <a href="rfq.html" class="font-semibold">RFQ</a>
-      <a href="contact.html">Contact Us</a>
-
+    <div id="mobile-menu" class="hidden md:hidden border-t border-black/10 bg-white">
+      <div class="px-6 py-4 flex flex-col gap-2 text-[14px] font-medium">
+        <a href="index.html#home">Home</a>
+        <a href="technology.html">Product Suite</a>
+        <a href="usecases.html">Use Cases</a>
+        <a href="focus.html">Our Focus</a>
+        <a href="rfq.html" class="font-semibold">RFQ</a>
+        <a href="contact.html">Contact Us</a>
+      </div>
     </div>
-  </div>
+  </nav>
 
-</nav>
-
-  <!-- RFQ SECTION (fits under 56px nav) -->
   <section id="rfq" class="bg-white">
     <div class="max-w-7xl mx-auto px-6 min-h-[calc(100dvh-56px)] py-10 lg:py-6 flex items-start lg:items-center">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch w-full">
 
         <!-- LEFT IMAGE -->
-        <div class="lg:col-span-4 relative h-full">
-
-  <div class="absolute inset-0 overflow-hidden">
-    
-    <img src="images/rfq.jpg"
-         alt="RFQ visual"
-         class="w-full h-full object-cover" />
-
-    <div class="absolute inset-0 bg-black/5"></div>
-
-  </div>
-
-</div>
+        <div class="hidden lg:block lg:col-span-4 relative h-full">
+          <div class="absolute inset-0 overflow-hidden">
+            <img src="images/rfq.jpg" alt="RFQ visual" class="w-full h-full object-cover" />
+            <div class="absolute inset-0 bg-black/5"></div>
+          </div>
+        </div>
 
         <!-- RIGHT CONTENT -->
         <div class="lg:col-span-7">
           <div class="max-w-xl ml-auto">
 
             <h2 class="text-4xl sm:text-5xl font-semibold tracking-tight text-[#0b1a2d]">
-              Request RFQ
-            </h2>
+  Request RFQ
+</h2>
+
+<p id="rfqSubtitle"
+   class="mt-2 text-sm tracking-[0.12em] uppercase text-[#2F5DA8] font-medium">
+  XXXXXXXXXXXXXXXXXXXXXxx
+</p>
 
             <!-- STEP 0 -->
-            <div id="rfqStep0Card" class="mt-6 rounded-2xl border border-black/10 bg-white p-6 sm:p-7">
+           <div id="rfqStep0Card"
+     class="mt-6 rounded-2xl border border-black/10 bg-white p-6 sm:p-7 shadow-[0_25px_70px_rgba(11,26,45,0.15),0_5px_20px_rgba(11,26,45,0.08)]">
               <div class="text-lg font-semibold text-[#0b1a2d]">Basic Details</div>
               <div class="mt-1 text-sm text-[#0b1a2d]/55">Please enter your contact information.</div>
 
@@ -199,16 +363,22 @@
             <!-- WIZARD -->
             <div id="rfqWizardWrap" class="hidden">
 
-              <!-- TRACKER -->
-              <div id="rfqTrackerWrap" class="mt-8">
+              <!-- DESKTOP TRACKER -->
+              <div id="rfqTrackerWrapDesktop" class="mt-8 hidden md:block">
                 <div class="relative">
-                  <div id="rfqLine" class="absolute left-0 right-0 top-[28px] h-px bg-black/10"></div>
+                 
                   <div id="rfqTracker" class="grid grid-cols-9 gap-3 relative z-10"></div>
                 </div>
               </div>
 
+              <!-- MOBILE TRACKER -->
+              <div id="rfqTrackerWrapMobile" class="mt-6 md:hidden">
+                <div id="rfqMobileTracker" class="w-full"></div>
+              </div>
+
               <!-- STEP CARD -->
-              <div id="rfqWizardCard" class="mt-6 rounded-2xl border border-black/10 bg-white p-6 sm:p-7">
+             <div id="rfqWizardCard"
+     class="mt-6 rounded-2xl border border-black/10 bg-white p-6 sm:p-7 shadow-[0_20px_60px_rgba(11,26,45,0.12)]">
                 <div id="rfqStepTitle" class="text-lg font-semibold text-[#0b1a2d]"></div>
                 <div id="rfqStepSubtitle" class="mt-1 text-sm text-[#0b1a2d]/55"></div>
 
@@ -216,96 +386,20 @@
 
                 <div class="mt-6 flex justify-between gap-3">
                   <button id="rfqBack"
-  class="rounded-full border border-[#0b1a2d] text-[#0b1a2d] bg-white px-6 py-2.5 text-sm font-semibold hover:bg-[#0b1a2d] hover:text-white transition disabled:opacity-30 disabled:cursor-not-allowed">
-  ← Back
-</button>
+                    class="rounded-full border border-[#0b1a2d] text-[#0b1a2d] bg-white px-6 py-2.5 text-sm font-semibold hover:bg-[#0b1a2d] hover:text-white transition disabled:opacity-30 disabled:cursor-not-allowed">
+                    ← Back
+                  </button>
 
                   <button id="rfqNext"
-  class="rounded-full border border-[#0b1a2d] text-[#0b1a2d] bg-white px-6 py-2.5 text-sm font-semibold hover:bg-[#0b1a2d] hover:text-white transition">
-  Next →
-</button>
+                    class="rounded-full border border-[#0b1a2d] text-[#0b1a2d] bg-white px-6 py-2.5 text-sm font-semibold hover:bg-[#0b1a2d] hover:text-white transition">
+                    Next →
+                  </button>
                 </div>
 
                 <div id="rfqSubmitWrap" class="mt-6 hidden">
                   <button id="rfqSubmit"
-                    class="w-full rounded-full bg-[#22c55e] text-white px-6 py-3 font-semibold hover:bg-[#16a34a] transition">
-                    Submit Order
-                  </button>
-                </div>
-
-
-              </div>
-            </div>
-
-            <!-- REVIEW -->
-            <div id="rfqReviewWrap" class="mt-10 hidden">
-              <div class="rounded-2xl border border-black/10 bg-white p-6 sm:p-7">
-
-                <h3 class="text-2xl font-semibold text-[#0b1a2d]">Order Review</h3>
-                <p class="mt-1 text-sm text-[#0b1a2d]/55">Review your request details.</p>
-
-                <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-
-                  <div class="rounded-xl border border-black/10 p-4">
-                    <div class="text-[#0b1a2d]/55">Name</div>
-                    <div id="rvName" class="mt-1 font-semibold">—</div>
-                  </div>
-
-                  <div class="rounded-xl border border-black/10 p-4">
-                    <div class="text-[#0b1a2d]/55">Email</div>
-                    <div id="rvEmail" class="mt-1 font-semibold">—</div>
-                  </div>
-
-                  <div class="rounded-xl border border-black/10 p-4">
-                    <div class="text-[#0b1a2d]/55">Number</div>
-                    <div id="rvPhone" class="mt-1 font-semibold">—</div>
-                  </div>
-
-                  <div class="rounded-xl border border-black/10 p-4">
-                    <div class="text-[#0b1a2d]/55">Crop</div>
-                    <div id="rvCrop" class="mt-1 font-semibold">—</div>
-                  </div>
-
-                  <div class="rounded-xl border border-black/10 p-4">
-                    <div class="text-[#0b1a2d]/55">SKU</div>
-                    <div id="rvSku" class="mt-1 font-semibold">—</div>
-                  </div>
-
-                  <div class="rounded-xl border border-black/10 p-4">
-                    <div class="text-[#0b1a2d]/55">Containers</div>
-                    <div id="rvContainers" class="mt-1 font-semibold">—</div>
-                  </div>
-
-                  <div class="rounded-xl border border-black/10 p-4">
-                    <div class="text-[#0b1a2d]/55">Destination</div>
-                    <div id="rvDestination" class="mt-1 font-semibold">—</div>
-                  </div>
-
-                  <div class="rounded-xl border border-black/10 p-4">
-                    <div class="text-[#0b1a2d]/55">Expected Delivery Date</div>
-                    <div id="rvDelivery" class="mt-1 font-semibold">—</div>
-                  </div>
-
-                  <div class="rounded-xl border border-black/10 p-4">
-                    <div class="text-[#0b1a2d]/55">Quality Inspection</div>
-                    <div id="rvQuality" class="mt-1 font-semibold">—</div>
-                  </div>
-
-                  <div class="rounded-xl border border-black/10 p-4">
-                    <div class="text-[#0b1a2d]/55">Insurance</div>
-                    <div id="rvInsurance" class="mt-1 font-semibold">—</div>
-                  </div>
-
-                  <div class="rounded-xl border border-black/10 p-4">
-                    <div class="text-[#0b1a2d]/55">Payment Method</div>
-                    <div id="rvPayment" class="mt-1 font-semibold">—</div>
-                  </div>
-                </div>
-
-                <div class="mt-8 flex justify-center">
-                  <button id="rfqFinalSubmit"
-                    class="w-full sm:w-[360px] rounded-full bg-[#22c55e] text-white px-6 py-3 font-semibold hover:bg-[#16a34a] transition">
-                    Final Submit
+                    class="w-full rounded-full bg-[#0b1a2d] text-white px-6 py-3 font-semibold hover:bg-[#142a4a] transition">
+                    Submit RFQ
                   </button>
                 </div>
 
@@ -339,15 +433,15 @@
   <script>
     (function(){
       const steps = [
-        { key:"crop",   label:"Crop",       title:"Buyer Choose Crop", subtitle:"Select the crop you want to purchase.", type:"select", options:["White Beans","Sesame","Fava Beans","Rice","Caraway","Fennel"]},
-        { key:"spec",   label:"Spec",       title:"SKU / Specification", subtitle:"Choose the SKU specification.", type:"select", options:["WKB-001 (Standard)","WKB-002 (Premium)","SSM-001 (Standard)","SSM-002 (Premium)","RCE-001 (Standard)"]},
-        { key:"containers", label:"Tons",   title:"Number of Containers", subtitle:"Enter the number of containers.", type:"number", placeholder:"e.g. 4" },
-        { key:"packing", label:"Packing",   title:"Packing", subtitle:"Choose packing format.", type:"select", options:["25kg PP Bags","50kg PP Bags","Jumbo Bags","Bulk"]},
-        { key:"destination", label:"Destination", title:"Destination", subtitle:"Where should the shipment be delivered?", type:"text", placeholder:"Country / City" },
-        { key:"delivery", label:"Delivery", title:"Expected Delivery Date", subtitle:"Choose your expected delivery date.", type:"date" },
-        { key:"quality", label:"Quality",   title:"Quality Inspection", subtitle:"Select inspection method.", type:"select", options:["Shunah QC","Third-Party Inspection","Buyer Inspection"]},
-        { key:"insurance", label:"Insurance", title:"Insurance", subtitle:"Select insurance option.", type:"select", options:["Included","Optional","Not Required"]},
-        { key:"payment", label:"Payment",   title:"Payment Method", subtitle:"Select payment method.", type:"select", options:["LC","TT","Cash Against Documents"]}
+        { key:"crop", label:"Crop", title:"Buyer Choose Crop", subtitle:"Select the crop you want to purchase.", type:"select", icon:"crop", options:["White Beans","Sesame","Fava Beans","Rice","Caraway","Fennel"]},
+        { key:"spec", label:"Spec", title:"SKU / Specification", subtitle:"Choose the SKU specification.", type:"select", icon:"spec", options:["WKB-001 (Standard)","WKB-002 (Premium)","SSM-001 (Standard)","SSM-002 (Premium)","RCE-001 (Standard)"]},
+        { key:"containers", label:"Tons", title:"Number of Containers", subtitle:"Enter the number of containers.", type:"number", icon:"tons", placeholder:"e.g. 4" },
+        { key:"packing", label:"Packing", title:"Packing", subtitle:"Choose packing format.", type:"select", icon:"packing", options:["25kg PP Bags","50kg PP Bags","Jumbo Bags","Bulk"]},
+        { key:"destination", label:"Destination", title:"Destination", subtitle:"Where should the shipment be delivered?", type:"text", icon:"destination", placeholder:"Country / City" },
+        { key:"delivery", label:"Delivery", title:"Expected Delivery Date", subtitle:"Choose your expected delivery date.", type:"date", icon:"delivery" },
+        { key:"quality", label:"Quality", title:"Quality Inspection", subtitle:"Select inspection method.", type:"select", icon:"quality", options:["Shunah QC","Third-Party Inspection","Buyer Inspection"]},
+        { key:"insurance", label:"Insurance", title:"Insurance", subtitle:"Select insurance option.", type:"select", icon:"insurance", options:["Included","Optional","Not Required"]},
+        { key:"review", label:"Confirm", title:"Review & Confirm", subtitle:"Please review your request details before submitting.", type:"review" }
       ];
 
       const state = {};
@@ -363,10 +457,8 @@
       const phoneEl = document.getElementById("rfqPhone");
       const startBtn = document.getElementById("rfqStart");
 
-      const trackerWrap = document.getElementById("rfqTrackerWrap");
       const tracker = document.getElementById("rfqTracker");
-      const wizardCard = document.getElementById("rfqWizardCard");
-      const reviewWrap = document.getElementById("rfqReviewWrap");
+      const mobileTracker = document.getElementById("rfqMobileTracker");
 
       const stepTitle = document.getElementById("rfqStepTitle");
       const stepSubtitle = document.getElementById("rfqStepSubtitle");
@@ -376,63 +468,163 @@
       const nextBtn = document.getElementById("rfqNext");
       const submitWrap = document.getElementById("rfqSubmitWrap");
       const submitBtn = document.getElementById("rfqSubmit");
-
-      const finalBtn = document.getElementById("rfqFinalSubmit");
       const finalMsg = document.getElementById("rfqFinalMsg");
 
-      const rv = {
-        name: document.getElementById("rvName"),
-        email: document.getElementById("rvEmail"),
-        phone: document.getElementById("rvPhone"),
-        crop: document.getElementById("rvCrop"),
-        sku: document.getElementById("rvSku"),
-        containers: document.getElementById("rvContainers"),
-        destination: document.getElementById("rvDestination"),
-        delivery: document.getElementById("rvDelivery"),
-        quality: document.getElementById("rvQuality"),
-        insurance: document.getElementById("rvInsurance"),
-        payment: document.getElementById("rvPayment"),
-      };
+      function iconSvg(type){
+        const map = {
+          crop: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 21V11"/><path d="M8 17c-2.5 0-4.5-2-4.5-4.5C6 12.5 8 14.5 8 17Z"/><path d="M16 17c2.5 0 4.5-2 4.5-4.5C18 12.5 16 14.5 16 17Z"/><path d="M8 11C5.5 11 3.5 9 3.5 6.5 6 6.5 8 8.5 8 11Z"/><path d="M16 11c2.5 0 4.5-2 4.5-4.5C18 6.5 16 8.5 16 11Z"/></svg>`,
+          spec: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 9h8M8 12h8M8 15h5"/></svg>`,
+          tons: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M7 7h10l-1 10H8L7 7Z"/><path d="M9 7a3 3 0 1 1 6 0"/></svg>`,
+          packing: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 3l8 4.5-8 4.5-8-4.5L12 3Z"/><path d="M4 7.5V16.5L12 21l8-4.5V7.5"/><path d="M12 12v9"/></svg>`,
+          destination: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 21s6-5.4 6-11a6 6 0 1 0-12 0c0 5.6 6 11 6 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>`,
+          delivery: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>`,
+          quality: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3Z"/><path d="m9 12 2 2 4-4"/></svg>`,
+          insurance: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3Z"/><path d="M9 12h6"/></svg>`,
+          chevron: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"><path d="m6 9 6 6 6-6"/></svg>`,
+          check: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>`
+        };
+        return map[type] || map.spec;
+      }
 
-      function makeField(step){
+      function buildSelectField(step){
         const wrap = document.createElement("div");
+        wrap.className = "rfqFieldIconWrap";
 
-        if(step.type === "select"){
-          const sel = document.createElement("select");
-          sel.className = "rfqField";
-          sel.innerHTML =
-            `<option value="">Select...</option>` +
-            (step.options||[]).map(o=>`<option value="${o}">${o}</option>`).join("");
-          sel.value = state[step.key] || "";
-          sel.addEventListener("change", ()=> state[step.key]=sel.value);
-          wrap.appendChild(sel);
-        } else {
-          const input = document.createElement("input");
-          input.type = step.type || "text";
-          input.placeholder = step.placeholder || "";
-          input.className = "rfqField";
-          input.value = state[step.key] || "";
-          input.addEventListener("input", ()=> state[step.key]=input.value);
-          wrap.appendChild(input);
+        const leftIcon = document.createElement("div");
+        leftIcon.className = "rfqFieldLeftIcon";
+        leftIcon.innerHTML = iconSvg(step.icon || "spec");
 
-          if(step.key === "containers"){
-            const note = document.createElement("div");
-            note.className = "mt-2 text-xs text-[#0b1a2d]/55";
-            note.textContent = "* A container is typically between 24–25 tons.";
-            wrap.appendChild(note);
-          }
+        const sel = document.createElement("select");
+        sel.className = "rfqField rfqFieldWithIcon";
+        sel.innerHTML =
+          `<option value="">Select...</option>` +
+          (step.options || []).map(o => `<option value="${o}">${o}</option>`).join("");
+        sel.value = state[step.key] || "";
+        sel.addEventListener("change", ()=> state[step.key] = sel.value);
+
+        const rightChevron = document.createElement("div");
+        rightChevron.className = "rfqFieldRightChevron";
+        rightChevron.innerHTML = iconSvg("chevron");
+
+        wrap.appendChild(leftIcon);
+        wrap.appendChild(sel);
+        wrap.appendChild(rightChevron);
+
+        return wrap;
+      }
+
+      function buildInputField(step){
+        const wrap = document.createElement("div");
+        wrap.className = "rfqFieldIconWrap";
+
+        const leftIcon = document.createElement("div");
+        leftIcon.className = "rfqFieldLeftIcon";
+        leftIcon.innerHTML = iconSvg(step.icon || "spec");
+
+        const input = document.createElement("input");
+        input.type = step.type || "text";
+        input.placeholder = step.placeholder || "";
+        input.className = "rfqField rfqFieldWithIcon";
+        input.value = state[step.key] || "";
+        input.addEventListener("input", ()=> state[step.key] = input.value);
+
+        wrap.appendChild(leftIcon);
+        wrap.appendChild(input);
+
+        if(step.type !== "date"){
+          const rightChevron = document.createElement("div");
+          rightChevron.className = "rfqFieldRightChevron";
+          rightChevron.style.opacity = ".0";
+          wrap.appendChild(rightChevron);
+        }
+
+        if(step.key === "containers"){
+          const note = document.createElement("div");
+          note.className = "mt-2 text-xs text-[#0b1a2d]/55";
+          note.textContent = "* A container is typically between 24–25 tons.";
+          const outer = document.createElement("div");
+          outer.appendChild(wrap);
+          outer.appendChild(note);
+          return outer;
         }
 
         return wrap;
       }
 
+      function reviewValue(v){
+        if(v === undefined || v === null || String(v).trim() === "") return "—";
+        return String(v);
+      }
+
+      function buildReviewStep(){
+        const outer = document.createElement("div");
+        outer.className = "space-y-4";
+
+        const grid = document.createElement("div");
+        grid.className = "grid grid-cols-1 sm:grid-cols-2 gap-3";
+
+        const items = [
+          ["Name", state.__name],
+          ["Email", state.__email],
+          ["Number", state.__phone],
+          ["Crop", state.crop],
+          ["SKU / Specification", state.spec],
+          ["Containers", state.containers],
+          ["Packing", state.packing],
+          ["Destination", state.destination],
+          ["Expected Delivery Date", state.delivery],
+          ["Quality Inspection", state.quality],
+          ["Insurance", state.insurance]
+        ];
+
+        items.forEach(([label, value]) => {
+          const box = document.createElement("div");
+          box.className = "reviewItem";
+          box.innerHTML = `
+            <div class="reviewLabel">${label}</div>
+            <div class="reviewValue">${reviewValue(value)}</div>
+          `;
+          grid.appendChild(box);
+        });
+
+        const note = document.createElement("div");
+        note.className = "reviewCheck";
+        note.innerHTML = `
+          <div class="reviewCheckIcon">${iconSvg("check")}</div>
+          <div>
+            <div class="text-sm font-semibold text-[#0b1a2d]">Final details will be confirmed in the quote.</div>
+            <div class="text-xs text-[#0b1a2d]/55 mt-1">Once submitted, Shunah will review your request and contact you shortly.</div>
+          </div>
+        `;
+
+        outer.appendChild(grid);
+        outer.appendChild(note);
+
+        return outer;
+      }
+
+      function makeField(step){
+        if(step.type === "review"){
+          return buildReviewStep();
+        }
+
+        if(step.type === "select"){
+          return buildSelectField(step);
+        }
+
+        return buildInputField(step);
+      }
+
       function isFilled(i){
-        const k = steps[i].key;
+        const step = steps[i];
+        if(step.type === "review") return true;
+        const k = step.key;
         return state[k] && String(state[k]).trim().length > 0;
       }
 
       function buildTracker(){
         tracker.innerHTML = "";
+
         steps.forEach((s, idx) => {
           const cell = document.createElement("div");
           cell.className = "tCircleWrap";
@@ -447,19 +639,14 @@
           label.textContent = s.label;
           label.dataset.idx = String(idx);
 
-          c.addEventListener("click", () => {
-  // allow only current or completed steps
+c.addEventListener("click", () => {
   if (idx > current && !completed.has(idx - 1)) return;
 
   current = idx;
-
-  // remove future progress if going backwards
-  for (let j = steps.length - 1; j > idx; j--) {
-    completed.delete(j);
-  }
-
+  finalSubmitted = false;
+  finalMsg.classList.add("hidden");
   render();
-});
+});    
 
           cell.appendChild(c);
           cell.appendChild(label);
@@ -467,29 +654,133 @@
         });
       }
 
-      function updateTrackerUI(){
-        const circles = tracker.querySelectorAll(".tCircle");
-        const labels  = tracker.querySelectorAll(".tLabel");
-        const done = Array.from(completed).filter(i=>i!==0).sort((a,b)=>a-b);
+     
+function updateTrackerUI(){
+  const circles = tracker.querySelectorAll(".tCircle");
+  const labels  = tracker.querySelectorAll(".tLabel");
 
-        circles.forEach((c) => {
-          const idx = Number(c.dataset.idx);
-          c.classList.toggle("active", idx === current);
-          c.classList.toggle("done", completed.has(idx));
+  circles.forEach((c) => {
+    const idx = Number(c.dataset.idx);
 
-          c.classList.remove("stack-1","stack-2","stack-3","stack-4","stack-5","stack-6","stack-7","stack-8");
+    c.classList.remove("active", "done");
 
-          if(idx !== 0 && completed.has(idx)){
-            const rank = done.indexOf(idx) + 1; // 1..8
-            if(rank > 0) c.classList.add("stack-" + Math.min(rank, 8));
+    if (idx < current) {
+      c.classList.add("done");
+    } else if (idx === current) {
+      c.classList.add("active");
+    }
+  });
+
+  labels.forEach((l) => {
+    const idx = Number(l.dataset.idx);
+
+    l.classList.remove("hiddenLabel", "activeLabel");
+
+    if (idx < current) {
+      l.classList.add("hiddenLabel");
+    } else if (idx === current) {
+      l.classList.add("activeLabel");
+    }
+  });
+}
+
+
+      function getCompactSteps(currentIndex, total){
+        const currentStep = currentIndex + 1;
+
+        if (currentStep <= 3) return [1, 2, 3, "...", total];
+        if (currentStep >= total - 2) return [1, "...", total - 2, total - 1, total];
+        return [1, "...", currentStep, "...", total];
+      }
+
+      function buildMobileTracker(){
+        mobileTracker.innerHTML = "";
+
+        const outer = document.createElement("div");
+        outer.className = "mTrackerOuter";
+
+        const row = document.createElement("div");
+        row.className = "mTrackerRow";
+
+        const left = document.createElement("button");
+        left.className = "mArrow";
+        left.innerHTML = "&#8249;";
+        left.disabled = current === 0;
+        left.addEventListener("click", () => {
+          if(current === 0) return;
+          current--;
+          finalSubmitted = false;
+          finalMsg.classList.add("hidden");
+          render();
+        });
+
+        const stepsWrap = document.createElement("div");
+        stepsWrap.className = "mSteps";
+
+        const visible = getCompactSteps(current, steps.length);
+
+        visible.forEach(item => {
+          if(item === "..."){
+            const dots = document.createElement("div");
+            dots.className = "mStepEllipsis";
+            dots.textContent = "...";
+            stepsWrap.appendChild(dots);
+            return;
           }
+
+          const idx = item - 1;
+          const bubble = document.createElement("button");
+          bubble.className = "mStepBubble";
+          bubble.textContent = item;
+
+      if(idx < current){
+  bubble.classList.add("done");
+} else if(idx === current){
+  bubble.classList.add("active");
+}
+
+          const canGo = idx <= current || completed.has(idx - 1);
+
+          if(!canGo && idx !== current){
+            bubble.style.opacity = ".55";
+            bubble.disabled = true;
+          } else {
+            bubble.addEventListener("click", () => {
+              current = idx;
+              for (let j = steps.length - 1; j > idx; j--) completed.delete(j);
+              finalSubmitted = false;
+              finalMsg.classList.add("hidden");
+              render();
+            });
+          }
+
+          stepsWrap.appendChild(bubble);
         });
 
-        labels.forEach((l) => {
-          const idx = Number(l.dataset.idx);
-          const hide = (idx !== 0 && completed.has(idx));
-          l.classList.toggle("hiddenLabel", hide);
+        const right = document.createElement("button");
+        right.className = "mArrow";
+        right.innerHTML = "&#8250;";
+        right.disabled = current === steps.length - 1;
+        right.addEventListener("click", () => {
+          if(current === steps.length - 1) return;
+          if(!isFilled(current)) return;
+          completed.add(current);
+          current++;
+          render();
         });
+
+        const label = document.createElement("div");
+        label.className = "mStepLabel";
+        label.textContent = steps[current].label.toUpperCase();
+
+        row.appendChild(left);
+        row.appendChild(stepsWrap);
+        row.appendChild(right);
+
+        outer.appendChild(row);
+        outer.appendChild(label);
+
+        mobileTracker.appendChild(outer);
       }
 
       function renderStep(){
@@ -501,43 +792,30 @@
         stepBody.appendChild(makeField(s));
 
         backBtn.disabled = current === 0;
-        nextBtn.textContent = "Next →";
 
-        submitWrap.classList.toggle("hidden", completed.size !== steps.length);
-      }
+        const isReview = s.type === "review";
+        nextBtn.classList.toggle("hidden", isReview);
+        submitWrap.classList.toggle("hidden", !isReview);
 
-      function fillReview(){
-        rv.name.textContent = state.__name || "—";
-        rv.email.textContent = state.__email || "—";
-        rv.phone.textContent = state.__phone || "—";
+        if(!isReview){
+          nextBtn.textContent = "Next →";
+        }
 
-        rv.crop.textContent = state.crop || "—";
-        rv.sku.textContent = state.spec || "—";
-        rv.containers.textContent = state.containers || "—";
-        rv.destination.textContent = state.destination || "—";
-        rv.delivery.textContent = state.delivery || "—";
-        rv.quality.textContent = state.quality || "—";
-        rv.insurance.textContent = state.insurance || "—";
-        rv.payment.textContent = state.payment || "—";
-      }
-
-      function showReview(){
-        fillReview();
-        trackerWrap.classList.add("hidden");
-        wizardCard.classList.add("hidden");
-        reviewWrap.classList.remove("hidden");
         finalMsg.classList.toggle("hidden", !finalSubmitted);
       }
 
       startBtn.addEventListener("click", () => {
-        const n = (nameEl.value||"").trim();
-        const e = (emailEl.value||"").trim();
-        const p = (phoneEl.value||"").trim();
+        const n = (nameEl.value || "").trim();
+        const e = (emailEl.value || "").trim();
+        const p = (phoneEl.value || "").trim();
+
         if(!n || !e || !p) return;
 
         state.__name = n;
         state.__email = e;
         state.__phone = p;
+
+document.getElementById("rfqSubtitle").textContent = "Structured procurement in 9 steps";
 
         step0Card.classList.add("hidden");
         wizardWrap.classList.remove("hidden");
@@ -551,95 +829,92 @@
         render();
       });
 
-      backBtn.addEventListener("click", () => {
-        if(current === 0) return;
-        current--;
-        render();
-      });
+   backBtn.addEventListener("click", () => {
+  if(current === 0) return;
+
+  current--;
+  finalSubmitted = false;
+  finalMsg.classList.add("hidden");
+  render();
+});
 
       submitBtn.addEventListener("click", () => {
-        showReview();
-      });
-
-      finalBtn.addEventListener("click", () => {
+        completed.add(current);
         finalSubmitted = true;
         finalMsg.classList.remove("hidden");
+        buildMobileTracker();
+        updateTrackerUI();
       });
 
       function render(){
-        if(!reviewWrap.classList.contains("hidden")) return;
         renderStep();
         updateTrackerUI();
+        buildMobileTracker();
       }
 
       buildTracker();
-      renderStep();
-      updateTrackerUI();
+      render();
     })();
   </script>
-<script>
-  (function () {
-    const mobileMenuButton = document.getElementById('mobile-menu-button');
-    const mobileMenu = document.getElementById('mobile-menu');
-    const openIcon = document.getElementById('menu-open-icon');
-    const closeIcon = document.getElementById('menu-close-icon');
 
-    if (!mobileMenuButton || !mobileMenu) return;
+  <script>
+    (function () {
+      const mobileMenuButton = document.getElementById('mobile-menu-button');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const openIcon = document.getElementById('menu-open-icon');
+      const closeIcon = document.getElementById('menu-close-icon');
 
-    let scrollCloseTimer;
+      if (!mobileMenuButton || !mobileMenu) return;
 
-    function openMobileMenu() {
-      mobileMenu.classList.remove('hidden');
-      mobileMenuButton.setAttribute('aria-expanded', 'true');
-      if (openIcon) openIcon.classList.add('hidden');
-      if (closeIcon) closeIcon.classList.remove('hidden');
-    }
+      let scrollCloseTimer;
 
-    function closeMobileMenu() {
-      mobileMenu.classList.add('hidden');
-      mobileMenuButton.setAttribute('aria-expanded', 'false');
-      if (openIcon) openIcon.classList.remove('hidden');
-      if (closeIcon) closeIcon.classList.add('hidden');
-    }
-
-    function isMobileView() {
-      return window.innerWidth < 768; // matches md:hidden
-    }
-
-    function toggleMobileMenu() {
-      if (mobileMenu.classList.contains('hidden')) {
-        openMobileMenu();
-      } else {
-        closeMobileMenu();
+      function openMobileMenu() {
+        mobileMenu.classList.remove('hidden');
+        mobileMenuButton.setAttribute('aria-expanded', 'true');
+        if (openIcon) openIcon.classList.add('hidden');
+        if (closeIcon) closeIcon.classList.remove('hidden');
       }
-    }
 
-    mobileMenuButton.addEventListener('click', toggleMobileMenu);
+      function closeMobileMenu() {
+        mobileMenu.classList.add('hidden');
+        mobileMenuButton.setAttribute('aria-expanded', 'false');
+        if (openIcon) openIcon.classList.remove('hidden');
+        if (closeIcon) closeIcon.classList.add('hidden');
+      }
 
-    // Close on any scroll movement
-    window.addEventListener(
-      'scroll',
-      function () {
-        if (!isMobileView()) return;
-        if (!mobileMenu.classList.contains('hidden')) {
+      function isMobileView() {
+        return window.innerWidth < 768;
+      }
+
+      function toggleMobileMenu() {
+        if (mobileMenu.classList.contains('hidden')) {
+          openMobileMenu();
+        } else {
           closeMobileMenu();
         }
+      }
 
-        // also close again when scrolling "stalls"
-        clearTimeout(scrollCloseTimer);
-        scrollCloseTimer = setTimeout(() => {
+      mobileMenuButton.addEventListener('click', toggleMobileMenu);
+
+      window.addEventListener(
+        'scroll',
+        function () {
           if (!isMobileView()) return;
-          closeMobileMenu();
-        }, 120);
-      },
-      { passive: true }
-    );
+          if (!mobileMenu.classList.contains('hidden')) closeMobileMenu();
 
-    // Optional: also close on resize back/forth
-    window.addEventListener('resize', function () {
-      closeMobileMenu();
-    });
-  })();
-</script>
+          clearTimeout(scrollCloseTimer);
+          scrollCloseTimer = setTimeout(() => {
+            if (!isMobileView()) return;
+            closeMobileMenu();
+          }, 120);
+        },
+        { passive: true }
+      );
+
+      window.addEventListener('resize', function () {
+        closeMobileMenu();
+      });
+    })();
+  </script>
 </body>
 </html>
