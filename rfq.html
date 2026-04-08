@@ -71,7 +71,9 @@
       position:relative;
       z-index:2;
       user-select:none;
+overflow:visible;
     }
+
 
     .tCircle{
       width:56px;
@@ -86,22 +88,85 @@
       border:2px solid #ffffff;
       color:#0b1a2d;
       cursor:pointer;
-      transition:transform 750ms cubic-bezier(.19,1,.22,1), background 250ms ease;
+      transition:
+    transform 250ms ease,
+    box-shadow 250ms ease,
+    background 200ms ease;
     }
 
+    .tCircleWrap{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:8px;
+      position:relative;
+      z-index:2;
+      user-select:none;
+      padding-top:14px;
+    }
+
+.tCircle{
+  position:relative; /* ADD THIS */
+}
+   .tCircleMark{
+  position:absolute;
+  top:14px;
+  right:-4px;   /* move to upper-right */
+  left:auto;
+  transform:none;
+ z-index:5;
+  width:18px;
+  height:18px;
+  border-radius:999px;
+
+  background:#22c55e;
+  color:#fff;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-size:11px;
+  font-weight:900;
+  line-height:1;
+
+  border:2px solid #ffffff;   /* white border */
+  box-shadow:0 4px 10px rgba(34,197,94,.25);
+
+  opacity:0;
+  pointer-events:none;
+  transition:all .2s ease;
+}
+
+    .tCircleMark.show{
+      opacity:1;
+    }
+
+    .tCircleMark.warn{
+      background:#22c55e;
+      color:#fff;
+    }
     .tCircle.done{
       background:#22c55e;
       color:white;
     }
 
    .tCircle.active{
-  background:#0b1a2d; /* NAVY */
+  background:#2F5DA8;              /* Shunah blue */
   color:white;
+
+  border:3px solid #ffffff;       /* clean white ring */
+
+  box-shadow:
+    0 0 0 4px rgba(47,93,168,0.15),   /* soft outer ring */
+    0 10px 25px rgba(47,93,168,0.35); /* glow depth */
+
+  transform:scale(1.08);          /* slight premium pop */
 }
 
     .tLabel{
-      font-size:11px;
-      letter-spacing:.10em;
+      font-size:9px;
+      letter-spacing:.08em;
       text-transform:uppercase;
       color:rgba(11,26,45,.55);
       transition:opacity 350ms ease,transform 350ms ease;
@@ -114,7 +179,7 @@
   font-weight:700;
 }
     .tLabel.hiddenLabel{
-      opacity:0;
+      opacity:1;
       transform:translateY(-4px);
       pointer-events:none;
     }
@@ -305,20 +370,20 @@
   </nav>
 
   <section id="rfq" class="bg-white">
-    <div class="max-w-7xl mx-auto px-6 min-h-[calc(100dvh-56px)] py-10 lg:py-6 flex items-start lg:items-center">
+    <div class="max-w-[1400px] mx-auto px-6 min-h-[calc(100dvh-56px)] py-10 lg:py-6 flex items-start lg:items-center">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch w-full">
 
         <!-- LEFT IMAGE -->
-        <div class="hidden lg:block lg:col-span-4 relative h-full">
-          <div class="absolute inset-0 overflow-hidden">
-            <img src="images/rfq.jpg" alt="RFQ visual" class="w-full h-full object-cover" />
+        <div class="hidden lg:block lg:col-span-3 relative h-full">
+          <div class="fixed top-0 left-0 w-[33.333%] h-screen overflow-hidden">
+           <img src="rfq/left.png" alt="RFQ visual" class="w-full h-full object-cover pointer-events-none select-none" />
             <div class="absolute inset-0 bg-black/5"></div>
           </div>
         </div>
 
         <!-- RIGHT CONTENT -->
-        <div class="lg:col-span-7">
-          <div class="max-w-xl ml-auto">
+        <div class="lg:col-span-8">
+<div class="max-w-2xl ml-auto">
 
             <h2 class="text-4xl sm:text-5xl font-semibold tracking-tight text-[#0b1a2d]">
   Request RFQ
@@ -364,7 +429,7 @@
             <div id="rfqWizardWrap" class="hidden">
 
               <!-- DESKTOP TRACKER -->
-              <div id="rfqTrackerWrapDesktop" class="mt-8 hidden md:block">
+              <div id="rfqTrackerWrapDesktop" class="mt-8 hidden md:block transition-opacity duration-300">
                 <div class="relative">
                  
                   <div id="rfqTracker" class="grid grid-cols-9 gap-3 relative z-10"></div>
@@ -372,36 +437,49 @@
               </div>
 
               <!-- MOBILE TRACKER -->
-              <div id="rfqTrackerWrapMobile" class="mt-6 md:hidden">
+              <div id="rfqTrackerWrapMobile" class="mt-6 md:hidden transition-opacity duration-300">
                 <div id="rfqMobileTracker" class="w-full"></div>
               </div>
 
               <!-- STEP CARD -->
              <div id="rfqWizardCard"
      class="mt-6 rounded-2xl border border-black/10 bg-white p-6 sm:p-7 shadow-[0_20px_60px_rgba(11,26,45,0.12)]">
-                <div id="rfqStepTitle" class="text-lg font-semibold text-[#0b1a2d]"></div>
-                <div id="rfqStepSubtitle" class="mt-1 text-sm text-[#0b1a2d]/55"></div>
+                <div class="flex items-start gap-4">
+  <div class="shrink-0">
+    <img
+      id="rfqStepIcon"
+      src="rfq/step1.png"
+      alt="Step icon"
+      class="w-12 h-12 object-contain"
+    />
+  </div>
 
-                <div class="mt-5" id="rfqStepBody"></div>
+  <div class="min-w-0">
+    <div id="rfqStepTitle" class="text-lg font-semibold text-[#0b1a2d]"></div>
+    <div id="rfqStepSubtitle" class="mt-1 text-sm text-[#0b1a2d]/55"></div>
+  </div>
+</div>
 
-                <div class="mt-6 flex justify-between gap-3">
+<div class="mt-3" id="rfqStepBody"></div>
+
+<div class="mt-6 flex justify-between items-center gap-3">
                   <button id="rfqBack"
                     class="rounded-full border border-[#0b1a2d] text-[#0b1a2d] bg-white px-6 py-2.5 text-sm font-semibold hover:bg-[#0b1a2d] hover:text-white transition disabled:opacity-30 disabled:cursor-not-allowed">
                     ← Back
                   </button>
 
                   <button id="rfqNext"
-                    class="rounded-full border border-[#0b1a2d] text-[#0b1a2d] bg-white px-6 py-2.5 text-sm font-semibold hover:bg-[#0b1a2d] hover:text-white transition">
+  class="rounded-full bg-[#2F5DA8] text-white px-6 py-2.5 text-sm font-semibold hover:bg-[#254a86] transition">
                     Next →
                   </button>
                 </div>
 
-                <div id="rfqSubmitWrap" class="mt-6 hidden">
-                  <button id="rfqSubmit"
-                    class="w-full rounded-full bg-[#0b1a2d] text-white px-6 py-3 font-semibold hover:bg-[#142a4a] transition">
-                    Submit RFQ
-                  </button>
-                </div>
+                <div id="rfqSubmitWrap" class="hidden">
+  <button id="rfqSubmit"
+    class="rounded-full bg-[#0b1a2d] text-white px-5 py-2 text-sm font-semibold hover:bg-[#142a4a] transition">
+    Confirm
+  </button>
+</div>
 
                 <div id="rfqFinalMsg"
                      class="mt-5 hidden rounded-xl border border-[#22c55e]/25 bg-[#22c55e]/10 p-4 text-[#0b1a2d]">
@@ -433,16 +511,17 @@
   <script>
     (function(){
       const steps = [
-        { key:"crop", label:"Crop", title:"Buyer Choose Crop", subtitle:"Select the crop you want to purchase.", type:"select", icon:"crop", options:["White Beans","Sesame","Fava Beans","Rice","Caraway","Fennel"]},
-        { key:"spec", label:"Spec", title:"SKU / Specification", subtitle:"Choose the SKU specification.", type:"select", icon:"spec", options:["WKB-001 (Standard)","WKB-002 (Premium)","SSM-001 (Standard)","SSM-002 (Premium)","RCE-001 (Standard)"]},
-        { key:"containers", label:"Tons", title:"Number of Containers", subtitle:"Enter the number of containers.", type:"number", icon:"tons", placeholder:"e.g. 4" },
-        { key:"packing", label:"Packing", title:"Packing", subtitle:"Choose packing format.", type:"select", icon:"packing", options:["25kg PP Bags","50kg PP Bags","Jumbo Bags","Bulk"]},
-        { key:"destination", label:"Destination", title:"Destination", subtitle:"Where should the shipment be delivered?", type:"text", icon:"destination", placeholder:"Country / City" },
-        { key:"delivery", label:"Delivery", title:"Expected Delivery Date", subtitle:"Choose your expected delivery date.", type:"date", icon:"delivery" },
-        { key:"quality", label:"Quality", title:"Quality Inspection", subtitle:"Select inspection method.", type:"select", icon:"quality", options:["Shunah QC","Third-Party Inspection","Buyer Inspection"]},
-        { key:"insurance", label:"Insurance", title:"Insurance", subtitle:"Select insurance option.", type:"select", icon:"insurance", options:["Included","Optional","Not Required"]},
-        { key:"review", label:"Confirm", title:"Review & Confirm", subtitle:"Please review your request details before submitting.", type:"review" }
-      ];
+  { key:"crop", label:"Crop", title:"Buyer Choose Crop", subtitle:"Select the crop you want to purchase.", type:"select", icon:"crop", options:["White Beans","Sesame","Fava Beans","Rice","Caraway","Fennel"]},
+  { key:"spec", label:"Spec", title:"SKU / Specification", subtitle:"Choose the SKU specification.", type:"select", icon:"spec", options:["WKB-001 (Standard)","WKB-002 (Premium)","SSM-001 (Standard)","SSM-002 (Premium)","RCE-001 (Standard)"]},
+  { key:"containers", label:"Tons", title:"Number of Containers", subtitle:"Enter the number of containers.", type:"number", icon:"tons", placeholder:"e.g. 4" },
+  { key:"packing", label:"Packing", title:"Packing", subtitle:"Choose packing format.", type:"select", icon:"packing", options:["25kg PP Bags","50kg PP Bags","Jumbo Bags","Bulk"]},
+  { key:"destination", label:"Destination", title:"Destination", subtitle:"Where should the shipment be delivered?", type:"text", icon:"destination", placeholder:"Country / City" },
+  { key:"delivery", label:"Delivery", title:"Expected Delivery Date", subtitle:"Choose your expected delivery date.", type:"date", icon:"delivery" },
+  { key:"quality", label:"Quality", title:"Quality Inspection", subtitle:"Select inspection method.", type:"select", icon:"quality", options:["Shunah QC","Third-Party Inspection","Buyer Inspection"]},
+  { key:"insurance", label:"Insurance", title:"Insurance", subtitle:"Select insurance option.", type:"select", icon:"insurance", options:["Included","Optional","Not Required"]},
+  { key:"paymentTerms", label:"Payment", title:"Payment Terms", subtitle:"Choose your preferred payment terms.", type:"select", icon:"payment", options:["Advance Payment","30% Advance / 70% Before Shipment","Letter of Credit (L/C)","CAD","Open Account"]},
+  { key:"review", label:"Review", title:"Review & Confirm", subtitle:"Please review your request details before submitting.", type:"review" }
+];
 
       const state = {};
       let current = 0;
@@ -464,6 +543,9 @@
       const stepSubtitle = document.getElementById("rfqStepSubtitle");
       const stepBody = document.getElementById("rfqStepBody");
 
+const stepIcon = document.getElementById("rfqStepIcon");
+
+
       const backBtn = document.getElementById("rfqBack");
       const nextBtn = document.getElementById("rfqNext");
       const submitWrap = document.getElementById("rfqSubmitWrap");
@@ -480,7 +562,8 @@
           delivery: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>`,
           quality: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3Z"/><path d="m9 12 2 2 4-4"/></svg>`,
           insurance: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3Z"/><path d="M9 12h6"/></svg>`,
-          chevron: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"><path d="m6 9 6 6 6-6"/></svg>`,
+payment: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18"/><path d="M7 15h3"/></svg>`,          
+chevron: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"><path d="m6 9 6 6 6-6"/></svg>`,
           check: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>`
         };
         return map[type] || map.spec;
@@ -556,54 +639,63 @@
         return String(v);
       }
 
-      function buildReviewStep(){
-        const outer = document.createElement("div");
-        outer.className = "space-y-4";
+function buildReviewStep(){
+  const outer = document.createElement("div");
+  outer.className = "space-y-2";
 
-        const grid = document.createElement("div");
-        grid.className = "grid grid-cols-1 sm:grid-cols-2 gap-3";
+  const qualityYes =
+    state.quality && String(state.quality).trim().toLowerCase() !== "no";
 
-        const items = [
-          ["Name", state.__name],
-          ["Email", state.__email],
-          ["Number", state.__phone],
-          ["Crop", state.crop],
-          ["SKU / Specification", state.spec],
-          ["Containers", state.containers],
-          ["Packing", state.packing],
-          ["Destination", state.destination],
-          ["Expected Delivery Date", state.delivery],
-          ["Quality Inspection", state.quality],
-          ["Insurance", state.insurance]
-        ];
+  const insuranceYes =
+    state.insurance && String(state.insurance).trim().toLowerCase() !== "no";
 
-        items.forEach(([label, value]) => {
-          const box = document.createElement("div");
-          box.className = "reviewItem";
-          box.innerHTML = `
-            <div class="reviewLabel">${label}</div>
-            <div class="reviewValue">${reviewValue(value)}</div>
-          `;
-          grid.appendChild(box);
-        });
+  let otherText = "No";
+  if(qualityYes && insuranceYes){
+    otherText = "Quality Inspection | Insurance";
+  } else if(qualityYes){
+    otherText = "Quality Inspection";
+  } else if(insuranceYes){
+    otherText = "Insurance";
+  }
 
-        const note = document.createElement("div");
-        note.className = "reviewCheck";
-        note.innerHTML = `
-          <div class="reviewCheckIcon">${iconSvg("check")}</div>
-          <div>
-            <div class="text-sm font-semibold text-[#0b1a2d]">Final details will be confirmed in the quote.</div>
-            <div class="text-xs text-[#0b1a2d]/55 mt-1">Once submitted, Shunah will review your request and contact you shortly.</div>
-          </div>
-        `;
+  const lines = [
+    {
+      label: "Basic:",
+      value: `${reviewValue(state.__name)} | ${reviewValue(state.__email)} | ${reviewValue(state.__phone)}`
+    },
+    {
+      label: "Order:",
+      value: `${reviewValue(state.crop)} | ${reviewValue(state.spec)} | ${reviewValue(state.containers)} Container | ${reviewValue(state.packing)}`
+    },
+    {
+      label: "Destination:",
+      value: `${reviewValue(state.destination)} | ${reviewValue(state.delivery)}`
+    },
+    {
+      label: "Other:",
+      value: otherText
+    },
+    {
+      label: "Payment Terms:",
+      value: `${reviewValue(state.paymentTerms)}`
+    }
+  ];
 
-        outer.appendChild(grid);
-        outer.appendChild(note);
+  lines.forEach((line) => {
+    const row = document.createElement("div");
+    row.className = "text-sm leading-relaxed";
 
-        return outer;
-      }
+    row.innerHTML = `
+      <span class="font-semibold text-[#2F5DA8]">${line.label}</span>
+      <span class="text-[#0b1a2d]">${line.value}</span>
+    `;
 
-      function makeField(step){
+    outer.appendChild(row);
+  });
+
+  return outer;
+}
+           function makeField(step){
         if(step.type === "review"){
           return buildReviewStep();
         }
@@ -622,12 +714,16 @@
         return state[k] && String(state[k]).trim().length > 0;
       }
 
-      function buildTracker(){
+          function buildTracker(){
         tracker.innerHTML = "";
 
-        steps.forEach((s, idx) => {
+steps.slice(0, 9).forEach((s, idx) => {
           const cell = document.createElement("div");
           cell.className = "tCircleWrap";
+
+          const mark = document.createElement("div");
+          mark.className = "tCircleMark";
+          mark.dataset.idx = String(idx);
 
           const c = document.createElement("div");
           c.className = "tCircle";
@@ -639,15 +735,22 @@
           label.textContent = s.label;
           label.dataset.idx = String(idx);
 
-c.addEventListener("click", () => {
-  if (idx > current && !completed.has(idx - 1)) return;
+          c.addEventListener("click", () => {
+            const canGo =
+              idx === current ||
+              completed.has(idx) ||
+              idx < current ||
+              completed.has(idx - 1);
 
-  current = idx;
-  finalSubmitted = false;
-  finalMsg.classList.add("hidden");
-  render();
-});    
+            if (!canGo) return;
 
+            current = idx;
+            finalSubmitted = false;
+            finalMsg.classList.add("hidden");
+            render();
+          });
+
+          cell.appendChild(mark);
           cell.appendChild(c);
           cell.appendChild(label);
           tracker.appendChild(cell);
@@ -655,34 +758,58 @@ c.addEventListener("click", () => {
       }
 
      
-function updateTrackerUI(){
-  const circles = tracker.querySelectorAll(".tCircle");
-  const labels  = tracker.querySelectorAll(".tLabel");
+      function updateTrackerUI(){
+        const circles = tracker.querySelectorAll(".tCircle");
+        const labels  = tracker.querySelectorAll(".tLabel");
+        const marks   = tracker.querySelectorAll(".tCircleMark");
 
-  circles.forEach((c) => {
-    const idx = Number(c.dataset.idx);
+        circles.forEach((c) => {
+          const idx = Number(c.dataset.idx);
 
-    c.classList.remove("active", "done");
+          c.classList.remove("active", "done");
 
-    if (idx < current) {
-      c.classList.add("done");
-    } else if (idx === current) {
-      c.classList.add("active");
-    }
-  });
+          if (completed.has(idx)) {
+            c.classList.add("done");
+          }
 
-  labels.forEach((l) => {
-    const idx = Number(l.dataset.idx);
+          if (idx === current) {
+            c.classList.add("active");
+          }
+        });
 
-    l.classList.remove("hiddenLabel", "activeLabel");
+        labels.forEach((l) => {
+          const idx = Number(l.dataset.idx);
 
-    if (idx < current) {
-      l.classList.add("hiddenLabel");
-    } else if (idx === current) {
-      l.classList.add("activeLabel");
-    }
-  });
-}
+          l.classList.remove("hiddenLabel", "activeLabel");
+
+          if (completed.has(idx) && idx !== current) {
+            l.classList.add("hiddenLabel");
+          } else if (idx === current) {
+            l.classList.add("activeLabel");
+          }
+        });
+
+        marks.forEach((m) => {
+          const idx = Number(m.dataset.idx);
+
+          m.classList.remove("show", "warn");
+          m.innerHTML = "";
+
+          if (!completed.has(idx)) return;
+
+          if (idx === current) {
+            m.classList.add("show", "warn");
+            m.textContent = "!";
+          } else {
+            m.classList.add("show");
+            m.innerHTML = `
+              <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 6L9 17l-5-5"/>
+              </svg>
+            `;
+          }
+        });
+      }
 
 
       function getCompactSteps(currentIndex, total){
@@ -692,6 +819,7 @@ function updateTrackerUI(){
         if (currentStep >= total - 2) return [1, "...", total - 2, total - 1, total];
         return [1, "...", currentStep, "...", total];
       }
+
 
       function buildMobileTracker(){
         mobileTracker.innerHTML = "";
@@ -717,7 +845,7 @@ function updateTrackerUI(){
         const stepsWrap = document.createElement("div");
         stepsWrap.className = "mSteps";
 
-        const visible = getCompactSteps(current, steps.length);
+const visible = getCompactSteps(current, 9);
 
         visible.forEach(item => {
           if(item === "..."){
@@ -731,23 +859,39 @@ function updateTrackerUI(){
           const idx = item - 1;
           const bubble = document.createElement("button");
           bubble.className = "mStepBubble";
-          bubble.textContent = item;
 
-      if(idx < current){
-  bubble.classList.add("done");
-} else if(idx === current){
-  bubble.classList.add("active");
-}
+          if (completed.has(idx)) {
+            bubble.classList.add("done");
+          }
 
-          const canGo = idx <= current || completed.has(idx - 1);
+          if (idx === current) {
+            bubble.classList.add("active");
+          }
 
-          if(!canGo && idx !== current){
+          if (completed.has(idx) && idx === current) {
+            bubble.textContent = "!";
+          } else if (completed.has(idx)) {
+            bubble.innerHTML = `
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 6L9 17l-5-5"/>
+              </svg>
+            `;
+          } else {
+            bubble.textContent = item;
+          }
+
+          const canGo =
+            idx === current ||
+            completed.has(idx) ||
+            idx < current ||
+            completed.has(idx - 1);
+
+          if(!canGo){
             bubble.style.opacity = ".55";
             bubble.disabled = true;
           } else {
             bubble.addEventListener("click", () => {
               current = idx;
-              for (let j = steps.length - 1; j > idx; j--) completed.delete(j);
               finalSubmitted = false;
               finalMsg.classList.add("hidden");
               render();
@@ -783,26 +927,40 @@ function updateTrackerUI(){
         mobileTracker.appendChild(outer);
       }
 
-      function renderStep(){
-        const s = steps[current];
-        stepTitle.textContent = s.title;
-        stepSubtitle.textContent = s.subtitle;
 
-        stepBody.innerHTML = "";
-        stepBody.appendChild(makeField(s));
 
-        backBtn.disabled = current === 0;
+function renderStep(){
+  const s = steps[current];
+  const isReview = s.type === "review";
+  const isPaymentStep = s.key === "paymentTerms";
 
-        const isReview = s.type === "review";
-        nextBtn.classList.toggle("hidden", isReview);
-        submitWrap.classList.toggle("hidden", !isReview);
+  stepTitle.textContent = s.title;
+  stepSubtitle.textContent = s.subtitle;
+  stepIcon.src = isReview ? "rfq/step9.png" : `rfq/step${current + 1}.png`;
+  stepIcon.alt = isReview ? "Review icon" : `Step ${current + 1} icon`;
 
-        if(!isReview){
-          nextBtn.textContent = "Next →";
-        }
+  stepBody.innerHTML = "";
+  stepBody.appendChild(makeField(s));
 
-        finalMsg.classList.toggle("hidden", !finalSubmitted);
-      }
+  backBtn.disabled = current === 0;
+
+  if(isReview){
+    document.getElementById("rfqTrackerWrapDesktop").classList.add("opacity-0", "pointer-events-none");
+    document.getElementById("rfqTrackerWrapMobile").classList.add("opacity-0", "pointer-events-none");
+    nextBtn.classList.add("hidden");
+    submitWrap.classList.remove("hidden");
+  } else {
+    document.getElementById("rfqTrackerWrapDesktop").classList.remove("opacity-0", "pointer-events-none");
+    document.getElementById("rfqTrackerWrapMobile").classList.remove("opacity-0", "pointer-events-none");
+    nextBtn.classList.remove("hidden");
+    submitWrap.classList.add("hidden");
+    nextBtn.textContent = isPaymentStep ? "Review Order and Submit" : "Next →";
+  }
+
+  finalMsg.classList.toggle("hidden", !finalSubmitted);
+}
+
+
 
       startBtn.addEventListener("click", () => {
         const n = (nameEl.value || "").trim();
@@ -823,28 +981,83 @@ document.getElementById("rfqSubtitle").textContent = "Structured procurement in 
       });
 
       nextBtn.addEventListener("click", () => {
-        if(!isFilled(current)) return;
-        completed.add(current);
-        if(current < steps.length - 1) current++;
-        render();
-      });
+  if(!isFilled(current)) return;
 
-   backBtn.addEventListener("click", () => {
-  if(current === 0) return;
+  completed.add(current);
 
-  current--;
+  const isPaymentStep = steps[current].key === "paymentTerms";
+
+  if(isPaymentStep){
+    current = steps.length - 1; // jump to review
+  } else if(current < 8){
+    current++;
+  }
+
   finalSubmitted = false;
   finalMsg.classList.add("hidden");
   render();
 });
 
-      submitBtn.addEventListener("click", () => {
-        completed.add(current);
-        finalSubmitted = true;
-        finalMsg.classList.remove("hidden");
-        buildMobileTracker();
-        updateTrackerUI();
-      });
+function resetRfqForm(){
+  Object.keys(state).forEach((key) => delete state[key]);
+  completed.clear();
+  current = 0;
+  finalSubmitted = false;
+
+  nameEl.value = "";
+  emailEl.value = "";
+  phoneEl.value = "";
+
+  document.getElementById("rfqSubtitle").textContent = "XXXXXXXXXXXXXXXXXXXXXxx";
+
+  finalMsg.classList.add("hidden");
+  wizardWrap.classList.add("hidden");
+  step0Card.classList.remove("hidden");
+
+  document.getElementById("rfqTrackerWrapDesktop").classList.remove("opacity-0", "pointer-events-none");
+  document.getElementById("rfqTrackerWrapMobile").classList.remove("opacity-0", "pointer-events-none");
+
+  render();
+}
+
+backBtn.addEventListener("click", () => {
+  if(current === 0) return;
+
+  if(steps[current].type === "review"){
+    current = 8;
+  } else {
+    current--;
+  }
+
+  finalSubmitted = false;
+  finalMsg.classList.add("hidden");
+  render();
+});
+
+submitBtn.addEventListener("click", () => {
+  finalSubmitted = true;
+
+  finalMsg.innerHTML = `
+    <div class="flex items-start gap-3">
+      <div class="shrink-0 mt-0.5">
+        <svg class="w-6 h-6 text-[#16a34a]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 6L9 17l-5-5" />
+        </svg>
+      </div>
+      <div>
+        <div class="font-semibold">We will contact you shortly regarding your order.</div>
+      </div>
+    </div>
+  `;
+
+  finalMsg.classList.remove("hidden");
+
+  setTimeout(() => {
+    resetRfqForm();
+  }, 5000);
+});
+
+
 
       function render(){
         renderStep();
