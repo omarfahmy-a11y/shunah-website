@@ -11,8 +11,14 @@
   <style>
     body { font-family: 'Inter', sans-serif; }
     html { scroll-behavior: smooth; }
+@media (max-width: 767px){
+  #rfqTrackerWrapDesktop {
+    display: none !important;
+  }
+}
+   
 
-    .rfqField{
+ .rfqField{
       width:100%;
       border:1px solid rgba(11,26,45,0.15);
       padding:12px 14px;
@@ -265,9 +271,9 @@ overflow:visible;
     }
 
     .mStepBubble.done{
-      background:#dbe7ff;
-      color:#2F5DA8;
-    }
+  background:#22c55e;   /* green */
+  color:#ffffff;        /* white check */
+}
 
     .mStepEllipsis{
       width:24px;
@@ -279,16 +285,17 @@ overflow:visible;
       transform:translateY(-1px);
     }
 
-    .mStepLabel{
-      margin-top:10px;
-      text-align:center;
-      font-size:11px;
-      line-height:1.1;
-      letter-spacing:.10em;
-      text-transform:uppercase;
-      color:#0b1a2d;
-      font-weight:700;
-    }
+   .mStepLabel{
+ width:34px;  
+ min-width:34px; 
+text-align:center;
+  font-size:11px;
+  line-height:1.1;
+  letter-spacing:.10em;
+  text-transform:uppercase;
+  color:#0b1a2d;
+  font-weight:700;
+}
 
     .reviewItem{
       border:1px solid rgba(11,26,45,0.08);
@@ -560,6 +567,7 @@ overflow:visible;
       let current = 0;
       const completed = new Set();
       let finalSubmitted = false;
+let hasReviewed = false;
 
       const step0Card = document.getElementById("rfqStep0Card");
       const wizardWrap = document.getElementById("rfqWizardWrap");
@@ -937,123 +945,135 @@ tracker.className = isReview
       }
 
 
-      function buildMobileTracker(){
-        mobileTracker.innerHTML = "";
+     function buildMobileTracker() {
+  mobileTracker.innerHTML = "";
 
-        const outer = document.createElement("div");
-        outer.className = "mTrackerOuter";
+  const outer = document.createElement("div");
+  outer.className = "mTrackerOuter";
 
-        const row = document.createElement("div");
-        row.className = "mTrackerRow";
+  const row = document.createElement("div");
+  row.className = "mTrackerRow";
 
-        const left = document.createElement("button");
-        left.className = "mArrow";
-        left.innerHTML = "&#8249;";
-        left.disabled = current === 0;
-        left.addEventListener("click", () => {
-          if(current === 0) return;
-          current--;
-          finalSubmitted = false;
-          finalMsg.classList.add("hidden");
-          render();
-        });
+  const labelsRow = document.createElement("div");
+  labelsRow.className = "mTrackerRow mt-2";
 
-        const stepsWrap = document.createElement("div");
-        stepsWrap.className = "mSteps";
+  // LEFT ARROW
+  const prev = document.createElement("button");
+  prev.className = "mArrow";
+  prev.innerHTML = "‹";
+  prev.disabled = current === 0;
+  prev.onclick = () => {
+    if (current === 0) return;
+    if (steps[current].type === "review") current = 8;
+    else current--;
+    render();
+  };
 
-const visible = getCompactSteps(current, 9);
+  row.appendChild(prev);
 
-        visible.forEach(item => {
-          if(item === "..."){
-            const dots = document.createElement("div");
-            dots.className = "mStepEllipsis";
-            dots.textContent = "...";
-            stepsWrap.appendChild(dots);
-            return;
-          }
+  // LEFT SPACER (for alignment)
+  const leftSpacer = document.createElement("div");
+  leftSpacer.className = "mArrow";
+  leftSpacer.style.visibility = "hidden";
+  labelsRow.appendChild(leftSpacer);
 
-          const idx = item - 1;
-          const bubble = document.createElement("button");
-          bubble.className = "mStepBubble";
+  const stepsWrap = document.createElement("div");
+  stepsWrap.className = "mSteps";
 
-          if (completed.has(idx)) {
-            bubble.classList.add("done");
-          }
+  const labelsWrap = document.createElement("div");
+  labelsWrap.className = "mSteps";
 
-          if (idx === current) {
-            bubble.classList.add("active");
-          }
+  const visible = [];
 
-          if (completed.has(idx) && idx === current) {
-            bubble.textContent = "!";
-          } else if (completed.has(idx)) {
-            bubble.innerHTML = `
-              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M20 6L9 17l-5-5"/>
-              </svg>
-            `;
-          } else {
-            bubble.textContent = item;
-          }
+  if (current <= 1) {
+    visible.push(0, 1, 2, "ellipsis", 8);
+  } else if (current >= 7) {
+    visible.push(0, "ellipsis", 6, 7, 8);
+  } else {
+    visible.push(current - 1, current, current + 1, "ellipsis", 8);
+  }
 
-          const canGo =
-            idx === current ||
-            completed.has(idx) ||
-            idx < current ||
-            completed.has(idx - 1);
+  visible.forEach((item) => {
+    if (item === "ellipsis") {
+      const ell = document.createElement("div");
+      ell.className = "mStepEllipsis";
+      ell.textContent = "…";
+      stepsWrap.appendChild(ell);
 
-          if(!canGo){
-            bubble.style.opacity = ".55";
-            bubble.disabled = true;
-          } else {
-            bubble.addEventListener("click", () => {
-              current = idx;
-              finalSubmitted = false;
-              finalMsg.classList.add("hidden");
-              render();
-            });
-          }
+      const ellSpace = document.createElement("div");
+      ellSpace.className = "mStepEllipsis";
+      ellSpace.innerHTML = "&nbsp;";
+      labelsWrap.appendChild(ellSpace);
+      return;
+    }
 
-          stepsWrap.appendChild(bubble);
-        });
+    // BUBBLE
+    const bubble = document.createElement("button");
+    bubble.className = "mStepBubble";
+    bubble.textContent = completed.has(item) ? "✓" : String(item + 1);
 
-        const right = document.createElement("button");
-        right.className = "mArrow";
-        right.innerHTML = "&#8250;";
-        right.disabled = current === steps.length - 1;
-        right.addEventListener("click", () => {
-          if(current === steps.length - 1) return;
-          if(!isFilled(current)) return;
-          completed.add(current);
-          current++;
-          render();
-        });
+    if (completed.has(item)) bubble.classList.add("done");
+    if (item === current) bubble.classList.add("active");
 
-        const label = document.createElement("div");
-        label.className = "mStepLabel";
-        label.textContent = steps[current].label.toUpperCase();
-
-        row.appendChild(left);
-        row.appendChild(stepsWrap);
-        row.appendChild(right);
-
-        outer.appendChild(row);
-        outer.appendChild(label);
-
-        mobileTracker.appendChild(outer);
+    bubble.onclick = () => {
+      if (item === current || completed.has(item) || item < current) {
+        current = item;
+        render();
       }
+    };
+
+    stepsWrap.appendChild(bubble);
+
+    // LABEL (aligned UNDER SAME SLOT)
+    const labelSlot = document.createElement("div");
+    labelSlot.className = "mStepLabel";
+    labelSlot.textContent =
+      item === current ? steps[item].label.toUpperCase() : "";
+
+    labelsWrap.appendChild(labelSlot);
+  });
+
+  row.appendChild(stepsWrap);
+  labelsRow.appendChild(labelsWrap);
+
+  // RIGHT ARROW
+  const next = document.createElement("button");
+  next.className = "mArrow";
+  next.innerHTML = "›";
+  next.disabled = current >= steps.length - 1;
+  next.onclick = () => {
+    if (current >= steps.length - 1) return;
+    current++;
+    render();
+  };
+
+  row.appendChild(next);
+
+  // RIGHT SPACER
+  const rightSpacer = document.createElement("div");
+  rightSpacer.className = "mArrow";
+  rightSpacer.style.visibility = "hidden";
+  labelsRow.appendChild(rightSpacer);
+
+  outer.appendChild(row);
+  outer.appendChild(labelsRow);
+  mobileTracker.appendChild(outer);
+}
 
 
 
 function renderStep(){
   const s = steps[current];
   const isReview = s.type === "review";
+if (isReview) {
+  hasReviewed = true;
+}
   const isPaymentStep = s.key === "paymentTerms";
 
   stepTitle.textContent = s.title;
   stepSubtitle.textContent = s.subtitle;
-  stepIcon.src = isReview ? "rfq/step9.png" : `rfq/step${current + 1}.png`;
-  stepIcon.alt = isReview ? "Review icon" : `Step ${current + 1} icon`;
+stepIcon.src = isReview ? "rfq/step10.png" : `rfq/step${current + 1}.png`;
+stepIcon.alt = isReview ? "Review icon" : `Step ${current + 1} icon`;
 
   stepBody.innerHTML = "";
   stepBody.appendChild(makeField(s));
@@ -1074,7 +1094,11 @@ if(isReview){
 
   nextBtn.classList.remove("hidden");
   submitBtn.classList.add("hidden");
-  nextBtn.textContent = isPaymentStep ? "Review Order and Submit" : "Next →";
+  if (hasReviewed && !isReview) {
+  nextBtn.textContent = "Back to Review →";
+} else {
+  nextBtn.textContent = isPaymentStep ? "Review Order" : "Next →";
+}
 }
 
   finalMsg.classList.toggle("hidden", !finalSubmitted);
@@ -1101,20 +1125,23 @@ document.getElementById("rfqSubtitle").textContent = "Structured procurement in 
       });
 
       nextBtn.addEventListener("click", () => {
-  if(!isFilled(current)) return;
+
+  // 🔥 if already reviewed → jump back to review
+  if (hasReviewed && current < steps.length - 1) {
+    current = steps.length - 1; // go to review
+    render();
+    return;
+  }
+
+  // normal validation
+  if (!isFilled(current)) return;
 
   completed.add(current);
 
-  const isPaymentStep = steps[current].key === "paymentTerms";
-
-  if(isPaymentStep){
-    current = steps.length - 1; // jump to review
-  } else if(current < 8){
+  if (current < steps.length - 1) {
     current++;
   }
 
-  finalSubmitted = false;
-  finalMsg.classList.add("hidden");
   render();
 });
 
@@ -1123,6 +1150,7 @@ function resetRfqForm(){
   completed.clear();
   current = 0;
   finalSubmitted = false;
+  hasReviewed = false;
 
   nameEl.value = "";
   emailEl.value = "";
