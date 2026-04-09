@@ -1311,25 +1311,18 @@ if(isReview){
 
   step0Card.classList.add("hidden");
   wizardWrap.classList.remove("hidden");
-  // 👇 ADD THIS
   document.getElementById("rfqSubtitle").textContent = "STRUCTURED PROCUREMENT IN 9 STEPS";
-document.getElementById("rfqHelperText").style.display = "none"; // 👈 ADD THIS
+  document.getElementById("rfqHelperText").style.display = "none";
   current = 0;
   render();
-
 });
 
-  nextBtn.addEventListener("click", () => {
+nextBtn.addEventListener("click", () => {
 
-  // 👉 ADD THIS (scroll up on mobile)
-  
-
-
-  // 🔥 if already reviewed → jump back to review
+  // if already reviewed → jump back to review
   if (hasReviewed && current < steps.length - 1) {
-    current = steps.length - 1; // go to review
+    current = steps.length - 1;
     render();
-  
     return;
   }
 
@@ -1343,9 +1336,7 @@ document.getElementById("rfqHelperText").style.display = "none"; // 👈 ADD THI
   }
 
   render();
-  scrollFormToTopMobile();
 });
-
 
 function scrollFormToTopMobile(){
   return;
@@ -1388,7 +1379,6 @@ phoneEl.value = "";
 
 backBtn.addEventListener("click", () => {
 
- 
   if (current === 0) {
     wizardWrap.classList.add("hidden");
     step0Card.classList.remove("hidden");
@@ -1404,8 +1394,7 @@ backBtn.addEventListener("click", () => {
 
   finalSubmitted = false;
   finalMsg.classList.add("hidden");
- render();
-
+  render();
 });
 
 submitBtn.addEventListener("click", () => {
