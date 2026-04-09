@@ -23,6 +23,22 @@
       transition:border-color 200ms ease, box-shadow 200ms ease;
     }
 
+/* REVIEW MODE — smaller tracker */
+.review-mode .tCircle {
+  width: 42px;
+  height: 42px;
+  font-size: 13px;
+}
+
+.review-mode .tLabel {
+  font-size: 8px;
+  letter-spacing: .06em;
+}
+
+select.placeholder-active {
+  color: rgba(11,26,45,0.45);
+}
+
     .rfqField:focus{
       border-color:#0b1a2d;
       box-shadow:0 0 0 2px rgba(11,26,45,0.08);
@@ -391,7 +407,7 @@ overflow:visible;
 
 <p id="rfqSubtitle"
    class="mt-2 text-sm tracking-[0.12em] uppercase text-[#2F5DA8] font-medium">
-  XXXXXXXXXXXXXXXXXXXXXxx
+  Lets Start with the Basics
 </p>
 
             <!-- STEP 0 -->
@@ -432,7 +448,7 @@ overflow:visible;
               <div id="rfqTrackerWrapDesktop" class="mt-8 hidden md:block transition-opacity duration-300">
                 <div class="relative">
                  
-                  <div id="rfqTracker" class="grid grid-cols-9 gap-3 relative z-10"></div>
+                  <div id="rfqTracker" class="grid gap-3 relative z-10"></div>
                 </div>
               </div>
 
@@ -442,8 +458,7 @@ overflow:visible;
               </div>
 
               <!-- STEP CARD -->
-             <div id="rfqWizardCard"
-     class="mt-6 rounded-2xl border border-black/10 bg-white p-6 sm:p-7 shadow-[0_20px_60px_rgba(11,26,45,0.12)]">
+             <div id="rfqWizardCard" class="mt-3 rounded-2xl border border-black/10 bg-white p-6 sm:p-7 shadow-[0_20px_60px_rgba(11,26,45,0.12)]">
                 <div class="flex items-start gap-4">
   <div class="shrink-0">
     <img
@@ -463,42 +478,60 @@ overflow:visible;
 <div class="mt-3" id="rfqStepBody"></div>
 
 <div class="mt-6 flex justify-between items-center gap-3">
-                  <button id="rfqBack"
-                    class="rounded-full border border-[#0b1a2d] text-[#0b1a2d] bg-white px-6 py-2.5 text-sm font-semibold hover:bg-[#0b1a2d] hover:text-white transition disabled:opacity-30 disabled:cursor-not-allowed">
-                    ← Back
-                  </button>
-
-                  <button id="rfqNext"
-  class="rounded-full bg-[#2F5DA8] text-white px-6 py-2.5 text-sm font-semibold hover:bg-[#254a86] transition">
-                    Next →
-                  </button>
-                </div>
-
-                <div id="rfqSubmitWrap" class="hidden">
-  <button id="rfqSubmit"
-    class="rounded-full bg-[#0b1a2d] text-white px-5 py-2 text-sm font-semibold hover:bg-[#142a4a] transition">
-    Confirm
+  <button id="rfqBack"
+    class="rounded-full border border-[#0b1a2d] text-[#0b1a2d] bg-white px-6 py-2.5 text-sm font-semibold hover:bg-[#0b1a2d] hover:text-white transition disabled:opacity-30 disabled:cursor-not-allowed">
+    ← Back
   </button>
+
+  <div class="flex gap-2">
+    <button id="rfqNext"
+      class="rounded-full bg-[#2F5DA8] text-white px-6 py-2.5 text-sm font-semibold hover:bg-[#254a86] transition">
+      Next →
+    </button>
+
+    <button id="rfqSubmit"
+      class="hidden rounded-full bg-[#2F5DA8] text-white px-6 py-2.5 text-sm font-semibold hover:bg-[#254a86] transition">
+      Confirm
+    </button>
+  </div>
 </div>
 
-                <div id="rfqFinalMsg"
-                     class="mt-5 hidden rounded-xl border border-[#22c55e]/25 bg-[#22c55e]/10 p-4 text-[#0b1a2d]">
-                  <div class="flex items-start gap-3">
-                    <div class="shrink-0 mt-0.5">
-                      <svg class="w-6 h-6 text-[#16a34a]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M20 6L9 17l-5-5" />
-                      </svg>
-                    </div>
-                    <div>
-                      <div class="font-semibold">You will be contacted shortly</div>
-                      <div class="text-sm text-[#0b1a2d]/60 mt-1">
-                        Your request has been submitted successfully.
-                      </div>
-                    </div>
-                  </div>
-                </div>
 
-              </div>
+
+               <div id="rfqFinalMsg"
+     class="mt-5 hidden rounded-xl border border-[#22c55e]/25 bg-[#22c55e]/10 p-4 text-[#0b1a2d]">
+  <div class="flex items-start gap-3">
+    <div class="shrink-0 mt-0.5">
+      <svg class="w-6 h-6 text-[#16a34a]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M20 6L9 17l-5-5" />
+      </svg>
+    </div>
+    <div>
+      <div class="font-semibold">You will be contacted shortly</div>
+      <div class="text-sm text-[#0b1a2d]/60 mt-1">
+        Your request has been submitted successfully.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="rfqThankYouState" class="hidden mt-4 text-center">
+  <img
+    src="rfq/letter.png"
+    alt="Thank you"
+    class="mx-auto w-[220px] sm:w-[260px] h-auto object-contain"
+  />
+
+  <div class="mt-5 text-xl sm:text-2xl font-semibold text-[#0b1a2d]">
+    Thank you for submitting.
+  </div>
+
+  <p class="mt-2 text-sm sm:text-base text-[#0b1a2d]/65 leading-relaxed max-w-[520px] mx-auto">
+    You will be contacted shortly. You will be redirected to a new form if you wish to submit a new request.
+  </p>
+</div>
+
+
             </div>
 
           </div>
@@ -513,7 +546,7 @@ overflow:visible;
       const steps = [
   { key:"crop", label:"Crop", title:"Buyer Choose Crop", subtitle:"Select the crop you want to purchase.", type:"select", icon:"crop", options:["White Beans","Sesame","Fava Beans","Rice","Caraway","Fennel"]},
   { key:"spec", label:"Spec", title:"SKU / Specification", subtitle:"Choose the SKU specification.", type:"select", icon:"spec", options:["WKB-001 (Standard)","WKB-002 (Premium)","SSM-001 (Standard)","SSM-002 (Premium)","RCE-001 (Standard)"]},
-  { key:"containers", label:"Tons", title:"Number of Containers", subtitle:"Enter the number of containers.", type:"number", icon:"tons", placeholder:"e.g. 4" },
+  { key:"containers", label:"Tons", title:"Number of Containers", subtitle:"Enter the number of containers.", type:"number", icon:"tons", placeholder:"e.g. 4 Containers= 100Tons" },
   { key:"packing", label:"Packing", title:"Packing", subtitle:"Choose packing format.", type:"select", icon:"packing", options:["25kg PP Bags","50kg PP Bags","Jumbo Bags","Bulk"]},
   { key:"destination", label:"Destination", title:"Destination", subtitle:"Where should the shipment be delivered?", type:"text", icon:"destination", placeholder:"Country / City" },
   { key:"delivery", label:"Delivery", title:"Expected Delivery Date", subtitle:"Choose your expected delivery date.", type:"date", icon:"delivery" },
@@ -548,9 +581,10 @@ const stepIcon = document.getElementById("rfqStepIcon");
 
       const backBtn = document.getElementById("rfqBack");
       const nextBtn = document.getElementById("rfqNext");
-      const submitWrap = document.getElementById("rfqSubmitWrap");
-      const submitBtn = document.getElementById("rfqSubmit");
-      const finalMsg = document.getElementById("rfqFinalMsg");
+
+     const submitBtn = document.getElementById("rfqSubmit");
+const finalMsg = document.getElementById("rfqFinalMsg");
+const thankYouState = document.getElementById("rfqThankYouState");
 
       function iconSvg(type){
         const map = {
@@ -570,31 +604,80 @@ chevron: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-widt
       }
 
       function buildSelectField(step){
-        const wrap = document.createElement("div");
-        wrap.className = "rfqFieldIconWrap";
+  const wrap = document.createElement("div");
+  wrap.className = "rfqFieldIconWrap";
 
-        const leftIcon = document.createElement("div");
-        leftIcon.className = "rfqFieldLeftIcon";
-        leftIcon.innerHTML = iconSvg(step.icon || "spec");
+  const leftIcon = document.createElement("div");
+  leftIcon.className = "rfqFieldLeftIcon";
+  leftIcon.innerHTML = iconSvg(step.icon || "spec");
 
-        const sel = document.createElement("select");
-        sel.className = "rfqField rfqFieldWithIcon";
-        sel.innerHTML =
-          `<option value="">Select...</option>` +
-          (step.options || []).map(o => `<option value="${o}">${o}</option>`).join("");
-        sel.value = state[step.key] || "";
-        sel.addEventListener("change", ()=> state[step.key] = sel.value);
+  const sel = document.createElement("select");
+  sel.className = "rfqField rfqFieldWithIcon";
 
-        const rightChevron = document.createElement("div");
-        rightChevron.className = "rfqFieldRightChevron";
-        rightChevron.innerHTML = iconSvg("chevron");
+  // add placeholder first
+  if (step.key === "crop") {
+    sel.innerHTML = `<option value="" selected disabled hidden>Select Crop...</option>`;
+    sel.classList.add("placeholder-active");
+  }
 
-        wrap.appendChild(leftIcon);
-        wrap.appendChild(sel);
-        wrap.appendChild(rightChevron);
+if (step.key === "spec") {
+  sel.innerHTML = `<option value="" selected disabled hidden>Choose Grade...</option>`;
+  sel.classList.add("placeholder-active");
+}
 
-        return wrap;
-      }
+if (step.key === "packing") {
+  sel.innerHTML = `<option value="" selected disabled hidden>Choose Packing...</option>`;
+  sel.classList.add("placeholder-active");
+}
+
+if (step.key === "quality") {
+  sel.innerHTML = `<option value="" selected disabled hidden>Choose...</option>`;
+  sel.classList.add("placeholder-active");
+}
+
+if (step.key === "insurance") {
+  sel.innerHTML = `<option value="" selected disabled hidden>Choose...</option>`;
+  sel.classList.add("placeholder-active");
+}
+
+if (step.key === "paymentTerms") {
+  sel.innerHTML = `<option value="" selected disabled hidden>Choose...</option>`;
+  sel.classList.add("placeholder-active");
+}
+
+  // then add real options
+  (step.options || []).forEach(o => {
+    const opt = document.createElement("option");
+    opt.value = o;
+    opt.textContent = o;
+    sel.appendChild(opt);
+  });
+
+  // restore saved value if any
+  if (state[step.key]) {
+    sel.value = state[step.key];
+    sel.classList.remove("placeholder-active");
+  }
+
+  sel.addEventListener("change", ()=> {
+    state[step.key] = sel.value;
+    if (sel.value) {
+      sel.classList.remove("placeholder-active");
+    } else {
+      sel.classList.add("placeholder-active");
+    }
+  });
+
+  const rightChevron = document.createElement("div");
+  rightChevron.className = "rfqFieldRightChevron";
+  rightChevron.innerHTML = iconSvg("chevron");
+
+  wrap.appendChild(leftIcon);
+  wrap.appendChild(sel);
+  wrap.appendChild(rightChevron);
+
+  return wrap;
+}
 
       function buildInputField(step){
         const wrap = document.createElement("div");
@@ -659,27 +742,31 @@ function buildReviewStep(){
   }
 
   const lines = [
-    {
-      label: "Basic:",
-      value: `${reviewValue(state.__name)} | ${reviewValue(state.__email)} | ${reviewValue(state.__phone)}`
-    },
-    {
-      label: "Order:",
-      value: `${reviewValue(state.crop)} | ${reviewValue(state.spec)} | ${reviewValue(state.containers)} Container | ${reviewValue(state.packing)}`
-    },
-    {
-      label: "Destination:",
-      value: `${reviewValue(state.destination)} | ${reviewValue(state.delivery)}`
-    },
-    {
-      label: "Other:",
-      value: otherText
-    },
-    {
-      label: "Payment Terms:",
-      value: `${reviewValue(state.paymentTerms)}`
-    }
-  ];
+  {
+    label: "Basic:",
+    value: `${reviewValue(state.__name)} | ${reviewValue(state.__email)} | ${reviewValue(state.__phone)}`
+  },
+  {
+    label: "Order:",
+    value: `${reviewValue(state.crop)} | ${reviewValue(state.spec)}`
+  },
+  {
+    label: "Quantity:",
+    value: `${reviewValue(state.containers)} Container | ${reviewValue(state.packing)}`
+  },
+  {
+    label: "Destination:",
+    value: `${reviewValue(state.destination)} | ${reviewValue(state.delivery)}`
+  },
+  {
+    label: "Other:",
+    value: otherText
+  },
+  {
+    label: "Payment Terms:",
+    value: `${reviewValue(state.paymentTerms)}`
+  }
+];
 
   lines.forEach((line) => {
     const row = document.createElement("div");
@@ -714,49 +801,78 @@ function buildReviewStep(){
         return state[k] && String(state[k]).trim().length > 0;
       }
 
-          function buildTracker(){
-        tracker.innerHTML = "";
+function buildTracker(){
+  tracker.innerHTML = "";
 
-steps.slice(0, 9).forEach((s, idx) => {
-          const cell = document.createElement("div");
-          cell.className = "tCircleWrap";
+  const isReview = steps[current].type === "review";
+tracker.className = isReview
+  ? "grid grid-cols-10 gap-3"
+  : "grid grid-cols-9 gap-3";
 
-          const mark = document.createElement("div");
-          mark.className = "tCircleMark";
-          mark.dataset.idx = String(idx);
 
-          const c = document.createElement("div");
-          c.className = "tCircle";
-          c.textContent = String(idx + 1);
-          c.dataset.idx = String(idx);
+  // 🔥 ADD BASIC BUBBLE ONLY IN REVIEW
+  if (isReview) {
+    const cell = document.createElement("div");
+    cell.className = "tCircleWrap";
 
-          const label = document.createElement("div");
-          label.className = "tLabel";
-          label.textContent = s.label;
-          label.dataset.idx = String(idx);
+    const c = document.createElement("div");
+    c.className = "tCircle";
+    c.textContent = "0";
 
-          c.addEventListener("click", () => {
-            const canGo =
-              idx === current ||
-              completed.has(idx) ||
-              idx < current ||
-              completed.has(idx - 1);
+    const label = document.createElement("div");
+    label.className = "tLabel";
+    label.textContent = "Basic";
 
-            if (!canGo) return;
+    c.addEventListener("click", () => {
+      wizardWrap.classList.add("hidden");
+      step0Card.classList.remove("hidden");
+    });
 
-            current = idx;
-            finalSubmitted = false;
-            finalMsg.classList.add("hidden");
-            render();
-          });
+    cell.appendChild(c);
+    cell.appendChild(label);
+    tracker.appendChild(cell);
+  }
 
-          cell.appendChild(mark);
-          cell.appendChild(c);
-          cell.appendChild(label);
-          tracker.appendChild(cell);
-        });
-      }
+  // normal steps
+  steps.slice(0, 9).forEach((s, idx) => {
+    const cell = document.createElement("div");
+    cell.className = "tCircleWrap";
 
+    const mark = document.createElement("div");
+    mark.className = "tCircleMark";
+    mark.dataset.idx = String(idx);
+
+    const c = document.createElement("div");
+    c.className = "tCircle";
+    c.textContent = String(idx + 1);
+    c.dataset.idx = String(idx);
+
+    const label = document.createElement("div");
+    label.className = "tLabel";
+    label.textContent = s.label;
+    label.dataset.idx = String(idx);
+
+    c.addEventListener("click", () => {
+      const canGo =
+        idx === current ||
+        completed.has(idx) ||
+        idx < current ||
+        completed.has(idx - 1);
+
+      if (!canGo) return;
+
+      current = idx;
+      finalSubmitted = false;
+      finalMsg.classList.add("hidden");
+      render();
+    });
+
+    cell.appendChild(mark);
+    cell.appendChild(c);
+    cell.appendChild(label);
+    tracker.appendChild(cell);
+  });
+}
      
       function updateTrackerUI(){
         const circles = tracker.querySelectorAll(".tCircle");
@@ -942,20 +1058,24 @@ function renderStep(){
   stepBody.innerHTML = "";
   stepBody.appendChild(makeField(s));
 
-  backBtn.disabled = current === 0;
+backBtn.disabled = false;
 
-  if(isReview){
-    document.getElementById("rfqTrackerWrapDesktop").classList.add("opacity-0", "pointer-events-none");
-    document.getElementById("rfqTrackerWrapMobile").classList.add("opacity-0", "pointer-events-none");
-    nextBtn.classList.add("hidden");
-    submitWrap.classList.remove("hidden");
-  } else {
-    document.getElementById("rfqTrackerWrapDesktop").classList.remove("opacity-0", "pointer-events-none");
-    document.getElementById("rfqTrackerWrapMobile").classList.remove("opacity-0", "pointer-events-none");
-    nextBtn.classList.remove("hidden");
-    submitWrap.classList.add("hidden");
-    nextBtn.textContent = isPaymentStep ? "Review Order and Submit" : "Next →";
-  }
+if(isReview){
+  document.getElementById("rfqTrackerWrapDesktop").classList.remove("hidden");
+  document.getElementById("rfqTrackerWrapMobile").classList.add("hidden");
+  document.getElementById("rfqTracker").classList.add("review-mode");
+
+  nextBtn.classList.add("hidden");
+  submitBtn.classList.remove("hidden");
+} else {
+  document.getElementById("rfqTrackerWrapDesktop").classList.remove("hidden");
+  document.getElementById("rfqTrackerWrapMobile").classList.remove("hidden");
+  document.getElementById("rfqTracker").classList.remove("review-mode");
+
+  nextBtn.classList.remove("hidden");
+  submitBtn.classList.add("hidden");
+  nextBtn.textContent = isPaymentStep ? "Review Order and Submit" : "Next →";
+}
 
   finalMsg.classList.toggle("hidden", !finalSubmitted);
 }
@@ -1011,19 +1131,35 @@ function resetRfqForm(){
   document.getElementById("rfqSubtitle").textContent = "XXXXXXXXXXXXXXXXXXXXXxx";
 
   finalMsg.classList.add("hidden");
+  thankYouState.classList.add("hidden");
+
+  document.getElementById("rfqStepIcon").classList.remove("hidden");
+  document.getElementById("rfqStepTitle").classList.remove("hidden");
+  document.getElementById("rfqStepSubtitle").classList.remove("hidden");
+  document.getElementById("rfqStepBody").classList.remove("hidden");
+
+  document.getElementById("rfqBack").classList.remove("hidden");
+  document.getElementById("rfqNext").classList.remove("hidden");
+  document.getElementById("rfqSubmit").classList.add("hidden");
+
+  document.getElementById("rfqTrackerWrapDesktop").classList.remove("hidden");
+  document.getElementById("rfqTrackerWrapMobile").classList.remove("hidden");
+
   wizardWrap.classList.add("hidden");
   step0Card.classList.remove("hidden");
-
-  document.getElementById("rfqTrackerWrapDesktop").classList.remove("opacity-0", "pointer-events-none");
-  document.getElementById("rfqTrackerWrapMobile").classList.remove("opacity-0", "pointer-events-none");
 
   render();
 }
 
 backBtn.addEventListener("click", () => {
-  if(current === 0) return;
+  if (current === 0) {
+    wizardWrap.classList.add("hidden");
+    step0Card.classList.remove("hidden");
+    document.getElementById("rfqSubtitle").textContent = "XXXXXXXXXXXXXXXXXXXXXxx";
+    return;
+  }
 
-  if(steps[current].type === "review"){
+  if (steps[current].type === "review") {
     current = 8;
   } else {
     current--;
@@ -1035,22 +1171,23 @@ backBtn.addEventListener("click", () => {
 });
 
 submitBtn.addEventListener("click", () => {
-  finalSubmitted = true;
+  finalSubmitted = false;
 
-  finalMsg.innerHTML = `
-    <div class="flex items-start gap-3">
-      <div class="shrink-0 mt-0.5">
-        <svg class="w-6 h-6 text-[#16a34a]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M20 6L9 17l-5-5" />
-        </svg>
-      </div>
-      <div>
-        <div class="font-semibold">We will contact you shortly regarding your order.</div>
-      </div>
-    </div>
-  `;
+  document.getElementById("rfqTrackerWrapDesktop").classList.add("hidden");
+  document.getElementById("rfqTrackerWrapMobile").classList.add("hidden");
+document.getElementById("rfqTracker").innerHTML = "";
 
-  finalMsg.classList.remove("hidden");
+  document.getElementById("rfqStepIcon").classList.add("hidden");
+  document.getElementById("rfqStepTitle").classList.add("hidden");
+  document.getElementById("rfqStepSubtitle").classList.add("hidden");
+  document.getElementById("rfqStepBody").classList.add("hidden");
+
+  document.getElementById("rfqBack").classList.add("hidden");
+  document.getElementById("rfqNext").classList.add("hidden");
+  document.getElementById("rfqSubmit").classList.add("hidden");
+
+  finalMsg.classList.add("hidden");
+  thankYouState.classList.remove("hidden");
 
   setTimeout(() => {
     resetRfqForm();
@@ -1058,12 +1195,12 @@ submitBtn.addEventListener("click", () => {
 });
 
 
-
-      function render(){
-        renderStep();
-        updateTrackerUI();
-        buildMobileTracker();
-      }
+     function render(){
+  buildTracker();
+  renderStep();
+  updateTrackerUI();
+  buildMobileTracker();
+}
 
       buildTracker();
       render();
