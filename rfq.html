@@ -1301,42 +1301,54 @@ if(isReview){
 }
 
 
+function closeKeyboardThen(callback) {
+  const active = document.activeElement;
 
-     startBtn.addEventListener("click", () => {
+  if (active && (active.tagName === "INPUT" || active.tagName === "TEXTAREA" || active.tagName === "SELECT")) {
+    active.blur();
+  }
 
-  state.__name = nameEl.value.trim();
-  state.__company = companyEl.value.trim();
-  state.__email = emailEl.value.trim();
-  state.__phone = phoneEl.value.trim();
+  setTimeout(() => {
+    callback();
+  }, 250);
+}
 
-  step0Card.classList.add("hidden");
-  wizardWrap.classList.remove("hidden");
-  document.getElementById("rfqSubtitle").textContent = "STRUCTURED PROCUREMENT IN 9 STEPS";
-  document.getElementById("rfqHelperText").style.display = "none";
-  current = 0;
-  render();
+startBtn.addEventListener("click", () => {
+  closeKeyboardThen(() => {
+    state.__name = nameEl.value.trim();
+    state.__company = companyEl.value.trim();
+    state.__email = emailEl.value.trim();
+    state.__phone = phoneEl.value.trim();
+
+    step0Card.classList.add("hidden");
+    wizardWrap.classList.remove("hidden");
+    document.getElementById("rfqSubtitle").textContent = "STRUCTURED PROCUREMENT IN 9 STEPS";
+    document.getElementById("rfqHelperText").style.display = "none";
+    current = 0;
+    render();
+  });
 });
 
 nextBtn.addEventListener("click", () => {
+  closeKeyboardThen(() => {
+    if (hasReviewed && current < steps.length - 1) {
+      current = steps.length - 1;
+      render();
+      return;
+    }
 
-  // if already reviewed → jump back to review
-  if (hasReviewed && current < steps.length - 1) {
-    current = steps.length - 1;
+    if (!isFilled(current)) return;
+
+    completed.add(current);
+
+    if (current < steps.length - 1) {
+      current++;
+    }
+
     render();
-    return;
-  }
-
-  // normal validation
-  if (!isFilled(current)) return;
-
-  completed.add(current);
-
-  if (current < steps.length - 1) {
-    current++;
-  }
-
-  render();
+  });
 });
+
 
 function scrollFormToTopMobile(){
   return;
@@ -1378,23 +1390,24 @@ phoneEl.value = "";
 }
 
 backBtn.addEventListener("click", () => {
+  closeKeyboardThen(() => {
+    if (current === 0) {
+      wizardWrap.classList.add("hidden");
+      step0Card.classList.remove("hidden");
+      document.getElementById("rfqSubtitle").textContent = "Lets Start with the Basics";
+      return;
+    }
 
-  if (current === 0) {
-    wizardWrap.classList.add("hidden");
-    step0Card.classList.remove("hidden");
-    document.getElementById("rfqSubtitle").textContent = "Lets Start with the Basics";
-    return;
-  }
+    if (steps[current].type === "review") {
+      current = 8;
+    } else {
+      current--;
+    }
 
-  if (steps[current].type === "review") {
-    current = 8;
-  } else {
-    current--;
-  }
-
-  finalSubmitted = false;
-  finalMsg.classList.add("hidden");
-  render();
+    finalSubmitted = false;
+    finalMsg.classList.add("hidden");
+    render();
+  });
 });
 
 submitBtn.addEventListener("click", () => {
