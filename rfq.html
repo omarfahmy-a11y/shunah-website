@@ -71,7 +71,7 @@
   height:100%;
   padding:0;
   background:transparent;
-  font-size:14px;
+  font-size:16px;   /* stops iPhone zoom */
 }
 
 .rfqFieldCircleIcon{
@@ -92,16 +92,17 @@
   opacity:.72;
 }
 
- .rfqField{
-      width:100%;
-      border:1px solid rgba(11,26,45,0.15);
-      padding:12px 14px;
-      border-radius:10px;
-      outline:none;
-      background:white;
-      color:#0b1a2d;
-      transition:border-color 200ms ease, box-shadow 200ms ease;
-    }
+.rfqField{
+  width:100%;
+  border:1px solid rgba(11,26,45,0.15);
+  padding:12px 14px;
+  border-radius:10px;
+  outline:none;
+  background:white;
+  color:#0b1a2d;
+  font-size:16px;   /* important */
+  transition:border-color 200ms ease, box-shadow 200ms ease;
+}
 
 /* REVIEW MODE — smaller tracker */
 .review-mode .tCircle {
