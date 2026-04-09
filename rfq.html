@@ -339,9 +339,9 @@ overflow:visible;
     }
 
     .mStepBubble.active{
-      background:#0b1a2d;
+      background:#2F5DA8;   /* Shunah blue */
       color:#fff;
-      box-shadow:0 8px 18px rgba(11,26,45,.18);
+      box-shadow:0 8px 18px rgba(47,93,168,.25);
     }
 
     .mStepBubble.done{
@@ -412,6 +412,10 @@ text-align:center;
   color:#0b1a2d;
   font-weight:700;
   white-space:nowrap;
+}
+
+.mStepSlotLabel.active{
+  color:#2F5DA8;   /* Shunah blue */
 }
 
 .mStepSlotSpacer{
@@ -1220,8 +1224,8 @@ function buildMobileTracker() {
     };
 
     const label = document.createElement("div");
-    label.className = "mStepSlotLabel";
-    label.textContent = item === current ? steps[item].label.toUpperCase() : "";
+    label.className = "mStepSlotLabel" + (item === current ? " active" : "");
+label.textContent = item === current ? steps[item].label.toUpperCase() : "";
 
     slot.appendChild(bubble);
     slot.appendChild(label);
