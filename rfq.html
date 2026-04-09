@@ -17,6 +17,80 @@
   }
 }
    
+@media (max-width: 767px){
+  .rfqMobileBg{
+    position: relative;
+    padding: 22px 16px;
+    border-radius: 18px;
+    overflow: hidden;
+  }
+
+  .rfqMobileBg::before{
+    content:"";
+    position:absolute;
+    inset:0;
+
+    background-image: url("rfq/bg-mobile.png"); /* 👈 your image */
+    background-size: cover;
+    background-position: center;
+
+    opacity:1.; /* 👈 VERY important for premium feel */
+    z-index:0;
+  }
+
+  .rfqMobileBg > *{
+    position: relative;
+    z-index:1;
+  }
+}
+
+.rfqFieldFlex{
+  display:flex;
+  align-items:center;
+  gap:10px;
+
+  height:42px;
+  border:1px solid rgba(11,26,45,0.12);
+  border-radius:10px;
+ 
+  padding-left:6px;   /* 👈 reduced */
+  padding-right:16px;  /* keep right clean */
+
+  background:white;
+}
+
+.rfqFieldFlex:focus-within{
+  border-color:#0b1a2d;
+  box-shadow:0 0 0 2px rgba(11,26,45,0.08);
+}
+
+.rfqFieldNoPadding{
+  border:none;
+  outline:none;
+  flex:1;
+  height:100%;
+  padding:0;
+  background:transparent;
+  font-size:14px;
+}
+
+.rfqFieldCircleIcon{
+  width:32px;
+  height:32px;
+
+  border-radius:999px;
+  background:#f1f3f6;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+}
+.rfqFieldCircleImg{
+  width:18px;
+  height:18px;
+  object-fit:contain;
+  opacity:.72;
+}
 
  .rfqField{
       width:100%;
@@ -441,8 +515,8 @@ text-align:center;
     </div>
   </nav>
 
-  <section id="rfq" class="bg-white">
-    <div class="max-w-[1400px] mx-auto px-6 min-h-[calc(100dvh-56px)] py-10 lg:py-6 flex items-start lg:items-center">
+  <section id="rfq" class="bg-white rfqMobileBg">
+    <div class="max-w-[1400px] mx-auto px-6 min-h-[calc(100dvh-56px)] py-0 lg:py-6 flex items-start lg:items-center">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch w-full">
 
         <!-- LEFT IMAGE -->
@@ -455,47 +529,105 @@ text-align:center;
 
         <!-- RIGHT CONTENT -->
         <div class="lg:col-span-8">
-<div class="max-w-2xl ml-auto">
+  <div class="max-w-2xl ml-auto">
 
-            <h2 class="text-4xl sm:text-5xl font-semibold tracking-tight text-[#0b1a2d]">
+            <h2 class="text-[28px] sm:text-[32px] font-bold tracking-[-0.5px] text-[#0B1A2D]">
   Request RFQ
 </h2>
 
-<p id="rfqSubtitle"
-   class="mt-2 text-sm tracking-[0.12em] uppercase text-[#2F5DA8] font-medium">
-  Lets Start with the Basics
+<div class="mt-2">
+  <p id="rfqSubtitle"
+  class="text-[13px] sm:text-[14px] tracking-[2px] uppercase text-[#4A6FA5] font-medium">
+  LET’S START WITH THE BASICS
 </p>
 
+  <p class="mt-2 text-sm text-[#0b1a2d]/55">
+     Tell us who you are to connect you with the right opportunities.
+  </p>
+</div>
+
             <!-- STEP 0 -->
-           <div id="rfqStep0Card"
-     class="mt-6 rounded-2xl border border-black/10 bg-white p-6 sm:p-7 shadow-[0_25px_70px_rgba(11,26,45,0.15),0_5px_20px_rgba(11,26,45,0.08)]">
-              <div class="text-lg font-semibold text-[#0b1a2d]">Basic Details</div>
-              <div class="mt-1 text-sm text-[#0b1a2d]/55">Please enter your contact information.</div>
+<div id="rfqStep0Card"
+  class="mt-6 rounded-2xl border border-black/10 bg-white p-6 sm:p-7 shadow-[0_25px_70px_rgba(11,26,45,0.15),0_5px_20px_rgba(11,26,45,0.08)]">
 
-              <div class="mt-5 space-y-5">
-                <div>
-                  <label class="block text-sm font-medium mb-2">Name</label>
-                  <input id="rfqName" class="rfqField" type="text" placeholder="Your name" />
-                </div>
+<div class="flex items-start gap-4">
 
-                <div>
-                  <label class="block text-sm font-medium mb-2">Email</label>
-                  <input id="rfqEmail" class="rfqField" type="email" placeholder="Your email" />
-                </div>
+  <div class="shrink-0">
+    <div class="w-14 h-14 rounded-full bg-[#f1f3f6] border border-white flex items-center justify-center">
+      <img
+        src="rfq/profile-placeholder.png"
+        alt="Profile placeholder"
+        class="w-7 h-7 object-contain opacity-70"
+      />
+    </div>
+  </div>
 
-                <div>
-                  <label class="block text-sm font-medium mb-2">Number</label>
-                  <input id="rfqPhone" class="rfqField" type="tel" placeholder="+20 ..." />
-                </div>
-              </div>
+  <div class="min-w-0">
+    <div class="text-[18px] font-semibold text-[#0B1A2D]">Basic Details</div>
+    <div class="mt-1 text-[12px] font-normal text-[#6B7A90]">
+  Please enter your contact information.
+</div>
+  </div>
 
-              <div class="mt-6 flex justify-end">
-                <button id="rfqStart"
-                  class="rounded-full bg-[#0b1a2d] text-white px-6 py-2.5 text-sm font-semibold hover:bg-[#142a4a] transition">
-                  Next →
-                </button>
-              </div>
-            </div>
+</div>
+
+  <div class="mt-5 space-y-4">
+
+   <div class="rfqFieldFlex">
+  <div class="rfqFieldCircleIcon">
+    <img src="rfq/user-icon.png" class="rfqFieldCircleImg" />
+  </div>
+
+<input id="rfqName"
+  class="rfqFieldNoPadding"
+  type="text"
+  placeholder="Your name" />
+</div>
+
+    
+<div class="rfqFieldFlex">
+  <div class="rfqFieldCircleIcon">
+    <img src="rfq/company-icon.png" alt="" class="rfqFieldCircleImg" />
+  </div>
+  <input
+    id="rfqCompany"
+    class="rfqFieldNoPadding"
+    type="text"
+    placeholder="Company name" />
+</div>
+
+<div class="rfqFieldFlex">
+  <div class="rfqFieldCircleIcon">
+    <img src="rfq/email-icon.png" alt="" class="rfqFieldCircleImg" />
+  </div>
+  <input
+    id="rfqEmail"
+    class="rfqFieldNoPadding"
+    type="email"
+    placeholder="Your email" />
+</div>
+
+<div class="rfqFieldFlex">
+  <div class="rfqFieldCircleIcon">
+    <img src="rfq/phone-icon.png" alt="" class="rfqFieldCircleImg" />
+  </div>
+  <input
+    id="rfqPhone"
+    class="rfqFieldNoPadding"
+    type="tel"
+    placeholder="+20 ..." />
+</div>
+
+
+  </div>
+
+  <div class="mt-6">
+    <button id="rfqStart"
+      class="w-full rounded-xl bg-[#0b1a2d] text-white px-6 py-3 text-sm font-semibold hover:bg-[#142a4a] transition">
+      Next →
+    </button>
+  </div>
+</div>
 
             <!-- WIZARD -->
             <div id="rfqWizardWrap" class="hidden">
@@ -621,10 +753,11 @@ let hasReviewed = false;
       const step0Card = document.getElementById("rfqStep0Card");
       const wizardWrap = document.getElementById("rfqWizardWrap");
 
-      const nameEl = document.getElementById("rfqName");
-      const emailEl = document.getElementById("rfqEmail");
-      const phoneEl = document.getElementById("rfqPhone");
-      const startBtn = document.getElementById("rfqStart");
+    const nameEl = document.getElementById("rfqName");
+const companyEl = document.getElementById("rfqCompany");
+const emailEl = document.getElementById("rfqEmail");
+const phoneEl = document.getElementById("rfqPhone");
+const startBtn = document.getElementById("rfqStart");
 
       const tracker = document.getElementById("rfqTracker");
       const mobileTracker = document.getElementById("rfqMobileTracker");
@@ -801,7 +934,7 @@ function buildReviewStep(){
   const lines = [
   {
     label: "Basic:",
-    value: `${reviewValue(state.__name)} | ${reviewValue(state.__email)} | ${reviewValue(state.__phone)}`
+    value: `${reviewValue(state.__name)} | ${reviewValue(state.__company)} | ${reviewValue(state.__email)} | ${reviewValue(state.__phone)}`
   },
   {
     label: "Order:",
@@ -1164,23 +1297,18 @@ if(isReview){
 
 
 
-      startBtn.addEventListener("click", () => {
-        const n = (nameEl.value || "").trim();
-        const e = (emailEl.value || "").trim();
-        const p = (phoneEl.value || "").trim();
+     startBtn.addEventListener("click", () => {
+  state.__name = nameEl.value.trim();
+  state.__company = companyEl.value.trim();
+  state.__email = emailEl.value.trim();
+  state.__phone = phoneEl.value.trim();
 
-        if(!n || !e || !p) return;
-
-        state.__name = n;
-        state.__email = e;
-        state.__phone = p;
-
-document.getElementById("rfqSubtitle").textContent = "Structured procurement in 9 steps";
-
-        step0Card.classList.add("hidden");
-        wizardWrap.classList.remove("hidden");
-        render();
-      });
+  step0Card.classList.add("hidden");
+  wizardWrap.classList.remove("hidden");
+  current = 0;
+  render();
+  scrollFormToTopMobile();
+});
 
   nextBtn.addEventListener("click", () => {
 
@@ -1238,8 +1366,9 @@ function resetRfqForm(){
   hasReviewed = false;
 
   nameEl.value = "";
-  emailEl.value = "";
-  phoneEl.value = "";
+companyEl.value = "";
+emailEl.value = "";
+phoneEl.value = "";
 
   document.getElementById("rfqSubtitle").textContent = "Lets Start with the Basics";
 
