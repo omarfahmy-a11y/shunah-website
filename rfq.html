@@ -1320,19 +1320,22 @@ startBtn.addEventListener("click", () => {
     state.__email = emailEl.value.trim();
     state.__phone = phoneEl.value.trim();
 
+    if (!state.__name || !state.__company || !state.__email || !state.__phone) {
+      return;
+    }
+
     step0Card.classList.add("hidden");
     wizardWrap.classList.remove("hidden");
     document.getElementById("rfqSubtitle").textContent = "STRUCTURED PROCUREMENT IN 9 STEPS";
     document.getElementById("rfqHelperText").style.display = "none";
     current = 0;
     render();
-if (window.innerWidth < 768) {
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
 
+    if (window.innerWidth < 768) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   });
 });
-
 nextBtn.addEventListener("click", () => {
   closeKeyboardThen(() => {
     if (hasReviewed && current < steps.length - 1) {
