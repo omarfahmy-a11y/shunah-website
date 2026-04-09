@@ -1326,6 +1326,10 @@ startBtn.addEventListener("click", () => {
     document.getElementById("rfqHelperText").style.display = "none";
     current = 0;
     render();
+if (window.innerWidth < 768) {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
   });
 });
 
@@ -1346,8 +1350,35 @@ nextBtn.addEventListener("click", () => {
     }
 
     render();
+
+nextBtn.addEventListener("click", () => {
+  closeKeyboardThen(() => {
+    if (hasReviewed && current < steps.length - 1) {
+      current = steps.length - 1;
+      render();
+      return;
+    }
+
+    if (!isFilled(current)) return;
+
+    completed.add(current);
+
+    if (current < steps.length - 1) {
+      current++;
+    }
+
+    render();
   });
 });
+
+if (window.innerWidth < 768) {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+  });
+});
+
+
 
 
 function scrollFormToTopMobile(){
@@ -1407,6 +1438,11 @@ backBtn.addEventListener("click", () => {
     finalSubmitted = false;
     finalMsg.classList.add("hidden");
     render();
+
+if (window.innerWidth < 768) {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
   });
 });
 
