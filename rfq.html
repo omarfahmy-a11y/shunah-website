@@ -276,14 +276,18 @@ overflow:visible;
 }
 
     .mStepEllipsis{
-      width:24px;
-      min-width:24px;
-      text-align:center;
-      color:#6b7280;
-      font-size:18px;
-      line-height:1;
-      transform:translateY(-1px);
-    }
+  width:24px;
+  min-width:24px;
+
+  display:flex;             /* center perfectly */
+  align-items:center;       /* vertical center */
+  justify-content:center;   /* horizontal center */
+
+  color:#6b7280;
+  font-size:18px;
+  line-height:1;
+   margin-top:30px;   /* 👈 THIS is what you control now */
+}
 
    .mStepLabel{
  width:34px;  
@@ -510,7 +514,7 @@ text-align:center;
               </div>
 
               <!-- STEP CARD -->
-             <div id="rfqWizardCard" class="mt-3 rounded-2xl border border-black/10 bg-white p-6 sm:p-7 shadow-[0_20px_60px_rgba(11,26,45,0.12)]">
+             <div id="rfqWizardCard" class="mt-6 rounded-2xl border border-black/10 bg-white p-6 sm:p-7 shadow-[0_20px_60px_rgba(11,26,45,0.12)]">
                 <div class="flex items-start gap-4">
   <div class="shrink-0">
     <img
@@ -990,7 +994,13 @@ tracker.className = isReview
       }
 
 
-    function buildMobileTracker() {
+    
+
+
+
+
+
+function buildMobileTracker() {
   mobileTracker.innerHTML = "";
 
   const outer = document.createElement("div");
@@ -1009,20 +1019,27 @@ tracker.className = isReview
     else current--;
     render();
   };
-
   row.appendChild(prev);
 
   const stepsWrap = document.createElement("div");
   stepsWrap.className = "mSteps";
 
-  const visible = [];
+  let visible = [];
 
-  if (current <= 1) {
-    visible.push(0, 1, 2, "ellipsis", 8);
-  } else if (current >= 7) {
-    visible.push(0, "ellipsis", 6, 7, 8);
+  // 0-based:
+  // group 1 = 0,1,2
+  // group 2 = 3,4,5
+  // group 3 = 6,7,8
+
+  if (current <= 2) {
+    // 1 2 3 ... 9
+    visible = [0, 1, 2, "ellipsis", 8];
+  } else if (current <= 5) {
+    // ... 4 5 6 ...
+    visible = ["ellipsis", 3, 4, 5, "ellipsis"];
   } else {
-    visible.push(current - 1, current, current + 1, "ellipsis", 8);
+    // 1 ... 7 8 9
+    visible = [0, "ellipsis", 6, 7, 8];
   }
 
   visible.forEach((item) => {
@@ -1048,16 +1065,25 @@ tracker.className = isReview
 
     const bubble = document.createElement("button");
     bubble.className = "mStepBubble";
-    bubble.textContent = completed.has(item) ? "✓" : String(item + 1);
+    bubble.textContent =
+      completed.has(item) && item !== current ? "✓" : String(item + 1);
 
     if (completed.has(item)) bubble.classList.add("done");
     if (item === current) bubble.classList.add("active");
 
     bubble.onclick = () => {
-      if (item === current || completed.has(item) || item < current) {
-        current = item;
-        render();
-      }
+      const canGo =
+        item === current ||
+        completed.has(item) ||
+        item < current ||
+        completed.has(item - 1);
+
+      if (!canGo) return;
+
+      current = item;
+      finalSubmitted = false;
+      finalMsg.classList.add("hidden");
+      render();
     };
 
     const label = document.createElement("div");
@@ -1074,7 +1100,7 @@ tracker.className = isReview
   const next = document.createElement("button");
   next.className = "mArrow";
   next.innerHTML = "›";
-  next.disabled = current >= steps.length - 1;
+  next.disabled = current === steps.length - 1;
   next.onclick = () => {
     if (current >= steps.length - 1) return;
     current++;
@@ -1082,10 +1108,15 @@ tracker.className = isReview
   };
 
   row.appendChild(next);
-
   outer.appendChild(row);
   mobileTracker.appendChild(outer);
 }
+
+
+
+
+
+
 
 
 
