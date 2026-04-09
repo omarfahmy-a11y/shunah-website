@@ -1143,7 +1143,23 @@ document.getElementById("rfqSubtitle").textContent = "Structured procurement in 
   }
 
   render();
+scrollFormToTopMobile();
 });
+
+
+function scrollFormToTopMobile(){
+  if (window.innerWidth >= 768) return;
+
+  const card = document.getElementById("rfqWizardCard");
+  if (!card) return;
+
+  setTimeout(() => {
+    card.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  }, 50);
+}
 
 function resetRfqForm(){
   Object.keys(state).forEach((key) => delete state[key]);
@@ -1195,7 +1211,8 @@ backBtn.addEventListener("click", () => {
 
   finalSubmitted = false;
   finalMsg.classList.add("hidden");
-  render();
+ render();
+scrollFormToTopMobile();
 });
 
 submitBtn.addEventListener("click", () => {
