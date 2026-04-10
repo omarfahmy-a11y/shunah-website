@@ -12,43 +12,46 @@
     body { font-family: 'Inter', sans-serif; }
     html { scroll-behavior: smooth; }
 @keyframes rfqBlinkRed {
-  0%, 100% {
+  0% {
     border-color: rgba(11,26,45,0.12);
     box-shadow: none;
   }
-  25%, 75% {
-    border-color: #ef4444;
-    box-shadow: 0 0 0 2px rgba(239,68,68,0.16);
-  }
+
   50% {
+    border-color: rgba(239,68,68,0.55);
+    box-shadow: 0 0 0 3px rgba(239,68,68,0.08);
+  }
+
+  100% {
     border-color: rgba(11,26,45,0.12);
     box-shadow: none;
   }
 }
 
 @keyframes rfqBlinkRedField {
-  0%, 100% {
+  0% {
     border-color: rgba(11,26,45,0.15);
     box-shadow: none;
   }
-  25%, 75% {
-    border-color: #ef4444;
-    box-shadow: 0 0 0 2px rgba(239,68,68,0.16);
-  }
+
   50% {
+    border-color: rgba(239,68,68,0.55);
+    box-shadow: 0 0 0 3px rgba(239,68,68,0.08);
+  }
+
+  100% {
     border-color: rgba(11,26,45,0.15);
     box-shadow: none;
   }
 }
 
 .rfqBlinkRed {
-  animation: rfqBlinkRed 0.65s ease 2;
+  animation: rfqBlinkRed 1.1s ease-in-out 2;
 }
 
 .rfqBlinkRedField {
-  animation: rfqBlinkRedField 0.65s ease 2;
+  animation: rfqBlinkRedField 1.1s ease-in-out 2;
 }
-
 @media (max-width: 767px){
   #rfqTrackerWrapDesktop {
     display: none !important;
@@ -142,6 +145,18 @@
   color:#0b1a2d;
   font-size:16px;   /* important */
   transition:border-color 200ms ease, box-shadow 200ms ease;
+}
+
+input[type="date"]{
+  width:100%;
+  min-width:0;
+  display:block;
+  -webkit-appearance:none;
+  appearance:none;
+}
+
+input[type="date"]::-webkit-date-and-time-value{
+  text-align:left;
 }
 
 /* REVIEW MODE — smaller tracker */
@@ -962,43 +977,51 @@ if (step.key === "paymentTerms") {
   return wrap;
 }
 
-      function buildInputField(step){
-        const wrap = document.createElement("div");
-        wrap.className = "rfqFieldIconWrap";
+    function buildInputField(step){
+  const wrap = document.createElement("div");
+  wrap.className = "rfqFieldIconWrap";
 
-        const leftIcon = document.createElement("div");
-        leftIcon.className = "rfqFieldLeftIcon";
-        leftIcon.innerHTML = iconSvg(step.icon || "spec");
+  const leftIcon = document.createElement("div");
+  leftIcon.className = "rfqFieldLeftIcon";
+  leftIcon.innerHTML = iconSvg(step.icon || "spec");
 
-        const input = document.createElement("input");
-        input.type = step.type || "text";
-        input.placeholder = step.placeholder || "";
-        input.className = "rfqField rfqFieldWithIcon";
-        input.value = state[step.key] || "";
-        input.addEventListener("input", ()=> state[step.key] = input.value);
+  const input = document.createElement("input");
+  input.type = step.type || "text";
+  input.placeholder = step.placeholder || "";
+  input.className = "rfqField rfqFieldWithIcon";
+  input.value = state[step.key] || "";
 
-        wrap.appendChild(leftIcon);
-        wrap.appendChild(input);
+  if (step.type === "date") {
+    input.style.width = "100%";
+    input.style.minWidth = "0";
+    input.style.flex = "1";
+    input.style.display = "block";
+  }
 
-        if(step.type !== "date"){
-          const rightChevron = document.createElement("div");
-          rightChevron.className = "rfqFieldRightChevron";
-          rightChevron.style.opacity = ".0";
-          wrap.appendChild(rightChevron);
-        }
+  input.addEventListener("input", ()=> state[step.key] = input.value);
 
-        if(step.key === "containers"){
-          const note = document.createElement("div");
-          note.className = "mt-2 text-xs text-[#0b1a2d]/55";
-          note.textContent = "* A container is typically between 24–25 tons.";
-          const outer = document.createElement("div");
-          outer.appendChild(wrap);
-          outer.appendChild(note);
-          return outer;
-        }
+  wrap.appendChild(leftIcon);
+  wrap.appendChild(input);
 
-        return wrap;
-      }
+  if(step.type !== "date"){
+    const rightChevron = document.createElement("div");
+    rightChevron.className = "rfqFieldRightChevron";
+    rightChevron.style.opacity = ".0";
+    wrap.appendChild(rightChevron);
+  }
+
+  if(step.key === "containers"){
+    const note = document.createElement("div");
+    note.className = "mt-2 text-xs text-[#0b1a2d]/55";
+    note.textContent = "* A container is typically between 24–25 tons.";
+    const outer = document.createElement("div");
+    outer.appendChild(wrap);
+    outer.appendChild(note);
+    return outer;
+  }
+
+  return wrap;
+}
 
       function reviewValue(v){
         if(v === undefined || v === null || String(v).trim() === "") return "—";
