@@ -2084,10 +2084,10 @@ startBtn.addEventListener("click", () => {
 setMainTitle("Choose Your Path");
 
 
-  document.getElementById("rfqSubtitle").textContent = "CHOOSE YOUR PATH";
-  document.getElementById("rfqHelperText").textContent =
-    "Choose the route that best matches what you want to do.";
-  document.getElementById("rfqHelperText").style.display = "";
+document.getElementById("rfqSubtitle").style.display = "none";
+document.getElementById("rfqHelperText").textContent =
+  "Choose the route that best matches what you want to do.";
+document.getElementById("rfqHelperText").style.display = "";
 
   if (window.innerWidth < 768) {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -2182,7 +2182,7 @@ bookingBackBtn.addEventListener("click", () => {
   setMainTitle("Choose Your Path");
 
 
-  document.getElementById("rfqSubtitle").textContent = "CHOOSE YOUR PATH";
+document.getElementById("rfqSubtitle").style.display = "none";
   document.getElementById("rfqHelperText").textContent =
     "Choose the route that best matches what you want to do.";
   document.getElementById("rfqHelperText").style.display = "";
@@ -2289,6 +2289,8 @@ phoneEl.value = "";
 editingBasicFromReview = false;
 startBtn.textContent = "Next →";  
 
+document.getElementById("rfqSubtitle").style.display = "";
+
 document.getElementById("rfqSubtitle").textContent = "Lets Start with the Basics";
 
   finalMsg.classList.add("hidden");
@@ -2340,7 +2342,7 @@ backBtn.addEventListener("click", () => {
       step0Card.classList.add("hidden");
 
       document.getElementById("rfqMainTitle").textContent = "Choose Your Path";
-      document.getElementById("rfqSubtitle").textContent = "CHOOSE YOUR PATH";
+document.getElementById("rfqSubtitle").style.display = "none";
       document.getElementById("rfqHelperText").textContent =
         "Choose the route that best matches what you want to do.";
       document.getElementById("rfqHelperText").style.display = "";
