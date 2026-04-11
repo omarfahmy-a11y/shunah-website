@@ -1330,50 +1330,52 @@ SECTION — SHUNAH KPIs (STRUCTURED / LEFT-ALIGNED)
 
     </div>
 
-    <!-- KPI ROW -->
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-10">
+ 
+<!-- KPI ROW -->
+<div id="kpi-row" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-10">
 
-      <!-- KPI 1 -->
-      <div class="pl-4 border-l border-slate-300">
-        <h3 class="text-[clamp(2.8rem,3.8vw,4.5rem)] font-semibold text-[#1e3a8a]">80%+</h3>
-        <p class="text-sm font-medium text-[#0f172a] mt-2">
-          Digital Aggregation Share
-        </p>
-      </div>
+  <!-- KPI 1 -->
+  <div class="pl-4 border-l border-slate-300">
+    <h3 class="kpi-number text-[clamp(2.8rem,3.8vw,4.5rem)] font-semibold text-[#1e3a8a]" data-target="80" data-suffix="%+">0</h3>
+    <p class="text-sm font-medium text-[#0f172a] mt-2">
+      Digital Aggregation Share
+    </p>
+  </div>
 
-      <!-- KPI 2 -->
-      <div class="pl-4 border-l border-slate-300">
-        <h3 class="text-3xl font-semibold text-[#1e3a8a]">27K</h3>
-        <p class="text-sm font-medium text-[#0f172a] mt-2">
-          Farmer Interactions
-        </p>
-      </div>
+  <!-- KPI 2 -->
+  <div class="pl-4 border-l border-slate-300">
+    <h3 class="kpi-number text-3xl font-semibold text-[#1e3a8a]" data-target="27" data-suffix="K">0</h3>
+    <p class="text-sm font-medium text-[#0f172a] mt-2">
+      Farmer Interactions
+    </p>
+  </div>
 
-      <!-- KPI 3 -->
-      <div class="pl-4 border-l border-slate-300">
-        <h3 class="text-3xl font-semibold text-[#1e3a8a]">120K+</h3>
-        <p class="text-sm font-medium text-[#0f172a] mt-2">
-          Tons Assessed
-        </p>
-      </div>
+  <!-- KPI 3 -->
+  <div class="pl-4 border-l border-slate-300">
+    <h3 class="kpi-number text-3xl font-semibold text-[#1e3a8a]" data-target="120" data-suffix="K+">0</h3>
+    <p class="text-sm font-medium text-[#0f172a] mt-2">
+      Tons Assessed
+    </p>
+  </div>
 
-      <!-- KPI 4 -->
-      <div class="pl-4 border-l border-slate-300">
-        <h3 class="text-3xl font-semibold text-[#1e3a8a]">60%</h3>
-        <p class="text-sm font-medium text-[#0f172a] mt-2">
-          Tech Accuracy
-        </p>
-      </div>
+  <!-- KPI 4 -->
+  <div class="pl-4 border-l border-slate-300">
+    <h3 class="kpi-number text-3xl font-semibold text-[#1e3a8a]" data-target="60" data-suffix="%">0</h3>
+    <p class="text-sm font-medium text-[#0f172a] mt-2">
+      Tech Accuracy
+    </p>
+  </div>
 
-      <!-- KPI 5 -->
-      <div class="pl-4 border-l border-slate-300">
-        <h3 class="text-3xl font-semibold text-[#1e3a8a]">123</h3>
-        <p class="text-sm font-medium text-[#0f172a] mt-2">
-          Third Parties Connected
-        </p>
-      </div>
+  <!-- KPI 5 -->
+  <div class="pl-4 border-l border-slate-300">
+    <h3 class="kpi-number text-3xl font-semibold text-[#1e3a8a]" data-target="123" data-suffix="">0</h3>
+    <p class="text-sm font-medium text-[#0f172a] mt-2">
+      Third Parties Connected
+    </p>
+  </div>
 
-    </div>
+</div>
+
 
   </div>
 </section>
@@ -2326,6 +2328,23 @@ line-height: 1;
     line-height: 1.2;
   }
 }
+/* =========================
+   METRIC FADE ON HOVER (DESKTOP ONLY)
+   ========================= */
+@media (min-width: 1280px){
+
+  /* fade all when hovering grid */
+  #why-dry-crops .metrics-grid:hover .metric-card{
+    opacity: 0.25 !important;
+    transition: opacity .25s ease;
+  }
+
+  /* keep hovered one sharp */
+  #why-dry-crops .metrics-grid .metric-card:hover{
+    opacity: 1 !important;
+  }
+
+}
   </style>
 
   <script>
@@ -2553,5 +2572,54 @@ line-height: 1;
   showNavbar();
 })();
 </script>
+
+<script>
+(function () {
+  const kpiRow = document.getElementById('kpi-row');
+  const counters = document.querySelectorAll('.kpi-number');
+
+  if (!kpiRow || !counters.length) return;
+
+  let hasAnimated = false;
+
+  function animateCounter(el) {
+    const target = parseInt(el.dataset.target || "0", 10);
+    const suffix = el.dataset.suffix || "";
+    const duration = 1800;
+    const startTime = performance.now();
+
+    function update(now) {
+      const progress = Math.min((now - startTime) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+      const value = Math.floor(target * eased);
+
+      el.textContent = value + suffix;
+
+      if (progress < 1) {
+        requestAnimationFrame(update);
+      } else {
+        el.textContent = target + suffix;
+      }
+    }
+
+    requestAnimationFrame(update);
+  }
+
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !hasAnimated) {
+        hasAnimated = true;
+        counters.forEach(animateCounter);
+        obs.unobserve(kpiRow);
+      }
+    });
+  }, {
+    threshold: 0.80
+  });
+
+  observer.observe(kpiRow);
+})();
+</script>
+
 </body>
 </html>
