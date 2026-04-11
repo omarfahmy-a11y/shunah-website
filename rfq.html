@@ -57,7 +57,13 @@
     display: none !important;
   }
 }
-   
+ 
+.rfqDateBlur {
+  filter: blur(1.5px);
+  opacity: 0.35;
+  pointer-events: none;
+}
+  
 @media (max-width: 767px){
   .rfqMobileBg{
     position: relative;
@@ -575,8 +581,9 @@ text-align:center;
     </div>
   </nav>
 
-  <section id="rfq" class="bg-white rfqMobileBg">
-    <div class="max-w-[1400px] mx-auto px-6 min-h-[calc(100dvh-56px)] py-0 lg:py-6 flex items-start lg:items-center">
+
+<section id="rfq" class="bg-white rfqMobileBg min-h-[calc(100dvh-48px)]">
+    <div class="max-w-[1400px] mx-auto px-6 min-h-[calc(100dvh-48px)] py-0 lg:py-6 flex items-start lg:items-center">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch w-full">
 
         <!-- LEFT IMAGE -->
@@ -597,7 +604,7 @@ text-align:center;
 
 <div class="mt-2">
   <p id="rfqSubtitle"
-  class="text-[13px] sm:text-[14px] tracking-[2px] uppercase text-[#4A6FA5] font-medium">
+  class="text-[11px] sm:text-[14px] tracking-[2px] uppercase text-[#4A6FA5] font-medium">
   LET’S START WITH THE BASICS
 </p>
 
@@ -687,10 +694,323 @@ text-align:center;
       Next →
     </button>
   </div>
+ <div class="mt-0 pt-4 text-center">
+    <div class="inline-flex items-center gap-2 text-[10px] text-[#0b1a2d]/60">
+      <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.9">
+        <rect x="5" y="10" width="14" height="10" rx="2"></rect>
+        <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
+      </svg>
+      <span>Your information is secure</span>
+    </div>
 </div>
 
-            <!-- WIZARD -->
+</div>
+
+<!-- PATH SELECTION -->
+<div id="rfqPathCard"
+  class="hidden mt-6 sm:rounded-[28px] sm:border sm:border-black/10 sm:bg-white sm:p-5 sm:shadow-[0_25px_70px_rgba(11,26,45,0.10),0_5px_20px_rgba(11,26,45,0.05)]">
+
+  <div class="space-y-4">
+
+    <button type="button" data-path="tech"
+  class="rfqPathOption group w-full rounded-[24px] border border-black/10 bg-white px-4 py-4 text-left shadow-[0_8px_24px_rgba(11,26,45,0.04)] transition hover:border-[#2F5DA8] hover:bg-[linear-gradient(180deg,#F7FAFF_0%,#EEF4FF_100%)] hover:shadow-[0_12px_28px_rgba(47,93,168,0.14)]">
+
+  <div class="flex items-start sm:items-center gap-3 sm:gap-4">
+
+    <!-- ICON -->
+    <div class="shrink-0 w-[72px] h-[72px] sm:w-[96px] sm:h-[96px] rounded-[16px] sm:rounded-[20px] flex items-center justify-center">
+      <img src="rfq/path-tech.png" class="w-[58px] h-[58px] sm:w-[82px] sm:h-[82px] object-contain" />
+    </div>
+
+    <!-- TEXT + MOBILE PILL -->
+    <div class="flex-1">
+
+     <div class="leading-[1.15] font-semibold text-[#0B1A2D]">
+  <span class="sm:hidden">Tech. Walkthrough</span>
+  <span class="hidden sm:inline">Technology Walkthrough</span>
+</div>
+
+      <div class="mt-1 sm:mt-2 text-[12.5px] sm:text-[14px] leading-[1.35] sm:leading-[1.45] text-[#0b1a2d]/62">
+        See how Shunah works in detail
+      </div>
+
+      <!-- 👇 MOBILE PILL -->
+<div class="mt-2 sm:hidden flex justify-end">
+  <div class="inline-flex items-center gap-1.5 rounded-full bg-[#EAF1FB] px-3 py-1.5 text-[12px] font-medium text-[#2F5DA8]">
+    
+    <svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="1.9">
+      <circle cx="12" cy="12" r="8"></circle>
+      <path d="M12 8v4l2.5 1.5"></path>
+    </svg>
+
+    <span>20 min</span>
+
+    <svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.1">
+      <path d="m9 6 6 6-6 6"></path>
+    </svg>
+
+  </div>
+</div>
+
+    </div>
+
+    <!-- 👇 DESKTOP PILL -->
+    <div class="hidden sm:block shrink-0">
+      <div class="inline-flex items-center gap-2 rounded-full bg-[#EAF1FB] px-4 py-2 text-[14px] font-medium text-[#2F5DA8]">
+        <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.9">
+          <circle cx="12" cy="12" r="8"></circle>
+          <path d="M12 8v4l2.5 1.5"></path>
+        </svg>
+        <span>20 min</span>
+        <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.1">
+          <path d="m9 6 6 6-6 6"></path>
+        </svg>
+      </div>
+    </div>
+
+  </div>
+</button>
+    </button>
+
+    <button type="button" data-path="usecase"
+      class="rfqPathOption group w-full rounded-[24px] border border-black/10 bg-white px-4 py-4 text-left shadow-[0_8px_24px_rgba(11,26,45,0.04)] transition hover:border-[#2F5DA8] hover:bg-[linear-gradient(180deg,#F7FAFF_0%,#EEF4FF_100%)] hover:shadow-[0_12px_28px_rgba(47,93,168,0.14)]">
+      <div class="flex items-start sm:items-center gap-3 sm:gap-4">
+
+  <!-- ICON -->
+  <div class="shrink-0 w-[72px] h-[72px] sm:w-[96px] sm:h-[96px] rounded-[16px] sm:rounded-[20px] flex items-center justify-center">
+    <img src="rfq/path-usecase.png" class="w-[58px] h-[58px] sm:w-[82px] sm:h-[82px] object-contain" />
+  </div>
+
+  <!-- TEXT + MOBILE PILL -->
+  <div class="flex-1">
+
+    <div class="text-[15px] sm:text-[18px] leading-[1.15] font-semibold text-[#0B1A2D]">
+      Use Case Discussion
+    </div>
+
+    <div class="mt-1 sm:mt-2 text-[12.5px] sm:text-[14px] leading-[1.35] sm:leading-[1.45] text-[#0b1a2d]/62">
+      Understand how it applies to your business
+    </div>
+
+    <!-- MOBILE PILL -->
+<div class="mt-2 sm:hidden flex justify-end">
+  <div class="inline-flex items-center gap-1.5 rounded-full bg-[#EAF1FB] px-3 py-1.5 text-[12px] font-medium text-[#2F5DA8]">
+    
+    <svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="1.9">
+      <circle cx="12" cy="12" r="8"></circle>
+      <path d="M12 8v4l2.5 1.5"></path>
+    </svg>
+
+    <span>15 min</span>
+
+    <svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.1">
+      <path d="m9 6 6 6-6 6"></path>
+    </svg>
+
+  </div>
+</div>
+
+  </div>
+
+  <!-- DESKTOP PILL -->
+  <div class="hidden sm:block shrink-0">
+      <div class="inline-flex items-center gap-2 rounded-full bg-[#EAF1FB] px-4 py-2 text-[14px] font-medium text-[#2F5DA8]">
+        <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.9">
+        <circle cx="12" cy="12" r="8"></circle>
+        <path d="M12 8v4l2.5 1.5"></path>
+      </svg>
+      <span>15 min</span>
+      <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.1">
+        <path d="m9 6 6 6-6 6"></path>
+      </svg>
+    </div>
+  </div>
+
+</div>
+    </button>
+
+    <button type="button" data-path="accessSupply"
+      class="rfqPathOption group w-full rounded-[24px] border border-black/10 bg-white px-4 py-4 text-left shadow-[0_8px_24px_rgba(11,26,45,0.04)] transition hover:border-[#2F5DA8] hover:bg-[linear-gradient(180deg,#F7FAFF_0%,#EEF4FF_100%)] hover:shadow-[0_12px_28px_rgba(47,93,168,0.14)]">
+     <div class="flex items-start sm:items-center gap-3 sm:gap-4">
+
+  <!-- ICON -->
+  <div class="shrink-0 w-[72px] h-[72px] sm:w-[96px] sm:h-[96px] rounded-[16px] sm:rounded-[20px] flex items-center justify-center">
+    <img src="rfq/path-supply.png" class="w-[58px] h-[58px] sm:w-[82px] sm:h-[82px] object-contain" />
+  </div>
+
+  <!-- TEXT + MOBILE PILL -->
+  <div class="flex-1">
+
+    <div class="text-[15px] sm:text-[18px] leading-[1.15] font-semibold text-[#0B1A2D]">
+      Access Supply
+    </div>
+
+    <div class="mt-1 sm:mt-2 text-[12.5px] sm:text-[14px] leading-[1.35] sm:leading-[1.45] text-[#0b1a2d]/62">
+      Start sourcing crops directly
+    </div>
+
+    <!-- MOBILE PILL -->
+<div class="mt-2 sm:hidden flex justify-end">
+  <div class="inline-flex items-center gap-1.5 rounded-full bg-[#EAF1FB] px-3 py-1.5 text-[12px] font-medium text-[#2F5DA8]">
+    
+    <svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="1.9">
+      <path d="M3 7l9-4 9 4-9 4-9-4z"></path>
+      <path d="M3 7v10l9 4 9-4V7"></path>
+      <path d="M12 11v10"></path>
+    </svg>
+
+    <span>Order</span>
+
+    <svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.1">
+      <path d="m9 6 6 6-6 6"></path>
+    </svg>
+
+  </div>
+</div>
+
+  </div>
+
+  <!-- DESKTOP PILL -->
+  <div class="hidden sm:block shrink-0">
+      <div class="inline-flex items-center gap-2 rounded-full bg-[#EAF1FB] px-4 py-2 text-[14px] font-medium text-[#2F5DA8]">
+        <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.9">
+        <path d="M3 7l9-4 9 4-9 4-9-4z"></path>
+        <path d="M3 7v10l9 4 9-4V7"></path>
+        <path d="M12 11v10"></path>
+      </svg>
+      <span>Order</span>
+      <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.1">
+        <path d="m9 6 6 6-6 6"></path>
+      </svg>
+    </div>
+  </div>
+
+</div>
+    </button>
+
+  </div>
+
+  <div class="mt-0 pt-4 text-center">
+    <div class="inline-flex items-center gap-2 text-[10px] text-[#0b1a2d]/60">
+      <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.9">
+        <rect x="5" y="10" width="14" height="10" rx="2"></rect>
+        <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
+      </svg>
+      <span>Your information is secure</span>
+    </div>
+  </div>
+</div>
+
+<!-- BOOKING SCREEN -->
+<div id="rfqBookingCard"
+  class="hidden mt-6 rounded-[28px] border border-black/10 bg-white p-4 sm:p-5 shadow-[0_25px_70px_rgba(11,26,45,0.10),0_5px_20px_rgba(11,26,45,0.05)]">
+
+  <button id="rfqBookingBack"
+    type="button"
+    class="mb-4 inline-flex items-center justify-center w-10 h-10 rounded-full border border-black/10 bg-white text-[#0B1A2D]">
+    <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2">
+      <path d="M15 6l-6 6 6 6"></path>
+    </svg>
+  </button>
+  <div class="flex items-start gap-4">
+    <div class="shrink-0 w-[92px] h-[92px] rounded-[20px] bg-[#F7FAFF] flex items-center justify-center overflow-hidden">
+      <img id="rfqBookingImg" src="rfq/path-tech.png" alt="" class="w-[78px] h-[78px] object-contain" />
+    </div>
+
+    <div class="min-w-0 flex-1">
+      <div id="rfqBookingTitle" class="text-[18px] sm:text-[20px] leading-[1.15] font-semibold text-[#0B1A2D]">
+        Technology Walkthrough
+      </div>
+
+      <div id="rfqBookingDesc" class="mt-2 text-[14px] leading-[1.5] text-[#0b1a2d]/68">
+        A 20-minute session to see how Shunah works and how it can create value for you.
+      </div>
+
+      <div class="mt-3 flex flex-wrap gap-2"></div>
+    </div>
+  </div>
+ 
+
+<div class="mt-2 pt-2">
+  <div class="text-[15px] font-semibold text-[#0B1A2D]">Select a date</div>
+
+  <div class="mt-4 rounded-[22px] border border-black/10 p-4 sm:p-5">
+    <div class="flex items-center justify-between">
+      <button id="rfqCalPrev" type="button"
+        class="w-9 h-9 rounded-full border border-black/10 text-[#0B1A2D] flex items-center justify-center">
+        ‹
+      </button>
+
+      <div id="rfqCalMonthLabel" class="text-[16px] font-semibold text-[#0B1A2D]"></div>
+
+      <button id="rfqCalNext" type="button"
+        class="w-9 h-9 rounded-full border border-black/10 text-[#0B1A2D] flex items-center justify-center">
+        ›
+      </button>
+    </div>
+
+    <div class="mt-4 grid grid-cols-7 gap-y-3 text-center text-[12px] text-[#0b1a2d]/55">
+      <div>SUN</div><div>MON</div><div>TUE</div><div>WED</div><div>THU</div><div>FRI</div><div>SAT</div>
+    </div>
+
+    <div id="rfqCalendarGrid" class="mt-3 grid grid-cols-7 gap-y-3 text-center"></div>
+  </div>
+</div>
+
+<div class="mt-5">
+  <div class="flex items-center justify-between gap-3">
+    <div class="text-[15px] font-semibold text-[#0B1A2D]">Available times</div>
+    <div class="inline-flex items-center gap-2 text-[14px] text-[#0b1a2d]/65">
+      <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.9">
+        <circle cx="12" cy="12" r="9"></circle>
+        <path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"></path>
+      </svg>
+      <span>Cairo Local Time</span>
+    </div>
+  </div>
+
+  <div id="rfqTimeGrid" class="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-3"></div>
+</div>
+
+<div class="mt-5 rounded-[18px] bg-[#F5F7FB] px-4 py-4">
+  <div class="flex items-center gap-3">
+    <div class="w-10 h-10 rounded-[12px] bg-white flex items-center justify-center text-[#3B82F6]">
+      <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.9">
+        <rect x="3" y="5" width="18" height="16" rx="2"></rect>
+        <path d="M16 3v4M8 3v4M3 10h18"></path>
+      </svg>
+    </div>
+
+    <div class="min-w-0">
+      <div class="text-[13px] text-[#0b1a2d]/52">Your selection</div>
+      <div id="rfqBookingSelection" class="mt-1 text-[15px] font-medium text-[#0B1A2D]">
+        Select a date and time
+      </div>
+    </div>
+  </div>
+</div>
+
+<button id="rfqBookingConfirm"
+  type="button"
+  class="mt-5 w-full rounded-[16px] bg-[linear-gradient(90deg,#3B82F6_0%,#2F5DA8_100%)] text-white px-6 py-4 text-[18px] font-semibold shadow-[0_14px_30px_rgba(47,93,168,.22)] opacity-50 pointer-events-none">
+  Confirm Booking →
+</button>
+
+
+  <div class="mt-5 text-center">
+    <div class="inline-flex items-center gap-2 text-[14px] text-[#0b1a2d]/60">
+      <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.9">
+        <rect x="5" y="10" width="14" height="10" rx="2"></rect>
+        <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
+      </svg>
+      <span>Your information is secure</span>
+    </div>
+  </div>
+</div>            
+
+<!-- WIZARD -->
             <div id="rfqWizardWrap" class="hidden">
+
 
               <!-- DESKTOP TRACKER -->
               <div id="rfqTrackerWrapDesktop" class="mt-8 hidden md:block transition-opacity duration-300">
@@ -810,14 +1130,290 @@ text-align:center;
       let finalSubmitted = false;
 let hasReviewed = false;
 
-      const step0Card = document.getElementById("rfqStep0Card");
-      const wizardWrap = document.getElementById("rfqWizardWrap");
+const step0Card = document.getElementById("rfqStep0Card");
+const pathCard = document.getElementById("rfqPathCard");
+const bookingCard = document.getElementById("rfqBookingCard");
+const wizardWrap = document.getElementById("rfqWizardWrap");
 
-    const nameEl = document.getElementById("rfqName");
+const nameEl = document.getElementById("rfqName");
 const companyEl = document.getElementById("rfqCompany");
 const emailEl = document.getElementById("rfqEmail");
 const phoneEl = document.getElementById("rfqPhone");
 const startBtn = document.getElementById("rfqStart");
+const pathButtons = document.querySelectorAll(".rfqPathOption");
+const bookingBackBtn = document.getElementById("rfqBookingBack");
+const bookingConfirmBtn = document.getElementById("rfqBookingConfirm");
+const bookingTitle = document.getElementById("rfqBookingTitle");
+const bookingDesc = document.getElementById("rfqBookingDesc");
+const bookingImg = document.getElementById("rfqBookingImg");
+
+const calPrevBtn = document.getElementById("rfqCalPrev");
+const calNextBtn = document.getElementById("rfqCalNext");
+const calMonthLabel = document.getElementById("rfqCalMonthLabel");
+const calGrid = document.getElementById("rfqCalendarGrid");
+const timeGrid = document.getElementById("rfqTimeGrid");
+const bookingSelection = document.getElementById("rfqBookingSelection");
+
+
+const bookingState = {
+  viewDate: new Date(),
+  selectedDate: null,
+  selectedTime: "",
+  duration: "20 min",
+  times: [
+    "9:00 AM",
+    "10:30 AM",
+    "12:00 PM",
+    "1:30 PM",
+    "3:00 PM",
+    "4:30 PM",
+    "6:00 PM",
+    "7:30 PM"
+  ]
+};
+
+bookingState.viewDate = new Date(
+  bookingState.viewDate.getFullYear(),
+  bookingState.viewDate.getMonth(),
+  1
+);
+
+function sameDay(a, b) {
+  return a &&
+    b &&
+    a.getFullYear() === b.getFullYear() &&
+    a.getMonth() === b.getMonth() &&
+    a.getDate() === b.getDate();
+}
+
+function formatLongDate(date) {
+  return date.toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric"
+  });
+}
+
+function updateBookingSelection() {
+  if (!bookingState.selectedDate || !bookingState.selectedTime) {
+    bookingSelection.textContent = "Select a date and time";
+    bookingConfirmBtn.classList.add("opacity-50", "pointer-events-none");
+    return;
+  }
+
+ const userEmail = emailEl.value.trim();
+
+bookingSelection.textContent =
+  `${formatLongDate(bookingState.selectedDate)} • ${bookingState.selectedTime} • ${bookingState.duration} • ${userEmail}`;
+
+  bookingConfirmBtn.classList.remove("opacity-50", "pointer-events-none");
+}
+
+function renderTimeSlots() {
+  timeGrid.innerHTML = "";
+
+  bookingState.times.forEach((time) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.textContent = time;
+    btn.className =
+      "rounded-[14px] border px-4 py-3 text-[15px] transition";
+
+    const active = bookingState.selectedTime === time;
+
+    if (active) {
+      btn.className += " border-[#3B82F6] bg-[#F7FAFF] text-[#2F5DA8] shadow-[0_8px_18px_rgba(59,130,246,.08)]";
+    } else {
+      btn.className += " border-black/10 bg-white text-[#0B1A2D]";
+    }
+
+    btn.addEventListener("click", () => {
+      bookingState.selectedTime = time;
+      renderTimeSlots();
+      updateBookingSelection();
+    });
+
+    timeGrid.appendChild(btn);
+  });
+}
+
+
+function renderCalendar() {
+  const view = bookingState.viewDate || new Date();
+  const year = view.getFullYear();
+  const month = view.getMonth();
+
+  calMonthLabel.textContent = view.toLocaleString("en-US", {
+    month: "long",
+    year: "numeric"
+  });
+
+  calGrid.innerHTML = "";
+
+  const firstDayIndex = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const prevMonthDays = new Date(year, month, 0).getDate();
+
+  const today = new Date();
+  const todayOnly = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+  const currentMonthStart = new Date(todayOnly.getFullYear(), todayOnly.getMonth(), 1);
+  const viewedMonthStart = new Date(year, month, 1);
+
+  const isCurrentMonthView =
+    viewedMonthStart.getFullYear() === currentMonthStart.getFullYear() &&
+    viewedMonthStart.getMonth() === currentMonthStart.getMonth();
+
+  // Disable left arrow on current month
+  if (isCurrentMonthView) {
+    calPrevBtn.disabled = true;
+    calPrevBtn.classList.add("opacity-35", "cursor-not-allowed");
+  } else {
+    calPrevBtn.disabled = false;
+    calPrevBtn.classList.remove("opacity-35", "cursor-not-allowed");
+  }
+
+  // Previous month spillover days
+  for (let i = 0; i < firstDayIndex; i++) {
+    const prevDay = prevMonthDays - firstDayIndex + i + 1;
+
+    const ghostBtn = document.createElement("button");
+    ghostBtn.type = "button";
+    ghostBtn.textContent = prevDay;
+    ghostBtn.className =
+      "mx-auto inline-flex items-center justify-center w-11 h-11 rounded-full text-[15px]";
+
+    if (isCurrentMonthView) {
+      // In today's real month → blur and disable all previous-month spillover
+      ghostBtn.classList.add("rfqDateBlur");
+      ghostBtn.disabled = true;
+    } else {
+      // In other months → normal ghost behavior
+      ghostBtn.classList.add("text-[#0b1a2d]/30");
+      ghostBtn.addEventListener("click", () => {
+        bookingState.viewDate = new Date(year, month - 1, 1);
+        bookingState.selectedDate = new Date(year, month - 1, prevDay);
+        renderCalendar();
+        updateBookingSelection();
+      });
+    }
+
+    calGrid.appendChild(ghostBtn);
+  }
+
+  // Current month days
+  for (let day = 1; day <= daysInMonth; day++) {
+    const dateObj = new Date(year, month, day);
+    const isPast = isCurrentMonthView && dateObj < todayOnly;
+    const isSelected = sameDay(dateObj, bookingState.selectedDate);
+    const isToday = sameDay(dateObj, todayOnly);
+
+    const wrap = document.createElement("div");
+    const btn = document.createElement("button");
+
+    btn.type = "button";
+    btn.textContent = day;
+    btn.className =
+      "inline-flex items-center justify-center w-11 h-11 rounded-full text-[15px] transition";
+
+    if (isSelected) {
+      btn.className += " bg-[#3B82F6] text-white shadow-[0_8px_18px_rgba(59,130,246,0.28)]";
+    } else if (isPast) {
+      btn.classList.add("rfqDateBlur");
+      btn.disabled = true;
+    } else if (isToday) {
+      btn.className += " border border-[#3B82F6] text-[#2F5DA8] bg-[#F7FAFF]";
+    } else {
+      btn.className += " text-[#0B1A2D] hover:bg-[#F3F6FB]";
+    }
+
+    if (!isPast) {
+      btn.addEventListener("click", () => {
+        bookingState.selectedDate = new Date(year, month, day);
+        renderCalendar();
+        updateBookingSelection();
+      });
+    }
+
+    wrap.appendChild(btn);
+    calGrid.appendChild(wrap);
+  }
+
+  // Next month spillover days
+  const totalCells = firstDayIndex + daysInMonth;
+  const trailing = (7 - (totalCells % 7)) % 7;
+
+  for (let i = 1; i <= trailing; i++) {
+    const nextDay = i;
+
+    const ghostBtn = document.createElement("button");
+    ghostBtn.type = "button";
+    ghostBtn.textContent = nextDay;
+    ghostBtn.className =
+      "mx-auto inline-flex items-center justify-center w-11 h-11 rounded-full text-[15px] text-[#0b1a2d]/30";
+
+    ghostBtn.addEventListener("click", () => {
+      bookingState.viewDate = new Date(year, month + 1, 1);
+      bookingState.selectedDate = new Date(year, month + 1, nextDay);
+      renderCalendar();
+      updateBookingSelection();
+    });
+
+    calGrid.appendChild(ghostBtn);
+  }
+}
+
+function openBookingCalendar() {
+  if (!bookingState.selectedDate) {
+    const today = new Date();
+    bookingState.selectedDate = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate()
+    );
+    bookingState.viewDate = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      1
+    );
+  }
+
+  renderCalendar();
+  renderTimeSlots();
+  updateBookingSelection();
+}
+
+calPrevBtn.addEventListener("click", () => {
+  const today = new Date();
+  const currentMonthStart = new Date(today.getFullYear(), today.getMonth(), 1);
+  const viewedMonthStart = new Date(
+    bookingState.viewDate.getFullYear(),
+    bookingState.viewDate.getMonth(),
+    1
+  );
+
+  if (viewedMonthStart <= currentMonthStart) {
+    return;
+  }
+
+  bookingState.viewDate = new Date(
+    bookingState.viewDate.getFullYear(),
+    bookingState.viewDate.getMonth() - 1,
+    1
+  );
+
+  renderCalendar();
+});
+
+calNextBtn.addEventListener("click", () => {
+  bookingState.viewDate = new Date(
+    bookingState.viewDate.getFullYear(),
+    bookingState.viewDate.getMonth() + 1,
+    1
+  );
+  renderCalendar();
+});
+
 
       const tracker = document.getElementById("rfqTracker");
       const mobileTracker = document.getElementById("rfqMobileTracker");
@@ -1430,22 +2026,154 @@ function closeKeyboardThen(callback) {
 }
 
 startBtn.addEventListener("click", () => {
+  const basicsFilled =
+    nameEl.value.trim() &&
+    companyEl.value.trim() &&
+    emailEl.value.trim() &&
+    phoneEl.value.trim();
+
+  if (!basicsFilled) {
+    blinkMissingBasics();
+    return;
+  }
+
+  step0Card.classList.add("hidden");
+  pathCard.classList.remove("hidden");
+  bookingCard.classList.add("hidden");
+  wizardWrap.classList.add("hidden");
+
+  state.__path = "";
+
+  document.getElementById("rfqSubtitle").textContent = "CHOOSE YOUR PATH";
+  document.getElementById("rfqHelperText").textContent =
+    "Choose the route that best matches what you want to do.";
+  document.getElementById("rfqHelperText").style.display = "";
+
+  if (window.innerWidth < 768) {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+});
+
+pathButtons.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const chosen = btn.dataset.path;
+    state.__path = chosen;
+
+    if (chosen === "accessSupply") {
+      pathCard.classList.add("hidden");
+      bookingCard.classList.add("hidden");
+      wizardWrap.classList.remove("hidden");
+
+      document.getElementById("rfqSubtitle").textContent =
+        "STRUCTURED PROCUREMENT IN 9 STEPS";
+      document.getElementById("rfqHelperText").textContent =
+        "Complete the form below to submit your request.";
+      document.getElementById("rfqHelperText").style.display = "";
+
+      current = 0;
+      render();
+
+      if (window.innerWidth < 768) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+      return;
+    }
+
+    if (chosen === "tech") {
+      pathCard.classList.add("hidden");
+      wizardWrap.classList.add("hidden");
+      bookingCard.classList.remove("hidden");
+
+      document.getElementById("rfqSubtitle").textContent = "BOOK A SESSION";
+      document.getElementById("rfqHelperText").textContent =
+        "Choose a time slot to speak with our team.";
+      document.getElementById("rfqHelperText").style.display = "";
+
+      bookingTitle.innerHTML = "Technology<br>Walkthrough";
+      bookingDesc.textContent =
+        "A 20-minute session to see how Shunah works and how it can create value for you.";
+      bookingImg.src = "rfq/path-tech.png";
+      bookingImg.alt = "Technology Walkthrough";
+
+  openBookingCalendar();     
+
+ if (window.innerWidth < 768) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+      return;
+    }
+
+    if (chosen === "usecase") {
+      pathCard.classList.add("hidden");
+      wizardWrap.classList.add("hidden");
+      bookingCard.classList.remove("hidden");
+
+      document.getElementById("rfqSubtitle").textContent = "BOOK A SESSION";
+      document.getElementById("rfqHelperText").textContent =
+        "Choose a time slot to speak with our team.";
+      document.getElementById("rfqHelperText").style.display = "";
+
+      bookingTitle.innerHTML = "Use Case<br>Discussion";
+      bookingDesc.textContent =
+        "A 20-minute session to understand how Shunah can apply to your business and sourcing needs.";
+      bookingImg.src = "rfq/path-usecase.png";
+      bookingImg.alt = "Use Case Discussion";
+
+ openBookingCalendar();
+
+      if (window.innerWidth < 768) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    }
+  });
+});
+
+bookingBackBtn.addEventListener("click", () => {
+  bookingCard.classList.add("hidden");
+  pathCard.classList.remove("hidden");
+  wizardWrap.classList.add("hidden");
+
+  document.getElementById("rfqSubtitle").textContent = "CHOOSE YOUR PATH";
+  document.getElementById("rfqHelperText").textContent =
+    "Choose the route that best matches what you want to do.";
+  document.getElementById("rfqHelperText").style.display = "";
+
+  if (window.innerWidth < 768) {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+});
+
+bookingConfirmBtn.addEventListener("click", () => {
+  if (!bookingState.selectedDate || !bookingState.selectedTime) return;
+
+  bookingConfirmBtn.textContent = "Booking Confirmed";
+  bookingConfirmBtn.disabled = true;
+  bookingConfirmBtn.classList.remove("pointer-events-none");
+  bookingConfirmBtn.classList.add("opacity-80");
+
+  bookingSelection.textContent =
+    `${formatLongDate(bookingState.selectedDate)} • ${bookingState.selectedTime} • ${bookingState.duration}`;
+});
+
+nextBtn.addEventListener("click", () => {
   closeKeyboardThen(() => {
-    state.__name = nameEl.value.trim();
-    state.__company = companyEl.value.trim();
-    state.__email = emailEl.value.trim();
-    state.__phone = phoneEl.value.trim();
+    if (hasReviewed && current < steps.length - 1) {
+      current = steps.length - 1;
+      render();
+      return;
+    }
 
-   if (!state.__name || !state.__company || !state.__email || !state.__phone) {
-  blinkMissingBasics();
-  return;
-}
+    if (!isFilled(current)) {
+      blinkCurrentStepIfEmpty();
+      return;
+    }
 
-    step0Card.classList.add("hidden");
-    wizardWrap.classList.remove("hidden");
-    document.getElementById("rfqSubtitle").textContent = "STRUCTURED PROCUREMENT IN 9 STEPS";
-    document.getElementById("rfqHelperText").style.display = "none";
-    current = 0;
+    completed.add(current);
+
+    if (current < steps.length - 1) {
+      current++;
+    }
+
     render();
 
     if (window.innerWidth < 768) {
@@ -1453,54 +2181,6 @@ startBtn.addEventListener("click", () => {
     }
   });
 });
-nextBtn.addEventListener("click", () => {
-  closeKeyboardThen(() => {
-    if (hasReviewed && current < steps.length - 1) {
-      current = steps.length - 1;
-      render();
-      return;
-    }
-
-if (!isFilled(current)) {
-  blinkCurrentStepIfEmpty();
-  return;
-}
-
-    completed.add(current);
-
-    if (current < steps.length - 1) {
-      current++;
-    }
-
-    render();
-
-nextBtn.addEventListener("click", () => {
-  closeKeyboardThen(() => {
-    if (hasReviewed && current < steps.length - 1) {
-      current = steps.length - 1;
-      render();
-      return;
-    }
-
-    if (!isFilled(current)) return;
-
-    completed.add(current);
-
-    if (current < steps.length - 1) {
-      current++;
-    }
-
-    render();
-  });
-});
-
-if (window.innerWidth < 768) {
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-  });
-});
-
 
 
 
@@ -1537,21 +2217,45 @@ phoneEl.value = "";
   document.getElementById("rfqTrackerWrapDesktop").classList.remove("hidden");
   document.getElementById("rfqTrackerWrapMobile").classList.remove("hidden");
 
-  wizardWrap.classList.add("hidden");
-  step0Card.classList.remove("hidden");
+ wizardWrap.classList.add("hidden");
+pathCard.classList.add("hidden");
+bookingCard.classList.add("hidden");
+step0Card.classList.remove("hidden");
 
-  render();
+document.getElementById("rfqHelperText").style.display = "";
+document.getElementById("rfqHelperText").textContent =
+  "Tell us who you are to connect you with the right opportunities.";
+bookingConfirmBtn.textContent = "Confirm Booking →";
+bookingConfirmBtn.disabled = false;
+bookingConfirmBtn.classList.remove("opacity-80");
+
+bookingState.viewDate = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+bookingState.selectedDate = null;
+bookingState.selectedTime = "";
+bookingConfirmBtn.textContent = "Confirm Booking →";
+bookingConfirmBtn.disabled = false;
+bookingConfirmBtn.classList.add("opacity-50", "pointer-events-none");
+bookingConfirmBtn.classList.remove("opacity-80");
+bookingSelection.textContent = "Select a date and time"; 
+
+
+ render();
 }
 
 backBtn.addEventListener("click", () => {
   closeKeyboardThen(() => {
-    if (current === 0) {
-      wizardWrap.classList.add("hidden");
-      step0Card.classList.remove("hidden");
-      document.getElementById("rfqSubtitle").textContent = "Lets Start with the Basics";
-      return;
-    }
-
+   if (current === 0) {
+  wizardWrap.classList.add("hidden");
+  pathCard.classList.remove("hidden");
+  bookingCard.classList.add("hidden");
+  step0Card.classList.add("hidden");
+  document.getElementById("rfqSubtitle").textContent = "CHOOSE YOUR PATH";
+  document.getElementById("rfqHelperText").textContent =
+    "Choose the route that best matches what you want to do.";
+  document.getElementById("rfqHelperText").style.display = "";
+  return;
+}
+    
     if (steps[current].type === "review") {
       current = 8;
     } else {
