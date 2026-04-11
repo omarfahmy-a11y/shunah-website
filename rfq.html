@@ -188,7 +188,7 @@ select.placeholder-active {
 
     .rfqFieldWithIcon{
       padding-left:44px;
-      padding-right:42px;
+      padding-right:10px;
       appearance:none;
       -webkit-appearance:none;
       -moz-appearance:none;
@@ -212,7 +212,7 @@ select.placeholder-active {
 
     .rfqFieldRightChevron{
       position:absolute;
-      right:14px;
+      right:6px;
       top:50%;
       transform:translateY(-50%);
       width:18px;
@@ -598,8 +598,8 @@ text-align:center;
         <div class="lg:col-span-8">
   <div class="max-w-2xl ml-auto">
 
-            <h2 class="text-[28px] sm:text-[32px] font-bold tracking-[-0.5px] text-[#0B1A2D]">
-  Request RFQ
+            <h2 id="rfqMainTitle" class="text-[28px] sm:text-[32px] font-bold tracking-[-0.5px] text-[#0B1A2D]">
+  Get Started
 </h2>
 
 <div class="mt-2">
@@ -770,7 +770,7 @@ text-align:center;
 
   </div>
 </button>
-    </button>
+    
 
     <button type="button" data-path="usecase"
       class="rfqPathOption group w-full rounded-[24px] border border-black/10 bg-white px-4 py-4 text-left shadow-[0_8px_24px_rgba(11,26,45,0.04)] transition hover:border-[#2F5DA8] hover:bg-[linear-gradient(180deg,#F7FAFF_0%,#EEF4FF_100%)] hover:shadow-[0_12px_28px_rgba(47,93,168,0.14)]">
@@ -1135,6 +1135,8 @@ const pathCard = document.getElementById("rfqPathCard");
 const bookingCard = document.getElementById("rfqBookingCard");
 const wizardWrap = document.getElementById("rfqWizardWrap");
 
+let editingBasicFromReview = false;
+
 const nameEl = document.getElementById("rfqName");
 const companyEl = document.getElementById("rfqCompany");
 const emailEl = document.getElementById("rfqEmail");
@@ -1154,7 +1156,10 @@ const calGrid = document.getElementById("rfqCalendarGrid");
 const timeGrid = document.getElementById("rfqTimeGrid");
 const bookingSelection = document.getElementById("rfqBookingSelection");
 
-
+function setMainTitle(value) {
+  const title = document.getElementById("rfqMainTitle");
+  if (title) title.textContent = value;
+}
 const bookingState = {
   viewDate: new Date(),
   selectedDate: null,
@@ -1725,10 +1730,21 @@ tracker.className = isReview
     label.className = "tLabel";
     label.textContent = "Basic";
 
-    c.addEventListener("click", () => {
-      wizardWrap.classList.add("hidden");
-      step0Card.classList.remove("hidden");
-    });
+  c.addEventListener("click", () => {
+  editingBasicFromReview = true;
+
+  wizardWrap.classList.add("hidden");
+  pathCard.classList.add("hidden");
+  bookingCard.classList.add("hidden");
+  step0Card.classList.remove("hidden");
+
+  startBtn.textContent = "Review →";
+
+  document.getElementById("rfqSubtitle").textContent = "LET’S START WITH THE BASICS";
+  document.getElementById("rfqHelperText").textContent =
+    "Please review and update your basic details.";
+  document.getElementById("rfqHelperText").style.display = "";
+});
 
     cell.appendChild(c);
     cell.appendChild(label);
@@ -2037,12 +2053,36 @@ startBtn.addEventListener("click", () => {
     return;
   }
 
+  state.__name = nameEl.value.trim();
+  state.__company = companyEl.value.trim();
+  state.__email = emailEl.value.trim();
+  state.__phone = phoneEl.value.trim();
+
+  if (editingBasicFromReview) {
+    editingBasicFromReview = false;
+    step0Card.classList.add("hidden");
+    wizardWrap.classList.remove("hidden");
+    current = steps.length - 1;
+    render();
+
+    if (window.innerWidth < 768) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+    return;
+  }
+
   step0Card.classList.add("hidden");
   pathCard.classList.remove("hidden");
+
   bookingCard.classList.add("hidden");
   wizardWrap.classList.add("hidden");
 
   state.__path = "";
+
+  startBtn.textContent = "Next →";
+
+setMainTitle("Choose Your Path");
+
 
   document.getElementById("rfqSubtitle").textContent = "CHOOSE YOUR PATH";
   document.getElementById("rfqHelperText").textContent =
@@ -2064,6 +2104,8 @@ pathButtons.forEach((btn) => {
       bookingCard.classList.add("hidden");
       wizardWrap.classList.remove("hidden");
 
+setMainTitle("Supply Request");
+
       document.getElementById("rfqSubtitle").textContent =
         "STRUCTURED PROCUREMENT IN 9 STEPS";
       document.getElementById("rfqHelperText").textContent =
@@ -2084,12 +2126,14 @@ pathButtons.forEach((btn) => {
       wizardWrap.classList.add("hidden");
       bookingCard.classList.remove("hidden");
 
+setMainTitle("Inside Shunah Technology");
+
       document.getElementById("rfqSubtitle").textContent = "BOOK A SESSION";
       document.getElementById("rfqHelperText").textContent =
         "Choose a time slot to speak with our team.";
       document.getElementById("rfqHelperText").style.display = "";
 
-      bookingTitle.innerHTML = "Technology<br>Walkthrough";
+      bookingTitle.innerHTML = "Technology Walkthrough";
       bookingDesc.textContent =
         "A 20-minute session to see how Shunah works and how it can create value for you.";
       bookingImg.src = "rfq/path-tech.png";
@@ -2108,14 +2152,16 @@ pathButtons.forEach((btn) => {
       wizardWrap.classList.add("hidden");
       bookingCard.classList.remove("hidden");
 
+setMainTitle("Inside Shunah Technology");
+
       document.getElementById("rfqSubtitle").textContent = "BOOK A SESSION";
       document.getElementById("rfqHelperText").textContent =
         "Choose a time slot to speak with our team.";
       document.getElementById("rfqHelperText").style.display = "";
 
-      bookingTitle.innerHTML = "Use Case<br>Discussion";
+      bookingTitle.innerHTML = "Use Case Discussion";
       bookingDesc.textContent =
-        "A 20-minute session to understand how Shunah can apply to your business and sourcing needs.";
+        "A 15-minute session to understand how Shunah can apply to your business and sourcing needs.";
       bookingImg.src = "rfq/path-usecase.png";
       bookingImg.alt = "Use Case Discussion";
 
@@ -2133,6 +2179,9 @@ bookingBackBtn.addEventListener("click", () => {
   pathCard.classList.remove("hidden");
   wizardWrap.classList.add("hidden");
 
+  setMainTitle("Choose Your Path");
+
+
   document.getElementById("rfqSubtitle").textContent = "CHOOSE YOUR PATH";
   document.getElementById("rfqHelperText").textContent =
     "Choose the route that best matches what you want to do.";
@@ -2141,6 +2190,33 @@ bookingBackBtn.addEventListener("click", () => {
   if (window.innerWidth < 768) {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
+});
+
+bookingConfirmBtn.addEventListener("click", () => {
+
+  // only for path 1 & 2
+  if (state.__path !== "tech" && state.__path !== "usecase") return;
+
+  // make sure date + time selected
+  if (!bookingState.selectedDate || !bookingState.selectedTime) return;
+
+  // UI feedback
+  bookingConfirmBtn.textContent = "Booked ✓";
+  bookingConfirmBtn.disabled = true;
+  bookingConfirmBtn.classList.add("opacity-70");
+
+  document.getElementById("rfqHelperText").textContent =
+    "Your session has been booked successfully.";
+
+  // wait 5 seconds → reset
+  setTimeout(() => {
+    resetRfqForm();
+
+    // scroll up (important mobile)
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
+  }, 5000);
+
 });
 
 bookingConfirmBtn.addEventListener("click", () => {
@@ -2157,9 +2233,19 @@ bookingConfirmBtn.addEventListener("click", () => {
 
 nextBtn.addEventListener("click", () => {
   closeKeyboardThen(() => {
-    if (hasReviewed && current < steps.length - 1) {
+    if (hasReviewed && steps[current].type !== "review") {
+      if (!isFilled(current)) {
+        blinkCurrentStepIfEmpty();
+        return;
+      }
+
+      completed.add(current);
       current = steps.length - 1;
       render();
+
+      if (window.innerWidth < 768) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
       return;
     }
 
@@ -2200,7 +2286,10 @@ companyEl.value = "";
 emailEl.value = "";
 phoneEl.value = "";
 
-  document.getElementById("rfqSubtitle").textContent = "Lets Start with the Basics";
+editingBasicFromReview = false;
+startBtn.textContent = "Next →";  
+
+document.getElementById("rfqSubtitle").textContent = "Lets Start with the Basics";
 
   finalMsg.classList.add("hidden");
   thankYouState.classList.add("hidden");
@@ -2244,18 +2333,24 @@ bookingSelection.textContent = "Select a date and time";
 
 backBtn.addEventListener("click", () => {
   closeKeyboardThen(() => {
-   if (current === 0) {
-  wizardWrap.classList.add("hidden");
-  pathCard.classList.remove("hidden");
-  bookingCard.classList.add("hidden");
-  step0Card.classList.add("hidden");
-  document.getElementById("rfqSubtitle").textContent = "CHOOSE YOUR PATH";
-  document.getElementById("rfqHelperText").textContent =
-    "Choose the route that best matches what you want to do.";
-  document.getElementById("rfqHelperText").style.display = "";
-  return;
-}
-    
+    if (current === 0) {
+      wizardWrap.classList.add("hidden");
+      pathCard.classList.remove("hidden");
+      bookingCard.classList.add("hidden");
+      step0Card.classList.add("hidden");
+
+      document.getElementById("rfqMainTitle").textContent = "Choose Your Path";
+      document.getElementById("rfqSubtitle").textContent = "CHOOSE YOUR PATH";
+      document.getElementById("rfqHelperText").textContent =
+        "Choose the route that best matches what you want to do.";
+      document.getElementById("rfqHelperText").style.display = "";
+
+      if (window.innerWidth < 768) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+      return;
+    }
+
     if (steps[current].type === "review") {
       current = 8;
     } else {
@@ -2266,12 +2361,11 @@ backBtn.addEventListener("click", () => {
     finalMsg.classList.add("hidden");
     render();
 
-if (window.innerWidth < 768) {
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
+    if (window.innerWidth < 768) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   });
-});
+});;
 
 submitBtn.addEventListener("click", () => {
   finalSubmitted = false;
@@ -2369,5 +2463,7 @@ document.getElementById("rfqTracker").innerHTML = "";
       });
     })();
   </script>
+
+
 </body>
 </html>
