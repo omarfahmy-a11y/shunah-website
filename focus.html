@@ -2097,5 +2097,31 @@ tableWrap.parentNode.insertBefore(mobileDetails, tableWrap);
 
   document.addEventListener('DOMContentLoaded', buildMobileSkuDetails);
 </script>
+<script>
+  const cropsMarquee = document.getElementById('cropsMarquee');
+  const cropsTrack = document.getElementById('cropsTrack');
+
+  if (cropsMarquee && cropsTrack) {
+    const isSmallScreen = () => window.innerWidth <= 640;
+
+    const pauseRibbon = () => {
+      if (isSmallScreen()) {
+        cropsTrack.style.animationPlayState = 'paused';
+      }
+    };
+
+    const resumeRibbon = () => {
+      if (isSmallScreen()) {
+        cropsTrack.style.animationPlayState = 'running';
+      }
+    };
+
+    cropsMarquee.addEventListener('touchstart', pauseRibbon, { passive: true });
+    cropsMarquee.addEventListener('touchend', resumeRibbon, { passive: true });
+    cropsMarquee.addEventListener('touchcancel', resumeRibbon, { passive: true });
+  }
+</script>
+
+
 </body>
 </html>
