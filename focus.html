@@ -260,11 +260,34 @@ body { font-family: 'Inter', sans-serif; }
   opacity: .85;
 }
 
-    @media (max-width: 640px){
-      .chip{ width: 96px; }
-      .chip:hover .pillWrap{ width: 280px; }
-      .meta .name{ max-width: 140px; }
-    }
+   @media (max-width: 640px){
+  .chip{ width: 96px; }
+  .chip:hover .pillWrap{ width: 280px; }
+  .meta .name{ max-width: 140px; }
+
+  .chip.mobile-left-lock{
+    z-index: 60;
+  }
+
+  .chip.mobile-left-lock .pillWrap{
+    width: 280px;
+    box-shadow:
+      0 10px 24px rgba(11,26,45,0.12),
+      0 0 0 1px rgba(47,93,168,0.12),
+      0 8px 18px rgba(47,93,168,0.20),
+      0 16px 34px rgba(47,93,168,0.10);
+  }
+
+  .chip.mobile-left-lock .pillContent{
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .chip.mobile-left-lock .pillWrap{
+    transform: translateX(0);
+    left: 0;
+  }
+}
 
 
 /* ===== MOBILE SKU DETAILS: reuse existing card, no nested box ===== */
@@ -2097,31 +2120,68 @@ tableWrap.parentNode.insertBefore(mobileDetails, tableWrap);
 
   document.addEventListener('DOMContentLoaded', buildMobileSkuDetails);
 </script>
+
+
 <script>
-  const cropsMarquee = document.getElementById('cropsMarquee');
-  const cropsTrack = document.getElementById('cropsTrack');
+  document.addEventListener('DOMContentLoaded', () => {
+    const cropsMarquee = document.getElementById('cropsMarquee');
+    const cropsTrack = document.getElementById('cropsTrack');
 
-  if (cropsMarquee && cropsTrack) {
+    if (!cropsMarquee || !cropsTrack) return;
+
     const isSmallScreen = () => window.innerWidth <= 640;
+    let closeTimer = null;
 
-    const pauseRibbon = () => {
-      if (isSmallScreen()) {
-        cropsTrack.style.animationPlayState = 'paused';
-      }
-    };
+    function pauseRibbon() {
+      cropsTrack.style.animationPlayState = 'paused';
+    }
 
-    const resumeRibbon = () => {
-      if (isSmallScreen()) {
-        cropsTrack.style.animationPlayState = 'running';
-      }
-    };
+    function resumeRibbon() {
+      cropsTrack.style.animationPlayState = 'running';
+    }
 
-    cropsMarquee.addEventListener('touchstart', pauseRibbon, { passive: true });
-    cropsMarquee.addEventListener('touchend', resumeRibbon, { passive: true });
-    cropsMarquee.addEventListener('touchcancel', resumeRibbon, { passive: true });
-  }
+    function closeAllChips() {
+      cropsTrack.querySelectorAll('.chip').forEach((chip) => {
+        chip.classList.remove('mobile-active', 'mobile-left-lock');
+      });
+    }
+
+    function activateChip(chip) {
+      if (!isSmallScreen() || !chip) return;
+
+      clearTimeout(closeTimer);
+
+      pauseRibbon();
+      closeAllChips();
+
+      chip.classList.add('mobile-left-lock');
+
+      requestAnimationFrame(() => {
+        chip.classList.add('mobile-active');
+      });
+
+      closeTimer = setTimeout(() => {
+        chip.classList.remove('mobile-active', 'mobile-left-lock');
+        resumeRibbon();
+      }, 3000);
+    }
+
+    cropsTrack.addEventListener('click', (e) => {
+      const chip = e.target.closest('.chip');
+      if (!chip || !isSmallScreen()) return;
+
+      e.preventDefault();
+      activateChip(chip);
+    });
+
+    cropsTrack.addEventListener('touchstart', (e) => {
+      const chip = e.target.closest('.chip');
+      if (!chip || !isSmallScreen()) return;
+
+      activateChip(chip);
+    }, { passive: true });
+  });
 </script>
-
 
 </body>
 </html>
