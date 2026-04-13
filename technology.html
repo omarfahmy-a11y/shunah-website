@@ -426,6 +426,7 @@ SHUNAH – Technology Cards
 
         <!-- ================= Panel 1 ================= -->
         <article
+id="card-1"
           class="suitePanel block h-full relative min-h-0 flex-1 overflow-hidden rounded-3xl ring-1 ring-black/10 bg-white"
           data-panel="0"
         >
@@ -450,13 +451,17 @@ SHUNAH – Technology Cards
             </div>
 
             <div class="mt-3 pt-2 mt-auto">
-              <a href="RCI.html" class="suiteKnowMore">Explore</a>
+              <a href="RCI.html" class="suiteKnowMore"
+   onclick="sessionStorage.setItem('originCard','card-1')">
+  Explore
+</a>
             </div>
           </div>
         </article>
 
         <!-- ================= Panel 2 ================= -->
         <article
+id="card-2"
           class="suitePanel block h-full relative min-h-0 flex-1 overflow-hidden rounded-3xl ring-1 ring-black/10 bg-white"
           data-panel="1"
         >
@@ -481,13 +486,17 @@ SHUNAH – Technology Cards
             </div>
 
             <div class="mt-3 pt-2 mt-auto">
-              <a href="CAV.html" class="suiteKnowMore">Explore</a>
+            <a href="CAV.html" class="suiteKnowMore"
+   onclick="sessionStorage.setItem('originCard','card-2')">
+  Explore
+</a>
             </div>
           </div>
         </article>
 
         <!-- ================= Panel 3 ================= -->
         <article
+id="card-3"
           class="suitePanel block h-full relative min-h-0 flex-1 overflow-hidden rounded-3xl ring-1 ring-black/10 bg-white"
           data-panel="2"
         >
@@ -512,13 +521,17 @@ SHUNAH – Technology Cards
             </div>
 
             <div class="mt-3 pt-2 mt-auto">
-              <a href="IOT.html" class="suiteKnowMore">Explore</a>
+             <a href="IOT.html" class="suiteKnowMore"
+   onclick="sessionStorage.setItem('originCard','card-3')">
+  Explore
+</a>
             </div>
           </div>
         </article>
 
         <!-- ================= Panel 4 ================= -->
         <article
+id="card-4"
           class="suitePanel block h-full relative min-h-0 flex-1 overflow-hidden rounded-3xl ring-1 ring-black/10 bg-white"
           data-panel="3"
         >
@@ -543,7 +556,10 @@ SHUNAH – Technology Cards
             </div>
 
             <div class="mt-3 pt-2 mt-auto">
-              <a href="DMIE.html" class="suiteKnowMore">Explore</a>
+             <a href="DMIE.html" class="suiteKnowMore"
+   onclick="sessionStorage.setItem('originCard','card-4')">
+  Explore
+</a>
             </div>
           </div>
         </article>
@@ -1064,5 +1080,28 @@ color: #225AB4;
   showNav();
   resetIdleHide();
 })();
-</script></body>
+</script>
+<script>
+window.addEventListener('load', () => {
+  const cardId = sessionStorage.getItem('originCard');
+
+  if (cardId) {
+    const el = document.getElementById(cardId);
+
+    if (el) {
+      setTimeout(() => {
+        el.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center'
+        });
+      }, 300);
+    }
+
+    sessionStorage.removeItem('originCard');
+  }
+});
+</script>
+
+
+</body>
 </html>
