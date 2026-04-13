@@ -126,7 +126,9 @@ body { font-family: 'Inter', sans-serif; }
       /* duration is set dynamically in JS for perfect looping */
       will-change: transform;
     }
-    #cropsMarquee:hover .marquee-track{ animation-play-state: paused; }
+    @media (min-width: 641px) and (hover: hover){
+  #cropsMarquee:hover .marquee-track{ animation-play-state: paused; }
+}
 
 
 
@@ -153,24 +155,25 @@ body { font-family: 'Inter', sans-serif; }
       color: rgba(11,26,45,.75);
       white-space: nowrap;
     }
-/* When hovering anywhere in the ribbon */
-#cropsTrack:hover .chip{
-  opacity: 0.25;
-  transition: opacity 180ms ease;
-}
+@media (min-width: 641px) and (hover: hover){
+  /* When hovering anywhere in the ribbon */
+  #cropsTrack:hover .chip{
+    opacity: 0.25;
+    transition: opacity 180ms ease;
+  }
 
-/* Keep hovered chip fully visible */
-#cropsTrack .chip:hover{
-  opacity: 1;
-}
+  /* Keep hovered chip fully visible */
+  #cropsTrack .chip:hover{
+    opacity: 1;
+  }
 
+  #cropsTrack .chip{
+    transition: opacity 180ms ease, transform 220ms ease;
+  }
 
-#cropsTrack .chip{
-  transition: opacity 180ms ease, transform 220ms ease;
-}
-
-#cropsTrack .chip:hover{
-  transform: scale(1.04);
+  #cropsTrack .chip:hover{
+    transform: scale(1.04);
+  }
 }
     /* ===== SIMPLE: circle image -> pill on hover (NO SPLIT) ===== */
    .pillWrap{
@@ -192,14 +195,16 @@ body { font-family: 'Inter', sans-serif; }
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
-.chip:hover .pillWrap{
-  width: 260px;
+@media (min-width: 641px) and (hover: hover){
+  .chip:hover .pillWrap{
+    width: 260px;
 
-  box-shadow:
-    0 10px 24px rgba(11,26,45,0.12),
-    0 0 0 1px rgba(47,93,168,0.12),
-    0 8px 18px rgba(47,93,168,0.20),
-    0 16px 34px rgba(47,93,168,0.10);
+    box-shadow:
+      0 10px 24px rgba(11,26,45,0.12),
+      0 0 0 1px rgba(47,93,168,0.12),
+      0 8px 18px rgba(47,93,168,0.20),
+      0 16px 34px rgba(47,93,168,0.10);
+  }
 }
     .circleImage{
       width: 60px;
@@ -223,10 +228,12 @@ body { font-family: 'Inter', sans-serif; }
       min-width: 0;
       width: calc(100% - 60px - 14px);
     }
-    .chip:hover .pillContent{
-      opacity: 1;
-      transform: translateX(0);
-    }
+    @media (min-width: 641px) and (hover: hover){
+  .chip:hover .pillContent{
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
 
     .meta{
       display: grid;
@@ -1838,7 +1845,7 @@ body { font-family: 'Inter', sans-serif; }
           <div class="pillContent">
             <div class="meta">
               <div class="name">${c.name}</div>
-              <div class="skus"><span style="font-weight:800;color:rgba(11,26,45,.92)">${c.skus}</span> SKUs</div>
+              <div class="skus"><span style="font-weight:800;color:rgba(11,26,45,.92)">3</span> SKUs</div>
             </div>
 
             <a class="knowMore" href="#skus" data-know="${c.key}">
@@ -2140,84 +2147,100 @@ tableWrap.parentNode.insertBefore(mobileDetails, tableWrap);
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-
-  const track = document.getElementById('cropsTrack');
   const marquee = document.getElementById('cropsMarquee');
+  const track = document.getElementById('cropsTrack');
 
-  if (!track || !marquee) return;
-
-  const isMobile = () => window.innerWidth <= 640;
+  if (!marquee || !track) return;
 
   let activeChip = null;
-  let timer = null;
+  let closeTimer = null;
 
-  function pause() {
+  function isSmallScreen() {
+    return window.innerWidth <= 640;
+  }
+
+  function stopRibbon() {
     track.style.animationPlayState = 'paused';
   }
 
-  function resume() {
+  function resumeRibbon() {
     track.style.animationPlayState = 'running';
   }
 
-  function closeActive() {
-    if (!activeChip) return;
+  function clearActiveChip() {
+    if (activeChip) {
+      activeChip.classList.remove('mobile-active', 'mobile-left-lock');
+      activeChip = null;
+    }
+  }
 
-    activeChip.classList.remove('mobile-active');
-    activeChip = null;
+  function clearCloseTimer() {
+    if (closeTimer) {
+      clearTimeout(closeTimer);
+      closeTimer = null;
+    }
+  }
 
-    clearTimeout(timer);
-    resume();
+  function closeCurrentAndResume() {
+    clearCloseTimer();
+    clearActiveChip();
+    resumeRibbon();
   }
 
   function openChip(chip) {
-    if (!isMobile()) return;
+    clearCloseTimer();
 
-    // close previous
     if (activeChip && activeChip !== chip) {
-      activeChip.classList.remove('mobile-active');
+      activeChip.classList.remove('mobile-active', 'mobile-left-lock');
     }
-
-    clearTimeout(timer);
 
     activeChip = chip;
+    chip.classList.add('mobile-active', 'mobile-left-lock');
+    stopRibbon();
 
-    pause();
-
-    // ensure visible (SHIFT LEFT if needed)
-    const rect = chip.getBoundingClientRect();
-    const overflowRight = rect.right + 200 - window.innerWidth; // 200 = opened width buffer
-
-    if (overflowRight > 0) {
-      track.style.transform = `translateX(${ -overflowRight - 20 }px)`;
-    }
-
-    chip.classList.add('mobile-active');
-
-    timer = setTimeout(() => {
-      closeActive();
-      track.style.transform = '';
-    }, 3000);
+    closeTimer = setTimeout(() => {
+      if (activeChip === chip) {
+        chip.classList.remove('mobile-active', 'mobile-left-lock');
+        activeChip = null;
+        resumeRibbon();
+      }
+    }, 5000);
   }
 
-  // CLICK ON CHIP
   track.addEventListener('click', (e) => {
-    const chip = e.target.closest('.chip');
-    if (!chip || !isMobile()) return;
+    if (!isSmallScreen()) return;
 
+    const chip = e.target.closest('.chip');
+    if (!chip) return;
+
+    e.preventDefault();
     e.stopPropagation();
+
+    if (activeChip === chip) {
+      closeCurrentAndResume();
+      return;
+    }
+
     openChip(chip);
   });
 
-  // CLICK ANYWHERE ELSE
   document.addEventListener('click', (e) => {
-    if (!isMobile()) return;
+    if (!isSmallScreen()) return;
+    if (!activeChip) return;
 
-    if (!e.target.closest('.chip')) {
-      closeActive();
-      track.style.transform = '';
-    }
+    const clickedChip = e.target.closest('.chip');
+    if (clickedChip) return;
+
+    closeCurrentAndResume();
   });
 
+  window.addEventListener('resize', () => {
+    if (!isSmallScreen()) {
+      clearCloseTimer();
+      clearActiveChip();
+      resumeRibbon();
+    }
+  });
 });
 </script>
 
