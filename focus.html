@@ -95,6 +95,21 @@
   .center{
     left: 71%;
   }
+.chip.mobile-active .pillWrap{
+  width: 280px;
+
+  box-shadow:
+    0 10px 24px rgba(11,26,45,0.12),
+    0 0 0 1px rgba(47,93,168,0.12),
+    0 8px 18px rgba(47,93,168,0.20),
+    0 16px 34px rgba(47,93,168,0.10);
+}
+
+.chip.mobile-active .pillContent{
+  opacity: 1;
+  transform: translateX(0);
+}
+
 }
 
 
@@ -340,6 +355,7 @@ body { font-family: 'Inter', sans-serif; }
     display: none;
     margin-top: 12px;
   }
+
 
   .sku-mobile-details.open .sku-mobile-body{
     display: block;
@@ -2123,65 +2139,89 @@ tableWrap.parentNode.insertBefore(mobileDetails, tableWrap);
 
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const cropsMarquee = document.getElementById('cropsMarquee');
-    const cropsTrack = document.getElementById('cropsTrack');
+document.addEventListener('DOMContentLoaded', () => {
 
-    if (!cropsMarquee || !cropsTrack) return;
+  const track = document.getElementById('cropsTrack');
+  const marquee = document.getElementById('cropsMarquee');
 
-    const isSmallScreen = () => window.innerWidth <= 640;
-    let closeTimer = null;
+  if (!track || !marquee) return;
 
-    function pauseRibbon() {
-      cropsTrack.style.animationPlayState = 'paused';
+  const isMobile = () => window.innerWidth <= 640;
+
+  let activeChip = null;
+  let timer = null;
+
+  function pause() {
+    track.style.animationPlayState = 'paused';
+  }
+
+  function resume() {
+    track.style.animationPlayState = 'running';
+  }
+
+  function closeActive() {
+    if (!activeChip) return;
+
+    activeChip.classList.remove('mobile-active');
+    activeChip = null;
+
+    clearTimeout(timer);
+    resume();
+  }
+
+  function openChip(chip) {
+    if (!isMobile()) return;
+
+    // close previous
+    if (activeChip && activeChip !== chip) {
+      activeChip.classList.remove('mobile-active');
     }
 
-    function resumeRibbon() {
-      cropsTrack.style.animationPlayState = 'running';
+    clearTimeout(timer);
+
+    activeChip = chip;
+
+    pause();
+
+    // ensure visible (SHIFT LEFT if needed)
+    const rect = chip.getBoundingClientRect();
+    const overflowRight = rect.right + 200 - window.innerWidth; // 200 = opened width buffer
+
+    if (overflowRight > 0) {
+      track.style.transform = `translateX(${ -overflowRight - 20 }px)`;
     }
 
-    function closeAllChips() {
-      cropsTrack.querySelectorAll('.chip').forEach((chip) => {
-        chip.classList.remove('mobile-active', 'mobile-left-lock');
-      });
-    }
+    chip.classList.add('mobile-active');
 
-    function activateChip(chip) {
-      if (!isSmallScreen() || !chip) return;
+    timer = setTimeout(() => {
+      closeActive();
+      track.style.transform = '';
+    }, 3000);
+  }
 
-      clearTimeout(closeTimer);
+  // CLICK ON CHIP
+  track.addEventListener('click', (e) => {
+    const chip = e.target.closest('.chip');
+    if (!chip || !isMobile()) return;
 
-      pauseRibbon();
-      closeAllChips();
-
-      chip.classList.add('mobile-left-lock');
-
-      requestAnimationFrame(() => {
-        chip.classList.add('mobile-active');
-      });
-
-      closeTimer = setTimeout(() => {
-        chip.classList.remove('mobile-active', 'mobile-left-lock');
-        resumeRibbon();
-      }, 3000);
-    }
-
-    cropsTrack.addEventListener('click', (e) => {
-      const chip = e.target.closest('.chip');
-      if (!chip || !isSmallScreen()) return;
-
-      e.preventDefault();
-      activateChip(chip);
-    });
-
-    cropsTrack.addEventListener('touchstart', (e) => {
-      const chip = e.target.closest('.chip');
-      if (!chip || !isSmallScreen()) return;
-
-      activateChip(chip);
-    }, { passive: true });
+    e.stopPropagation();
+    openChip(chip);
   });
+
+  // CLICK ANYWHERE ELSE
+  document.addEventListener('click', (e) => {
+    if (!isMobile()) return;
+
+    if (!e.target.closest('.chip')) {
+      closeActive();
+      track.style.transform = '';
+    }
+  });
+
+});
 </script>
+
+
 
 </body>
 </html>
