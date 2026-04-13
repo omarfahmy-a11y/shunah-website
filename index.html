@@ -133,7 +133,8 @@
         </h1>
 
         <p class="text-lg text-gray-200 mb-8">
-          Shunah is an Agritech Company focusing on Dry Crops. Utilizing Satellite Technology, Computer Aided Vision, Dynamic Market Intelligence Engine, and Social Infrastructure IoT, Shunah Optimizes the Dry Crops Supply Chain for Small Scale Farmers. 
+          Shunah is a next-generation agritech platform for dry crops.
+Leveraging satellite data, computer-aided vision, dynamic market intelligence, and IoT infrastructure, Shunah digitizes and optimizes supply chains at scale.
         </p>
 
         <a href="technology.html"
@@ -841,7 +842,11 @@ L 1400 427.4
 
   <style>
   <style>
-  /* =========================================================
+  
+
+
+
+/* =========================================================
      STAGE 2 ADD-ON FOR #process-flow-reference
      Updated:
      - Removed stage 2 red line entirely
@@ -1303,6 +1308,8 @@ transform: translate(-250px, -20px);
 </script>
 </section>
 
+
+
 <!-- =========================================================
 SECTION — SHUNAH KPIs (STRUCTURED / LEFT-ALIGNED)
 ========================================================= -->
@@ -1390,6 +1397,11 @@ Updated:
 <section id="why-dry-crops" class="bg-white text-slate-900 overflow-hidden"> 
   <div class="mx-auto max-w-[1380px] px-6 lg:px-10 py-12 lg:py-14">
 
+<!-- HOVER / TAP HINT -->
+<div class="dry-crops-hover-hint" aria-hidden="true">
+  <div class="dry-crops-hover-box">Hover / tap circle to know more</div>
+  <img src="homepage/tap-icon.png" alt="" class="dry-crops-hover-hand">
+</div>
     <!-- TOP -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
 
@@ -2345,6 +2357,86 @@ line-height: 1;
   }
 
 }
+
+/* =========================
+   WHY DRY CROPS - HOVER / TAP HINT
+   ========================= */
+#why-dry-crops .dry-crops-hover-hint{
+  position: absolute;
+  z-index: 30;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(8px) scale(0.96);
+  transition: opacity .35s ease, transform .35s ease;
+}
+
+#why-dry-crops .dry-crops-hover-hint.is-visible{
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+#why-dry-crops .dry-crops-hover-box{
+  background: rgba(255,255,255,0.96);
+  color: #062a57;
+  border: 1px solid rgba(6,42,87,0.10);
+  border-radius: 999px;
+  padding: 10px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  box-shadow: 0 14px 34px rgba(15,23,42,0.12);
+  backdrop-filter: blur(8px);
+}
+
+#why-dry-crops .dry-crops-hover-hand{
+  position: absolute;
+  width: 42px;
+  height: auto;
+  right: 130px;
+  bottom: 22px;
+  animation: dryCropsHandPulse 1.1s ease-in-out infinite;
+  transform-origin: 60% 20%;
+}
+
+@keyframes dryCropsHandPulse{
+  0%,100% { transform: translateY(0) scale(1); }
+  50%     { transform: translateY(4px) scale(0.97); }
+}
+
+/* desktop position */
+@media (min-width: 1025px){
+  #why-dry-crops .dry-crops-hover-hint{
+    top: 90%;
+    left: 10%;
+  }
+}
+
+/* mobile / tablet position */
+@media (max-width: 1024px){
+  #why-dry-crops .dry-crops-hover-hint{
+    top: 83%;
+    left: 30%;
+    transform: translate(-50%, 8px) scale(0.96);
+  }
+
+  #why-dry-crops .dry-crops-hover-hint.is-visible{
+    transform: translate(-50%, 0) scale(1);
+  }
+
+  #why-dry-crops .dry-crops-hover-box{
+    font-size: 11px;
+    padding: 9px 12px;
+  }
+
+  #why-dry-crops .dry-crops-hover-hand{
+    width: 36px;
+    right: 10px;
+    bottom: 20px;
+  }
+}
+
+
   </style>
 
   <script>
@@ -2374,9 +2466,39 @@ line-height: 1;
     const overlayText = section.querySelector('.metric-mobile-text');
     const overlaySubs = section.querySelector('.metric-mobile-subs');
     const overlayClose = section.querySelector('.metric-mobile-close');
+
     const metricSlots = Array.from(section.querySelectorAll('.metric-slot'));
 
+
+    const hoverHint = section.querySelector('.dry-crops-hover-hint');
+    let hoverHintTimer = null;
+
+    function showDryCropsHint() {
+      if (!hoverHint || !metricSlots.length) return;
+
+      hoverHint.classList.add('is-visible');
+
+      clearTimeout(hoverHintTimer);
+      hoverHintTimer = setTimeout(() => {
+        hoverHint.classList.remove('is-visible');
+      }, 5000);
+    }
+
+    function hideDryCropsHint() {
+      if (!hoverHint) return;
+      hoverHint.classList.remove('is-visible');
+      clearTimeout(hoverHintTimer);
+    }
+
     if (!overlay || !metricSlots.length) return;
+
+    showDryCropsHint();
+
+    metricSlots.forEach((slot) => {
+      slot.addEventListener('mouseenter', hideDryCropsHint, { passive: true });
+      slot.addEventListener('click', hideDryCropsHint, { passive: true });
+      slot.addEventListener('touchstart', hideDryCropsHint, { passive: true });
+    });
 
     function isMobileMetrics() {
       return window.innerWidth <= 1024;
