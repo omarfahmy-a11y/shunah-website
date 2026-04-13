@@ -930,8 +930,8 @@ text-align:center;
     </div>
   </div>
  
-
-<div class="mt-2 pt-2">
+<!-- MOBILE: keep as is -->
+<div class="mt-2 pt-2 md:hidden">
   <div class="text-[15px] font-semibold text-[#0B1A2D]">Select a date</div>
 
   <div class="mt-4 rounded-[22px] border border-black/10 p-4 sm:p-5">
@@ -953,23 +953,70 @@ text-align:center;
       <div>SUN</div><div>MON</div><div>TUE</div><div>WED</div><div>THU</div><div>FRI</div><div>SAT</div>
     </div>
 
-    <div id="rfqCalendarGrid" class="mt-3 grid grid-cols-7 gap-y-3 text-center"></div>
+    <div id="rfqCalendarGridMobile" class="mt-3 grid grid-cols-7 gap-y-3 text-center"></div>
+  </div>
+
+  <div class="mt-5">
+    <div class="flex items-center justify-between gap-3">
+      <div class="text-[15px] font-semibold text-[#0B1A2D]">Available times</div>
+      <div class="inline-flex items-center gap-2 text-[14px] text-[#0b1a2d]/65">
+        <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.9">
+          <circle cx="12" cy="12" r="8"></circle>
+          <path d="M12 8v4l2.5 1.5"></path>
+        </svg>
+        <span id="rfqBookingDurationMobile">Cairo Local</span>
+      </div>
+    </div>
+
+    <div id="rfqTimeGridMobile" class="mt-4 grid grid-cols-2 gap-3"></div>
   </div>
 </div>
 
-<div class="mt-5">
-  <div class="flex items-center justify-between gap-3">
-    <div class="text-[15px] font-semibold text-[#0B1A2D]">Available times</div>
-    <div class="inline-flex items-center gap-2 text-[14px] text-[#0b1a2d]/65">
-      <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.9">
-        <circle cx="12" cy="12" r="9"></circle>
-        <path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"></path>
-      </svg>
-      <span>Cairo Local Time</span>
+<!-- DESKTOP: new compact 2 columns -->
+<div class="hidden md:grid md:grid-cols-[minmax(0,1.1fr)_minmax(240px,0.9fr)] md:gap-5 mt-2 pt-2 items-stretch">
+  <!-- COLUMN A -->
+  <div>
+    <div class="text-[15px] font-semibold text-[#0B1A2D]">Select a date</div>
+
+    <div class="mt-4 rounded-[22px] border border-black/10 p-4">
+      <div class="flex items-center justify-between">
+        <button id="rfqCalPrevDesktop" type="button"
+          class="w-9 h-9 rounded-full border border-black/10 text-[#0B1A2D] flex items-center justify-center">
+          ‹
+        </button>
+
+        <div id="rfqCalMonthLabelDesktop" class="text-[16px] font-semibold text-[#0B1A2D]"></div>
+
+        <button id="rfqCalNextDesktop" type="button"
+          class="w-9 h-9 rounded-full border border-black/10 text-[#0B1A2D] flex items-center justify-center">
+          ›
+        </button>
+      </div>
+
+      <div class="mt-4 grid grid-cols-7 gap-y-3 text-center text-[12px] text-[#0b1a2d]/55">
+        <div>SUN</div><div>MON</div><div>TUE</div><div>WED</div><div>THU</div><div>FRI</div><div>SAT</div>
+      </div>
+
+      <div id="rfqCalendarGrid" class="mt-3 grid grid-cols-7 gap-y-3 text-center"></div>
     </div>
   </div>
 
-  <div id="rfqTimeGrid" class="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-3"></div>
+  <!-- COLUMN B -->
+  <div class="flex flex-col h-full">
+    <div class="flex items-center justify-between gap-3">
+      <div class="text-[15px] font-semibold text-[#0B1A2D]">Available times</div>
+      <div class="inline-flex items-center gap-2 text-[14px] text-[#0b1a2d]/65">
+        <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.9">
+          <circle cx="12" cy="12" r="8"></circle>
+          <path d="M12 8v4l2.5 1.5"></path>
+        </svg>
+        <span id="rfqBookingDuration">Cairo Local</span>
+      </div>
+    </div>
+
+<div id="rfqTimeGrid"
+     class="mt-4 flex flex-col gap-2 flex-1"></div>
+  </div>
 </div>
 
 <div class="mt-5 rounded-[18px] bg-[#F5F7FB] px-4 py-4">
@@ -1162,6 +1209,13 @@ const calNextBtn = document.getElementById("rfqCalNext");
 const calMonthLabel = document.getElementById("rfqCalMonthLabel");
 const calGrid = document.getElementById("rfqCalendarGrid");
 const timeGrid = document.getElementById("rfqTimeGrid");
+
+const calPrevBtnDesktop = document.getElementById("rfqCalPrevDesktop");
+const calNextBtnDesktop = document.getElementById("rfqCalNextDesktop");
+const calMonthLabelDesktop = document.getElementById("rfqCalMonthLabelDesktop");
+
+const calGridMobile = document.getElementById("rfqCalendarGridMobile");
+const timeGridMobile = document.getElementById("rfqTimeGridMobile");
 const bookingSelection = document.getElementById("rfqBookingSelection");
 
 function setMainTitle(value) {
@@ -1173,17 +1227,14 @@ const bookingState = {
   selectedDate: null,
   selectedTime: "",
   duration: "20 min",
-  times: [
-    "9:00 AM",
-    "10:30 AM",
-    "12:00 PM",
-    "1:30 PM",
-    "3:00 PM",
-    "4:30 PM",
-    "6:00 PM",
-    "7:30 PM"
-  ]
-};
+times: [
+  "9:00 AM",
+  "10:30 AM",
+  "12:00 PM",
+  "1:30 PM",
+  "3:00 PM",
+  "4:30 PM"
+]};
 
 bookingState.viewDate = new Date(
   bookingState.viewDate.getFullYear(),
@@ -1222,33 +1273,46 @@ bookingSelection.textContent =
   bookingConfirmBtn.classList.remove("opacity-50", "pointer-events-none");
 }
 
+
 function renderTimeSlots() {
-  timeGrid.innerHTML = "";
+  if (timeGrid) timeGrid.innerHTML = "";
+  if (timeGridMobile) timeGridMobile.innerHTML = "";
 
   bookingState.times.forEach((time) => {
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.textContent = time;
-    btn.className =
-      "rounded-[14px] border px-4 py-3 text-[15px] transition";
+    const createBtn = (mobile = false) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.textContent = time;
 
-    const active = bookingState.selectedTime === time;
+      const active = bookingState.selectedTime === time;
 
-    if (active) {
-      btn.className += " border-[#3B82F6] bg-[#F7FAFF] text-[#2F5DA8] shadow-[0_8px_18px_rgba(59,130,246,.08)]";
-    } else {
-      btn.className += " border-black/10 bg-white text-[#0B1A2D]";
-    }
+      btn.className = mobile
+        ? "rounded-xl border px-4 py-3 text-[13px] font-medium transition " +
+          (active
+            ? "bg-[#2F5DA8] text-white border-[#2F5DA8] shadow-[0_8px_20px_rgba(47,93,168,0.20)]"
+            : "border-black/10 text-[#0B1A2D] hover:border-[#2F5DA8] hover:text-[#2F5DA8]")
+       
+: "w-full flex-1 rounded-xl border px-4 py-3 text-left text-[13px] flex items-center justify-start bg-white" +
+  (active
+    ? " border-[#2F5DA8] text-[#2F5DA8] shadow-[0_8px_20px_rgba(47,93,168,0.20)]"
+    : " border-black/10 text-[#0B1A2D] hover:border-[#2F5DA8] hover:text-[#2F5DA8]");
 
-    btn.addEventListener("click", () => {
-      bookingState.selectedTime = time;
-      renderTimeSlots();
-      updateBookingSelection();
-    });
 
-    timeGrid.appendChild(btn);
+      btn.addEventListener("click", () => {
+        bookingState.selectedTime = time;
+        renderTimeSlots();
+        updateBookingSelection();
+      });
+
+      return btn;
+    };
+
+    if (timeGrid) timeGrid.appendChild(createBtn(false));
+    if (timeGridMobile) timeGridMobile.appendChild(createBtn(true));
   });
 }
+
+
 
 
 function renderCalendar() {
@@ -1256,125 +1320,119 @@ function renderCalendar() {
   const year = view.getFullYear();
   const month = view.getMonth();
 
-  calMonthLabel.textContent = view.toLocaleString("en-US", {
+  const monthLabel = view.toLocaleDateString("en-US", {
     month: "long",
     year: "numeric"
   });
 
-  calGrid.innerHTML = "";
+  if (calMonthLabel) calMonthLabel.textContent = monthLabel;
+  if (calMonthLabelDesktop) calMonthLabelDesktop.textContent = monthLabel;
+
+  if (calGrid) calGrid.innerHTML = "";
+  if (calGridMobile) calGridMobile.innerHTML = "";
+
+  const today = new Date();
+  const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate());
 
   const firstDayIndex = new Date(year, month, 1).getDay();
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const prevMonthDays = new Date(year, month, 0).getDate();
 
-  const today = new Date();
-  const todayOnly = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  function makeDayButton(targetDate, dayNumber, isGhost = false) {
+    const isPast = targetDate < todayStart;
+    const isToday = sameDay(targetDate, todayStart);
+    const isSelected = sameDay(targetDate, bookingState.selectedDate);
 
-  const currentMonthStart = new Date(todayOnly.getFullYear(), todayOnly.getMonth(), 1);
-  const viewedMonthStart = new Date(year, month, 1);
-
-  const isCurrentMonthView =
-    viewedMonthStart.getFullYear() === currentMonthStart.getFullYear() &&
-    viewedMonthStart.getMonth() === currentMonthStart.getMonth();
-
-  // Disable left arrow on current month
-  if (isCurrentMonthView) {
-    calPrevBtn.disabled = true;
-    calPrevBtn.classList.add("opacity-35", "cursor-not-allowed");
-  } else {
-    calPrevBtn.disabled = false;
-    calPrevBtn.classList.remove("opacity-35", "cursor-not-allowed");
-  }
-
-  // Previous month spillover days
-  for (let i = 0; i < firstDayIndex; i++) {
-    const prevDay = prevMonthDays - firstDayIndex + i + 1;
-
-    const ghostBtn = document.createElement("button");
-    ghostBtn.type = "button";
-    ghostBtn.textContent = prevDay;
-    ghostBtn.className =
-      "mx-auto inline-flex items-center justify-center w-11 h-11 rounded-full text-[15px]";
-
-    if (isCurrentMonthView) {
-      // In today's real month → blur and disable all previous-month spillover
-      ghostBtn.classList.add("rfqDateBlur");
-      ghostBtn.disabled = true;
-    } else {
-      // In other months → normal ghost behavior
-      ghostBtn.classList.add("text-[#0b1a2d]/30");
-      ghostBtn.addEventListener("click", () => {
-        bookingState.viewDate = new Date(year, month - 1, 1);
-        bookingState.selectedDate = new Date(year, month - 1, prevDay);
-        renderCalendar();
-        updateBookingSelection();
-      });
-    }
-
-    calGrid.appendChild(ghostBtn);
-  }
-
-  // Current month days
-  for (let day = 1; day <= daysInMonth; day++) {
-    const dateObj = new Date(year, month, day);
-    const isPast = isCurrentMonthView && dateObj < todayOnly;
-    const isSelected = sameDay(dateObj, bookingState.selectedDate);
-    const isToday = sameDay(dateObj, todayOnly);
-
-    const wrap = document.createElement("div");
     const btn = document.createElement("button");
-
     btn.type = "button";
-    btn.textContent = day;
+    btn.textContent = dayNumber;
     btn.className =
-      "inline-flex items-center justify-center w-11 h-11 rounded-full text-[15px] transition";
+      "mx-auto inline-flex items-center justify-center w-11 h-11 rounded-full text-[15px] transition";
 
     if (isSelected) {
       btn.className += " bg-[#3B82F6] text-white shadow-[0_8px_18px_rgba(59,130,246,0.28)]";
-    } else if (isPast) {
+    } else if (isPast && !isGhost) {
       btn.classList.add("rfqDateBlur");
       btn.disabled = true;
-    } else if (isToday) {
+    } else if (isToday && !isGhost) {
       btn.className += " border border-[#3B82F6] text-[#2F5DA8] bg-[#F7FAFF]";
     } else {
-      btn.className += " text-[#0B1A2D] hover:bg-[#F3F6FB]";
+      btn.className += isGhost
+        ? " text-[#0b1a2d]/30 hover:bg-[#F3F6FB]"
+        : " text-[#0B1A2D] hover:bg-[#F3F6FB]";
     }
 
-    if (!isPast) {
+    if (!isPast || isGhost) {
       btn.addEventListener("click", () => {
-        bookingState.selectedDate = new Date(year, month, day);
+        bookingState.selectedDate = new Date(
+          targetDate.getFullYear(),
+          targetDate.getMonth(),
+          targetDate.getDate()
+        );
+
+        bookingState.viewDate = new Date(
+          targetDate.getFullYear(),
+          targetDate.getMonth(),
+          1
+        );
+
         renderCalendar();
         updateBookingSelection();
       });
     }
 
-    wrap.appendChild(btn);
-    calGrid.appendChild(wrap);
+    return btn;
   }
 
-  // Next month spillover days
+  function appendToBoth(btnDesktop, btnMobile) {
+    if (calGrid) calGrid.appendChild(btnDesktop);
+    if (calGridMobile) calGridMobile.appendChild(btnMobile);
+  }
+
+  // Previous month spillover
+  for (let i = firstDayIndex - 1; i >= 0; i--) {
+    const dayNumber = prevMonthDays - i;
+    const targetDate = new Date(year, month - 1, dayNumber);
+
+    const btnDesktop = makeDayButton(targetDate, dayNumber, true);
+    const btnMobile = makeDayButton(targetDate, dayNumber, true);
+
+    appendToBoth(btnDesktop, btnMobile);
+  }
+
+  // Current month
+  for (let day = 1; day <= daysInMonth; day++) {
+    const targetDate = new Date(year, month, day);
+
+    const btnDesktop = makeDayButton(targetDate, day, false);
+    const btnMobile = makeDayButton(targetDate, day, false);
+
+    appendToBoth(btnDesktop, btnMobile);
+  }
+
+  // Next month spillover
   const totalCells = firstDayIndex + daysInMonth;
   const trailing = (7 - (totalCells % 7)) % 7;
 
   for (let i = 1; i <= trailing; i++) {
-    const nextDay = i;
+    const targetDate = new Date(year, month + 1, i);
 
-    const ghostBtn = document.createElement("button");
-    ghostBtn.type = "button";
-    ghostBtn.textContent = nextDay;
-    ghostBtn.className =
-      "mx-auto inline-flex items-center justify-center w-11 h-11 rounded-full text-[15px] text-[#0b1a2d]/30";
+    const btnDesktop = makeDayButton(targetDate, i, true);
+    const btnMobile = makeDayButton(targetDate, i, true);
 
-    ghostBtn.addEventListener("click", () => {
-      bookingState.viewDate = new Date(year, month + 1, 1);
-      bookingState.selectedDate = new Date(year, month + 1, nextDay);
-      renderCalendar();
-      updateBookingSelection();
-    });
-
-    calGrid.appendChild(ghostBtn);
+    appendToBoth(btnDesktop, btnMobile);
   }
 }
+
+
+
+
+
+
+
+
+
+
 
 function openBookingCalendar() {
   if (!bookingState.selectedDate) {
@@ -1428,6 +1486,36 @@ calNextBtn.addEventListener("click", () => {
 });
 
 
+calPrevBtnDesktop?.addEventListener("click", () => {
+  const today = new Date();
+  const currentMonthStart = new Date(today.getFullYear(), today.getMonth(), 1);
+  const viewedMonthStart = new Date(
+    bookingState.viewDate.getFullYear(),
+    bookingState.viewDate.getMonth(),
+    1
+  );
+
+  if (viewedMonthStart <= currentMonthStart) {
+    return;
+  }
+
+  bookingState.viewDate = new Date(
+    bookingState.viewDate.getFullYear(),
+    bookingState.viewDate.getMonth() - 1,
+    1
+  );
+
+  renderCalendar();
+});
+
+calNextBtnDesktop?.addEventListener("click", () => {
+  bookingState.viewDate = new Date(
+    bookingState.viewDate.getFullYear(),
+    bookingState.viewDate.getMonth() + 1,
+    1
+  );
+  renderCalendar();
+});
       const tracker = document.getElementById("rfqTracker");
       const mobileTracker = document.getElementById("rfqMobileTracker");
 
