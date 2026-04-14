@@ -930,8 +930,9 @@ text-align:center;
     </div>
   </div>
  
-<!-- MOBILE: keep as is -->
-<div class="mt-2 pt-2 md:hidden">
+
+<!-- MOBILE -->
+<div id="rfqBookingCalendarMobileWrap" class="mt-2 pt-2 md:hidden">
   <div class="text-[15px] font-semibold text-[#0B1A2D]">Select a date</div>
 
   <div class="mt-4 rounded-[22px] border border-black/10 p-4 sm:p-5">
@@ -972,9 +973,8 @@ text-align:center;
   </div>
 </div>
 
-<!-- DESKTOP: new compact 2 columns -->
-<div class="hidden md:grid md:grid-cols-[minmax(0,1.1fr)_minmax(240px,0.9fr)] md:gap-5 mt-2 pt-2 items-stretch">
-  <!-- COLUMN A -->
+<!-- DESKTOP -->
+<div id="rfqBookingCalendarDesktopWrap" class="hidden md:grid md:grid-cols-[minmax(0,1.25fr)_minmax(200px,0.75fr)] md:gap-5 mt-2 pt-2 items-stretch">
   <div>
     <div class="text-[15px] font-semibold text-[#0B1A2D]">Select a date</div>
 
@@ -1001,7 +1001,6 @@ text-align:center;
     </div>
   </div>
 
-  <!-- COLUMN B -->
   <div class="flex flex-col h-full">
     <div class="flex items-center justify-between gap-3">
       <div class="text-[15px] font-semibold text-[#0B1A2D]">Available times</div>
@@ -1014,12 +1013,11 @@ text-align:center;
       </div>
     </div>
 
-<div id="rfqTimeGrid"
-     class="mt-4 flex flex-col gap-2 flex-1"></div>
+    <div id="rfqTimeGrid" class="mt-4 flex flex-col gap-2 flex-1 items-center"></div>
   </div>
 </div>
 
-<div class="mt-5 rounded-[18px] bg-[#F5F7FB] px-4 py-4">
+<div id="rfqBookingSelectionWrap" class="mt-5 rounded-[18px] bg-[#F5F7FB] px-4 py-4">
   <div class="flex items-center gap-3">
     <div class="w-10 h-10 rounded-[12px] bg-white flex items-center justify-center text-[#3B82F6]">
       <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.9">
@@ -1035,6 +1033,19 @@ text-align:center;
       </div>
     </div>
   </div>
+</div>
+
+<div id="rfqBookingEmailState" class="hidden mt-5 text-center">
+  <img
+    src="rfq/letter.png"
+    alt="Confirmation letter"
+    class="mx-auto w-[170px] sm:w-[210px] h-auto object-contain"
+  />
+
+  <p class="mt-4 text-[14px] sm:text-[15px] leading-relaxed text-[#0b1a2d]/70 max-w-[460px] mx-auto">
+    You will recive a confirmation email shortly, on
+    <span id="rfqBookingEmailText" class="font-semibold text-[#0B1A2D]"></span>.
+  </p>
 </div>
 
 <button id="rfqBookingConfirm"
@@ -1217,6 +1228,12 @@ const calMonthLabelDesktop = document.getElementById("rfqCalMonthLabelDesktop");
 const calGridMobile = document.getElementById("rfqCalendarGridMobile");
 const timeGridMobile = document.getElementById("rfqTimeGridMobile");
 const bookingSelection = document.getElementById("rfqBookingSelection");
+
+const bookingCalendarMobileWrap = document.getElementById("rfqBookingCalendarMobileWrap");
+const bookingCalendarDesktopWrap = document.getElementById("rfqBookingCalendarDesktopWrap");
+const bookingSelectionWrap = document.getElementById("rfqBookingSelectionWrap");
+const bookingEmailState = document.getElementById("rfqBookingEmailState");
+const bookingEmailText = document.getElementById("rfqBookingEmailText");
 
 function setMainTitle(value) {
   const title = document.getElementById("rfqMainTitle");
@@ -2138,21 +2155,32 @@ function closeKeyboardThen(callback) {
 }
 
 startBtn.addEventListener("click", () => {
-  const basicsFilled =
-    nameEl.value.trim() &&
-    companyEl.value.trim() &&
-    emailEl.value.trim() &&
-    phoneEl.value.trim();
+  const name = nameEl.value.trim();
+  const company = companyEl.value.trim();
+  const email = emailEl.value.trim();
+  const phone = phoneEl.value.trim();
+
+  const basicsFilled = name && company && email && phone;
 
   if (!basicsFilled) {
     blinkMissingBasics();
     return;
   }
 
-  state.__name = nameEl.value.trim();
-  state.__company = companyEl.value.trim();
-  state.__email = emailEl.value.trim();
-  state.__phone = phoneEl.value.trim();
+  // email validation
+  const emailBox = emailEl.closest(".rfqFieldFlex");
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (!emailEl.checkValidity() || !emailRegex.test(email)) {
+    blinkInvalid(emailBox);
+    emailEl.focus();
+    return;
+  }
+
+  state.__name = name;
+  state.__company = company;
+  state.__email = email;
+  state.__phone = phone;
 
   if (editingBasicFromReview) {
     editingBasicFromReview = false;
@@ -2177,18 +2205,18 @@ startBtn.addEventListener("click", () => {
 
   startBtn.textContent = "Next →";
 
-setMainTitle("Choose Your Path");
+  setMainTitle("Choose Your Path");
 
-
-document.getElementById("rfqSubtitle").style.display = "none";
-document.getElementById("rfqHelperText").textContent =
-  "Choose the route that best matches what you want to do.";
-document.getElementById("rfqHelperText").style.display = "";
+  document.getElementById("rfqSubtitle").style.display = "none";
+  document.getElementById("rfqHelperText").textContent =
+    "Choose the route that best matches what you want to do.";
+  document.getElementById("rfqHelperText").style.display = "";
 
   if (window.innerWidth < 768) {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 });
+
 
 pathButtons.forEach((btn) => {
   btn.addEventListener("click", () => {
@@ -2289,43 +2317,29 @@ document.getElementById("rfqSubtitle").style.display = "none";
 });
 
 bookingConfirmBtn.addEventListener("click", () => {
-
-  // only for path 1 & 2
-  if (state.__path !== "tech" && state.__path !== "usecase") return;
-
-  // make sure date + time selected
   if (!bookingState.selectedDate || !bookingState.selectedTime) return;
 
-  // UI feedback
-  bookingConfirmBtn.textContent = "Booked ✓";
-  bookingConfirmBtn.disabled = true;
-  bookingConfirmBtn.classList.add("opacity-70");
+  const userEmail = emailEl.value.trim();
 
-  document.getElementById("rfqHelperText").textContent =
-    "Your session has been booked successfully.";
+  bookingCalendarMobileWrap.style.display = "none";
+  bookingCalendarDesktopWrap.style.display = "none";
+  bookingSelectionWrap.style.display = "none";
 
-  // wait 5 seconds → reset
-  setTimeout(() => {
-    resetRfqForm();
-
-    // scroll up (important mobile)
-    window.scrollTo({ top: 0, behavior: "smooth" });
-
-  }, 5000);
-
-});
-
-bookingConfirmBtn.addEventListener("click", () => {
-  if (!bookingState.selectedDate || !bookingState.selectedTime) return;
+  bookingEmailText.textContent = userEmail || "your email";
+  bookingEmailState.classList.remove("hidden");
+  bookingEmailState.style.display = "block";
 
   bookingConfirmBtn.textContent = "Booking Confirmed";
   bookingConfirmBtn.disabled = true;
-  bookingConfirmBtn.classList.remove("pointer-events-none");
+  bookingConfirmBtn.classList.remove("pointer-events-none", "opacity-50");
   bookingConfirmBtn.classList.add("opacity-80");
 
-  bookingSelection.textContent =
-    `${formatLongDate(bookingState.selectedDate)} • ${bookingState.selectedTime} • ${bookingState.duration}`;
+  setTimeout(() => {
+    resetRfqForm();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, 5000);
 });
+
 
 nextBtn.addEventListener("click", () => {
   closeKeyboardThen(() => {
@@ -2371,16 +2385,27 @@ function scrollFormToTopMobile(){
 }
 
 function resetRfqForm(){
-  Object.keys(state).forEach((key) => delete state[key]);
-  completed.clear();
-  current = 0;
-  finalSubmitted = false;
-  hasReviewed = false;
+  const savedName = state.__name || "";
+const savedCompany = state.__company || "";
+const savedEmail = state.__email || "";
+const savedPhone = state.__phone || "";
 
-  nameEl.value = "";
-companyEl.value = "";
-emailEl.value = "";
-phoneEl.value = "";
+Object.keys(state).forEach((key) => delete state[key]);
+
+state.__name = savedName;
+state.__company = savedCompany;
+state.__email = savedEmail;
+state.__phone = savedPhone;
+
+completed.clear();
+current = 0;
+finalSubmitted = false;
+hasReviewed = false;
+
+nameEl.value = savedName;
+companyEl.value = savedCompany;
+emailEl.value = savedEmail;
+phoneEl.value = savedPhone;
 
 editingBasicFromReview = false;
 startBtn.textContent = "Next →";  
@@ -2425,6 +2450,13 @@ bookingConfirmBtn.disabled = false;
 bookingConfirmBtn.classList.add("opacity-50", "pointer-events-none");
 bookingConfirmBtn.classList.remove("opacity-80");
 bookingSelection.textContent = "Select a date and time"; 
+
+bookingCalendarMobileWrap.style.display = "";
+bookingCalendarDesktopWrap.style.display = "";
+bookingSelectionWrap.style.display = "";
+bookingEmailState.style.display = "";
+bookingEmailState.classList.add("hidden");
+bookingEmailText.textContent = "";
 
 
  render();
@@ -2487,7 +2519,7 @@ document.getElementById("rfqTracker").innerHTML = "";
 
   setTimeout(() => {
     resetRfqForm();
-  }, 5000);
+  }, 10000);
 });
 
 
