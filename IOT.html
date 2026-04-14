@@ -211,17 +211,20 @@
           </h2>
 
           <p class="mt-6 max-w-[540px] text-[16px] leading-[1.75] text-slate-600">
-            IoT connects every touchpoint—farms, assets, and logistics—making us the intelligence layer that processes and directs flow in real time. Every interaction becomes a signal that drives smarter movement, tighter control, and consistent execution.
-          </p>
+  IoT connects every touchpoint—crops, assets, and capital—making us the intelligence layer that processes and directs flow in real time.
+  <span class="text-[#2F5DA8] font-medium">
+    Our ambition is to channel 30% of Africa’s agricultural GDP through our infrastructure
+  </span>, positioning Shunah as the backbone of agri-flow across the continent.
+</p>
   <!-- DESKTOP TOGGLE: ABOVE METRICS -->
 <div class="hidden lg:flex mt-4 mb-4 ml-7">
 
   <div class="relative inline-flex rounded-full border border-slate-200 bg-slate-100 p-1">
     <button
-      id="toggle-features"
+      id="toggle-Platform"
       class="toggle-btn relative z-10 rounded-full px-5 py-1.5 text-sm font-semibold transition-all duration-300 bg-white text-[#0E2A47] shadow"
     >
-      Features
+      Platform
     </button>
 
     <button
@@ -264,10 +267,10 @@
 <div class="relative flex flex-col items-center mt-6 lg:hidden">
   <div class="relative inline-flex rounded-full border border-slate-200 bg-slate-100 p-1">
     <button
-      id="toggle-features-mobile"
+      id="toggle-Platform-mobile"
       class="toggle-btn relative z-10 rounded-full px-5 py-1.5 text-sm font-semibold transition-all duration-300 bg-white text-[#0E2A47] shadow"
     >
-      Features
+      Platform
     </button>
 
     <button
@@ -324,7 +327,7 @@
 
   
      <img
-  src="IOT/app2.png"
+  src="IOT/app2.jpeg"
   class="h-[110%] w-[110%] object-contain mx-auto"
       onerror="this.style.opacity='0'; this.parentElement.style.background='white';"
     />
@@ -425,7 +428,7 @@ class="opacity-0 transition-opacity duration-500"
               id="ssc-mobile-panel"
               class="mt-5 overflow-hidden rounded-xl border border-[#0E2A47]/15 bg-white lg:hidden"
             >
-<div id="ssc-mobile-features" class="hidden p-5">
+<div id="ssc-mobile-Platform" class="hidden p-5">
 
   <!-- TITLE -->
   <div class="text-center mb-3">
@@ -572,7 +575,7 @@ What was once noise becomes clarity.
 >
             <div class="relative h-full overflow-hidden">
 
-             <div id="ssc-features-panel" class="absolute inset-0 pr-2 opacity-100 transition-opacity duration-150">
+             <div id="ssc-Platform-panel" class="absolute inset-0 pr-2 opacity-100 transition-opacity duration-150">
   <div class="flex min-h-[420px] lg:min-h-[500px] flex-col justify-start pt-1">
     
     <!-- CHIP -->
@@ -839,7 +842,7 @@ What was once noise becomes clarity.
         const arc = document.getElementById("ssc-arc");
 const bgRing = document.getElementById("ssc-bg-ring");
 
-      const featuresPanel = document.getElementById("ssc-features-panel");
+      const PlatformPanel = document.getElementById("ssc-Platform-panel");
 const featureAppBox = document.getElementById("ssc-feature-app-box");
 const panel = document.getElementById("ssc-panel");
 const mobilePanel = document.getElementById("ssc-mobile-panel");
@@ -851,7 +854,7 @@ const intro = document.getElementById("ssc-intro");
         const tStep = document.getElementById("ssc-step");
         const bullets = document.getElementById("ssc-bullets");
         const detailIcon = document.getElementById("ssc-detail-icon");
-const mobileFeatures = document.getElementById("ssc-mobile-features");
+const mobilePlatform = document.getElementById("ssc-mobile-Platform");
         const mobileIntro = document.getElementById("ssc-mobile-intro");
         const mobileDetail = document.getElementById("ssc-mobile-detail");
         const mobileTitle = document.getElementById("ssc-mobile-title");
@@ -877,10 +880,10 @@ const helperPulseRing = document.getElementById("ssc-helper-pulse-ring");
 
         const counters = Array.from(section.querySelectorAll(".ssc-counter"));
 
-        const btnFeatures = document.getElementById("toggle-features");
+        const btnPlatform = document.getElementById("toggle-Platform");
         const btnBackend = document.getElementById("toggle-backend");
 
-const btnFeaturesMobile = document.getElementById("toggle-features-mobile");
+const btnPlatformMobile = document.getElementById("toggle-Platform-mobile");
 const btnBackendMobile = document.getElementById("toggle-backend-mobile");
 
 const mobileSourcesSlider = document.getElementById("ssc-mobile-sources-slider");
@@ -891,10 +894,10 @@ let mobileSourcesIndex = 0;
 let mobileStartX = 0;
 let mobileDeltaX = 0;
 
-btnFeatures?.addEventListener("click", () => setToggle("features"));
+btnPlatform?.addEventListener("click", () => setToggle("Platform"));
 btnBackend?.addEventListener("click", () => setToggle("backend"));
 
-btnFeaturesMobile?.addEventListener("click", () => setToggle("features"));
+btnPlatformMobile?.addEventListener("click", () => setToggle("Platform"));
 btnBackendMobile?.addEventListener("click", () => {
   setToggle("backend");
 
@@ -911,7 +914,7 @@ btnBackendMobile?.addEventListener("click", () => {
         let autoplay = false;
         let countersRan = false;
         let helperTimer = null;
-        let currentMode = "features";
+        let currentMode = "Platform";
 
         const isReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         const hasHover = window.matchMedia("(hover: hover)").matches;
@@ -920,13 +923,14 @@ btnBackendMobile?.addEventListener("click", () => {
         function isMobileView() {
           return mobileMq.matches;
         }
-
 function updateMobileSourcesSlider(index) {
   if (!mobileSourcesTrack) return;
 
-  const maxIndex = 2;
-  mobileSourcesIndex = Math.max(0, Math.min(index, maxIndex));
+  const totalSlides = 3;
+  mobileSourcesIndex = (index + totalSlides) % totalSlides;
+
   mobileSourcesTrack.style.transform = `translateX(-${mobileSourcesIndex * 100}%)`;
+
   mobileSourceDots.forEach((dot, i) => {
     dot.classList.toggle("bg-[#2F5DA8]", i === mobileSourcesIndex);
     dot.classList.toggle("bg-slate-300", i !== mobileSourcesIndex);
@@ -951,13 +955,15 @@ function initMobileSourcesSlider() {
     mobileDeltaX = e.touches[0].clientX - mobileStartX;
   }, { passive: true });
 
-  mobileSourcesSlider.addEventListener("touchend", () => {
-    if (mobileDeltaX < -40) {
+ mobileSourcesSlider.addEventListener("touchend", () => {
+  if (Math.abs(mobileDeltaX) > 40) {
+    if (mobileDeltaX < 0) {
       updateMobileSourcesSlider(mobileSourcesIndex + 1);
-    } else if (mobileDeltaX > 40) {
+    } else {
       updateMobileSourcesSlider(mobileSourcesIndex - 1);
     }
-  });
+  }
+});
 
   updateMobileSourcesSlider(0);
 }
@@ -999,10 +1005,10 @@ function initMobileSourcesSlider() {
           updateMobilePanelOnly(i);
         }
 
-        function showDesktopFeatures() {
-          if (featuresPanel) {
-            featuresPanel.classList.add("opacity-100");
-            featuresPanel.classList.remove("opacity-0", "pointer-events-none");
+        function showDesktopPlatform() {
+          if (PlatformPanel) {
+            PlatformPanel.classList.add("opacity-100");
+            PlatformPanel.classList.remove("opacity-0", "pointer-events-none");
           }
 
           if (intro) {
@@ -1016,16 +1022,16 @@ function initMobileSourcesSlider() {
           }
         }
 
-        function hideDesktopFeatures() {
-          if (!featuresPanel) return;
-          featuresPanel.classList.add("opacity-0", "pointer-events-none");
-          featuresPanel.classList.remove("opacity-100");
+        function hideDesktopPlatform() {
+          if (!PlatformPanel) return;
+          PlatformPanel.classList.add("opacity-0", "pointer-events-none");
+          PlatformPanel.classList.remove("opacity-100");
         }
 
         function showDesktopIntro() {
           if (!intro || !detail) return;
 
-          hideDesktopFeatures();
+          hideDesktopPlatform();
 
           intro.classList.add("opacity-100");
           intro.classList.remove("opacity-0", "pointer-events-none");
@@ -1037,7 +1043,7 @@ function initMobileSourcesSlider() {
         function showDesktopDetail() {
           if (!intro || !detail) return;
 
-          hideDesktopFeatures();
+          hideDesktopPlatform();
 
           intro.classList.add("opacity-0", "pointer-events-none");
           intro.classList.remove("opacity-100");
@@ -1051,13 +1057,13 @@ function setToggle(mode) {
 
 const panel = document.getElementById("ssc-panel");
 
-if (mode === "features") {
+if (mode === "Platform") {
   panel.style.height = "620px";   // taller (adjust if you want)
 } else {
   panel.style.height = "420px";   // original backend height
 } 
 
-if (mode === "features") {
+if (mode === "Platform") {
   panel.style.border = "none";
   panel.style.boxShadow = "none";
   panel.style.background = "transparent";
@@ -1069,25 +1075,25 @@ if (mode === "features") {
 
 const rightCol = document.getElementById("ssc-right-col");
 
-if (mode === "features") {
+if (mode === "Platform") {
   rightCol.style.paddingTop = "0px";   // moves it UP (adjust if needed)
 } else {
   rightCol.style.paddingTop = "96px";   // original pt-24
 }
 
- if (mode === "features") {
+ if (mode === "Platform") {
     stopHelper();
 stopAutoplay();
 
 
 
-    btnFeatures?.classList.add("bg-white", "text-[#0E2A47]", "shadow");
+    btnPlatform?.classList.add("bg-white", "text-[#0E2A47]", "shadow");
     mobilePanel?.classList.remove("border-[#0E2A47]/15", "border-slate-200");
     mobilePanel?.classList.add("border-transparent");
-    btnFeatures?.classList.remove("text-slate-500");
+    btnPlatform?.classList.remove("text-slate-500");
 
-    btnFeaturesMobile?.classList.add("bg-white", "text-[#0E2A47]", "shadow");
-    btnFeaturesMobile?.classList.remove("text-slate-500");
+    btnPlatformMobile?.classList.add("bg-white", "text-[#0E2A47]", "shadow");
+    btnPlatformMobile?.classList.remove("text-slate-500");
 
     btnBackendMobile?.classList.remove("bg-white", "text-[#0E2A47]", "shadow");
     btnBackendMobile?.classList.add("text-slate-500");
@@ -1113,14 +1119,14 @@ stopAutoplay();
     mobilePanel?.classList.remove("mt-5", "mt-12", "mt-32", "mt-44");
     mobilePanel?.classList.add("mt-32");
 
-    if (mobileFeatures) mobileFeatures.classList.remove("hidden");
+    if (mobilePlatform) mobilePlatform.classList.remove("hidden");
     if (mobileIntro) mobileIntro.classList.add("hidden");
     if (mobileDetail) {
       mobileDetail.classList.add("hidden");
       mobileDetail.classList.remove("flex");
     }
 
-    showDesktopFeatures();
+    showDesktopPlatform();
   } else {
     if (isMobileView()) {
       runMobileIntro();
@@ -1136,14 +1142,14 @@ stopAutoplay();
     bgRing?.classList.remove("opacity-0");
     bgRing?.classList.add("opacity-100");
 
-    btnFeatures?.classList.remove("bg-white", "text-[#0E2A47]", "shadow");
-    btnFeatures?.classList.add("text-slate-500");
+    btnPlatform?.classList.remove("bg-white", "text-[#0E2A47]", "shadow");
+    btnPlatform?.classList.add("text-slate-500");
 
     btnBackendMobile?.classList.add("bg-white", "text-[#0E2A47]", "shadow");
     btnBackendMobile?.classList.remove("text-slate-500");
 
-    btnFeaturesMobile?.classList.remove("bg-white", "text-[#0E2A47]", "shadow");
-    btnFeaturesMobile?.classList.add("text-slate-500");
+    btnPlatformMobile?.classList.remove("bg-white", "text-[#0E2A47]", "shadow");
+    btnPlatformMobile?.classList.add("text-slate-500");
 
     mobilePanel?.classList.remove("border-transparent");
     mobilePanel?.classList.add("border", "border-[#0E2A47]/15");
@@ -1163,7 +1169,7 @@ stopAutoplay();
     mobilePanel?.classList.remove("mt-5", "mt-12", "mt-32", "mt-44");
     mobilePanel?.classList.add("mt-12");
 
-    if (mobileFeatures) mobileFeatures.classList.add("hidden");
+    if (mobilePlatform) mobilePlatform.classList.add("hidden");
     if (mobileIntro) mobileIntro.classList.remove("hidden");
     if (mobileDetail) {
       mobileDetail.classList.add("hidden");
@@ -1537,7 +1543,7 @@ function runMobileHelper() {
 
         mobileClose?.addEventListener("click", closeMobileDetail);
 
-        btnFeatures?.addEventListener("click", () => setToggle("features"));
+        btnPlatform?.addEventListener("click", () => setToggle("Platform"));
         btnBackend?.addEventListener("click", () => setToggle("backend"));
 
         updateAllPanels(0);
@@ -1552,7 +1558,7 @@ initMobileSourcesSlider();
           setActive(0, true);
         }
 
-        setToggle("features");
+        setToggle("Platform");
         setupScrollTrigger();
 
         mobileMq.addEventListener?.("change", () => {
@@ -1562,8 +1568,8 @@ initMobileSourcesSlider();
           if (!isMobileView()) {
             unlockMobilePageScroll();
             closeMobileDetail();
-            if (currentMode === "features") {
-              showDesktopFeatures();
+            if (currentMode === "Platform") {
+              showDesktopPlatform();
             } else {
               showDesktopIntro();
             }
