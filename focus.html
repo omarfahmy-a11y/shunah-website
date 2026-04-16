@@ -67,14 +67,63 @@
   border-bottom-right-radius: 205px;
 }
 
-/* 4 — PALE BLUE */ .quarter-4 { position: absolute; top: 75px; left: 303px; /* SAME as circle 3 */ width: 185px; height: 185px; background: #cfe3ff; border-top-right-radius: 185px; } /* 5 — NAVY */ .quarter-5 { position: absolute; top: 115px; left: 303px; /* SAME as circle 3 */ width: 145px; height: 145px; background: #0e2a47; border-top-right-radius: 145px; }
+.quarter-4 {
+  position: absolute;
+  top: 65px;
+  left: 303px;
+  width: 185px;
+  height: 185px;
+  background: #cfe3ff;
+  border-top-right-radius: 185px;
+  z-index: 2; /* 👈 add this */
+}
+
+.quarter-5 {
+  position: absolute;
+  top: 105px;
+  left: 303px;
+  width: 145px;
+  height: 145px;
+  background: #0e2a47;
+  border-top-right-radius: 145px;
+  z-index: 3; /* 👈 add this */
+}
+
+.quarter-6 {
+  position: absolute;
+  top: 25px;
+  left: 303px;
+  width: 225px;
+  height: 225px;
+  background: #e8f1ff;
+  border-top-right-radius: 225px;
+  z-index: 1; /* 👈 THIS is where it goes */
+}
+
+.quarter-7 {
+  position: absolute;
+
+  /* slightly offset so edge shows */
+  top: calc(40px - var(--gap) - 5px);
+  left: calc(70px - var(--gap) - 5px);
+
+  width: 210px;
+  height: 210px;
+
+  background: #cfe3ff;
+
+  /* THIS is the key fix */
+  border-top-left-radius: 210px;
+
+  z-index: 0;
+}
 
 .center {
   position: absolute;
   top: 48%;
   left: 52%;
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
   transform: translate(-50%, -50%);
   border-radius: 50%;
   background: white;
@@ -82,10 +131,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+ z-index: 4;
 }
 .center img {
-  width: 70px;
-  height: 70px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
   object-fit: cover;
 }
@@ -282,6 +332,12 @@ body { font-family: 'Inter', sans-serif; }
   opacity: .85;
 }
 
+
+
+
+
+
+
    @media (max-width: 640px){
   .chip{
     width: 96px;
@@ -297,14 +353,32 @@ body { font-family: 'Inter', sans-serif; }
     transform: scale(1.04);
   }
 
+  @media (max-width: 640px){
+  .chip.mobile-left-lock{
+    z-index: 60;
+    opacity: 1 !important;
+    transform: scale(1.04);
+  }
+
   .chip.mobile-left-lock .pillWrap{
+    position: absolute;
+    left: 50vw;
+    transform: translateX(-50%);
     width: 280px;
+    z-index: 80;
+
     box-shadow:
       0 10px 24px rgba(11,26,45,0.12),
       0 0 0 1px rgba(47,93,168,0.12),
       0 8px 18px rgba(47,93,168,0.20),
       0 16px 34px rgba(47,93,168,0.10);
   }
+
+  .chip.mobile-left-lock .pillContent{
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
 
   .chip.mobile-left-lock .pillContent{
     opacity: 1;
@@ -792,7 +866,8 @@ body { font-family: 'Inter', sans-serif; }
 <div class="flex items-center justify-center w-full -mt-4 sm:-mt-2 md:mt-0 overflow-hidden order-last md:order-none">
   <div class="h-[350px] sm:h-[504px] md:h-[560px] w-full flex justify-center">
     <div class="layout scale-[0.65] sm:scale-[0.9] md:scale-[1] origin-top mx-auto -ml-20 sm:-ml-6 md:ml-0">
-      <div class="quarter quarter-1">
+<div class="arc quarter-7"></div>      
+<div class="quarter quarter-1">
         <img src="focus/your-image-1.png" />
       </div>
 
@@ -806,6 +881,7 @@ body { font-family: 'Inter', sans-serif; }
 
       <div class="arc quarter-4"></div>
       <div class="arc quarter-5"></div>
+<div class="arc quarter-6"></div>
 
       <div class="center">
         <img src="focus/shunah.png" />
@@ -2256,100 +2332,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 </script>
-  if (!marquee || !track) return;
-
-  let activeChip = null;
-  let closeTimer = null;
-
-  function isSmallScreen() {
-    return window.innerWidth <= 640;
-  }
-
-  function stopRibbon() {
-    track.style.animationPlayState = 'paused';
-  }
-
-  function resumeRibbon() {
-    track.style.animationPlayState = 'running';
-  }
-
-  function clearActiveChip() {
-    if (activeChip) {
-      activeChip.classList.remove('mobile-active', 'mobile-left-lock');
-      activeChip = null;
-    }
-  }
-
-  function clearCloseTimer() {
-    if (closeTimer) {
-      clearTimeout(closeTimer);
-      closeTimer = null;
-    }
-  }
-
-  function closeCurrentAndResume() {
-    clearCloseTimer();
-    clearActiveChip();
-    resumeRibbon();
-  }
-
-  function openChip(chip) {
-    clearCloseTimer();
-
-    if (activeChip && activeChip !== chip) {
-      activeChip.classList.remove('mobile-active', 'mobile-left-lock');
-    }
-
-    activeChip = chip;
-    chip.classList.add('mobile-active', 'mobile-left-lock');
-    stopRibbon();
-
-    closeTimer = setTimeout(() => {
-      if (activeChip === chip) {
-        chip.classList.remove('mobile-active', 'mobile-left-lock');
-        activeChip = null;
-        resumeRibbon();
-      }
-    }, 5000);
-  }
-
-  track.addEventListener('click', (e) => {
-    if (!isSmallScreen()) return;
-
-    const chip = e.target.closest('.chip');
-    if (!chip) return;
-
-    e.preventDefault();
-    e.stopPropagation();
-
-    if (activeChip === chip) {
-      closeCurrentAndResume();
-      return;
-    }
-
-    openChip(chip);
-  });
-
-  document.addEventListener('click', (e) => {
-    if (!isSmallScreen()) return;
-    if (!activeChip) return;
-
-    const clickedChip = e.target.closest('.chip');
-    if (clickedChip) return;
-
-    closeCurrentAndResume();
-  });
-
-  window.addEventListener('resize', () => {
-    if (!isSmallScreen()) {
-      clearCloseTimer();
-      clearActiveChip();
-      resumeRibbon();
-    }
-  });
-});
-</script>
-
+ 
 
 
 </body>
