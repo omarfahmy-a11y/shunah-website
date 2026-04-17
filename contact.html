@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shunah | Contact Us</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      scrollbar-width: none;
+    }
+
+    body::-webkit-scrollbar { display: none; }
+
+    @media (min-width: 1024px) {
+      html, body {
+        min-height: 100%;
+      }
+    }
+
+    .contact-page-shell {
+      min-height: auto;
+    }
+
+    .form-field.field-error {
+      border-color: rgba(220, 38, 38, 0.35) !important;
+      box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.08);
+    }
+
+    #form-error {
+      animation: fadeSlideDown 0.28s ease;
+    }
+
+    @keyframes fadeSlideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-white text-[#0b1a2d]">
+
+  <!-- NAV -->
+  <nav id="site-navbar" class="sticky top-0 z-50 bg-white border-b border-black/10 shadow-sm h-12">
+    <div class="relative max-w-7xl mx-auto h-12 px-4 sm:px-6 md:px-10 flex items-center justify-between">
+
+      <!-- LEFT: Logo -->
+      <a href="homepage.html" class="flex items-center shrink-0">
+        <img src="images/shunah-logo.png" alt="Shunah Logo" class="h-7 w-auto" />
+      </a>
+
+      <!-- DESKTOP MENU -->
+      <div class="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-6 text-[12.5px] font-medium text-[#0b1a2d]/80 whitespace-nowrap">
+        <a href="homepage.html#home" class="hover:text-[#0b1a2d] transition">Home</a>
+        <a href="productsuite.html" class="hover:text-[#0b1a2d] transition">Product Suite</a>
+        <a href="usecases.html" class="hover:text-[#0b1a2d] transition">Use Cases</a>
+        <a href="focus.html" class="hover:text-[#0b1a2d] transition">Our Focus</a>
+        <a href="inquiry.html" class="hover:text-[#0b1a2d] transition">RFQ</a>
+        <a href="contact.html" class="text-[#0b1a2d] font-semibold rounded-full px-4 py-1 bg-[#0b1a2d]/6 ring-1 ring-[#0b1a2d]/15">
+          Contact Us
+        </a>
+      </div>
+
+      <!-- MOBILE BUTTON -->
+      <button
+        id="mobile-menu-button"
+        type="button"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+        class="md:hidden w-10 h-10 flex items-center justify-center text-[#0b1a2d]"
+      >
+        <svg id="menu-open-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+
+        <svg id="menu-close-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- MOBILE DROPDOWN -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-black/10 bg-white">
+      <div class="px-4 sm:px-6 py-4 flex flex-col gap-2 text-[14px] font-medium text-[#0b1a2d]">
+        <a href="homepage.html#home">Home</a>
+        <a href="productsuite.html">Product Suite</a>
+        <a href="usecases.html">Use Cases</a>
+        <a href="focus.html">Our Focus</a>
+        <a href="inquiry.html">RFQ</a>
+        <a href="contact.html" class="font-semibold">Contact Us</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- CONTACT SECTION -->
+  <section class="contact-page-shell relative overflow-hidden py-4 md:py-6 px-4 sm:px-6 lg:px-[clamp(2.5rem,4vw,4.5rem)] 2xl:px-[clamp(4.5rem,6vw,7rem)]">
+    <!-- subtle premium background accents -->
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="absolute left-[-120px] top-[80px] w-[280px] h-[280px] rounded-full bg-[#225AB4]/[0.05] blur-3xl"></div>
+      <div class="absolute right-[8%] top-[18%] w-[360px] h-[360px] rounded-full bg-[#225AB4]/[0.08] blur-3xl"></div>
+    </div>
+
+    <div class="relative mx-auto max-w-7xl xl:max-w-[1380px] 2xl:max-w-[1520px] grid lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] gap-10 lg:gap-[clamp(3.25rem,5vw,5rem)] 2xl:gap-[clamp(4.5rem,6vw,6.5rem)] items-start">
+
+      <!-- LEFT SIDE -->
+      <div class="max-w-[560px] xl:max-w-[600px]">
+        <h1 class="text-[clamp(38px,3.3vw,48px)] leading-[0.98] font-semibold tracking-[-0.04em] text-[#0b1a2d] mb-[clamp(1.25rem,2vw,1.5rem)]">
+          Get in <span class="text-[#225AB4]">Touch</span>
+        </h1>
+
+        <p class="text-[clamp(16px,1.2vw,17px)] leading-[1.75] text-[#0b1a2d]/65 max-w-[540px] xl:max-w-[580px] mb-[clamp(2rem,3vw,2.5rem)]">
+          Whether you need sourcing, crop quality assessment, or want to explore working with Shunah,
+          our team is ready to support you.
+        </p>
+
+        <div class="space-y-[clamp(0.9rem,1.2vw,1rem)]">
+          <div class="group rounded-2xl border border-black/8 bg-white/70 backdrop-blur-sm px-[clamp(1.1rem,1.4vw,1.3rem)] py-[clamp(0.95rem,1.3vw,1rem)] shadow-[0_10px_30px_rgba(11,26,45,0.04)] hover:shadow-[0_16px_40px_rgba(11,26,45,0.07)] transition">
+            <div class="text-[11px] uppercase tracking-[0.18em] text-[#0b1a2d]/40 mb-1">Email</div>
+            <div class="text-[18px] font-medium tracking-[-0.02em] text-[#0b1a2d]">
+              info@shunah.net
+            </div>
+          </div>
+
+          <div class="group rounded-2xl border border-black/8 bg-white/70 backdrop-blur-sm px-[clamp(1.1rem,1.4vw,1.3rem)] py-[clamp(0.95rem,1.3vw,1rem)] shadow-[0_10px_30px_rgba(11,26,45,0.04)] hover:shadow-[0_16px_40px_rgba(11,26,45,0.07)] transition">
+            <div class="text-[11px] uppercase tracking-[0.18em] text-[#0b1a2d]/40 mb-1">Address</div>
+            <div class="text-[18px] font-medium tracking-[-0.02em] text-[#0b1a2d]">
+              Cairo, Egypt
+            </div>
+          </div>
+
+          <div class="group rounded-2xl border border-black/8 bg-white/70 backdrop-blur-sm px-[clamp(1.1rem,1.4vw,1.3rem)] py-[clamp(0.95rem,1.3vw,1rem)] shadow-[0_10px_30px_rgba(11,26,45,0.04)] hover:shadow-[0_16px_40px_rgba(11,26,45,0.07)] transition">
+            <div class="text-[11px] uppercase tracking-[0.18em] text-[#0b1a2d]/40 mb-1">Phone</div>
+            <div class="text-[18px] font-medium tracking-[-0.02em] text-[#0b1a2d]">
+             +20 109 2412 224
+            </div>
+            <div class="text-[13px] text-[#0b1a2d]/45 mt-1">
+              Sunday – Thursday, 9 AM – 6 PM (Cairo Time)
+            </div>
+          </div>
+<!-- SOCIAL ICONS -->
+<div class="flex justify-center gap-4 mt-4">
+  <img src="Contact/linkedin.png" class="w-8 h-8 object-contain hover:scale-110 transition cursor-pointer" />
+  <img src="Contact/whatsapp.png" class="w-8 h-8 object-contain hover:scale-110 transition cursor-pointer" />
+  <img src="Contact/facebook.png" class="w-8 h-8 object-contain hover:scale-110 transition cursor-pointer" />
+  <img src="Contact/instagram.png" class="w-8 h-8 object-contain hover:scale-110 transition cursor-pointer" />
+
+
+</div>        
+
+</div>
+      </div>
+
+
+
+      <!-- RIGHT SIDE FORM -->
+      <div class="relative w-full">
+        <!-- blue glow -->
+        <div class="absolute inset-0 scale-[0.96] rounded-[34px] bg-[#225AB4]/10 blur-3xl pointer-events-none"></div>
+
+        <div class="relative rounded-[30px] border border-black/8 bg-white/80 backdrop-blur-xl p-5 sm:p-6 lg:p-[clamp(1.5rem,2vw,1.75rem)] shadow-[0_25px_80px_rgba(11,26,45,0.10)]">
+          <div class="flex items-center justify-between mb-[clamp(1rem,1.8vw,1.25rem)]">
+            <div>
+              <h2 class="text-[24px] md:text-[28px] font-semibold tracking-[-0.03em] text-[#0b1a2d]">
+                Let’s start the conversation
+              </h2>
+              <p class="text-sm md:text-[15px] text-[#0b1a2d]/50 mt-1">
+                Tell us what you need and our team will get back to you.
+              </p>
+            </div>
+          </div>
+
+          <form id="contact-form" class="space-y-[clamp(0.9rem,1.3vw,1rem)]" novalidate>
+            <div id="form-error" class="hidden rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-[14px] text-red-700">
+              Please complete all required fields before sending your message.
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-[clamp(0.9rem,1.3vw,1rem)]">
+              <div>
+                <label class="text-[12px] font-medium text-[#0b1a2d]/55 mb-2 block">First Name</label>
+                <input
+                  id="first-name"
+                  type="text"
+                  placeholder="Enter your first name"
+                  class="form-field w-full rounded-2xl border border-black/8 bg-white px-4 py-3.5 text-[15px] text-[#0b1a2d] placeholder:text-[#0b1a2d]/30 outline-none transition focus:border-[#225AB4]/35 focus:shadow-[0_0_0_4px_rgba(34,90,180,0.08)]"
+                >
+              </div>
+
+              <div>
+                <label class="text-[12px] font-medium text-[#0b1a2d]/55 mb-2 block">Last Name</label>
+                <input
+                  id="last-name"
+                  type="text"
+                  placeholder="Enter your last name"
+                  class="form-field w-full rounded-2xl border border-black/8 bg-white px-4 py-3.5 text-[15px] text-[#0b1a2d] placeholder:text-[#0b1a2d]/30 outline-none transition focus:border-[#225AB4]/35 focus:shadow-[0_0_0_4px_rgba(34,90,180,0.08)]"
+                >
+              </div>
+            </div>
+
+            <div>
+              <label class="text-[12px] font-medium text-[#0b1a2d]/55 mb-2 block">Email</label>
+              <input
+                id="email"
+                type="email"
+                placeholder="Enter your email address"
+                class="form-field w-full rounded-2xl border border-black/8 bg-white px-4 py-3.5 text-[15px] text-[#0b1a2d] placeholder:text-[#0b1a2d]/30 outline-none transition focus:border-[#225AB4]/35 focus:shadow-[0_0_0_4px_rgba(34,90,180,0.08)]"
+              >
+            </div>
+
+            <div>
+              <label class="text-[12px] font-medium text-[#0b1a2d]/55 mb-2 block">How can we help?</label>
+              <textarea
+                id="help-message"
+                placeholder="Tell us about your sourcing, quality assessment, or partnership needs"
+                class="form-field w-full rounded-2xl border border-black/8 bg-white px-4 py-4 text-[15px] text-[#0b1a2d] placeholder:text-[#0b1a2d]/30 min-h-[110px] md:min-h-[120px] resize-none outline-none transition focus:border-[#225AB4]/35 focus:shadow-[0_0_0_4px_rgba(34,90,180,0.08)]"
+              ></textarea>
+            </div>
+
+            <div class="pt-2 flex flex-col items-end gap-3">
+              <button
+                type="submit"
+                id="submit-btn"
+                class="group inline-flex items-center gap-3 rounded-full border border-[#0b1a2d] bg-white px-6 py-3 text-sm font-semibold text-[#0b1a2d] transition hover:bg-[#225AB4] hover:text-white hover:border-[#225AB4]"
+              >
+                <span>Send Message</span>
+                <span class="flex h-7 w-7 items-center justify-center rounded-full bg-white text-[#0b1a2d] transition group-hover:translate-x-[2px]">→</span>
+              </button>
+            </div>
+          </form>
+
+          <div id="success-state" class="hidden min-h-[420px] sm:min-h-[450px] md:min-h-[470px] flex items-center justify-center">
+            <div class="text-center max-w-[320px] mx-auto">
+              <img
+                src="images/letter.png"
+                alt="Letter illustration"
+                class="w-32 h-32 md:w-40 md:h-40 mx-auto mb-5 object-contain"
+              />
+              <p class="text-[22px] md:text-[26px] font-semibold tracking-[-0.03em] text-[#0b1a2d] leading-[1.25]">
+                Thank you, we’ll contact you shortly.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <script>
+    (function () {
+      const mobileMenuButton = document.getElementById("mobile-menu-button");
+      const mobileMenu = document.getElementById("mobile-menu");
+      const openIcon = document.getElementById("menu-open-icon");
+      const closeIcon = document.getElementById("menu-close-icon");
+
+      if (!mobileMenuButton || !mobileMenu) return;
+
+      let scrollCloseTimer;
+
+      function openMobileMenu() {
+        mobileMenu.classList.remove("hidden");
+        mobileMenuButton.setAttribute("aria-expanded", "true");
+        if (openIcon) openIcon.classList.add("hidden");
+        if (closeIcon) closeIcon.classList.remove("hidden");
+      }
+
+      function closeMobileMenu() {
+        mobileMenu.classList.add("hidden");
+        mobileMenuButton.setAttribute("aria-expanded", "false");
+        if (openIcon) openIcon.classList.remove("hidden");
+        if (closeIcon) closeIcon.classList.add("hidden");
+      }
+
+      function isMobileView() {
+        return window.innerWidth < 768;
+      }
+
+      function toggleMobileMenu() {
+        if (mobileMenu.classList.contains("hidden")) {
+          openMobileMenu();
+        } else {
+          closeMobileMenu();
+        }
+      }
+
+      mobileMenuButton.addEventListener("click", toggleMobileMenu);
+
+      window.addEventListener(
+        "scroll",
+        function () {
+          if (!isMobileView()) return;
+
+          if (!mobileMenu.classList.contains("hidden")) {
+            closeMobileMenu();
+          }
+
+          clearTimeout(scrollCloseTimer);
+          scrollCloseTimer = setTimeout(() => {
+            if (!isMobileView()) return;
+            closeMobileMenu();
+          }, 120);
+        },
+        { passive: true }
+      );
+
+      window.addEventListener("resize", function () {
+        closeMobileMenu();
+      });
+
+      const contactForm = document.getElementById("contact-form");
+      const formError = document.getElementById("form-error");
+      const successState = document.getElementById("success-state");
+      const formFields = document.querySelectorAll(".form-field");
+
+      if (contactForm && formError && successState) {
+        contactForm.addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          let hasError = false;
+
+          formFields.forEach((field) => {
+            const isEmpty = !field.value.trim();
+            field.classList.remove("field-error");
+
+            if (isEmpty) {
+              hasError = true;
+              field.classList.add("field-error");
+            }
+          });
+
+          if (hasError) {
+            formError.classList.remove("hidden");
+            return;
+          }
+
+          formError.classList.add("hidden");
+          formFields.forEach((field) => field.classList.remove("field-error"));
+
+          contactForm.classList.add("hidden");
+          successState.classList.remove("hidden");
+
+          setTimeout(() => {
+            successState.classList.add("hidden");
+            contactForm.classList.remove("hidden");
+            contactForm.reset();
+          }, 5000);
+        });
+
+        formFields.forEach((field) => {
+          field.addEventListener("input", function () {
+            if (field.value.trim()) {
+              field.classList.remove("field-error");
+            }
+
+            const anyEmpty = Array.from(formFields).some((item) => !item.value.trim());
+            if (!anyEmpty) {
+              formError.classList.add("hidden");
+            }
+          });
+        });
+      }
+    })();
+  </script>
+
+</body>
+</html>

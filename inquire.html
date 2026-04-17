@@ -1,0 +1,2542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shunah | Request RFQ</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    html { scroll-behavior: smooth; }
+@keyframes rfqBlinkRed {
+  0% {
+    border-color: rgba(11,26,45,0.12);
+    box-shadow: none;
+  }
+
+  50% {
+    border-color: rgba(239,68,68,0.55);
+    box-shadow: 0 0 0 3px rgba(239,68,68,0.08);
+  }
+
+  100% {
+    border-color: rgba(11,26,45,0.12);
+    box-shadow: none;
+  }
+}
+
+@keyframes rfqBlinkRedField {
+  0% {
+    border-color: rgba(11,26,45,0.15);
+    box-shadow: none;
+  }
+
+  50% {
+    border-color: rgba(239,68,68,0.55);
+    box-shadow: 0 0 0 3px rgba(239,68,68,0.08);
+  }
+
+  100% {
+    border-color: rgba(11,26,45,0.15);
+    box-shadow: none;
+  }
+}
+
+.rfqBlinkRed {
+  animation: rfqBlinkRed 1.1s ease-in-out 2;
+}
+
+.rfqBlinkRedField {
+  animation: rfqBlinkRedField 1.1s ease-in-out 2;
+}
+@media (max-width: 767px){
+  #rfqTrackerWrapDesktop {
+    display: none !important;
+  }
+}
+ 
+.rfqDateBlur {
+  filter: blur(1.5px);
+  opacity: 0.35;
+  pointer-events: none;
+}
+  
+@media (max-width: 767px){
+  .rfqMobileBg{
+    position: relative;
+    padding: 22px 16px;
+    border-radius: 18px;
+    overflow: hidden;
+  }
+
+
+
+  .rfqMobileBg::before{
+    content:"";
+    position:absolute;
+    inset:0;
+
+    background-image: url("rfq/bg-mobile.png"); /* 👈 your image */
+    background-size: cover;
+    background-position: center;
+
+    opacity:1.; /* 👈 VERY important for premium feel */
+    z-index:0;
+  }
+
+  .rfqMobileBg > *{
+    position: relative;
+    z-index:1;
+  }
+}
+
+.rfqFieldFlex{
+  display:flex;
+  align-items:center;
+  gap:10px;
+
+  height:42px;
+  border:1px solid rgba(11,26,45,0.12);
+  border-radius:10px;
+ 
+  padding-left:6px;   /* 👈 reduced */
+  padding-right:16px;  /* keep right clean */
+
+  background:white;
+}
+
+.rfqFieldFlex:focus-within{
+  border-color:#0b1a2d;
+  box-shadow:0 0 0 2px rgba(11,26,45,0.08);
+}
+
+.rfqFieldNoPadding{
+  border:none;
+  outline:none;
+  flex:1;
+  height:100%;
+  padding:0;
+  background:transparent;
+  font-size:16px;   /* stops iPhone zoom */
+}
+
+.rfqFieldCircleIcon{
+  width:32px;
+  height:32px;
+
+  border-radius:999px;
+  background:#f1f3f6;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+}
+.rfqFieldCircleImg{
+  width:18px;
+  height:18px;
+  object-fit:contain;
+  opacity:.72;
+}
+
+.rfqField{
+  width:100%;
+  border:1px solid rgba(11,26,45,0.15);
+  padding:12px 14px;
+  border-radius:10px;
+  outline:none;
+  background:white;
+  color:#0b1a2d;
+  font-size:16px;   /* important */
+  transition:border-color 200ms ease, box-shadow 200ms ease;
+}
+
+input[type="date"]{
+  width:100%;
+  min-width:0;
+  display:block;
+  -webkit-appearance:none;
+  appearance:none;
+}
+
+input[type="date"]::-webkit-date-and-time-value{
+  text-align:left;
+}
+
+/* REVIEW MODE — smaller tracker */
+.review-mode .tCircle {
+  width: 42px;
+  height: 42px;
+  font-size: 13px;
+}
+
+.review-mode .tLabel {
+  font-size: 8px;
+  letter-spacing: .06em;
+}
+
+select.placeholder-active {
+  color: rgba(11,26,45,0.45);
+}
+
+    .rfqField:focus{
+      border-color:#0b1a2d;
+      box-shadow:0 0 0 2px rgba(11,26,45,0.08);
+    }
+
+    .rfqFieldWithIcon{
+      padding-left:44px;
+      padding-right:10px;
+      appearance:none;
+      -webkit-appearance:none;
+      -moz-appearance:none;
+    }
+
+    .rfqFieldIconWrap{
+      position:relative;
+      width:100%;
+    }
+
+    .rfqFieldLeftIcon{
+      position:absolute;
+      left:14px;
+      top:50%;
+      transform:translateY(-50%);
+      width:26px;
+      height:26px;
+      color:#5b84d7;
+      pointer-events:none;
+    }
+
+    .rfqFieldRightChevron{
+      position:absolute;
+      right:6px;
+      top:50%;
+      transform:translateY(-50%);
+      width:18px;
+      height:18px;
+      color:#0b1a2d;
+      pointer-events:none;
+    }
+
+    .tCircleWrap{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:8px;
+      position:relative;
+      z-index:2;
+      user-select:none;
+overflow:visible;
+    }
+
+
+    .tCircle{
+      width:56px;
+      height:56px;
+      border-radius:999px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:800;
+      font-size:15px;
+      background:#e5e7eb;
+      border:2px solid #ffffff;
+      color:#0b1a2d;
+      cursor:pointer;
+      transition:
+    transform 250ms ease,
+    box-shadow 250ms ease,
+    background 200ms ease;
+    }
+
+    .tCircleWrap{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:8px;
+      position:relative;
+      z-index:2;
+      user-select:none;
+      padding-top:14px;
+    }
+
+.tCircle{
+  position:relative; /* ADD THIS */
+}
+   .tCircleMark{
+  position:absolute;
+  top:14px;
+  right:-4px;   /* move to upper-right */
+  left:auto;
+  transform:none;
+ z-index:5;
+  width:18px;
+  height:18px;
+  border-radius:999px;
+
+  background:#22c55e;
+  color:#fff;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-size:11px;
+  font-weight:900;
+  line-height:1;
+
+  border:2px solid #ffffff;   /* white border */
+  box-shadow:0 4px 10px rgba(34,197,94,.25);
+
+  opacity:0;
+  pointer-events:none;
+  transition:all .2s ease;
+}
+
+    .tCircleMark.show{
+      opacity:1;
+    }
+
+    .tCircleMark.warn{
+      background:#22c55e;
+      color:#fff;
+    }
+    .tCircle.done{
+      background:#22c55e;
+      color:white;
+    }
+
+   .tCircle.active{
+  background:#2F5DA8;              /* Shunah blue */
+  color:white;
+
+  border:3px solid #ffffff;       /* clean white ring */
+
+  box-shadow:
+    0 0 0 4px rgba(47,93,168,0.15),   /* soft outer ring */
+    0 10px 25px rgba(47,93,168,0.35); /* glow depth */
+
+  transform:scale(1.08);          /* slight premium pop */
+}
+
+    .tLabel{
+      font-size:9px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:rgba(11,26,45,.55);
+      transition:opacity 350ms ease,transform 350ms ease;
+      text-align:center;
+      line-height:1.1;
+      min-height:22px;
+    }
+.tLabel.activeLabel{
+  color:#0b1a2d;
+  font-weight:700;
+}
+    .tLabel.hiddenLabel{
+      opacity:1;
+      transform:translateY(-4px);
+      pointer-events:none;
+    }
+
+  
+
+    /* Mobile compact tracker */
+    .mTrackerOuter{
+      width:100%;
+    }
+
+    .mTrackerRow{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+    }
+
+    .mArrow{
+      width:32px;
+      height:32px;
+      min-width:32px;
+      border-radius:999px;
+      border:1px solid rgba(11,26,45,0.08);
+      background:#f3f4f6;
+      color:#6b7280;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:16px;
+      font-weight:700;
+      transition:all .2s ease;
+    }
+
+    .mArrow:disabled{
+      opacity:.45;
+      cursor:not-allowed;
+    }
+
+    .mSteps{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+    }
+
+    .mStepBubble{
+      width:34px;
+      height:34px;
+      min-width:34px;
+      border-radius:999px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:14px;
+      font-weight:700;
+      background:#e5e7eb;
+      color:#6b7280;
+      border:none;
+      transition:all .2s ease;
+    }
+
+    .mStepBubble.active{
+      background:#2F5DA8;   /* Shunah blue */
+      color:#fff;
+      box-shadow:0 8px 18px rgba(47,93,168,.25);
+    }
+
+    .mStepBubble.done{
+  background:#22c55e;   /* green */
+  color:#ffffff;        /* white check */
+}
+
+    .mStepEllipsis{
+  width:24px;
+  min-width:24px;
+
+  display:flex;             /* center perfectly */
+  align-items:center;       /* vertical center */
+  justify-content:center;   /* horizontal center */
+
+  color:#6b7280;
+  font-size:18px;
+  line-height:1;
+   margin-top:30px;   /* 👈 THIS is what you control now */
+}
+
+   .mStepLabel{
+ width:34px;  
+ min-width:34px; 
+text-align:center;
+  font-size:11px;
+  line-height:1.1;
+  letter-spacing:.10em;
+  text-transform:uppercase;
+  color:#0b1a2d;
+  font-weight:700;
+}
+
+.mStepLabel{
+ width:34px;  
+ min-width:34px; 
+ text-align:center;
+ font-size:11px;
+ line-height:1.1;
+ letter-spacing:.10em;
+ text-transform:uppercase;
+ color:#0b1a2d;
+ font-weight:700;
+}
+
+/* 👇 PASTE HERE 👇 */
+
+.mStepSlot{
+  width:34px;
+  min-width:34px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  position:relative;
+}
+
+.mStepSlotLabel{
+  position:absolute;
+  top:44px;
+  left:50%;
+  transform:translateX(-50%);
+  width:max-content;
+  text-align:center;
+  font-size:11px;
+  line-height:1.1;
+  letter-spacing:.10em;
+  text-transform:uppercase;
+  color:#0b1a2d;
+  font-weight:700;
+  white-space:nowrap;
+}
+
+.mStepSlotLabel.active{
+  color:#2F5DA8;   /* Shunah blue */
+}
+
+.mStepSlotSpacer{
+  margin-top:10px;
+  width:34px;
+  min-width:34px;
+  height:24px;
+}
+    .reviewItem{
+      border:1px solid rgba(11,26,45,0.08);
+      border-radius:14px;
+      padding:14px 15px;
+      background:white;
+    }
+
+    .reviewLabel{
+      font-size:12px;
+      line-height:1;
+      color:rgba(11,26,45,.50);
+    }
+
+    .reviewValue{
+      margin-top:8px;
+      font-size:14px;
+      line-height:1.35;
+      font-weight:600;
+      color:#0b1a2d;
+      word-break:break-word;
+    }
+
+    .reviewCheck{
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      border:1px solid rgba(47,93,168,0.10);
+      background:#f7faff;
+      border-radius:14px;
+      padding:14px;
+    }
+
+    .reviewCheckIcon{
+      width:18px;
+      height:18px;
+      color:#2F5DA8;
+      flex:0 0 auto;
+      margin-top:1px;
+    }
+
+    @media (min-width: 768px){
+      #rfqTrackerWrapMobile{
+        display:none !important;
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-white text-[#0b1a2d] min-h-screen overflow-y-auto">
+
+  <!-- NAV -->
+  <nav id="site-navbar" class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-black/10 h-12 shadow-[0_4px_14px_rgba(0,0,0,0.06)]">
+    <div class="relative max-w-7xl mx-auto h-12 px-6 md:px-10 flex items-center justify-between">
+
+      <a href="homepage.html" class="flex items-center">
+        <img src="images/shunah-logo.png" alt="Shunah Logo" class="h-7 w-auto" />
+      </a>
+
+      <div class="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-7 text-[12.5px] font-medium text-[#0b1a2d]/80">
+        <a href="homepage.html#home" class="hover:text-[#0b1a2d] transition">Home</a>
+        <a href="productsuite.html" class="hover:text-[#0b1a2d] transition">Product Suite</a>
+        <a href="usecases.html" class="hover:text-[#0b1a2d] transition">Use Cases</a>
+        <a href="focus.html" class="hover:text-[#0b1a2d] transition">Our Focus</a>
+
+        <a href="inquire.html"
+           class="text-[#0b1a2d] font-semibold rounded-full px-4 py-1 bg-[#0b1a2d]/6 ring-1 ring-[#0b1a2d]/15">
+          RFQ
+        </a>
+
+        <a href="contact.html" class="hover:text-[#0b1a2d] transition">Contact Us</a>
+      </div>
+
+      <button id="mobile-menu-button" class="md:hidden w-10 h-10 flex items-center justify-center">
+        <svg id="menu-open-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+
+        <svg id="menu-close-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/>
+        </svg>
+      </button>
+    </div>
+
+    <div id="mobile-menu" class="hidden md:hidden border-t border-black/10 bg-white">
+      <div class="px-6 py-4 flex flex-col gap-2 text-[14px] font-medium">
+        <a href="homepage.html#home">Home</a>
+        <a href="productsuite.html">Product Suite</a>
+        <a href="usecases.html">Use Cases</a>
+        <a href="focus.html">Our Focus</a>
+        <a href="inquire.html" class="font-semibold">RFQ</a>
+        <a href="contact.html">Contact Us</a>
+      </div>
+    </div>
+  </nav>
+
+
+<section id="rfq" class="bg-white rfqMobileBg min-h-[calc(100dvh-48px)]">
+    <div class="max-w-[1400px] mx-auto px-6 min-h-[calc(100dvh-48px)] py-0 lg:py-6 flex items-start lg:items-center">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch w-full">
+
+        <!-- LEFT IMAGE -->
+        <div class="hidden lg:block lg:col-span-3 relative h-full">
+          <div class="fixed top-0 left-0 w-[33.333%] h-screen overflow-hidden">
+           <img src="rfq/left.png" alt="RFQ visual" class="w-full h-full object-cover pointer-events-none select-none" />
+            <div class="absolute inset-0 bg-black/5"></div>
+          </div>
+        </div>
+
+        <!-- RIGHT CONTENT -->
+        <div class="lg:col-span-8">
+  <div class="max-w-2xl ml-auto">
+
+            
+            <!-- STEP 0 -->
+<div id="rfqBasicSection" class="mt-0">
+<h2 class="text-[28px] sm:text-[32px] font-bold tracking-[-0.5px] text-[#0B1A2D]">
+  Get Started
+</h2>
+
+<div class="mt-2">
+  <p class="text-[11px] sm:text-[14px] tracking-[2px] uppercase text-[#4A6FA5] font-medium">
+    LET’S START WITH THE BASICS
+  </p>
+
+  <p class="mt-2 text-sm text-[#0b1a2d]/55">
+    Tell us who you are to connect you with the right opportunities.
+  </p>
+</div>
+  <div id="rfqStep0Card"
+    class="mt-2 rounded-2xl border border-black/10 bg-white p-6 sm:p-7 shadow-[0_25px_70px_rgba(11,26,45,0.15),0_5px_20px_rgba(11,26,45,0.08)]">
+
+    <div class="flex items-start gap-4">
+      <div class="shrink-0">
+        <div class="w-14 h-14 rounded-full bg-[#f1f3f6] border border-white flex items-center justify-center">
+          <img
+            src="rfq/profile-placeholder.png"
+            alt="Profile placeholder"
+            class="w-7 h-7 object-contain opacity-70"
+          />
+        </div>
+      </div>
+
+      <div class="min-w-0">
+        <div class="text-[18px] font-semibold text-[#0B1A2D]">Basic Details</div>
+        <div class="mt-1 text-[12px] font-normal text-[#6B7A90]">
+          Please enter your contact information.
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-5 space-y-4">
+      <div class="rfqFieldFlex">
+        <div class="rfqFieldCircleIcon">
+          <img src="rfq/user-icon.png" class="rfqFieldCircleImg" />
+        </div>
+        <input id="rfqName" class="rfqFieldNoPadding" type="text" placeholder="Your name" />
+      </div>
+
+      <div class="rfqFieldFlex">
+        <div class="rfqFieldCircleIcon">
+          <img src="rfq/company-icon.png" alt="" class="rfqFieldCircleImg" />
+        </div>
+        <input id="rfqCompany" class="rfqFieldNoPadding" type="text" placeholder="Company name" />
+      </div>
+
+      <div class="rfqFieldFlex">
+        <div class="rfqFieldCircleIcon">
+          <img src="rfq/email-icon.png" alt="" class="rfqFieldCircleImg" />
+        </div>
+        <input id="rfqEmail" class="rfqFieldNoPadding" type="email" placeholder="Your email" />
+      </div>
+
+      <div class="rfqFieldFlex">
+        <div class="rfqFieldCircleIcon">
+          <img src="rfq/phone-icon.png" alt="" class="rfqFieldCircleImg" />
+        </div>
+        <input id="rfqPhone" class="rfqFieldNoPadding" type="tel" placeholder="+20 ..." />
+      </div>
+    </div>
+
+    <div class="mt-6">
+      <button id="rfqStart"
+        class="w-full rounded-xl bg-[#0b1a2d] text-white px-6 py-3 text-sm font-semibold hover:bg-[#142a4a] transition">
+        Next →
+      </button>
+    </div>
+  </div>
+
+  <div class="mt-4 text-center">
+    <div class="inline-flex items-center gap-2 text-[10px] text-[#0b1a2d]/60">
+      <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.9">
+        <rect x="5" y="10" width="14" height="10" rx="2"></rect>
+        <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
+      </svg>
+      <span>Your information is secure</span>
+    </div>
+  </div>
+</div>
+
+<!-- PATH SELECTION -->
+<div id="rfqPathSection" class="hidden mt-0">
+  <h2 class="text-[28px] sm:text-[32px] font-bold tracking-[-0.5px] text-[#0B1A2D]">
+    Choose Your Path
+  </h2>
+
+  <p class="mt-2 text-sm text-[#0b1a2d]/55">
+    Choose the route that best matches what you want to do.
+  </p>
+
+  <div id="rfqPathCard"
+    class="mt-6 sm:rounded-[28px] sm:border sm:border-black/10 sm:bg-white sm:p-5 sm:shadow-[0_25px_70px_rgba(11,26,45,0.10),0_5px_20px_rgba(11,26,45,0.05)]">
+
+  <div class="space-y-4">
+
+    <button type="button" data-path="tech"
+  class="rfqPathOption group w-full rounded-[24px] border border-black/10 bg-white px-4 py-4 text-left shadow-[0_8px_24px_rgba(11,26,45,0.04)] transition hover:border-[#2F5DA8] hover:bg-[linear-gradient(180deg,#F7FAFF_0%,#EEF4FF_100%)] hover:shadow-[0_12px_28px_rgba(47,93,168,0.14)]">
+
+  <div class="flex items-start sm:items-center gap-3 sm:gap-4">
+
+    <!-- ICON -->
+    <div class="shrink-0 w-[72px] h-[72px] sm:w-[96px] sm:h-[96px] rounded-[16px] sm:rounded-[20px] flex items-center justify-center">
+      <img src="rfq/path-tech.png" class="w-[58px] h-[58px] sm:w-[82px] sm:h-[82px] object-contain" />
+    </div>
+
+    <!-- TEXT + MOBILE PILL -->
+    <div class="flex-1">
+
+     <div class="leading-[1.15] font-semibold text-[#0B1A2D]">
+  <span class="sm:hidden">Tech. Walkthrough</span>
+  <span class="hidden sm:inline">Technology Walkthrough</span>
+</div>
+
+      <div class="mt-1 sm:mt-2 text-[12.5px] sm:text-[14px] leading-[1.35] sm:leading-[1.45] text-[#0b1a2d]/62">
+        See how Shunah works in detail
+      </div>
+
+      <!-- 👇 MOBILE PILL -->
+<div class="mt-2 sm:hidden flex justify-end">
+  <div class="inline-flex items-center gap-1.5 rounded-full bg-[#EAF1FB] px-3 py-1.5 text-[12px] font-medium text-[#2F5DA8]">
+    
+    <svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="1.9">
+      <circle cx="12" cy="12" r="8"></circle>
+      <path d="M12 8v4l2.5 1.5"></path>
+    </svg>
+
+    <span>20 min</span>
+
+    <svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.1">
+      <path d="m9 6 6 6-6 6"></path>
+    </svg>
+
+  </div>
+</div>
+
+    </div>
+
+    <!-- 👇 DESKTOP PILL -->
+    <div class="hidden sm:block shrink-0">
+      <div class="inline-flex items-center gap-2 rounded-full bg-[#EAF1FB] px-4 py-2 text-[14px] font-medium text-[#2F5DA8]">
+        <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.9">
+          <circle cx="12" cy="12" r="8"></circle>
+          <path d="M12 8v4l2.5 1.5"></path>
+        </svg>
+        <span>20 min</span>
+        <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.1">
+          <path d="m9 6 6 6-6 6"></path>
+        </svg>
+      </div>
+    </div>
+
+  </div>
+</button>
+    
+
+    <button type="button" data-path="usecase"
+      class="rfqPathOption group w-full rounded-[24px] border border-black/10 bg-white px-4 py-4 text-left shadow-[0_8px_24px_rgba(11,26,45,0.04)] transition hover:border-[#2F5DA8] hover:bg-[linear-gradient(180deg,#F7FAFF_0%,#EEF4FF_100%)] hover:shadow-[0_12px_28px_rgba(47,93,168,0.14)]">
+      <div class="flex items-start sm:items-center gap-3 sm:gap-4">
+
+  <!-- ICON -->
+  <div class="shrink-0 w-[72px] h-[72px] sm:w-[96px] sm:h-[96px] rounded-[16px] sm:rounded-[20px] flex items-center justify-center">
+    <img src="rfq/path-usecase.png" class="w-[58px] h-[58px] sm:w-[82px] sm:h-[82px] object-contain" />
+  </div>
+
+  <!-- TEXT + MOBILE PILL -->
+  <div class="flex-1">
+
+    <div class="text-[15px] sm:text-[18px] leading-[1.15] font-semibold text-[#0B1A2D]">
+      Use Case Discussion
+    </div>
+
+    <div class="mt-1 sm:mt-2 text-[12.5px] sm:text-[14px] leading-[1.35] sm:leading-[1.45] text-[#0b1a2d]/62">
+      Understand how it applies to your business
+    </div>
+
+    <!-- MOBILE PILL -->
+<div class="mt-2 sm:hidden flex justify-end">
+  <div class="inline-flex items-center gap-1.5 rounded-full bg-[#EAF1FB] px-3 py-1.5 text-[12px] font-medium text-[#2F5DA8]">
+    
+    <svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="1.9">
+      <circle cx="12" cy="12" r="8"></circle>
+      <path d="M12 8v4l2.5 1.5"></path>
+    </svg>
+
+    <span>15 min</span>
+
+    <svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.1">
+      <path d="m9 6 6 6-6 6"></path>
+    </svg>
+
+  </div>
+</div>
+
+  </div>
+
+  <!-- DESKTOP PILL -->
+  <div class="hidden sm:block shrink-0">
+      <div class="inline-flex items-center gap-2 rounded-full bg-[#EAF1FB] px-4 py-2 text-[14px] font-medium text-[#2F5DA8]">
+        <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.9">
+        <circle cx="12" cy="12" r="8"></circle>
+        <path d="M12 8v4l2.5 1.5"></path>
+      </svg>
+      <span>15 min</span>
+      <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.1">
+        <path d="m9 6 6 6-6 6"></path>
+      </svg>
+    </div>
+  </div>
+
+</div>
+    </button>
+
+    <button type="button" data-path="accessSupply"
+      class="rfqPathOption group w-full rounded-[24px] border border-black/10 bg-white px-4 py-4 text-left shadow-[0_8px_24px_rgba(11,26,45,0.04)] transition hover:border-[#2F5DA8] hover:bg-[linear-gradient(180deg,#F7FAFF_0%,#EEF4FF_100%)] hover:shadow-[0_12px_28px_rgba(47,93,168,0.14)]">
+     <div class="flex items-start sm:items-center gap-3 sm:gap-4">
+
+  <!-- ICON -->
+  <div class="shrink-0 w-[72px] h-[72px] sm:w-[96px] sm:h-[96px] rounded-[16px] sm:rounded-[20px] flex items-center justify-center">
+    <img src="rfq/path-supply.png" class="w-[58px] h-[58px] sm:w-[82px] sm:h-[82px] object-contain" />
+  </div>
+
+  <!-- TEXT + MOBILE PILL -->
+  <div class="flex-1">
+
+    <div class="text-[15px] sm:text-[18px] leading-[1.15] font-semibold text-[#0B1A2D]">
+      Access Supply
+    </div>
+
+    <div class="mt-1 sm:mt-2 text-[12.5px] sm:text-[14px] leading-[1.35] sm:leading-[1.45] text-[#0b1a2d]/62">
+      Start sourcing crops directly
+    </div>
+
+    <!-- MOBILE PILL -->
+<div class="mt-2 sm:hidden flex justify-end">
+  <div class="inline-flex items-center gap-1.5 rounded-full bg-[#EAF1FB] px-3 py-1.5 text-[12px] font-medium text-[#2F5DA8]">
+    
+    <svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="1.9">
+      <path d="M3 7l9-4 9 4-9 4-9-4z"></path>
+      <path d="M3 7v10l9 4 9-4V7"></path>
+      <path d="M12 11v10"></path>
+    </svg>
+
+    <span>Order</span>
+
+    <svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.1">
+      <path d="m9 6 6 6-6 6"></path>
+    </svg>
+
+  </div>
+</div>
+
+  </div>
+
+  <!-- DESKTOP PILL -->
+  <div class="hidden sm:block shrink-0">
+      <div class="inline-flex items-center gap-2 rounded-full bg-[#EAF1FB] px-4 py-2 text-[14px] font-medium text-[#2F5DA8]">
+        <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.9">
+        <path d="M3 7l9-4 9 4-9 4-9-4z"></path>
+        <path d="M3 7v10l9 4 9-4V7"></path>
+        <path d="M12 11v10"></path>
+      </svg>
+      <span>Order</span>
+      <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.1">
+        <path d="m9 6 6 6-6 6"></path>
+      </svg>
+    </div>
+  </div>
+
+</div>
+    </button>
+
+  </div>
+
+    </div>
+
+  <div class="mt-4 text-center">
+    <div class="inline-flex items-center gap-2 text-[10px] text-[#0b1a2d]/60">
+      <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.9">
+        <rect x="5" y="10" width="14" height="10" rx="2"></rect>
+        <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
+      </svg>
+      <span>Your information is secure</span>
+    </div>
+  </div>
+</div>
+
+<!-- BOOKING SCREEN -->
+<div id="rfqBookingSection" class="hidden mt-0">
+  <h2 class="text-[28px] sm:text-[32px] font-bold tracking-[-0.5px] text-[#0B1A2D]">
+    Book a Session
+  </h2>
+
+  <p class="mt-2 text-sm text-[#0b1a2d]/55">
+    Choose a suitable date and time for your discussion.
+  </p>
+
+  <div id="rfqBookingCard"
+    class="mt-6 rounded-[28px] border border-black/10 bg-white p-4 sm:p-5 shadow-[0_25px_70px_rgba(11,26,45,0.10),0_5px_20px_rgba(11,26,45,0.05)]">
+  <button id="rfqBookingBack"
+    type="button"
+    class="mb-4 inline-flex items-center justify-center w-10 h-10 rounded-full border border-black/10 bg-white text-[#0B1A2D]">
+    <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2">
+      <path d="M15 6l-6 6 6 6"></path>
+    </svg>
+  </button>
+  <div class="flex items-start gap-4">
+    <div class="shrink-0 w-[92px] h-[92px] rounded-[20px] bg-[#F7FAFF] flex items-center justify-center overflow-hidden">
+      <img id="rfqBookingImg" src="rfq/path-tech.png" alt="" class="w-[78px] h-[78px] object-contain" />
+    </div>
+
+    <div class="min-w-0 flex-1">
+      <div id="rfqBookingTitle" class="text-[18px] sm:text-[20px] leading-[1.15] font-semibold text-[#0B1A2D]">
+        Technology Walkthrough
+      </div>
+
+      <div id="rfqBookingDesc" class="mt-2 text-[14px] leading-[1.5] text-[#0b1a2d]/68">
+        A 20-minute session to see how Shunah works and how it can create value for you.
+      </div>
+
+      <div class="mt-3 flex flex-wrap gap-2"></div>
+    </div>
+  </div>
+ 
+
+<!-- MOBILE -->
+<div id="rfqBookingCalendarMobileWrap" class="mt-2 pt-2 md:hidden">
+  <div class="text-[15px] font-semibold text-[#0B1A2D]">Select a date</div>
+
+  <div class="mt-4 rounded-[22px] border border-black/10 p-4 sm:p-5">
+    <div class="flex items-center justify-between">
+      <button id="rfqCalPrev" type="button"
+        class="w-9 h-9 rounded-full border border-black/10 text-[#0B1A2D] flex items-center justify-center">
+        ‹
+      </button>
+
+      <div id="rfqCalMonthLabel" class="text-[16px] font-semibold text-[#0B1A2D]"></div>
+
+      <button id="rfqCalNext" type="button"
+        class="w-9 h-9 rounded-full border border-black/10 text-[#0B1A2D] flex items-center justify-center">
+        ›
+      </button>
+    </div>
+
+    <div class="mt-4 grid grid-cols-7 gap-y-3 text-center text-[12px] text-[#0b1a2d]/55">
+      <div>SUN</div><div>MON</div><div>TUE</div><div>WED</div><div>THU</div><div>FRI</div><div>SAT</div>
+    </div>
+
+    <div id="rfqCalendarGridMobile" class="mt-3 grid grid-cols-7 gap-y-3 text-center"></div>
+  </div>
+
+  <div class="mt-5">
+    <div class="flex items-center justify-between gap-3">
+      <div class="text-[15px] font-semibold text-[#0B1A2D]">Available times</div>
+      <div class="inline-flex items-center gap-2 text-[14px] text-[#0b1a2d]/65">
+        <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.9">
+          <circle cx="12" cy="12" r="8"></circle>
+          <path d="M12 8v4l2.5 1.5"></path>
+        </svg>
+        <span id="rfqBookingDurationMobile">Cairo Local</span>
+      </div>
+    </div>
+
+    <div id="rfqTimeGridMobile" class="mt-4 grid grid-cols-2 gap-3"></div>
+  </div>
+</div>
+
+<!-- DESKTOP -->
+<div id="rfqBookingCalendarDesktopWrap" class="hidden md:grid md:grid-cols-[minmax(0,1.25fr)_minmax(200px,0.75fr)] md:gap-5 mt-2 pt-2 items-stretch">
+  <div>
+    <div class="text-[15px] font-semibold text-[#0B1A2D]">Select a date</div>
+
+    <div class="mt-4 rounded-[22px] border border-black/10 p-4">
+      <div class="flex items-center justify-between">
+        <button id="rfqCalPrevDesktop" type="button"
+          class="w-9 h-9 rounded-full border border-black/10 text-[#0B1A2D] flex items-center justify-center">
+          ‹
+        </button>
+
+        <div id="rfqCalMonthLabelDesktop" class="text-[16px] font-semibold text-[#0B1A2D]"></div>
+
+        <button id="rfqCalNextDesktop" type="button"
+          class="w-9 h-9 rounded-full border border-black/10 text-[#0B1A2D] flex items-center justify-center">
+          ›
+        </button>
+      </div>
+
+      <div class="mt-4 grid grid-cols-7 gap-y-3 text-center text-[12px] text-[#0b1a2d]/55">
+        <div>SUN</div><div>MON</div><div>TUE</div><div>WED</div><div>THU</div><div>FRI</div><div>SAT</div>
+      </div>
+
+      <div id="rfqCalendarGrid" class="mt-3 grid grid-cols-7 gap-y-3 text-center"></div>
+    </div>
+  </div>
+
+  <div class="flex flex-col h-full">
+    <div class="flex items-center justify-between gap-3">
+      <div class="text-[15px] font-semibold text-[#0B1A2D]">Available times</div>
+      <div class="inline-flex items-center gap-2 text-[14px] text-[#0b1a2d]/65">
+        <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.9">
+          <circle cx="12" cy="12" r="8"></circle>
+          <path d="M12 8v4l2.5 1.5"></path>
+        </svg>
+        <span id="rfqBookingDuration">Cairo Local</span>
+      </div>
+    </div>
+
+    <div id="rfqTimeGrid" class="mt-4 flex flex-col gap-2 flex-1 items-center"></div>
+  </div>
+</div>
+
+<div id="rfqBookingSelectionWrap" class="mt-5 rounded-[18px] bg-[#F5F7FB] px-4 py-4">
+  <div class="flex items-center gap-3">
+    <div class="w-10 h-10 rounded-[12px] bg-white flex items-center justify-center text-[#3B82F6]">
+      <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.9">
+        <rect x="3" y="5" width="18" height="16" rx="2"></rect>
+        <path d="M16 3v4M8 3v4M3 10h18"></path>
+      </svg>
+    </div>
+
+    <div class="min-w-0">
+      <div class="text-[13px] text-[#0b1a2d]/52">Your selection</div>
+      <div id="rfqBookingSelection" class="mt-1 text-[15px] font-medium text-[#0B1A2D]">
+        Select a date and time
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="rfqBookingEmailState" class="hidden mt-5 text-center">
+  <img
+    src="rfq/letter.png"
+    alt="Confirmation letter"
+    class="mx-auto w-[170px] sm:w-[210px] h-auto object-contain"
+  />
+
+  <p class="mt-4 text-[14px] sm:text-[15px] leading-relaxed text-[#0b1a2d]/70 max-w-[460px] mx-auto">
+    You will recive a confirmation email shortly, on
+    <span id="rfqBookingEmailText" class="font-semibold text-[#0B1A2D]"></span>.
+  </p>
+</div>
+
+<button id="rfqBookingConfirm"
+  type="button"
+  class="mt-5 w-full rounded-[16px] bg-[linear-gradient(90deg,#3B82F6_0%,#2F5DA8_100%)] text-white px-6 py-4 text-[18px] font-semibold shadow-[0_14px_30px_rgba(47,93,168,.22)] opacity-50 pointer-events-none">
+  Confirm Booking →
+</button>
+
+
+  <div class="mt-5 text-center">
+    <div class="inline-flex items-center gap-2 text-[14px] text-[#0b1a2d]/60">
+      <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.9">
+        <rect x="5" y="10" width="14" height="10" rx="2"></rect>
+        <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
+      </svg>
+      <span>Your information is secure</span>
+    </div>
+  </div>
+</div>            
+</div>    
+<!-- WIZARD -->
+<div id="rfqWizardSection" class="hidden mt-0">
+  <h2 class="text-[28px] sm:text-[32px] font-bold tracking-[-0.5px] text-[#0B1A2D]">
+    Access Supply
+  </h2>
+<p class="mt-2 text-[11px] sm:text-[14px] tracking-[2px] uppercase text-[#4A6FA5] font-medium">
+  STRUCTURED PROCUREMENT IN 9 STEPS
+</p>
+
+  <p class="mt-2 text-sm text-[#0b1a2d]/55">
+    Complete your request details to start sourcing crops directly.
+  </p>
+
+  <div id="rfqWizardWrap">
+
+
+              <!-- DESKTOP TRACKER -->
+              <div id="rfqTrackerWrapDesktop" class="mt-8 hidden md:block transition-opacity duration-300">
+                <div class="relative">
+                 
+                  <div id="rfqTracker" class="grid gap-3 relative z-10"></div>
+                </div>
+              </div>
+
+              <!-- MOBILE TRACKER -->
+              <div id="rfqTrackerWrapMobile" class="mt-6 md:hidden transition-opacity duration-300">
+                <div id="rfqMobileTracker" class="w-full"></div>
+              </div>
+
+              <!-- STEP CARD -->
+             <div id="rfqWizardCard" class="mt-6 rounded-2xl border border-black/10 bg-white p-6 sm:p-7 shadow-[0_20px_60px_rgba(11,26,45,0.12)]">
+                <div class="flex items-start gap-4">
+  <div class="shrink-0">
+    <img
+      id="rfqStepIcon"
+      src="rfq/step1.png"
+      alt="Step icon"
+      class="w-12 h-12 object-contain"
+    />
+  </div>
+
+  <div class="min-w-0">
+    <div id="rfqStepTitle" class="text-lg font-semibold text-[#0b1a2d]"></div>
+    <div id="rfqStepSubtitle" class="mt-1 text-sm text-[#0b1a2d]/55"></div>
+  </div>
+</div>
+
+<div class="mt-3" id="rfqStepBody"></div>
+
+<div class="mt-6 flex justify-between items-center gap-3">
+  <button id="rfqBack"
+    class="rounded-full border border-[#0b1a2d] text-[#0b1a2d] bg-white px-6 py-2.5 text-sm font-semibold hover:bg-[#0b1a2d] hover:text-white transition disabled:opacity-30 disabled:cursor-not-allowed">
+    ← Back
+  </button>
+
+  <div class="flex gap-2">
+    <button id="rfqNext"
+      class="rounded-full bg-[#2F5DA8] text-white px-6 py-2.5 text-sm font-semibold hover:bg-[#254a86] transition">
+      Next →
+    </button>
+
+    <button id="rfqSubmit"
+      class="hidden rounded-full bg-[#2F5DA8] text-white px-6 py-2.5 text-sm font-semibold hover:bg-[#254a86] transition">
+      Confirm
+    </button>
+  </div>
+</div>
+
+
+
+               <div id="rfqFinalMsg"
+     class="mt-5 hidden rounded-xl border border-[#22c55e]/25 bg-[#22c55e]/10 p-4 text-[#0b1a2d]">
+  <div class="flex items-start gap-3">
+    <div class="shrink-0 mt-0.5">
+      <svg class="w-6 h-6 text-[#16a34a]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M20 6L9 17l-5-5" />
+      </svg>
+    </div>
+    <div>
+      <div class="font-semibold">You will be contacted shortly</div>
+      <div class="text-sm text-[#0b1a2d]/60 mt-1">
+        Your request has been submitted successfully.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="rfqThankYouState" class="hidden mt-4 text-center">
+  <img
+    src="rfq/letter.png"
+    alt="Thank you"
+    class="mx-auto w-[220px] sm:w-[260px] h-auto object-contain"
+  />
+
+  <div class="mt-5 text-xl sm:text-2xl font-semibold text-[#0b1a2d]">
+    Thank you for submitting.
+  </div>
+
+  <p class="mt-2 text-sm sm:text-base text-[#0b1a2d]/65 leading-relaxed max-w-[520px] mx-auto">
+    You will be contacted shortly. You will be redirected to a new form if you wish to submit a new request.
+  </p>
+</div>
+
+
+            </div>
+<div class="mt-4 text-center">
+  <div class="inline-flex items-center gap-2 text-[10px] text-[#0b1a2d]/60">
+    <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.9">
+      <rect x="5" y="10" width="14" height="10" rx="2"></rect>
+      <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
+    </svg>
+    <span>Your information is secure</span>
+  </div>
+</div>
+</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <script>
+    (function(){
+      const steps = [
+  { key:"crop", label:"Crop", title:"Buyer Choose Crop", subtitle:"Select the crop you want to purchase.", type:"select", icon:"crop", options:["White Beans","Sesame","Fava Beans","Rice","Caraway","Fennel"]},
+  { key:"spec", label:"Spec", title:"SKU / Specification", subtitle:"Choose the SKU specification.", type:"select", icon:"spec", options:["WKB-001 (Standard)","WKB-002 (Premium)","SSM-001 (Standard)","SSM-002 (Premium)","RCE-001 (Standard)"]},
+  { key:"containers", label:"Tons", title:"Number of Containers", subtitle:"Enter the number of containers.", type:"tel", icon:"tons", placeholder:"e.g. 4 Containers= 100Tons" },
+  { key:"packing", label:"Packing", title:"Packing", subtitle:"Choose packing format.", type:"select", icon:"packing", options:["25kg PP Bags","50kg PP Bags","Jumbo Bags","Bulk"]},
+  { key:"destination", label:"Destination", title:"Destination", subtitle:"Where should the shipment be delivered?", type:"text", icon:"destination", placeholder:"Country / City" },
+  { key:"delivery", label:"Delivery", title:"Expected Delivery Date", subtitle:"Choose your expected delivery date.", type:"date", icon:"delivery" },
+  { key:"quality", label:"Quality", title:"Quality Inspection", subtitle:"Select inspection method.", type:"select", icon:"quality", options:["Shunah QC","Third-Party Inspection","Buyer Inspection"]},
+  { key:"insurance", label:"Insurance", title:"Insurance", subtitle:"Select insurance option.", type:"select", icon:"insurance", options:["Included","Optional","Not Required"]},
+  { key:"paymentTerms", label:"Payment", title:"Payment Terms", subtitle:"Choose your preferred payment terms.", type:"select", icon:"payment", options:["Advance Payment","30% Advance / 70% Before Shipment","Letter of Credit (L/C)","CAD","Open Account"]},
+  { key:"review", label:"Review", title:"Review & Confirm", subtitle:"Please review your request details before submitting.", type:"review" }
+];
+
+      const state = {};
+      let current = 0;
+      const completed = new Set();
+      let finalSubmitted = false;
+let hasReviewed = false;
+
+const basicSection = document.getElementById("rfqBasicSection");
+const pathSection = document.getElementById("rfqPathSection");
+const bookingSection = document.getElementById("rfqBookingSection");
+const wizardSection = document.getElementById("rfqWizardSection");
+
+const step0Card = document.getElementById("rfqStep0Card");
+const pathCard = document.getElementById("rfqPathCard");
+const bookingCard = document.getElementById("rfqBookingCard");
+const wizardWrap = document.getElementById("rfqWizardWrap");
+
+let editingBasicFromReview = false;
+
+const nameEl = document.getElementById("rfqName");
+const companyEl = document.getElementById("rfqCompany");
+const emailEl = document.getElementById("rfqEmail");
+const phoneEl = document.getElementById("rfqPhone");
+const startBtn = document.getElementById("rfqStart");
+const pathButtons = document.querySelectorAll(".rfqPathOption");
+const bookingBackBtn = document.getElementById("rfqBookingBack");
+const bookingConfirmBtn = document.getElementById("rfqBookingConfirm");
+const bookingTitle = document.getElementById("rfqBookingTitle");
+const bookingDesc = document.getElementById("rfqBookingDesc");
+const bookingImg = document.getElementById("rfqBookingImg");
+
+
+const calPrevBtn = document.getElementById("rfqCalPrev");
+const calNextBtn = document.getElementById("rfqCalNext");
+const calMonthLabel = document.getElementById("rfqCalMonthLabel");
+const calGrid = document.getElementById("rfqCalendarGrid");
+const timeGrid = document.getElementById("rfqTimeGrid");
+
+const calPrevBtnDesktop = document.getElementById("rfqCalPrevDesktop");
+const calNextBtnDesktop = document.getElementById("rfqCalNextDesktop");
+const calMonthLabelDesktop = document.getElementById("rfqCalMonthLabelDesktop");
+
+const calGridMobile = document.getElementById("rfqCalendarGridMobile");
+const timeGridMobile = document.getElementById("rfqTimeGridMobile");
+const bookingSelection = document.getElementById("rfqBookingSelection");
+
+const bookingCalendarMobileWrap = document.getElementById("rfqBookingCalendarMobileWrap");
+const bookingCalendarDesktopWrap = document.getElementById("rfqBookingCalendarDesktopWrap");
+const bookingSelectionWrap = document.getElementById("rfqBookingSelectionWrap");
+const bookingEmailState = document.getElementById("rfqBookingEmailState");
+const bookingEmailText = document.getElementById("rfqBookingEmailText");
+
+
+
+function showOnlySection(sectionToShow) {
+  [basicSection, pathSection, bookingSection, wizardSection].forEach((section) => {
+    if (!section) return;
+    section.classList.toggle("hidden", section !== sectionToShow);
+  });
+
+  window.scrollTo({ top: 0, behavior: "auto" });
+}
+
+basicSection.classList.remove("hidden");
+pathSection.classList.add("hidden");
+bookingSection.classList.add("hidden");
+wizardSection.classList.add("hidden");
+const bookingState = {
+  viewDate: new Date(),
+  selectedDate: null,
+  selectedTime: "",
+  duration: "20 min",
+times: [
+  "9:00 AM",
+  "10:30 AM",
+  "12:00 PM",
+  "1:30 PM",
+  "3:00 PM",
+  "4:30 PM"
+]};
+
+bookingState.viewDate = new Date(
+  bookingState.viewDate.getFullYear(),
+  bookingState.viewDate.getMonth(),
+  1
+);
+
+function sameDay(a, b) {
+  return a &&
+    b &&
+    a.getFullYear() === b.getFullYear() &&
+    a.getMonth() === b.getMonth() &&
+    a.getDate() === b.getDate();
+}
+
+function formatLongDate(date) {
+  return date.toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric"
+  });
+}
+
+function updateBookingSelection() {
+  if (!bookingState.selectedDate || !bookingState.selectedTime) {
+    bookingSelection.textContent = "Select a date and time";
+    bookingConfirmBtn.classList.add("opacity-50", "pointer-events-none");
+    return;
+  }
+
+ const userEmail = emailEl.value.trim();
+
+bookingSelection.textContent =
+  `${formatLongDate(bookingState.selectedDate)} • ${bookingState.selectedTime} • ${bookingState.duration} • ${userEmail}`;
+
+  bookingConfirmBtn.classList.remove("opacity-50", "pointer-events-none");
+}
+
+
+function renderTimeSlots() {
+  if (timeGrid) timeGrid.innerHTML = "";
+  if (timeGridMobile) timeGridMobile.innerHTML = "";
+
+  bookingState.times.forEach((time) => {
+    const createBtn = (mobile = false) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.textContent = time;
+
+      const active = bookingState.selectedTime === time;
+
+      btn.className = mobile
+        ? "rounded-xl border px-4 py-3 text-[13px] font-medium transition " +
+          (active
+            ? "bg-[#2F5DA8] text-white border-[#2F5DA8] shadow-[0_8px_20px_rgba(47,93,168,0.20)]"
+            : "border-black/10 text-[#0B1A2D] hover:border-[#2F5DA8] hover:text-[#2F5DA8]")
+       
+: "w-full flex-1 rounded-xl border px-4 py-3 text-left text-[13px] flex items-center justify-start" +
+  (active
+    ? " bg-[#2F5DA8] text-white border-[#2F5DA8] shadow-[0_8px_20px_rgba(47,93,168,0.30)]"
+    : " bg-white border-black/10 text-[#0B1A2D] hover:border-[#2F5DA8] hover:text-[#2F5DA8]");
+
+
+      btn.addEventListener("click", () => {
+        bookingState.selectedTime = time;
+        renderTimeSlots();
+        updateBookingSelection();
+      });
+
+      return btn;
+    };
+
+    if (timeGrid) timeGrid.appendChild(createBtn(false));
+    if (timeGridMobile) timeGridMobile.appendChild(createBtn(true));
+  });
+}
+
+
+
+
+function renderCalendar() {
+  const view = bookingState.viewDate || new Date();
+  const year = view.getFullYear();
+  const month = view.getMonth();
+
+  const monthLabel = view.toLocaleDateString("en-US", {
+    month: "long",
+    year: "numeric"
+  });
+
+  if (calMonthLabel) calMonthLabel.textContent = monthLabel;
+  if (calMonthLabelDesktop) calMonthLabelDesktop.textContent = monthLabel;
+
+  if (calGrid) calGrid.innerHTML = "";
+  if (calGridMobile) calGridMobile.innerHTML = "";
+
+  const today = new Date();
+  const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+  const firstDayIndex = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const prevMonthDays = new Date(year, month, 0).getDate();
+
+  function makeDayButton(targetDate, dayNumber, isGhost = false) {
+    const isPast = targetDate < todayStart;
+    const isToday = sameDay(targetDate, todayStart);
+    const isSelected = sameDay(targetDate, bookingState.selectedDate);
+
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.textContent = dayNumber;
+    btn.className =
+      "mx-auto inline-flex items-center justify-center w-11 h-11 rounded-full text-[15px] transition";
+
+    if (isSelected) {
+      btn.className += " bg-[#3B82F6] text-white shadow-[0_8px_18px_rgba(59,130,246,0.28)]";
+    } else if (isPast && !isGhost) {
+      btn.classList.add("rfqDateBlur");
+      btn.disabled = true;
+    } else if (isToday && !isGhost) {
+      btn.className += " border border-[#3B82F6] text-[#2F5DA8] bg-[#F7FAFF]";
+    } else {
+      btn.className += isGhost
+        ? " text-[#0b1a2d]/30 hover:bg-[#F3F6FB]"
+        : " text-[#0B1A2D] hover:bg-[#F3F6FB]";
+    }
+
+    if (!isPast || isGhost) {
+      btn.addEventListener("click", () => {
+        bookingState.selectedDate = new Date(
+          targetDate.getFullYear(),
+          targetDate.getMonth(),
+          targetDate.getDate()
+        );
+
+        bookingState.viewDate = new Date(
+          targetDate.getFullYear(),
+          targetDate.getMonth(),
+          1
+        );
+
+        renderCalendar();
+        updateBookingSelection();
+      });
+    }
+
+    return btn;
+  }
+
+  function appendToBoth(btnDesktop, btnMobile) {
+    if (calGrid) calGrid.appendChild(btnDesktop);
+    if (calGridMobile) calGridMobile.appendChild(btnMobile);
+  }
+
+  // Previous month spillover
+  for (let i = firstDayIndex - 1; i >= 0; i--) {
+    const dayNumber = prevMonthDays - i;
+    const targetDate = new Date(year, month - 1, dayNumber);
+
+    const btnDesktop = makeDayButton(targetDate, dayNumber, true);
+    const btnMobile = makeDayButton(targetDate, dayNumber, true);
+
+    appendToBoth(btnDesktop, btnMobile);
+  }
+
+  // Current month
+  for (let day = 1; day <= daysInMonth; day++) {
+    const targetDate = new Date(year, month, day);
+
+    const btnDesktop = makeDayButton(targetDate, day, false);
+    const btnMobile = makeDayButton(targetDate, day, false);
+
+    appendToBoth(btnDesktop, btnMobile);
+  }
+
+  // Next month spillover
+  const totalCells = firstDayIndex + daysInMonth;
+  const trailing = (7 - (totalCells % 7)) % 7;
+
+  for (let i = 1; i <= trailing; i++) {
+    const targetDate = new Date(year, month + 1, i);
+
+    const btnDesktop = makeDayButton(targetDate, i, true);
+    const btnMobile = makeDayButton(targetDate, i, true);
+
+    appendToBoth(btnDesktop, btnMobile);
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+function openBookingCalendar() {
+  if (!bookingState.selectedDate) {
+    const today = new Date();
+    bookingState.selectedDate = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate()
+    );
+    bookingState.viewDate = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      1
+    );
+  }
+
+  renderCalendar();
+  renderTimeSlots();
+  updateBookingSelection();
+}
+
+calPrevBtn.addEventListener("click", () => {
+  const today = new Date();
+  const currentMonthStart = new Date(today.getFullYear(), today.getMonth(), 1);
+  const viewedMonthStart = new Date(
+    bookingState.viewDate.getFullYear(),
+    bookingState.viewDate.getMonth(),
+    1
+  );
+
+  if (viewedMonthStart <= currentMonthStart) {
+    return;
+  }
+
+  bookingState.viewDate = new Date(
+    bookingState.viewDate.getFullYear(),
+    bookingState.viewDate.getMonth() - 1,
+    1
+  );
+
+  renderCalendar();
+});
+
+calNextBtn.addEventListener("click", () => {
+  bookingState.viewDate = new Date(
+    bookingState.viewDate.getFullYear(),
+    bookingState.viewDate.getMonth() + 1,
+    1
+  );
+  renderCalendar();
+});
+
+
+calPrevBtnDesktop?.addEventListener("click", () => {
+  const today = new Date();
+  const currentMonthStart = new Date(today.getFullYear(), today.getMonth(), 1);
+  const viewedMonthStart = new Date(
+    bookingState.viewDate.getFullYear(),
+    bookingState.viewDate.getMonth(),
+    1
+  );
+
+  if (viewedMonthStart <= currentMonthStart) {
+    return;
+  }
+
+  bookingState.viewDate = new Date(
+    bookingState.viewDate.getFullYear(),
+    bookingState.viewDate.getMonth() - 1,
+    1
+  );
+
+  renderCalendar();
+});
+
+calNextBtnDesktop?.addEventListener("click", () => {
+  bookingState.viewDate = new Date(
+    bookingState.viewDate.getFullYear(),
+    bookingState.viewDate.getMonth() + 1,
+    1
+  );
+  renderCalendar();
+});
+      const tracker = document.getElementById("rfqTracker");
+      const mobileTracker = document.getElementById("rfqMobileTracker");
+
+      const stepTitle = document.getElementById("rfqStepTitle");
+      const stepSubtitle = document.getElementById("rfqStepSubtitle");
+      const stepBody = document.getElementById("rfqStepBody");
+
+const stepIcon = document.getElementById("rfqStepIcon");
+
+
+      const backBtn = document.getElementById("rfqBack");
+      const nextBtn = document.getElementById("rfqNext");
+
+     const submitBtn = document.getElementById("rfqSubmit");
+const finalMsg = document.getElementById("rfqFinalMsg");
+const thankYouState = document.getElementById("rfqThankYouState");
+
+function blinkInvalid(el){
+  if (!el) return;
+
+  const isFlex = el.classList.contains("rfqFieldFlex");
+const cls = isFlex ? "rfqBlinkRed" : "rfqBlinkRedField";
+
+  el.classList.remove(cls);
+  void el.offsetWidth; // restart animation
+  el.classList.add(cls);
+
+  el.addEventListener("animationend", () => {
+    el.classList.remove(cls);
+  }, { once: true });
+}
+
+function blinkMissingBasics(){
+  const basicFields = [
+    { input: nameEl, box: nameEl.closest(".rfqFieldFlex") },
+    { input: companyEl, box: companyEl.closest(".rfqFieldFlex") },
+    { input: emailEl, box: emailEl.closest(".rfqFieldFlex") },
+    { input: phoneEl, box: phoneEl.closest(".rfqFieldFlex") }
+  ];
+
+  basicFields.forEach(({ input, box }) => {
+    if (!input.value.trim()) blinkInvalid(box);
+  });
+}
+
+function blinkCurrentStepIfEmpty(){
+  const s = steps[current];
+  if (!s || s.type === "review") return;
+
+  let target = null;
+
+  // STEP INPUTS (select / input)
+  const field = stepBody.querySelector(".rfqField");
+  if (field) target = field;
+
+  // BASIC STEP (desktop inputs)
+  if (!target) {
+    const flex = stepBody.querySelector(".rfqFieldFlex");
+    if (flex) target = flex;
+  }
+
+  const value = (state[s.key] || "").toString().trim();
+  if (!value && target) blinkInvalid(target);
+}
+
+      function iconSvg(type){
+        const map = {
+          crop: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 21V11"/><path d="M8 17c-2.5 0-4.5-2-4.5-4.5C6 12.5 8 14.5 8 17Z"/><path d="M16 17c2.5 0 4.5-2 4.5-4.5C18 12.5 16 14.5 16 17Z"/><path d="M8 11C5.5 11 3.5 9 3.5 6.5 6 6.5 8 8.5 8 11Z"/><path d="M16 11c2.5 0 4.5-2 4.5-4.5C18 6.5 16 8.5 16 11Z"/></svg>`,
+          spec: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 9h8M8 12h8M8 15h5"/></svg>`,
+          tons: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M7 7h10l-1 10H8L7 7Z"/><path d="M9 7a3 3 0 1 1 6 0"/></svg>`,
+          packing: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 3l8 4.5-8 4.5-8-4.5L12 3Z"/><path d="M4 7.5V16.5L12 21l8-4.5V7.5"/><path d="M12 12v9"/></svg>`,
+          destination: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 21s6-5.4 6-11a6 6 0 1 0-12 0c0 5.6 6 11 6 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>`,
+          delivery: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>`,
+          quality: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3Z"/><path d="m9 12 2 2 4-4"/></svg>`,
+          insurance: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3Z"/><path d="M9 12h6"/></svg>`,
+payment: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18"/><path d="M7 15h3"/></svg>`,          
+chevron: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"><path d="m6 9 6 6 6-6"/></svg>`,
+          check: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>`
+        };
+        return map[type] || map.spec;
+      }
+
+      function buildSelectField(step){
+  const wrap = document.createElement("div");
+  wrap.className = "rfqFieldIconWrap";
+
+  const leftIcon = document.createElement("div");
+  leftIcon.className = "rfqFieldLeftIcon";
+  leftIcon.innerHTML = iconSvg(step.icon || "spec");
+
+  const sel = document.createElement("select");
+  sel.className = "rfqField rfqFieldWithIcon";
+
+  // add placeholder first
+  if (step.key === "crop") {
+    sel.innerHTML = `<option value="" selected disabled hidden>Select Crop...</option>`;
+    sel.classList.add("placeholder-active");
+  }
+
+if (step.key === "spec") {
+  sel.innerHTML = `<option value="" selected disabled hidden>Choose Grade...</option>`;
+  sel.classList.add("placeholder-active");
+}
+
+if (step.key === "packing") {
+  sel.innerHTML = `<option value="" selected disabled hidden>Choose Packing...</option>`;
+  sel.classList.add("placeholder-active");
+}
+
+if (step.key === "quality") {
+  sel.innerHTML = `<option value="" selected disabled hidden>Choose...</option>`;
+  sel.classList.add("placeholder-active");
+}
+
+if (step.key === "insurance") {
+  sel.innerHTML = `<option value="" selected disabled hidden>Choose...</option>`;
+  sel.classList.add("placeholder-active");
+}
+
+if (step.key === "paymentTerms") {
+  sel.innerHTML = `<option value="" selected disabled hidden>Choose...</option>`;
+  sel.classList.add("placeholder-active");
+}
+
+  // then add real options
+  (step.options || []).forEach(o => {
+    const opt = document.createElement("option");
+    opt.value = o;
+    opt.textContent = o;
+    sel.appendChild(opt);
+  });
+
+  // restore saved value if any
+  if (state[step.key]) {
+    sel.value = state[step.key];
+    sel.classList.remove("placeholder-active");
+  }
+
+  sel.addEventListener("change", ()=> {
+    state[step.key] = sel.value;
+    if (sel.value) {
+      sel.classList.remove("placeholder-active");
+    } else {
+      sel.classList.add("placeholder-active");
+    }
+  });
+
+  const rightChevron = document.createElement("div");
+  rightChevron.className = "rfqFieldRightChevron";
+  rightChevron.innerHTML = iconSvg("chevron");
+
+  wrap.appendChild(leftIcon);
+  wrap.appendChild(sel);
+  wrap.appendChild(rightChevron);
+
+  return wrap;
+}
+
+    function buildInputField(step){
+  const wrap = document.createElement("div");
+  wrap.className = "rfqFieldIconWrap";
+
+  const leftIcon = document.createElement("div");
+  leftIcon.className = "rfqFieldLeftIcon";
+  leftIcon.innerHTML = iconSvg(step.icon || "spec");
+
+  const input = document.createElement("input");
+  input.type = step.type || "text";
+  input.placeholder = step.placeholder || "";
+  input.className = "rfqField rfqFieldWithIcon";
+  input.value = state[step.key] || "";
+
+  if (step.type === "date") {
+    input.style.width = "100%";
+    input.style.minWidth = "0";
+    input.style.flex = "1";
+    input.style.display = "block";
+  }
+
+  input.addEventListener("input", ()=> state[step.key] = input.value);
+
+  wrap.appendChild(leftIcon);
+  wrap.appendChild(input);
+
+  if(step.type !== "date"){
+    const rightChevron = document.createElement("div");
+    rightChevron.className = "rfqFieldRightChevron";
+    rightChevron.style.opacity = ".0";
+    wrap.appendChild(rightChevron);
+  }
+
+  if(step.key === "containers"){
+    const note = document.createElement("div");
+    note.className = "mt-2 text-xs text-[#0b1a2d]/55";
+    note.textContent = "* A container is typically between 24–25 tons.";
+    const outer = document.createElement("div");
+    outer.appendChild(wrap);
+    outer.appendChild(note);
+    return outer;
+  }
+
+  return wrap;
+}
+
+      function reviewValue(v){
+        if(v === undefined || v === null || String(v).trim() === "") return "—";
+        return String(v);
+      }
+
+function buildReviewStep(){
+  const outer = document.createElement("div");
+  outer.className = "space-y-2";
+
+  const qualityYes =
+    state.quality && String(state.quality).trim().toLowerCase() !== "no";
+
+  const insuranceYes =
+    state.insurance && String(state.insurance).trim().toLowerCase() !== "no";
+
+  let otherText = "No";
+  if(qualityYes && insuranceYes){
+    otherText = "Quality Inspection | Insurance";
+  } else if(qualityYes){
+    otherText = "Quality Inspection";
+  } else if(insuranceYes){
+    otherText = "Insurance";
+  }
+
+  const lines = [
+  {
+    label: "Basic:",
+    value: `${reviewValue(state.__name)} | ${reviewValue(state.__company)} | ${reviewValue(state.__email)} | ${reviewValue(state.__phone)}`
+  },
+  {
+    label: "Order:",
+    value: `${reviewValue(state.crop)} | ${reviewValue(state.spec)}`
+  },
+  {
+    label: "Quantity:",
+    value: `${reviewValue(state.containers)} Container | ${reviewValue(state.packing)}`
+  },
+  {
+    label: "Destination:",
+    value: `${reviewValue(state.destination)} | ${reviewValue(state.delivery)}`
+  },
+  {
+    label: "Other:",
+    value: otherText
+  },
+  {
+    label: "Payment Terms:",
+    value: `${reviewValue(state.paymentTerms)}`
+  }
+];
+
+  lines.forEach((line) => {
+    const row = document.createElement("div");
+    row.className = "text-sm leading-relaxed";
+
+    row.innerHTML = `
+      <span class="font-semibold text-[#2F5DA8]">${line.label}</span>
+      <span class="text-[#0b1a2d]">${line.value}</span>
+    `;
+
+    outer.appendChild(row);
+  });
+
+  return outer;
+}
+           function makeField(step){
+        if(step.type === "review"){
+          return buildReviewStep();
+        }
+
+        if(step.type === "select"){
+          return buildSelectField(step);
+        }
+
+        return buildInputField(step);
+      }
+
+      function isFilled(i){
+        const step = steps[i];
+        if(step.type === "review") return true;
+        const k = step.key;
+        return state[k] && String(state[k]).trim().length > 0;
+      }
+
+function buildTracker(){
+  tracker.innerHTML = "";
+
+  const isReview = steps[current].type === "review";
+tracker.className = isReview
+  ? "grid grid-cols-10 gap-3"
+  : "grid grid-cols-9 gap-3";
+
+
+  // 🔥 ADD BASIC BUBBLE ONLY IN REVIEW
+  if (isReview) {
+    const cell = document.createElement("div");
+    cell.className = "tCircleWrap";
+
+    const c = document.createElement("div");
+    c.className = "tCircle";
+    c.textContent = "0";
+
+    const label = document.createElement("div");
+    label.className = "tLabel";
+    label.textContent = "Basic";
+
+  c.addEventListener("click", () => {
+  editingBasicFromReview = true;
+
+  wizardWrap.classList.add("hidden");
+  pathCard.classList.add("hidden");
+  bookingCard.classList.add("hidden");
+  step0Card.classList.remove("hidden");
+
+  startBtn.textContent = "Review →";
+
+  });
+
+    cell.appendChild(c);
+    cell.appendChild(label);
+    tracker.appendChild(cell);
+  }
+
+  // normal steps
+  steps.slice(0, 9).forEach((s, idx) => {
+    const cell = document.createElement("div");
+    cell.className = "tCircleWrap";
+
+    const mark = document.createElement("div");
+    mark.className = "tCircleMark";
+    mark.dataset.idx = String(idx);
+
+    const c = document.createElement("div");
+    c.className = "tCircle";
+    c.textContent = String(idx + 1);
+    c.dataset.idx = String(idx);
+
+    const label = document.createElement("div");
+    label.className = "tLabel";
+    label.textContent = s.label;
+    label.dataset.idx = String(idx);
+
+    c.addEventListener("click", () => {
+      const canGo =
+        idx === current ||
+        completed.has(idx) ||
+        idx < current ||
+        completed.has(idx - 1);
+
+      if (!canGo) return;
+
+      current = idx;
+      finalSubmitted = false;
+      finalMsg.classList.add("hidden");
+      render();
+    });
+
+    cell.appendChild(mark);
+    cell.appendChild(c);
+    cell.appendChild(label);
+    tracker.appendChild(cell);
+  });
+}
+     
+      function updateTrackerUI(){
+        const circles = tracker.querySelectorAll(".tCircle");
+        const labels  = tracker.querySelectorAll(".tLabel");
+        const marks   = tracker.querySelectorAll(".tCircleMark");
+
+        circles.forEach((c) => {
+          const idx = Number(c.dataset.idx);
+
+          c.classList.remove("active", "done");
+
+          if (completed.has(idx)) {
+            c.classList.add("done");
+          }
+
+          if (idx === current) {
+            c.classList.add("active");
+          }
+        });
+
+        labels.forEach((l) => {
+          const idx = Number(l.dataset.idx);
+
+          l.classList.remove("hiddenLabel", "activeLabel");
+
+          if (completed.has(idx) && idx !== current) {
+            l.classList.add("hiddenLabel");
+          } else if (idx === current) {
+            l.classList.add("activeLabel");
+          }
+        });
+
+        marks.forEach((m) => {
+          const idx = Number(m.dataset.idx);
+
+          m.classList.remove("show", "warn");
+          m.innerHTML = "";
+
+          if (!completed.has(idx)) return;
+
+          if (idx === current) {
+            m.classList.add("show", "warn");
+            m.textContent = "!";
+          } else {
+            m.classList.add("show");
+            m.innerHTML = `
+              <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 6L9 17l-5-5"/>
+              </svg>
+            `;
+          }
+        });
+      }
+
+
+      function getCompactSteps(currentIndex, total){
+        const currentStep = currentIndex + 1;
+
+        if (currentStep <= 3) return [1, 2, 3, "...", total];
+        if (currentStep >= total - 2) return [1, "...", total - 2, total - 1, total];
+        return [1, "...", currentStep, "...", total];
+      }
+
+
+    
+
+
+
+
+
+function buildMobileTracker() {
+  mobileTracker.innerHTML = "";
+
+  const outer = document.createElement("div");
+  outer.className = "mTrackerOuter";
+
+  const row = document.createElement("div");
+  row.className = "mTrackerRow";
+
+  const prev = document.createElement("button");
+  prev.className = "mArrow";
+  prev.innerHTML = "‹";
+  prev.disabled = current === 0;
+  prev.onclick = () => {
+    if (current === 0) return;
+    if (steps[current].type === "review") current = 8;
+    else current--;
+    render();
+  };
+  row.appendChild(prev);
+
+  const stepsWrap = document.createElement("div");
+  stepsWrap.className = "mSteps";
+
+  let visible = [];
+
+  // 0-based:
+  // group 1 = 0,1,2
+  // group 2 = 3,4,5
+  // group 3 = 6,7,8
+
+  if (current <= 2) {
+    // 1 2 3 ... 9
+    visible = [0, 1, 2, "ellipsis", 8];
+  } else if (current <= 5) {
+    // ... 4 5 6 ...
+    visible = ["ellipsis", 3, 4, 5, "ellipsis"];
+  } else {
+    // 1 ... 7 8 9
+    visible = [0, "ellipsis", 6, 7, 8];
+  }
+
+  visible.forEach((item) => {
+    if (item === "ellipsis") {
+      const ellWrap = document.createElement("div");
+      ellWrap.className = "mStepSlot";
+
+      const ell = document.createElement("div");
+      ell.className = "mStepEllipsis";
+      ell.textContent = "…";
+
+      const spacer = document.createElement("div");
+      spacer.className = "mStepSlotSpacer";
+
+      ellWrap.appendChild(ell);
+      ellWrap.appendChild(spacer);
+      stepsWrap.appendChild(ellWrap);
+      return;
+    }
+
+    const slot = document.createElement("div");
+    slot.className = "mStepSlot";
+
+    const bubble = document.createElement("button");
+    bubble.className = "mStepBubble";
+    bubble.textContent =
+      completed.has(item) && item !== current ? "✓" : String(item + 1);
+
+    if (completed.has(item)) bubble.classList.add("done");
+    if (item === current) bubble.classList.add("active");
+
+    bubble.onclick = () => {
+      const canGo =
+        item === current ||
+        completed.has(item) ||
+        item < current ||
+        completed.has(item - 1);
+
+      if (!canGo) return;
+
+      current = item;
+      finalSubmitted = false;
+      finalMsg.classList.add("hidden");
+      render();
+    };
+
+    const label = document.createElement("div");
+    label.className = "mStepSlotLabel" + (item === current ? " active" : "");
+label.textContent = item === current ? steps[item].label.toUpperCase() : "";
+
+    slot.appendChild(bubble);
+    slot.appendChild(label);
+    stepsWrap.appendChild(slot);
+  });
+
+  row.appendChild(stepsWrap);
+
+  const next = document.createElement("button");
+  next.className = "mArrow";
+  next.innerHTML = "›";
+  next.disabled = current === steps.length - 1;
+  next.onclick = () => {
+    if (current >= steps.length - 1) return;
+    current++;
+    render();
+  };
+
+  row.appendChild(next);
+  outer.appendChild(row);
+  mobileTracker.appendChild(outer);
+}
+
+
+
+
+
+
+
+
+
+function renderStep(){
+  const s = steps[current];
+  const isReview = s.type === "review";
+if (isReview) {
+  hasReviewed = true;
+}
+  const isPaymentStep = s.key === "paymentTerms";
+
+  stepTitle.textContent = s.title;
+  stepSubtitle.textContent = s.subtitle;
+stepIcon.src = isReview ? "rfq/step10.png" : `rfq/step${current + 1}.png`;
+stepIcon.alt = isReview ? "Review icon" : `Step ${current + 1} icon`;
+
+  stepBody.innerHTML = "";
+  stepBody.appendChild(makeField(s));
+
+backBtn.disabled = false;
+
+if (isReview) {
+  document.getElementById("rfqTrackerWrapDesktop").classList.remove("hidden");
+  document.getElementById("rfqTrackerWrapMobile").classList.add("hidden");
+  document.getElementById("rfqTracker").classList.add("review-mode");
+
+  backBtn.className = "rounded-full border border-[#0b1a2d] text-[#0b1a2d] bg-white px-6 py-2.5 text-sm font-semibold hover:bg-[#0b1a2d] hover:text-white transition disabled:opacity-30 disabled:cursor-not-allowed";
+
+  nextBtn.classList.add("hidden");
+  submitBtn.classList.remove("hidden");
+} else {
+  document.getElementById("rfqTrackerWrapDesktop").classList.remove("hidden");
+  document.getElementById("rfqTrackerWrapMobile").classList.remove("hidden");
+  document.getElementById("rfqTracker").classList.remove("review-mode");
+
+  backBtn.className = "rounded-full border border-[#0b1a2d] text-[#0b1a2d] bg-white px-6 py-2.5 text-sm font-semibold hover:bg-[#0b1a2d] hover:text-white transition disabled:opacity-30 disabled:cursor-not-allowed";
+
+  nextBtn.classList.remove("hidden");
+  submitBtn.classList.add("hidden");
+
+  if (hasReviewed && !isReview) {
+    nextBtn.textContent = "Review →";
+  } else {
+    nextBtn.textContent = isPaymentStep ? "Review Order" : "Next →";
+  }
+}
+
+  finalMsg.classList.toggle("hidden", !finalSubmitted);
+}
+
+
+function closeKeyboardThen(callback) {
+  const active = document.activeElement;
+
+  if (active && (active.tagName === "INPUT" || active.tagName === "TEXTAREA" || active.tagName === "SELECT")) {
+    active.blur();
+  }
+
+  setTimeout(() => {
+    callback();
+  }, 250);
+}
+
+startBtn.addEventListener("click", () => {
+  const name = nameEl.value.trim();
+  const company = companyEl.value.trim();
+  const email = emailEl.value.trim();
+  const phone = phoneEl.value.trim();
+
+  const basicsFilled = name && company && email && phone;
+
+  if (!basicsFilled) {
+    blinkMissingBasics();
+    return;
+  }
+
+  const emailBox = emailEl.closest(".rfqFieldFlex");
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (!emailEl.checkValidity() || !emailRegex.test(email)) {
+    blinkInvalid(emailBox);
+    emailEl.focus();
+    return;
+  }
+
+  state.__name = name;
+  state.__company = company;
+  state.__email = email;
+  state.__phone = phone;
+  state.__path = "";
+
+  if (editingBasicFromReview) {
+    editingBasicFromReview = false;
+    current = steps.length - 1;
+    render();
+
+    
+
+    showOnlySection(wizardSection);
+    return;
+  }
+
+
+
+  showOnlySection(pathSection);
+});
+
+
+pathButtons.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const chosen = btn.dataset.path;
+    state.__path = chosen;
+
+    if (chosen === "accessSupply") {
+      current = 0;
+      render();
+
+
+
+   
+
+      showOnlySection(wizardSection);
+      return;
+    }
+
+
+   
+    if (chosen === "tech") {
+      bookingTitle.textContent = "Technology Walkthrough";
+      bookingDesc.textContent =
+        "A 20-minute session to see how Shunah works and how it can create value for you.";
+      bookingImg.src = "rfq/path-tech.png";
+      bookingImg.alt = "Technology Walkthrough";
+    }
+
+    if (chosen === "usecase") {
+      bookingTitle.textContent = "Use Case Discussion";
+      bookingDesc.textContent =
+        "A 15-minute session to understand how it applies to your business.";
+      bookingImg.src = "rfq/path-usecase.png";
+      bookingImg.alt = "Use Case Discussion";
+    }
+
+    openBookingCalendar();
+    showOnlySection(bookingSection);
+  });
+});
+
+
+bookingBackBtn.addEventListener("click", () => {
+
+
+
+  showOnlySection(pathSection);
+});
+
+
+bookingConfirmBtn.addEventListener("click", () => {
+  if (!bookingState.selectedDate || !bookingState.selectedTime) return;
+
+  const userEmail = emailEl.value.trim();
+
+  bookingCalendarMobileWrap.style.display = "none";
+  bookingCalendarDesktopWrap.style.display = "none";
+  bookingSelectionWrap.style.display = "none";
+
+  bookingEmailText.textContent = userEmail || "your email";
+  bookingEmailState.classList.remove("hidden");
+  bookingEmailState.style.display = "block";
+
+  bookingConfirmBtn.textContent = "Booking Confirmed";
+  bookingConfirmBtn.disabled = true;
+  bookingConfirmBtn.classList.remove("pointer-events-none", "opacity-50");
+  bookingConfirmBtn.classList.add("opacity-80");
+
+  setTimeout(() => {
+    resetRfqForm();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, 5000);
+});
+
+
+nextBtn.addEventListener("click", () => {
+  closeKeyboardThen(() => {
+    if (hasReviewed && steps[current].type !== "review") {
+      if (!isFilled(current)) {
+        blinkCurrentStepIfEmpty();
+        return;
+      }
+
+      completed.add(current);
+      current = steps.length - 1;
+      render();
+
+      if (window.innerWidth < 768) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+      return;
+    }
+
+    if (!isFilled(current)) {
+      blinkCurrentStepIfEmpty();
+      return;
+    }
+
+    completed.add(current);
+
+    if (current < steps.length - 1) {
+      current++;
+    }
+
+    render();
+
+    if (window.innerWidth < 768) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  });
+});
+
+
+
+function scrollFormToTopMobile(){
+  return;
+}
+
+function resetRfqForm(){
+  const savedName = state.__name || "";
+const savedCompany = state.__company || "";
+const savedEmail = state.__email || "";
+const savedPhone = state.__phone || "";
+
+Object.keys(state).forEach((key) => delete state[key]);
+
+state.__name = savedName;
+state.__company = savedCompany;
+state.__email = savedEmail;
+state.__phone = savedPhone;
+
+completed.clear();
+current = 0;
+finalSubmitted = false;
+hasReviewed = false;
+
+nameEl.value = savedName;
+companyEl.value = savedCompany;
+emailEl.value = savedEmail;
+phoneEl.value = savedPhone;
+
+editingBasicFromReview = false;
+startBtn.textContent = "Next →";  
+
+
+
+  finalMsg.classList.add("hidden");
+  thankYouState.classList.add("hidden");
+
+  document.getElementById("rfqStepIcon").classList.remove("hidden");
+  document.getElementById("rfqStepTitle").classList.remove("hidden");
+  document.getElementById("rfqStepSubtitle").classList.remove("hidden");
+  document.getElementById("rfqStepBody").classList.remove("hidden");
+
+  document.getElementById("rfqBack").classList.remove("hidden");
+  document.getElementById("rfqNext").classList.remove("hidden");
+  document.getElementById("rfqSubmit").classList.add("hidden");
+
+  document.getElementById("rfqTrackerWrapDesktop").classList.remove("hidden");
+  document.getElementById("rfqTrackerWrapMobile").classList.remove("hidden");
+
+basicSection.classList.remove("hidden");
+pathSection.classList.add("hidden");
+bookingSection.classList.add("hidden");
+wizardSection.classList.add("hidden");
+
+document.getElementById("rfqHelperText").style.display = "";
+document.getElementById("rfqHelperText").textContent =
+  "Tell us who you are to connect you with the right opportunities.";
+bookingConfirmBtn.textContent = "Confirm Booking →";
+bookingConfirmBtn.disabled = false;
+bookingConfirmBtn.classList.remove("opacity-80");
+
+bookingState.viewDate = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+bookingState.selectedDate = null;
+bookingState.selectedTime = "";
+bookingConfirmBtn.textContent = "Confirm Booking →";
+bookingConfirmBtn.disabled = false;
+bookingConfirmBtn.classList.add("opacity-50", "pointer-events-none");
+bookingConfirmBtn.classList.remove("opacity-80");
+bookingSelection.textContent = "Select a date and time"; 
+
+bookingCalendarMobileWrap.style.display = "";
+bookingCalendarDesktopWrap.style.display = "";
+bookingSelectionWrap.style.display = "";
+bookingEmailState.style.display = "";
+bookingEmailState.classList.add("hidden");
+bookingEmailText.textContent = "";
+
+
+ render();
+}
+
+backBtn.addEventListener("click", () => {
+  closeKeyboardThen(() => {
+   if (current === 0) {
+
+  
+  showOnlySection(pathSection);
+  return;
+}
+
+    if (steps[current].type === "review") {
+      current = 8;
+    } else {
+      current--;
+    }
+
+    finalSubmitted = false;
+    finalMsg.classList.add("hidden");
+    render();
+
+    if (window.innerWidth < 768) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  });
+});;
+
+submitBtn.addEventListener("click", () => {
+  finalSubmitted = false;
+
+  document.getElementById("rfqTrackerWrapDesktop").classList.add("hidden");
+  document.getElementById("rfqTrackerWrapMobile").classList.add("hidden");
+document.getElementById("rfqTracker").innerHTML = "";
+
+  document.getElementById("rfqStepIcon").classList.add("hidden");
+  document.getElementById("rfqStepTitle").classList.add("hidden");
+  document.getElementById("rfqStepSubtitle").classList.add("hidden");
+  document.getElementById("rfqStepBody").classList.add("hidden");
+
+  document.getElementById("rfqBack").classList.add("hidden");
+  document.getElementById("rfqNext").classList.add("hidden");
+  document.getElementById("rfqSubmit").classList.add("hidden");
+
+  finalMsg.classList.add("hidden");
+  thankYouState.classList.remove("hidden");
+
+  setTimeout(() => {
+    resetRfqForm();
+  }, 10000);
+});
+
+
+     function render(){
+  buildTracker();
+  renderStep();
+  updateTrackerUI();
+  buildMobileTracker();
+}
+
+      buildTracker();
+      render();
+    })();
+  </script>
+
+  <script>
+    (function () {
+      const mobileMenuButton = document.getElementById('mobile-menu-button');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const openIcon = document.getElementById('menu-open-icon');
+      const closeIcon = document.getElementById('menu-close-icon');
+
+      if (!mobileMenuButton || !mobileMenu) return;
+
+      let scrollCloseTimer;
+
+      function openMobileMenu() {
+        mobileMenu.classList.remove('hidden');
+        mobileMenuButton.setAttribute('aria-expanded', 'true');
+        if (openIcon) openIcon.classList.add('hidden');
+        if (closeIcon) closeIcon.classList.remove('hidden');
+      }
+
+      function closeMobileMenu() {
+        mobileMenu.classList.add('hidden');
+        mobileMenuButton.setAttribute('aria-expanded', 'false');
+        if (openIcon) openIcon.classList.remove('hidden');
+        if (closeIcon) closeIcon.classList.add('hidden');
+      }
+
+      function isMobileView() {
+        return window.innerWidth < 768;
+      }
+
+      function toggleMobileMenu() {
+        if (mobileMenu.classList.contains('hidden')) {
+          openMobileMenu();
+        } else {
+          closeMobileMenu();
+        }
+      }
+
+      mobileMenuButton.addEventListener('click', toggleMobileMenu);
+
+      window.addEventListener(
+        'scroll',
+        function () {
+          if (!isMobileView()) return;
+          if (!mobileMenu.classList.contains('hidden')) closeMobileMenu();
+
+          clearTimeout(scrollCloseTimer);
+          scrollCloseTimer = setTimeout(() => {
+            if (!isMobileView()) return;
+            closeMobileMenu();
+          }, 120);
+        },
+        { passive: true }
+      );
+
+      window.addEventListener('resize', function () {
+        closeMobileMenu();
+      });
+    })();
+  </script>
+
+
+</body>
+</html>
