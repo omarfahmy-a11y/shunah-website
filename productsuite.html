@@ -1116,6 +1116,16 @@ window.addEventListener('load', () => {
     sessionStorage.removeItem('originCard');
   }
 });
+
+
+window.addEventListener('pageshow', () => {
+  document.querySelectorAll('.suiteKnowMore').forEach(btn => {
+    btn.style.background = "";
+    btn.style.color = "";
+    btn.style.borderColor = "";
+    btn.style.transform = "";
+  });
+});
 </script>
 
 
