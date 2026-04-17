@@ -598,103 +598,83 @@ text-align:center;
         <div class="lg:col-span-8">
   <div class="max-w-2xl ml-auto">
 
-            <h2 id="rfqMainTitle" class="text-[28px] sm:text-[32px] font-bold tracking-[-0.5px] text-[#0B1A2D]">
+            
+            <!-- STEP 0 -->
+<div id="rfqBasicSection" class="mt-0">
+<h2 class="text-[28px] sm:text-[32px] font-bold tracking-[-0.5px] text-[#0B1A2D]">
   Get Started
 </h2>
 
 <div class="mt-2">
-  <p id="rfqSubtitle"
-  class="text-[11px] sm:text-[14px] tracking-[2px] uppercase text-[#4A6FA5] font-medium">
-  LET’S START WITH THE BASICS
-</p>
+  <p class="text-[11px] sm:text-[14px] tracking-[2px] uppercase text-[#4A6FA5] font-medium">
+    LET’S START WITH THE BASICS
+  </p>
 
- <p id="rfqHelperText" class="mt-2 text-sm text-[#0b1a2d]/55">
-  Tell us who you are to connect you with the right opportunities.
-</p>
+  <p class="mt-2 text-sm text-[#0b1a2d]/55">
+    Tell us who you are to connect you with the right opportunities.
+  </p>
 </div>
+  <div id="rfqStep0Card"
+    class="mt-2 rounded-2xl border border-black/10 bg-white p-6 sm:p-7 shadow-[0_25px_70px_rgba(11,26,45,0.15),0_5px_20px_rgba(11,26,45,0.08)]">
 
-            <!-- STEP 0 -->
-<div id="rfqStep0Card"
-  class="mt-6 rounded-2xl border border-black/10 bg-white p-6 sm:p-7 shadow-[0_25px_70px_rgba(11,26,45,0.15),0_5px_20px_rgba(11,26,45,0.08)]">
+    <div class="flex items-start gap-4">
+      <div class="shrink-0">
+        <div class="w-14 h-14 rounded-full bg-[#f1f3f6] border border-white flex items-center justify-center">
+          <img
+            src="rfq/profile-placeholder.png"
+            alt="Profile placeholder"
+            class="w-7 h-7 object-contain opacity-70"
+          />
+        </div>
+      </div>
 
-<div class="flex items-start gap-4">
+      <div class="min-w-0">
+        <div class="text-[18px] font-semibold text-[#0B1A2D]">Basic Details</div>
+        <div class="mt-1 text-[12px] font-normal text-[#6B7A90]">
+          Please enter your contact information.
+        </div>
+      </div>
+    </div>
 
-  <div class="shrink-0">
-    <div class="w-14 h-14 rounded-full bg-[#f1f3f6] border border-white flex items-center justify-center">
-      <img
-        src="rfq/profile-placeholder.png"
-        alt="Profile placeholder"
-        class="w-7 h-7 object-contain opacity-70"
-      />
+    <div class="mt-5 space-y-4">
+      <div class="rfqFieldFlex">
+        <div class="rfqFieldCircleIcon">
+          <img src="rfq/user-icon.png" class="rfqFieldCircleImg" />
+        </div>
+        <input id="rfqName" class="rfqFieldNoPadding" type="text" placeholder="Your name" />
+      </div>
+
+      <div class="rfqFieldFlex">
+        <div class="rfqFieldCircleIcon">
+          <img src="rfq/company-icon.png" alt="" class="rfqFieldCircleImg" />
+        </div>
+        <input id="rfqCompany" class="rfqFieldNoPadding" type="text" placeholder="Company name" />
+      </div>
+
+      <div class="rfqFieldFlex">
+        <div class="rfqFieldCircleIcon">
+          <img src="rfq/email-icon.png" alt="" class="rfqFieldCircleImg" />
+        </div>
+        <input id="rfqEmail" class="rfqFieldNoPadding" type="email" placeholder="Your email" />
+      </div>
+
+      <div class="rfqFieldFlex">
+        <div class="rfqFieldCircleIcon">
+          <img src="rfq/phone-icon.png" alt="" class="rfqFieldCircleImg" />
+        </div>
+        <input id="rfqPhone" class="rfqFieldNoPadding" type="tel" placeholder="+20 ..." />
+      </div>
+    </div>
+
+    <div class="mt-6">
+      <button id="rfqStart"
+        class="w-full rounded-xl bg-[#0b1a2d] text-white px-6 py-3 text-sm font-semibold hover:bg-[#142a4a] transition">
+        Next →
+      </button>
     </div>
   </div>
 
-  <div class="min-w-0">
-    <div class="text-[18px] font-semibold text-[#0B1A2D]">Basic Details</div>
-    <div class="mt-1 text-[12px] font-normal text-[#6B7A90]">
-  Please enter your contact information.
-</div>
-  </div>
-
-</div>
-
-  <div class="mt-5 space-y-4">
-
-   <div class="rfqFieldFlex">
-  <div class="rfqFieldCircleIcon">
-    <img src="rfq/user-icon.png" class="rfqFieldCircleImg" />
-  </div>
-
-<input id="rfqName"
-  class="rfqFieldNoPadding"
-  type="text"
-  placeholder="Your name" />
-</div>
-
-    
-<div class="rfqFieldFlex">
-  <div class="rfqFieldCircleIcon">
-    <img src="rfq/company-icon.png" alt="" class="rfqFieldCircleImg" />
-  </div>
-  <input
-    id="rfqCompany"
-    class="rfqFieldNoPadding"
-    type="text"
-    placeholder="Company name" />
-</div>
-
-<div class="rfqFieldFlex">
-  <div class="rfqFieldCircleIcon">
-    <img src="rfq/email-icon.png" alt="" class="rfqFieldCircleImg" />
-  </div>
-  <input
-    id="rfqEmail"
-    class="rfqFieldNoPadding"
-    type="email"
-    placeholder="Your email" />
-</div>
-
-<div class="rfqFieldFlex">
-  <div class="rfqFieldCircleIcon">
-    <img src="rfq/phone-icon.png" alt="" class="rfqFieldCircleImg" />
-  </div>
-  <input
-    id="rfqPhone"
-    class="rfqFieldNoPadding"
-    type="tel"
-    placeholder="+20 ..." />
-</div>
-
-
-  </div>
-
-  <div class="mt-6">
-    <button id="rfqStart"
-      class="w-full rounded-xl bg-[#0b1a2d] text-white px-6 py-3 text-sm font-semibold hover:bg-[#142a4a] transition">
-      Next →
-    </button>
-  </div>
- <div class="mt-0 pt-4 text-center">
+  <div class="mt-4 text-center">
     <div class="inline-flex items-center gap-2 text-[10px] text-[#0b1a2d]/60">
       <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.9">
         <rect x="5" y="10" width="14" height="10" rx="2"></rect>
@@ -702,13 +682,21 @@ text-align:center;
       </svg>
       <span>Your information is secure</span>
     </div>
-</div>
-
+  </div>
 </div>
 
 <!-- PATH SELECTION -->
-<div id="rfqPathCard"
-  class="hidden mt-6 sm:rounded-[28px] sm:border sm:border-black/10 sm:bg-white sm:p-5 sm:shadow-[0_25px_70px_rgba(11,26,45,0.10),0_5px_20px_rgba(11,26,45,0.05)]">
+<div id="rfqPathSection" class="hidden mt-0">
+  <h2 class="text-[28px] sm:text-[32px] font-bold tracking-[-0.5px] text-[#0B1A2D]">
+    Choose Your Path
+  </h2>
+
+  <p class="mt-2 text-sm text-[#0b1a2d]/55">
+    Choose the route that best matches what you want to do.
+  </p>
+
+  <div id="rfqPathCard"
+    class="mt-6 sm:rounded-[28px] sm:border sm:border-black/10 sm:bg-white sm:p-5 sm:shadow-[0_25px_70px_rgba(11,26,45,0.10),0_5px_20px_rgba(11,26,45,0.05)]">
 
   <div class="space-y-4">
 
@@ -890,7 +878,9 @@ text-align:center;
 
   </div>
 
-  <div class="mt-0 pt-4 text-center">
+    </div>
+
+  <div class="mt-4 text-center">
     <div class="inline-flex items-center gap-2 text-[10px] text-[#0b1a2d]/60">
       <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.9">
         <rect x="5" y="10" width="14" height="10" rx="2"></rect>
@@ -902,9 +892,17 @@ text-align:center;
 </div>
 
 <!-- BOOKING SCREEN -->
-<div id="rfqBookingCard"
-  class="hidden mt-6 rounded-[28px] border border-black/10 bg-white p-4 sm:p-5 shadow-[0_25px_70px_rgba(11,26,45,0.10),0_5px_20px_rgba(11,26,45,0.05)]">
+<div id="rfqBookingSection" class="hidden mt-0">
+  <h2 class="text-[28px] sm:text-[32px] font-bold tracking-[-0.5px] text-[#0B1A2D]">
+    Book a Session
+  </h2>
 
+  <p class="mt-2 text-sm text-[#0b1a2d]/55">
+    Choose a suitable date and time for your discussion.
+  </p>
+
+  <div id="rfqBookingCard"
+    class="mt-6 rounded-[28px] border border-black/10 bg-white p-4 sm:p-5 shadow-[0_25px_70px_rgba(11,26,45,0.10),0_5px_20px_rgba(11,26,45,0.05)]">
   <button id="rfqBookingBack"
     type="button"
     class="mb-4 inline-flex items-center justify-center w-10 h-10 rounded-full border border-black/10 bg-white text-[#0B1A2D]">
@@ -1065,9 +1063,21 @@ text-align:center;
     </div>
   </div>
 </div>            
-
+</div>    
 <!-- WIZARD -->
-            <div id="rfqWizardWrap" class="hidden">
+<div id="rfqWizardSection" class="hidden mt-0">
+  <h2 class="text-[28px] sm:text-[32px] font-bold tracking-[-0.5px] text-[#0B1A2D]">
+    Access Supply
+  </h2>
+<p class="mt-2 text-[11px] sm:text-[14px] tracking-[2px] uppercase text-[#4A6FA5] font-medium">
+  STRUCTURED PROCUREMENT IN 9 STEPS
+</p>
+
+  <p class="mt-2 text-sm text-[#0b1a2d]/55">
+    Complete your request details to start sourcing crops directly.
+  </p>
+
+  <div id="rfqWizardWrap">
 
 
               <!-- DESKTOP TRACKER -->
@@ -1168,6 +1178,7 @@ text-align:center;
     <span>Your information is secure</span>
   </div>
 </div>
+</div>
           </div>
         </div>
 
@@ -1196,6 +1207,11 @@ text-align:center;
       let finalSubmitted = false;
 let hasReviewed = false;
 
+const basicSection = document.getElementById("rfqBasicSection");
+const pathSection = document.getElementById("rfqPathSection");
+const bookingSection = document.getElementById("rfqBookingSection");
+const wizardSection = document.getElementById("rfqWizardSection");
+
 const step0Card = document.getElementById("rfqStep0Card");
 const pathCard = document.getElementById("rfqPathCard");
 const bookingCard = document.getElementById("rfqBookingCard");
@@ -1214,6 +1230,7 @@ const bookingConfirmBtn = document.getElementById("rfqBookingConfirm");
 const bookingTitle = document.getElementById("rfqBookingTitle");
 const bookingDesc = document.getElementById("rfqBookingDesc");
 const bookingImg = document.getElementById("rfqBookingImg");
+
 
 const calPrevBtn = document.getElementById("rfqCalPrev");
 const calNextBtn = document.getElementById("rfqCalNext");
@@ -1235,10 +1252,21 @@ const bookingSelectionWrap = document.getElementById("rfqBookingSelectionWrap");
 const bookingEmailState = document.getElementById("rfqBookingEmailState");
 const bookingEmailText = document.getElementById("rfqBookingEmailText");
 
-function setMainTitle(value) {
-  const title = document.getElementById("rfqMainTitle");
-  if (title) title.textContent = value;
+
+
+function showOnlySection(sectionToShow) {
+  [basicSection, pathSection, bookingSection, wizardSection].forEach((section) => {
+    if (!section) return;
+    section.classList.toggle("hidden", section !== sectionToShow);
+  });
+
+  window.scrollTo({ top: 0, behavior: "auto" });
 }
+
+basicSection.classList.remove("hidden");
+pathSection.classList.add("hidden");
+bookingSection.classList.add("hidden");
+wizardSection.classList.add("hidden");
 const bookingState = {
   viewDate: new Date(),
   selectedDate: null,
@@ -1309,10 +1337,10 @@ function renderTimeSlots() {
             ? "bg-[#2F5DA8] text-white border-[#2F5DA8] shadow-[0_8px_20px_rgba(47,93,168,0.20)]"
             : "border-black/10 text-[#0B1A2D] hover:border-[#2F5DA8] hover:text-[#2F5DA8]")
        
-: "w-full flex-1 rounded-xl border px-4 py-3 text-left text-[13px] flex items-center justify-start bg-white" +
+: "w-full flex-1 rounded-xl border px-4 py-3 text-left text-[13px] flex items-center justify-start" +
   (active
-    ? " border-[#2F5DA8] text-[#2F5DA8] shadow-[0_8px_20px_rgba(47,93,168,0.20)]"
-    : " border-black/10 text-[#0B1A2D] hover:border-[#2F5DA8] hover:text-[#2F5DA8]");
+    ? " bg-[#2F5DA8] text-white border-[#2F5DA8] shadow-[0_8px_20px_rgba(47,93,168,0.30)]"
+    : " bg-white border-black/10 text-[#0B1A2D] hover:border-[#2F5DA8] hover:text-[#2F5DA8]");
 
 
       btn.addEventListener("click", () => {
@@ -1853,11 +1881,7 @@ tracker.className = isReview
 
   startBtn.textContent = "Review →";
 
-  document.getElementById("rfqSubtitle").textContent = "LET’S START WITH THE BASICS";
-  document.getElementById("rfqHelperText").textContent =
-    "Please review and update your basic details.";
-  document.getElementById("rfqHelperText").style.display = "";
-});
+  });
 
     cell.appendChild(c);
     cell.appendChild(label);
@@ -2167,7 +2191,6 @@ startBtn.addEventListener("click", () => {
     return;
   }
 
-  // email validation
   const emailBox = emailEl.closest(".rfqFieldFlex");
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -2181,40 +2204,22 @@ startBtn.addEventListener("click", () => {
   state.__company = company;
   state.__email = email;
   state.__phone = phone;
+  state.__path = "";
 
   if (editingBasicFromReview) {
     editingBasicFromReview = false;
-    step0Card.classList.add("hidden");
-    wizardWrap.classList.remove("hidden");
     current = steps.length - 1;
     render();
 
-    if (window.innerWidth < 768) {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
+    
+
+    showOnlySection(wizardSection);
     return;
   }
 
-  step0Card.classList.add("hidden");
-  pathCard.classList.remove("hidden");
 
-  bookingCard.classList.add("hidden");
-  wizardWrap.classList.add("hidden");
 
-  state.__path = "";
-
-  startBtn.textContent = "Next →";
-
-  setMainTitle("Choose Your Path");
-
-  document.getElementById("rfqSubtitle").style.display = "none";
-  document.getElementById("rfqHelperText").textContent =
-    "Choose the route that best matches what you want to do.";
-  document.getElementById("rfqHelperText").style.display = "";
-
-  if (window.innerWidth < 768) {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
+  showOnlySection(pathSection);
 });
 
 
@@ -2224,97 +2229,48 @@ pathButtons.forEach((btn) => {
     state.__path = chosen;
 
     if (chosen === "accessSupply") {
-      pathCard.classList.add("hidden");
-      bookingCard.classList.add("hidden");
-      wizardWrap.classList.remove("hidden");
-
-setMainTitle("Supply Request");
-
-      document.getElementById("rfqSubtitle").textContent =
-        "STRUCTURED PROCUREMENT IN 9 STEPS";
-      document.getElementById("rfqHelperText").textContent =
-        "Complete the form below to submit your request.";
-      document.getElementById("rfqHelperText").style.display = "";
-
       current = 0;
       render();
 
-      if (window.innerWidth < 768) {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }
+
+
+   
+
+      showOnlySection(wizardSection);
       return;
     }
 
+
+   
     if (chosen === "tech") {
-      pathCard.classList.add("hidden");
-      wizardWrap.classList.add("hidden");
-      bookingCard.classList.remove("hidden");
-
-setMainTitle("Inside Shunah Technology");
-
-      document.getElementById("rfqSubtitle").textContent = "BOOK A SESSION";
-      document.getElementById("rfqHelperText").textContent =
-        "Choose a time slot to speak with our team.";
-      document.getElementById("rfqHelperText").style.display = "";
-
-      bookingTitle.innerHTML = "Technology Walkthrough";
+      bookingTitle.textContent = "Technology Walkthrough";
       bookingDesc.textContent =
         "A 20-minute session to see how Shunah works and how it can create value for you.";
       bookingImg.src = "rfq/path-tech.png";
       bookingImg.alt = "Technology Walkthrough";
-
-  openBookingCalendar();     
-
- if (window.innerWidth < 768) {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }
-      return;
     }
 
     if (chosen === "usecase") {
-      pathCard.classList.add("hidden");
-      wizardWrap.classList.add("hidden");
-      bookingCard.classList.remove("hidden");
-
-setMainTitle("Inside Shunah Technology");
-
-      document.getElementById("rfqSubtitle").textContent = "BOOK A SESSION";
-      document.getElementById("rfqHelperText").textContent =
-        "Choose a time slot to speak with our team.";
-      document.getElementById("rfqHelperText").style.display = "";
-
-      bookingTitle.innerHTML = "Use Case Discussion";
+      bookingTitle.textContent = "Use Case Discussion";
       bookingDesc.textContent =
-        "A 15-minute session to understand how Shunah can apply to your business and sourcing needs.";
+        "A 15-minute session to understand how it applies to your business.";
       bookingImg.src = "rfq/path-usecase.png";
       bookingImg.alt = "Use Case Discussion";
-
- openBookingCalendar();
-
-      if (window.innerWidth < 768) {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }
     }
+
+    openBookingCalendar();
+    showOnlySection(bookingSection);
   });
 });
 
+
 bookingBackBtn.addEventListener("click", () => {
-  bookingCard.classList.add("hidden");
-  pathCard.classList.remove("hidden");
-  wizardWrap.classList.add("hidden");
-
-  setMainTitle("Choose Your Path");
 
 
-document.getElementById("rfqSubtitle").style.display = "none";
-  document.getElementById("rfqHelperText").textContent =
-    "Choose the route that best matches what you want to do.";
-  document.getElementById("rfqHelperText").style.display = "";
 
-  if (window.innerWidth < 768) {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
+  showOnlySection(pathSection);
 });
+
 
 bookingConfirmBtn.addEventListener("click", () => {
   if (!bookingState.selectedDate || !bookingState.selectedTime) return;
@@ -2410,10 +2366,7 @@ phoneEl.value = savedPhone;
 editingBasicFromReview = false;
 startBtn.textContent = "Next →";  
 
-document.getElementById("rfqSubtitle").style.display = "";
 
-document.getElementById("rfqSubtitle").textContent = "Lets Start with the Basics";
-setMainTitle("Get Started");
 
   finalMsg.classList.add("hidden");
   thankYouState.classList.add("hidden");
@@ -2430,10 +2383,10 @@ setMainTitle("Get Started");
   document.getElementById("rfqTrackerWrapDesktop").classList.remove("hidden");
   document.getElementById("rfqTrackerWrapMobile").classList.remove("hidden");
 
- wizardWrap.classList.add("hidden");
-pathCard.classList.add("hidden");
-bookingCard.classList.add("hidden");
-step0Card.classList.remove("hidden");
+basicSection.classList.remove("hidden");
+pathSection.classList.add("hidden");
+bookingSection.classList.add("hidden");
+wizardSection.classList.add("hidden");
 
 document.getElementById("rfqHelperText").style.display = "";
 document.getElementById("rfqHelperText").textContent =
@@ -2464,23 +2417,12 @@ bookingEmailText.textContent = "";
 
 backBtn.addEventListener("click", () => {
   closeKeyboardThen(() => {
-    if (current === 0) {
-      wizardWrap.classList.add("hidden");
-      pathCard.classList.remove("hidden");
-      bookingCard.classList.add("hidden");
-      step0Card.classList.add("hidden");
+   if (current === 0) {
 
-      document.getElementById("rfqMainTitle").textContent = "Choose Your Path";
-document.getElementById("rfqSubtitle").style.display = "none";
-      document.getElementById("rfqHelperText").textContent =
-        "Choose the route that best matches what you want to do.";
-      document.getElementById("rfqHelperText").style.display = "";
-
-      if (window.innerWidth < 768) {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }
-      return;
-    }
+  
+  showOnlySection(pathSection);
+  return;
+}
 
     if (steps[current].type === "review") {
       current = 8;
