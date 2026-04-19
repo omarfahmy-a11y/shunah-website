@@ -72,7 +72,7 @@
       <a href="productsuite.html" class="hover:text-[#0b1a2d] transition">Product Suite</a>
       <a href="usecases.html" class="hover:text-[#0b1a2d] transition">Use Cases</a>
       <a href="focus.html" class="hover:text-[#0b1a2d] transition">Our Focus</a>
-           <a href="inquire.html" class="hover:text-[#0b1a2d] transition">RFQ</a>
+           <a href="inquire.html" class="hover:text-[#0b1a2d] transition">Inquire</a>
       <a href="contact.html" class="hover:text-[#0b1a2d] transition">Contact Us</a>
     </div>
 
@@ -106,7 +106,7 @@
       <a href="productsuite.html" class="nav-link">Product Suite</a>
       <a href="usecases.html" class="nav-link">Use Cases</a>
       <a href="focus.html" class="nav-link">Our Focus</a>
-      <a href="inquire.html" class="nav-link">RFQ</a>
+      <a href="inquire.html" class="nav-link">Inquire</a>
       <a href="contact.html" class="nav-link">Contact Us</a>
     </div>
   </div>
@@ -1102,8 +1102,16 @@ Updated:
     min-height: 292px; /* 4 cards + 3 gaps */
   }
 
-  .eco-card {
+   .eco-card {
     overflow: hidden;
+    background: linear-gradient(
+      to right,
+      rgba(34, 90, 180, 0.18) 0%,
+      rgba(34, 90, 180, 0.10) 18%,
+      rgba(34, 90, 180, 0.04) 42%,
+      rgba(255, 255, 255, 0.96) 72%,
+      rgba(255, 255, 255, 1) 100%
+    ) !important;
   }
 
   .eco-icon,
@@ -2196,7 +2204,7 @@ dryCropsHintObserver.observe(section);
         mobileCloseTimer = setTimeout(() => {
           if (!isMobileView()) return;
           hideNavbar();
-        }, 1500);
+        }, 5000);
 
         if (currentScrollY <= 0) {
           showNavbar();
@@ -2226,7 +2234,7 @@ dryCropsHintObserver.observe(section);
       clearTimeout(desktopScrollStopTimer);
       desktopScrollStopTimer = setTimeout(() => {
         if (!isMobileView()) hideNavbar();
-      }, 1500);
+      }, 5000);
 
       lastScrollY = currentScrollY;
     },
