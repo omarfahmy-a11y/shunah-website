@@ -50,12 +50,15 @@
 }
 
 /* 2 — BOTTOM LEFT */
+
+
 .quarter-2 {
   top: calc(260px + var(--gap));
   left: calc(35px - var(--gap));
   width: 255px;
   height: 255px;
   border-bottom-left-radius: 255px;
+
 }
 
 /* 3 — BOTTOM RIGHT */
@@ -65,6 +68,7 @@
   width: 205px;
   height: 205px;
   border-bottom-right-radius: 205px;
+ z-index: 1;
 }
 
 .quarter-4 {
@@ -107,15 +111,49 @@
   top: calc(40px - var(--gap) - 5px);
   left: calc(70px - var(--gap) - 5px);
 
-  width: 210px;
-  height: 210px;
+  width: 220px;
+  height: 220px;
 
-  background: #cfe3ff;
+  background: #0b1a2d;
 
   /* THIS is the key fix */
-  border-top-left-radius: 210px;
+  border-top-left-radius: 220px;
 
   z-index: 0;
+}
+
+.quarter-8 {
+  position: absolute;
+
+  /* same base position as quarter-2, slightly offset */
+  top: calc(260px + var(--gap) + 6px);
+  left: calc(35px - var(--gap) - 6px);
+
+  width: 255px;
+  height: 255px;
+
+  background: #2F5DA8; /* navy */
+
+  border-bottom-left-radius: 255px;
+
+  z-index: 0; /* behind */
+}
+
+.quarter-9 {
+  position: absolute;
+
+  /* same base as quarter-3, slight offset */
+  top: calc(260px + var(--gap) + 6px);
+  left: calc(290px + var(--gap) + 6px);
+
+  width: 205px;
+  height: 205px;
+
+  background: #2F5DA8; /* Shunah Blue */
+
+  border-bottom-right-radius: 205px;
+
+  z-index: 0; /* behind */
 }
 
 .center {
@@ -868,16 +906,18 @@ body { font-family: 'Inter', sans-serif; }
     <div class="layout scale-[0.65] sm:scale-[0.9] md:scale-[1] origin-top mx-auto -ml-20 sm:-ml-6 md:ml-0">
 <div class="arc quarter-7"></div>      
 <div class="quarter quarter-1">
-        <img src="focus/your-image-1.png" />
-      </div>
+  <img src="focus/your-image-1.png" />
+</div>
 
-      <div class="quarter quarter-2">
-        <img src="focus/your-image-2.jpg" />
-      </div>
+<div class="arc quarter-8"></div>
+<div class="quarter quarter-2">
+  <img src="focus/your-image-2.jpg" />
+</div>
 
-      <div class="quarter quarter-3">
-        <img src="focus/your-image-4.jpg" />
-      </div>
+<div class="arc quarter-9"></div>
+<div class="quarter quarter-3">
+  <img src="focus/your-image-4.jpg" />
+</div>
 
       <div class="arc quarter-4"></div>
       <div class="arc quarter-5"></div>
