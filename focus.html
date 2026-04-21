@@ -391,7 +391,23 @@ body { font-family: 'Inter', sans-serif; }
     transform: scale(1.04);
   }
 
-  @media (max-width: 640px){
+
+  .chip.mobile-left-lock .pillContent{
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  
+@media (max-width: 640px){
+  .chip{
+    width: 96px;
+    transition: opacity 180ms ease, transform 220ms ease;
+  }
+
+  .meta .name{
+    max-width: 140px;
+  }
+
   .chip.mobile-left-lock{
     z-index: 60;
     opacity: 1 !important;
@@ -400,8 +416,8 @@ body { font-family: 'Inter', sans-serif; }
 
   .chip.mobile-left-lock .pillWrap{
     position: absolute;
-    left: 50vw;
-    transform: translateX(-50%);
+    left: var(--pill-left, 0px);
+    transform: none;
     width: 280px;
     z-index: 80;
 
@@ -416,18 +432,15 @@ body { font-family: 'Inter', sans-serif; }
     opacity: 1;
     transform: translateX(0);
   }
-}
 
-  .chip.mobile-left-lock .pillContent{
+  #cropsTrack.mobile-has-active .chip{
+    opacity: 0.25;
+  }
+
+  #cropsTrack.mobile-has-active .chip.mobile-left-lock{
     opacity: 1;
-    transform: translateX(0);
   }
-
-  .chip.mobile-left-lock .pillWrap{
-    transform: translateX(0);
-    left: 0;
-  }
-
+}
   #cropsTrack.mobile-has-active .chip{
     opacity: 0.25;
   }
@@ -1031,16 +1044,16 @@ body { font-family: 'Inter', sans-serif; }
                   <div class="divide-y divide-[#0b1a2d]/10 bg-white">
                     <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
                       <div class="col-span-4 font-semibold text-[#0b1a2d]">Egyptian White Beans</div>
-                      <div class="col-span-2 text-center">Navy / Redbeans</div>
+                      <div class="col-span-2 text-center">Navy </div>
                       <div class="col-span-2 text-center">25kg / 50kg</div>
-                      <div class="col-span-2 text-center">Cleaned</div>
+                      <div class="col-span-2 text-center">180/200</div>
                       <div class="col-span-2 text-center font-semibold">1 x 20’</div>
                     </div>
                     <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
                       <div class="col-span-4 font-semibold text-[#0b1a2d]">Sorted White Beans</div>
-                      <div class="col-span-2 text-center">Red Beans</div>
+                      <div class="col-span-2 text-center">White Beans</div>
                       <div class="col-span-2 text-center">25kg</div>
-                      <div class="col-span-2 text-center">Export</div>
+                      <div class="col-span-2 text-center">200/220</div>
                       <div class="col-span-2 text-center font-semibold">1 x 40’</div>
                     </div>
                     <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm text-[#0b1a2d]/80">
@@ -2046,7 +2059,137 @@ body { font-family: 'Inter', sans-serif; }
   setTimeout(syncMarquee, 250);
   setTimeout(syncMarquee, 900);
 </script>
+<script>
+(function () {
+  const marquee = document.getElementById('cropsMarquee');
+  const track = document.getElementById('cropsTrack');
 
+  if (!marquee || !track) return;
+
+  let activeChip = null;
+  let closeTimer = null;
+
+  function isMobile() {
+    return window.innerWidth <= 640;
+  }
+
+  function stopRibbon() {
+    track.style.animationPlayState = 'paused';
+  }
+
+  function startRibbon() {
+    track.style.animationPlayState = 'running';
+  }
+
+  function clearTimer() {
+    if (closeTimer) {
+      clearTimeout(closeTimer);
+      closeTimer = null;
+    }
+  }
+
+  function closeActiveChip() {
+    clearTimer();
+
+    if (activeChip) {
+      activeChip.classList.remove('mobile-left-lock', 'mobile-active');
+      activeChip.style.removeProperty('--pill-left');
+      activeChip = null;
+    }
+
+    track.classList.remove('mobile-has-active');
+    startRibbon();
+  }
+
+  function setCenteredPosition(chip) {
+    const pill = chip.querySelector('.pillWrap');
+    if (!pill) return;
+
+    const marqueeRect = marquee.getBoundingClientRect();
+    const chipRect = chip.getBoundingClientRect();
+
+    const pillWidth = 280;
+    const targetLeft =
+      (marqueeRect.width / 2) - (pillWidth / 2) - (chipRect.left - marqueeRect.left);
+
+    chip.style.setProperty('--pill-left', `${targetLeft}px`);
+  }
+
+  function openChip(chip) {
+    if (activeChip && activeChip !== chip) {
+      activeChip.classList.remove('mobile-left-lock', 'mobile-active');
+      activeChip.style.removeProperty('--pill-left');
+    }
+
+    activeChip = chip;
+
+    setCenteredPosition(chip);
+
+    chip.classList.add('mobile-left-lock', 'mobile-active');
+    track.classList.add('mobile-has-active');
+
+    stopRibbon();
+
+    clearTimer();
+    closeTimer = setTimeout(() => {
+      closeActiveChip();
+    }, 5000);
+  }
+
+  track.addEventListener('click', function (e) {
+    if (!isMobile()) return;
+
+    const chip = e.target.closest('.chip');
+    if (!chip || !track.contains(chip)) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (activeChip === chip) {
+      closeActiveChip();
+      return;
+    }
+
+    openChip(chip);
+  });
+
+  document.addEventListener('click', function (e) {
+    if (!isMobile()) return;
+    if (!activeChip) return;
+
+    if (e.target.closest('.chip')) return;
+
+    closeActiveChip();
+  });
+
+  window.addEventListener('resize', function () {
+    if (!isMobile()) {
+      closeActiveChip();
+      return;
+    }
+
+    if (activeChip) {
+      setCenteredPosition(activeChip);
+    }
+  });
+
+  window.addEventListener('scroll', function () {
+    if (!isMobile()) return;
+    if (!activeChip) return;
+
+    closeActiveChip();
+  }, { passive: true });
+
+  document.addEventListener('touchstart', function (e) {
+    if (!isMobile()) return;
+    if (!activeChip) return;
+
+    if (e.target.closest('.chip')) return;
+
+    closeActiveChip();
+  }, { passive: true });
+})();
+</script>
 
 <script>
   (function () {
@@ -2282,6 +2425,124 @@ document.addEventListener('DOMContentLoaded', () => {
   const marquee = document.getElementById('cropsMarquee');
   const track = document.getElementById('cropsTrack');
 
+  if (!marquee || !track) return;
+
+  let activeChip = null;
+  let closeTimer = null;
+
+  function isSmallScreen() {
+    return window.innerWidth <= 640;
+  }
+
+  function stopRibbon() {
+    track.style.animationPlayState = 'paused';
+  }
+
+  function resumeRibbon() {
+    track.style.animationPlayState = 'running';
+  }
+
+  function clearCloseTimer() {
+    if (closeTimer) {
+      clearTimeout(closeTimer);
+      closeTimer = null;
+    }
+  }
+
+  function clearActiveChip() {
+    if (activeChip) {
+      activeChip.style.removeProperty('--pill-left');
+      activeChip.classList.remove('mobile-active', 'mobile-left-lock');
+      activeChip = null;
+    }
+
+    track.classList.remove('mobile-has-active');
+  }
+
+  function closeCurrentAndResume() {
+    clearCloseTimer();
+    clearActiveChip();
+    resumeRibbon();
+  }
+
+  function setPillCenteredInRibbon(chip) {
+    const pill = chip.querySelector('.pillWrap');
+    if (!pill) return;
+
+    const marqueeRect = marquee.getBoundingClientRect();
+    const chipRect = chip.getBoundingClientRect();
+
+    const pillWidth = 280;
+    const ribbonCenterX = marqueeRect.left + (marqueeRect.width / 2);
+
+    const leftInsideChip =
+      ribbonCenterX - chipRect.left - (pillWidth / 2);
+
+    chip.style.setProperty('--pill-left', `${leftInsideChip}px`);
+  }
+
+  function openChip(chip) {
+    clearCloseTimer();
+
+    if (activeChip && activeChip !== chip) {
+      activeChip.style.removeProperty('--pill-left');
+      activeChip.classList.remove('mobile-active', 'mobile-left-lock');
+    }
+
+    activeChip = chip;
+
+    setPillCenteredInRibbon(chip);
+
+    track.classList.add('mobile-has-active');
+    chip.classList.add('mobile-active', 'mobile-left-lock');
+
+    stopRibbon();
+
+    closeTimer = setTimeout(() => {
+      closeCurrentAndResume();
+    }, 5000);
+  }
+
+  track.addEventListener('click', (e) => {
+    if (!isSmallScreen()) return;
+
+    const chip = e.target.closest('.chip');
+    if (!chip) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (activeChip === chip) {
+      closeCurrentAndResume();
+      return;
+    }
+
+    openChip(chip);
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!isSmallScreen()) return;
+    if (!activeChip) return;
+
+    const clickedChip = e.target.closest('.chip');
+    if (clickedChip) return;
+
+    closeCurrentAndResume();
+  });
+
+  window.addEventListener('resize', () => {
+    clearCloseTimer();
+    clearActiveChip();
+    resumeRibbon();
+  });
+
+  window.addEventListener('scroll', () => {
+    if (!isSmallScreen()) return;
+    if (!activeChip) return;
+    closeCurrentAndResume();
+  }, { passive: true });
+});
+</script>
   if (!marquee || !track) return;
 
   let activeChip = null;
