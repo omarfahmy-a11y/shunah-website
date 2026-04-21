@@ -323,6 +323,7 @@
   <div
     id="ssc-feature-app-box"
     class="absolute left-1/2 top-[68%] lg:top-[54%] z-30 hidden h-[500px] w-[550px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-[28px] bg-white"
+  style="background:#ffffff !important;"
   >
 
   
@@ -432,9 +433,9 @@ class="opacity-0 transition-opacity duration-500"
 
   <!-- TITLE -->
   <div class="text-center mb-3">
-    <div class="text-[11px] font-semibold tracking-[0.18em] uppercase text-slate-400">
-      Nodes Connected
-    </div>
+   <div id="ssc-mobile-sources-title" class="text-[11px] font-semibold tracking-[0.18em] uppercase text-slate-400">
+  Physical Infrastructure
+</div>
 
     <!-- DOTS -->
     <div id="ssc-mobile-sources-dots" class="mt-2 flex items-center justify-center gap-1.5">
@@ -488,20 +489,21 @@ class="opacity-0 transition-opacity duration-500"
       </div>
 
       <!-- SLIDE 3 -->
-      <div class="grid shrink-0 basis-full grid-cols-3 gap-4 text-center items-start">
+      
+<div class="grid shrink-0 basis-full grid-cols-3 gap-4 text-center items-start">
         <div class="flex flex-col items-center">
-          <img src="IOT/webforums.png" alt="Web Forums" class="h-14 w-14 object-contain" />
+          <img src="IOT/RI.png" alt="Web Forums" class="h-14 w-14 object-contain" />
           <h3 class="mt-2 text-[13px] font-semibold leading-tight text-[#64748B]">Remote Identification</h3>
         </div>
 
         <div class="flex flex-col items-center">
-          <img src="IOT/shunah-app.png" alt="Shunah App" class="h-14 w-14 object-contain" />
-          <h3 class="mt-2 text-[13px] font-semibold leading-tight text-[#64748B]">Aided Vision</h3>
+          <img src="IOT/AV.png" alt="Shunah App" class="h-14 w-14 object-contain" />
+          <h3 class="mt-2 text-[13px] font-semibold leading-tight text-[#64748B]">Aided<BR>Vision</h3>
         </div>
 
         <div class="flex flex-col items-center">
-          <img src="IOT/sites.png" alt="Sites" class="h-14 w-14 object-contain" />
-          <h3 class="mt-2 text-[13px] font-semibold leading-tight text-[#64748B]">Intelligence Engine</h3>
+          <img src="IOT/MI.png" alt="Sites" class="h-14 w-14 object-contain" />
+          <h3 class="mt-2 text-[13px] font-semibold leading-tight text-[#64748B]">Market Intelligence</h3>
         </div>
       </div>
     </div>
@@ -691,22 +693,7 @@ Storage
         </div>
       </div>
 
-      <div class="flex items-start gap-4">
-        <img
-          src="IOT/webforums.png"
-          alt="Web Forums"
-          class="h-11 w-11 rounded-[12px] object-contain shrink-0"
-        />
-        <div class="flex flex-col text-left pt-0.5">
-          <h4 class="text-[16px] leading-tight font-semibold text-slate-900">
-            Web Forums
-          </h4>
-          <p class="mt-1 text-[11px] leading-snug text-slate-500">
-            Threads &amp; Discussions
-          </p>
-        </div>
-      </div>
-    </div>
+          </div>
 
   </div>
 </div>
@@ -931,6 +918,17 @@ function updateMobileSourcesSlider(index) {
 
   mobileSourcesTrack.style.transform = `translateX(-${mobileSourcesIndex * 100}%)`;
 
+  // ✅ TITLES PER SLIDE
+  const titles = [
+    "Physical Infrastructure",
+    "Operational Infrastructure",
+    "Intelligence Layer"
+  ];
+
+  const titleEl = document.getElementById("ssc-mobile-sources-title");
+  if (titleEl) titleEl.textContent = titles[mobileSourcesIndex];
+
+  // dots (leave as is)
   mobileSourceDots.forEach((dot, i) => {
     dot.classList.toggle("bg-[#2F5DA8]", i === mobileSourcesIndex);
     dot.classList.toggle("bg-slate-300", i !== mobileSourcesIndex);
