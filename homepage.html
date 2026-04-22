@@ -1924,19 +1924,18 @@ line-height: 1;
   }
 }
 
-/* mobile / tablet position */
 @media (max-width: 1024px){
   #why-dry-crops .dry-crops-hover-hint{
-    top: 118px;
+    top: 82%;
+    left: 25%;
     bottom: auto;
-    left: 24px;
-    transform: translateY(8px) scale(0.96);
     width: max-content;
     max-width: calc(100vw - 48px);
+    transform: translate(-50%, -50%) scale(0.96);
   }
 
   #why-dry-crops .dry-crops-hover-hint.is-visible{
-    transform: translate(-50%, 0) scale(1);
+    transform: translate(-50%, -50%) scale(1);
   }
 
   #why-dry-crops .dry-crops-hover-box{
@@ -1947,8 +1946,10 @@ line-height: 1;
 
   #why-dry-crops .dry-crops-hover-hand{
     width: 34px;
-    right: 12px;
+    left: 50%;
+    right: auto;
     bottom: -18px;
+    transform: translateX(-50%);
   }
 }
 
