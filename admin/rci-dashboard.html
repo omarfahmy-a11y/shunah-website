@@ -1,51 +1,2250 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>Shunah Internal Console | RCI</title>
+
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
   <style>
-:root{--shunah-blue:#2F5DA8;--navy:#0B1A2D;--bg:#F6F8FB;--card:#fff;--border:#E5EAF1;--text-soft:#64748B;--green:#16A34A;--danger:#B91C1C}*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--navy)}.admin-kicker{color:var(--shunah-blue);font-size:13px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}h1{margin:0;font-size:34px;letter-spacing:-.04em}.admin-subtitle{margin-top:8px;color:var(--text-soft);font-size:15px}.btn{border:0;cursor:pointer;font-weight:900;border-radius:14px;padding:12px 18px}.btn-primary{background:var(--navy);color:#fff;box-shadow:0 12px 28px rgba(11,26,45,.16)}.btn-soft{background:#EEF3FA;color:var(--navy)}.shell{min-height:100vh;padding:28px}.header{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;margin-bottom:22px}.header-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end}.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}.stat-card,.filters-card,.map-card,.table-card{background:var(--card);border:1px solid var(--border);box-shadow:0 10px 30px rgba(11,26,45,.05)}.stat-card{border-radius:22px;padding:18px}.stat-label{font-size:13px;color:var(--text-soft);margin-bottom:8px}.stat-value{font-size:28px;font-weight:900;letter-spacing:-.03em}.filters-card{border-radius:22px;padding:14px;margin-bottom:18px;display:grid;grid-template-columns:1fr 180px 180px 140px;gap:12px;align-items:center}.filter-input,.filter-select,.login-input{width:100%;border:1px solid var(--border);border-radius:14px;padding:12px 13px;font-size:14px;outline:none;background:white}.filter-input:focus,.filter-select:focus,.login-input:focus{border-color:var(--shunah-blue);box-shadow:0 0 0 4px rgba(47,93,168,.10)}.dashboard-grid{display:grid;grid-template-columns:.85fr 1.4fr;gap:18px;align-items:stretch}.map-card,.table-card{border-radius:26px;overflow:hidden}.card-head{padding:16px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:12px}.card-title{font-weight:900}.status{font-size:13px;color:var(--text-soft);white-space:nowrap}#map{width:100%;height:650px}.table-wrap{max-height:650px;overflow:auto}table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:13px 14px;border-bottom:1px solid var(--border);text-align:left;vertical-align:top}th{color:var(--text-soft);font-size:12px;font-weight:900;background:#FAFBFD;position:sticky;top:0;z-index:2}tbody tr{cursor:pointer;transition:background .15s ease}tbody tr:hover{background:#F8FAFD}.crop-pill{display:inline-flex;padding:5px 9px;border-radius:999px;background:rgba(47,93,168,.09);color:var(--shunah-blue);font-weight:900;font-size:12px}.coord-text{color:var(--text-soft);font-size:12px;margin-top:5px;line-height:1.35}.popup-title{font-weight:900;margin-bottom:6px;color:var(--navy)}.popup-line{margin:3px 0;font-size:13px}.popup-image{width:180px;height:120px;object-fit:cover;border-radius:12px;margin-bottom:8px;border:1px solid var(--border)}.popup-metrics{margin-top:6px;padding-top:6px;border-top:1px solid var(--border)}.metric-line{font-size:12px;margin:2px 0}.empty-state{padding:22px;color:var(--text-soft);text-align:center;font-weight:700}@media(max-width:1050px){.stats-grid{grid-template-columns:repeat(2,1fr)}.dashboard-grid{grid-template-columns:1fr}}@media(max-width:700px){.shell{padding:18px}.header{flex-direction:column}.filters-card{grid-template-columns:1fr}.stats-grid{grid-template-columns:1fr}h1{font-size:28px}#map{height:520px}}
-</style>
+    :root{
+      --shunah-blue:#2F5DA8;
+      --navy:#0B1A2D;
+      --bg:#F6F8FB;
+      --card:#fff;
+      --border:#E5EAF1;
+      --text-soft:#64748B;
+      --green:#16A34A;
+      --danger:#B91C1C;
+      --amber:#D97706;
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      font-family:Inter,Arial,sans-serif;
+      background:var(--bg);
+      color:var(--navy);
+    }
+
+    .admin-kicker{
+      color:var(--shunah-blue);
+      font-size:12px;
+      font-weight:800;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin-bottom:6px;
+    }
+
+    h1{
+      margin:0;
+      font-size:30px;
+      letter-spacing:-.04em;
+    }
+
+    .admin-subtitle{
+      margin-top:6px;
+      color:var(--text-soft);
+      font-size:13px;
+      line-height:1.25;
+    }
+
+
+    
+    .btn{
+      border:0;
+      cursor:pointer;
+      font-weight:800;
+      border-radius:12px;
+      padding:9px 14px;
+      font-size:12px;
+    }
+
+
+.stat-icon svg{
+  width:20px;
+  height:20px;
+  stroke-width:2;
+}
+
+.stat-icon.blue{
+  background:rgba(59,130,246,.10);
+  color:#2563EB;
+}
+
+.stat-icon.green{
+  background:rgba(34,197,94,.10);
+  color:#16A34A;
+}
+
+.stat-icon.amber{
+  background:rgba(245,158,11,.12);
+  color:#D97706;
+}
+
+.stat-icon.red{
+  background:rgba(239,68,68,.10);
+  color:#DC2626;
+}
+
+.stat-card{
+  border-radius:18px;
+  padding:16px 18px;
+  min-height:104px;
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+}
+
+.stat-top{
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  gap:14px;
+  width:100%;
+}
+
+.stat-icon{
+  width:58px;
+  height:58px;
+  border-radius:18px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex:0 0 58px;
+}
+
+.stat-icon svg{
+  width:30px;
+  height:30px;
+  stroke-width:2;
+}
+
+.stat-copy{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  justify-content:center;
+  gap:3px;
+}
+
+.stat-label{
+  font-size:12px;
+  color:var(--text-soft);
+  margin-bottom:0;
+  font-weight:600;
+}
+
+.stat-value{
+  font-size:25px;
+  font-weight:800;
+  letter-spacing:-.03em;
+  line-height:1;
+}
+
+.stat-sub{
+  font-size:12px;
+  color:var(--text-soft);
+  font-weight:600;
+}
+
+.title-filter-btn{
+  width:22px;
+  height:20px;
+  border:1px solid var(--border);
+  border-radius:6px;
+  background:#fff;
+  color:var(--text-soft);
+  font-size:12px;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:0;
+  line-height:1;
+}
+
+.title-filter-btn.active{
+  color:var(--shunah-blue);
+  border-color:rgba(47,93,168,.35);
+  background:rgba(47,93,168,.08);
+}
+
+.hidden-filter-input{
+  position:absolute;
+  opacity:0;
+  width:1px;
+  height:1px;
+  pointer-events:none;
+}
+    
+.th-filter{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  width:100%;
+}
+
+.th-filter.left{
+  justify-content:flex-start;
+}
+
+.th-filter span{
+  white-space:nowrap;
+}
+
+.th-filter-input{
+  width:64px;
+  border:1px solid var(--border);
+  border-radius:7px;
+  padding:3px 5px;
+  font-size:10px;
+  font-weight:500;
+  background:#fff;
+  color:var(--navy);
+  outline:none;
+}
+
+.th-filter-select{
+  width:22px;
+  height:20px;
+  border:1px solid var(--border);
+  border-radius:6px;
+  background:#fff;
+  color:var(--text-soft);
+  font-size:10px;
+  cursor:pointer;
+}
+
+.btn-primary{
+      background:var(--navy);
+      color:#fff;
+      box-shadow:0 12px 28px rgba(11,26,45,.16);
+    }
+
+    .btn-soft{
+      background:#EEF3FA;
+      color:var(--navy);
+    }
+
+    .shell{
+      min-height:100vh;
+      padding:20px;
+    }
+
+    .header{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:16px;
+      margin-bottom:14px;
+    }
+
+    .header-actions{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .stats-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:10px;
+      margin-bottom:12px;
+    }
+
+    .stat-card,
+    .filters-card,
+    .map-card,
+    .table-card{
+      background:var(--card);
+      border:1px solid var(--border);
+      box-shadow:0 10px 30px rgba(11,26,45,.05);
+    }
+
+   
+
+    .filters-card{
+      border-radius:18px;
+      padding:10px;
+      margin-bottom:12px;
+      display:grid;
+      grid-template-columns:1fr 145px 160px 155px 100px;
+      gap:9px;
+      align-items:center;
+    }
+
+    .filter-input,
+    .filter-select,
+    .login-input{
+      width:100%;
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:9px 11px;
+      font-size:12px;
+      outline:none;
+      background:white;
+    }
+
+    .filter-input:focus,
+    .filter-select:focus,
+    .login-input:focus{
+      border-color:var(--shunah-blue);
+      box-shadow:0 0 0 4px rgba(47,93,168,.10);
+    }
+
+    .dashboard-grid{
+      display:grid;
+      grid-template-columns:1.65fr .85fr;
+      gap:12px;
+      align-items:stretch;
+    }
+
+    .map-card,
+    .table-card{
+      border-radius:20px;
+      overflow:hidden;
+    }
+
+    .card-head{
+      padding:11px 14px;
+      border-bottom:1px solid var(--border);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+    }
+
+    .card-title{
+      font-weight:900;
+      font-size:15px;
+    }
+
+.clear-table-btn{
+  border:1px solid var(--border);
+  background:#fff;
+  color:var(--text-soft);
+  border-radius:999px;
+  padding:5px 10px;
+  font-size:11px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+.clear-table-btn:hover{
+  color:var(--shunah-blue);
+  border-color:rgba(47,93,168,.30);
+  background:rgba(47,93,168,.06);
+}
+    
+    .status{
+      font-size:12px;
+      color:var(--text-soft);
+      white-space:nowrap;
+    }
+
+    #map{
+      width:100%;
+      height:470px;
+    }
+
+    .table-wrap{
+      max-height:470px;
+      overflow:auto;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      font-size:11px;
+      table-layout:auto;
+    }
+
+ th,
+td{
+  padding:7px 8px;
+  border-bottom:1px solid var(--border);
+  text-align:center;
+  vertical-align:top;
+  white-space:nowrap;
+}
+
+th:first-child,
+td:first-child{
+  text-align:left;
+}
+
+   th{
+  color:var(--text-soft);
+  font-size:11px;
+  font-weight:800;
+  background:#FAFBFD;
+  position:sticky;
+  top:0;
+  z-index:2;
+  text-align:center;
+}
+
+th:first-child{
+  text-align:left;
+}
+
+    tbody tr{
+      cursor:pointer;
+      transition:background .15s ease;
+    }
+
+    tbody tr:hover{
+      background:#F8FAFD;
+    }
+
+    .crop-pill{
+      display:inline-block;
+      padding:0;
+      border-radius:0;
+      background:transparent;
+      color:var(--navy);
+      font-weight:800;
+      font-size:11px;
+      max-width:120px;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
+
+    .coord-text{
+      color:var(--text-soft);
+      font-size:12px;
+      margin-top:5px;
+      line-height:1.35;
+    }
+
+    .popup-title{
+      font-weight:900;
+      margin-bottom:6px;
+      color:var(--navy);
+    }
+
+    .popup-line{
+      margin:3px 0;
+      font-size:13px;
+    }
+
+    .popup-image{
+      width:180px;
+      height:120px;
+      object-fit:cover;
+      border-radius:12px;
+      margin-bottom:8px;
+      border:1px solid var(--border);
+    }
+
+    .popup-metrics{
+      margin-top:6px;
+      padding-top:6px;
+      border-top:1px solid var(--border);
+    }
+
+    .metric-line{
+      font-size:12px;
+      margin:2px 0;
+    }
+
+    .empty-state{
+      padding:22px;
+      color:var(--text-soft);
+      text-align:center;
+      font-weight:700;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:999px;
+      padding:4px 8px;
+      font-size:10px;
+      font-weight:600;
+      white-space:nowrap;
+    }
+.ai-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+}
+
+.ai-plus{
+  width:14px;
+  height:14px;
+  border-radius:999px;
+  border:1px solid currentColor;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-size:11px;
+  line-height:1;
+  font-weight:700;
+  opacity:.75;
+}
+
+    .badge-ready{
+      background:rgba(22,163,74,.10);
+      color:var(--green);
+    }
+
+    .badge-reject{
+      background:rgba(185,28,28,.10);
+      color:var(--danger);
+    }
+
+    .badge-pending{
+      background:rgba(217,119,6,.12);
+      color:var(--amber);
+    }
+
+    .verify-actions{
+      display:flex;
+      gap:5px;
+      flex-wrap:nowrap;
+      align-items:center;
+    }
+
+    .manual-select,
+.confirm-select{
+  width:auto;
+  min-width:108px;
+  max-width:118px;
+  border:1px solid var(--border);
+  border-radius:999px;
+  padding:5px 18px 5px 12px;
+  font-size:11px;
+  font-weight:600;
+  color:var(--text-soft);
+  outline:none;
+  cursor:pointer;
+  text-align:center;
+  text-align-last:center;
+
+  appearance:none;
+  -webkit-appearance:none;
+  -moz-appearance:none;
+
+  background-color:#fff;
+  background-image:url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%2364748B' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 9px center;
+  background-size:10px 6px;
+}
+
+.select-pill-wrap{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:118px;
+  border:1px solid var(--border);
+  border-radius:999px;
+  background:#fff;
+  overflow:hidden;
+}
+
+.select-pill-wrap.select-empty{
+  color:var(--text-soft);
+  background:#fff;
+  border-color:var(--border);
+}
+
+.select-pill-wrap.select-confirm,
+.select-pill-wrap.select-accept{
+  color:var(--green);
+  background:rgba(22,163,74,.10);
+  border-color:rgba(22,163,74,.25);
+}
+
+.select-pill-wrap.select-override,
+.select-pill-wrap.select-reject{
+  color:var(--danger);
+  background:rgba(185,28,28,.10);
+  border-color:rgba(185,28,28,.25);
+}
+
+.select-pill-wrap select{
+  width:100%;
+  border:0;
+  outline:0;
+  color:inherit;
+  font-size:11px;
+  font-weight:600;
+  padding:5px 28px 5px 18px;
+  cursor:pointer;
+  text-align:center;
+  text-align-last:center;
+
+  appearance:none;
+  -webkit-appearance:none;
+  -moz-appearance:none;
+
+  background-color:transparent;
+  background-image:url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%2316A34A' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 18px center;
+  background-size:10px 6px;
+}
+
+.select-pill-wrap select option{
+  background:#fff;
+  color:var(--navy);
+  text-align:left;
+}
+
+.manual-select:focus,
+.confirm-select:focus{
+  border-color:var(--shunah-blue);
+  box-shadow:0 0 0 3px rgba(47,93,168,.10);
+}
+
+/* The opened dropdown list stays visually normal/white */
+.manual-select option,
+.confirm-select option{
+  background:#fff;
+  color:var(--navy);
+  font-weight:600;
+  text-align:left;
+}
+/* Placeholder */
+.select-empty{
+  color:var(--text-soft);
+  background:#fff;
+  font-weight:600;
+}
+
+/* Selected pill states */
+.select-confirm{
+  color:var(--green);
+  background:rgba(22,163,74,.10);
+  border-color:rgba(22,163,74,.25);
+  font-weight:600;
+}
+
+.select-override{
+  color:var(--danger);
+  background:rgba(185,28,28,.10);
+  border-color:rgba(185,28,28,.25);
+  font-weight:600;
+}
+
+.select-accept{
+  color:var(--green);
+  background:rgba(22,163,74,.10);
+  border-color:rgba(22,163,74,.25);
+  font-weight:600;
+}
+
+.select-reject{
+  color:var(--danger);
+  background:rgba(185,28,28,.10);
+  border-color:rgba(185,28,28,.25);
+  font-weight:600;
+}
+
+.confirm-placeholder{
+  color:var(--text-soft);
+  font-size:11px;
+}
+    .verify-btn{
+      border:1px solid var(--border);
+      background:#fff;
+      border-radius:999px;
+      padding:5px 7px;
+      font-size:10px;
+      font-weight:800;
+      cursor:pointer;
+      white-space:nowrap;
+    }
+.verify-btn.approve{
+      color:var(--green);
+      border-color:rgba(22,163,74,.25);
+      background:rgba(22,163,74,.06);
+    }
+
+    .verify-btn.reject{
+      color:var(--danger);
+      border-color:rgba(185,28,28,.25);
+      background:rgba(185,28,28,.06);
+    }
+
+    .verify-btn.reset{
+      color:var(--text-soft);
+      background:#F8FAFC;
+    }
+
+    .reason-text{
+      font-size:10px;
+      color:var(--text-soft);
+      line-height:1.2;
+      margin-top:4px;
+      max-width:135px;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
+
+    .area-text{
+      font-size:10px;
+      color:var(--text-soft);
+      margin-top:4px;
+      white-space:nowrap;
+    }
+
+   .sentinel-result{
+  color:var(--text-soft);
+  font-size:10px;
+  line-height:1.25;
+  min-width:90px;
+  max-width:110px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.sentinel-result-wrap{
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  gap:10px;
+  min-width:380px;
+}
+
+.sentinel-preview{
+  width:54px;
+  height:38px;
+  object-fit:cover;
+  border-radius:9px;
+  border:1px solid var(--border);
+  cursor:pointer;
+  flex:0 0 54px;
+}
+    .sentinel-result b{
+      color:var(--navy);
+    }
+
+    .sentinel-source-real{
+      color:var(--green);
+      font-weight:900;
+    }
+
+    .sentinel-source-demo{
+      color:var(--danger);
+      font-weight:900;
+    }
+
+    .sentinel-queue-btn{
+      border:1px solid rgba(47,93,168,.25);
+      background:rgba(47,93,168,.06);
+      color:var(--shunah-blue);
+      border-radius:999px;
+      padding:5px 8px;
+      font-size:10px;
+      font-weight:800;
+      cursor:pointer;
+      white-space:nowrap;
+    }
+
+
+    .table-wrap::-webkit-scrollbar{
+      width:8px;
+      height:8px;
+    }
+
+    .table-wrap::-webkit-scrollbar-thumb{
+      background:#D7DFEA;
+      border-radius:999px;
+    }
+
+    .table-wrap::-webkit-scrollbar-track{
+      background:#F5F7FA;
+    }
+
+    td:nth-child(2) div,
+    td:nth-child(3),
+    td:nth-child(4),
+    td:nth-child(5),
+    td:nth-child(6),
+    td:nth-child(7),
+    td:nth-child(8),
+    td:nth-child(9){
+      max-width:170px;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    td:nth-child(4){
+      max-width:145px;
+    }
+
+    td:nth-child(9){
+  min-width:360px;
+  max-width:420px;
+}
+.ai-outcome-wrap{
+  display:block;
+  white-space:normal;
+}
+
+    .ai-details{
+  display:block;
+  position:relative;
+}
+
+   .ai-details summary{
+  list-style:none;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  background:transparent;
+  border:0;
+  padding:0;
+  margin:0;
+  user-select:none;
+}
+
+    .ai-details summary::-webkit-details-marker{
+      display:none;
+    }
+
+    .ai-details[open] summary{
+      background:rgba(47,93,168,.08);
+      border-color:rgba(47,93,168,.22);
+    }
+
+    .ai-reasons-pop{
+  margin-top:7px;
+  width:260px;
+  background:#fff;
+  border:1px solid var(--border);
+  box-shadow:none;
+  border-radius:12px;
+  padding:9px 11px;
+  white-space:normal;
+}
+
+    .ai-reasons-pop ul{
+      margin:0;
+      padding-left:18px;
+      color:var(--text-soft);
+      line-height:1.35;
+      font-size:11px;
+    }
+
+
+    @media(max-width:1150px){
+      .filters-card{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .stats-grid{
+        grid-template-columns:repeat(2,1fr);
+      }
+
+      .dashboard-grid{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media(max-width:700px){
+      .shell{
+        padding:18px;
+      }
+
+      .header{
+        flex-direction:column;
+      }
+
+      .filters-card{
+        grid-template-columns:1fr;
+      }
+
+      .stats-grid{
+        grid-template-columns:1fr;
+      }
+
+      h1{
+        font-size:28px;
+      }
+
+      #map{
+        height:520px;
+      }
+    }
+  </style>
 </head>
+
 <body>
-<main class="shell">
-<header class="header"><div><div class="admin-kicker">Shunah Internal Console</div><h1>RCI Dashboard</h1><div class="admin-subtitle">Remote crop identification plots collected from Supabase. Each record joins 4 coordinates into one field shape.</div></div><div class="header-actions"><button class="btn btn-soft" onclick="location.href='login.html'">Switch System</button><button class="btn btn-primary" onclick="loadRecords()">Refresh Data</button><button class="btn btn-soft" onclick="signOutAdmin()">Logout</button></div></header>
-<section class="stats-grid"><div class="stat-card"><div class="stat-label">Total Plots</div><div class="stat-value" id="totalRecords">—</div></div><div class="stat-card"><div class="stat-label">Today</div><div class="stat-value" id="todayRecords">—</div></div><div class="stat-card"><div class="stat-label">Latest Crop</div><div class="stat-value" id="latestCrop">—</div></div><div class="stat-card"><div class="stat-label">Latest User</div><div class="stat-value" id="latestUser">—</div></div></section>
-<section class="filters-card"><input class="filter-input" id="searchFilter" type="text" placeholder="Search user, phone, crop, coordinates..." oninput="applyFilters()"/><select class="filter-select" id="cropFilter" onchange="applyFilters()"><option value="">All crops</option></select><input class="filter-input" id="dateFilter" type="date" onchange="applyFilters()"/><button class="btn btn-soft" onclick="clearFilters()">Clear</button></section>
-<section class="dashboard-grid"><div class="table-card"><div class="card-head"><div class="card-title">RCI Records</div><div class="status" id="tableStatus">—</div></div><div class="table-wrap"><table><thead><tr><th>Crop</th><th>User</th><th>Date</th><th>Coordinates</th></tr></thead><tbody id="recordsTable"></tbody></table></div></div><div class="map-card"><div class="card-head"><div class="card-title">Plot Map</div><div class="status" id="mapStatus">Loading...</div></div><div id="map"></div></div></section>
-</main>
-<script>
-const client=supabase.createClient("https://dcomyartrveufwgkitvq.supabase.co","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRjb215YXJ0cnZldWZ3Z2tpdHZxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkwMDc2MTQsImV4cCI6MjA5NDU4MzYxNH0.O5PeG7gasjDn_pxVdYNHsd3nwDvhimVNWnAG-PlcjZc");
-let allItems=[],filteredItems=[],mapObjects=[];
-const map=L.map("map").setView([26.8206,30.8025],6);L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{attribution:"Tiles &copy; Esri",maxZoom:19}).addTo(map);let markersLayer=L.layerGroup().addTo(map);
+  <main class="shell">
+    <header class="header">
+      <div>
+      
+        <h1>RCI Dashboard</h1>
+       
+      </div>
 
-function formatDate(dateString){if(!dateString)return "—";return new Date(dateString).toLocaleString("en-GB",{day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"})}
-function getDateOnly(dateString){if(!dateString)return "";return new Date(dateString).toISOString().split("T")[0]}
-function isToday(dateString){if(!dateString)return false;const d=new Date(dateString),t=new Date();return d.getDate()===t.getDate()&&d.getMonth()===t.getMonth()&&d.getFullYear()===t.getFullYear()}
-function safeText(value){if(value===null||value===undefined||value==="")return "—";return String(value)}
-function getCrop(item){return item.crop||item.selected_crop||item.crop_name||item.crop_type||"—"}
-function getUserName(item){return item.username||item.user_name||item.name||item.full_name||item.created_by||"—"}
-function getPhone(item){return item.user_phone||item.phone||item.mobile||item.user_mobile||"—"}
-function getCreatedAt(item){return item.created_at||item.inserted_at||item.saved_at||item.date||item.createdAt||null}
-function toNumber(value){const n=Number(value);return Number.isFinite(n)?n:null}
-function renderMetrics(metrics){if(!metrics)return "";let parsed=metrics;if(typeof metrics==="string"){try{parsed=JSON.parse(metrics)}catch{return ""}}if(typeof parsed!=="object")return "";const rows=Object.entries(parsed).slice(0,8).map(([k,v])=>`<div class="metric-line"><b>${k}:</b> ${v}</div>`).join("");return rows?`<div class="popup-metrics"><div class="popup-line"><b>Metrics</b></div>${rows}</div>`:""}
-function buildCropFilter(items){const cropFilter=document.getElementById("cropFilter");const current=cropFilter.value;const crops=[...new Set(items.map(getCrop).filter(c=>c&&c!=="—"))];cropFilter.innerHTML='<option value="">All crops</option>';crops.forEach(c=>cropFilter.innerHTML+=`<option value="${c}">${c}</option>`);cropFilter.value=current}
-function clearFilters(){document.getElementById("searchFilter").value="";document.getElementById("cropFilter").value="";document.getElementById("dateFilter").value="";filteredItems=[...allItems];renderDashboard(filteredItems)}
-function renderStats(items){const todayCount=items.filter(i=>isToday(getCreatedAt(i))).length;const latest=items[0]||{};document.getElementById("totalRecords").textContent=items.length;document.getElementById("todayRecords").textContent=todayCount;document.getElementById("latestCrop").textContent=getCrop(latest);document.getElementById("latestUser").textContent=getUserName(latest)!=="—"?getUserName(latest):getPhone(latest)}
-async function signOutAdmin(){await client.auth.signOut();location.href="login.html"}
-async function requireSession(){const {data}=await client.auth.getSession();if(!data.session)location.href="login.html"}
+      <div class="header-actions">
+        <button class="btn btn-soft" onclick="location.href='login.html'">Switch System</button>
+        <button class="btn btn-primary" onclick="loadRecords()">Refresh Data</button>
+        <button class="btn btn-soft" onclick="signOutAdmin()">Logout</button>
+      </div>
+    </header>
 
-function parseCoordinateString(value){if(!value||typeof value!=="string")return null;const parts=value.split(",").map(p=>Number(p.trim()));if(parts.length<2||!Number.isFinite(parts[0])||!Number.isFinite(parts[1]))return null;return [parts[0],parts[1]]}
-function getPolygonPoints(item){const possibleArray=item.coordinates||item.points||item.polygon||item.field_coordinates;if(Array.isArray(possibleArray)&&possibleArray.length>=4){const parsed=possibleArray.map(p=>{if(Array.isArray(p))return [toNumber(p[0]),toNumber(p[1])];if(typeof p==="object"&&p!==null)return [toNumber(p.lat||p.latitude),toNumber(p.lng||p.lon||p.longitude)];return parseCoordinateString(p)}).filter(p=>p&&p[0]!==null&&p[1]!==null);if(parsed.length>=4)return parsed.slice(0,4)}if(typeof possibleArray==="string"){try{const parsedJson=JSON.parse(possibleArray);if(Array.isArray(parsedJson)){const parsed=parsedJson.map(p=>Array.isArray(p)?[toNumber(p[0]),toNumber(p[1])]:[toNumber(p.lat||p.latitude),toNumber(p.lng||p.lon||p.longitude)]).filter(p=>p[0]!==null&&p[1]!==null);if(parsed.length>=4)return parsed.slice(0,4)}}catch{}}const c1=parseCoordinateString(item.coordinate_1||item.coord_1||item.point_1);const c2=parseCoordinateString(item.coordinate_2||item.coord_2||item.point_2);const c3=parseCoordinateString(item.coordinate_3||item.coord_3||item.point_3);const c4=parseCoordinateString(item.coordinate_4||item.coord_4||item.point_4);if(c1&&c2&&c3&&c4)return [c1,c2,c3,c4];const points=[[toNumber(item.coordinate_1_lat||item.coord1_lat||item.lat_1||item.point1_lat),toNumber(item.coordinate_1_lng||item.coord1_lng||item.lng_1||item.point1_lng)],[toNumber(item.coordinate_2_lat||item.coord2_lat||item.lat_2||item.point2_lat),toNumber(item.coordinate_2_lng||item.coord2_lng||item.lng_2||item.point2_lng)],[toNumber(item.coordinate_3_lat||item.coord3_lat||item.lat_3||item.point3_lat),toNumber(item.coordinate_3_lng||item.coord3_lng||item.lng_3||item.point3_lng)],[toNumber(item.coordinate_4_lat||item.coord4_lat||item.lat_4||item.point4_lat),toNumber(item.coordinate_4_lng||item.coord4_lng||item.lng_4||item.point4_lng)]];if(points.every(p=>p[0]!==null&&p[1]!==null))return points;return null}
-function getCoordinatesText(item){const points=getPolygonPoints(item);if(!points)return "Missing 4 coordinates";return points.map((p,i)=>`${i+1}: ${p[0]}, ${p[1]}`).join(" | ")}
-function buildPopup(item,coordinatesText){const imageUrl=item.image_url||item.photo_url||"";const imageHtml=imageUrl?`<img class="popup-image" src="${imageUrl}" alt="Record image" />`:"";return `<div>${imageHtml}<div class="popup-title">Shunah RCI Plot</div><div class="popup-line"><b>User:</b> ${safeText(getUserName(item))}</div><div class="popup-line"><b>Phone:</b> ${safeText(getPhone(item))}</div><div class="popup-line"><b>Crop:</b> ${safeText(getCrop(item))}</div><div class="popup-line"><b>Date:</b> ${safeText(formatDate(getCreatedAt(item)))}</div><div class="popup-line"><b>Coordinates:</b> ${safeText(coordinatesText)}</div>${item.land_type?`<div class="popup-line"><b>Land:</b> ${safeText(item.land_type)}</div>`:""}${item.notes?`<div class="popup-line"><b>Notes:</b> ${safeText(item.notes)}</div>`:""}</div>`}
-async function loadRecords(){markersLayer.clearLayers();mapObjects=[];document.getElementById("mapStatus").textContent="Loading...";document.getElementById("tableStatus").textContent="Loading...";const {data,error}=await client.from("rci_records").select("*").order("created_at",{ascending:false});if(error){console.error(error);document.getElementById("mapStatus").textContent="Could not load rci_records";document.getElementById("tableStatus").textContent="Error";document.getElementById("recordsTable").innerHTML='<tr><td colspan="4"><div class="empty-state">Could not load rci_records. Check table name and Supabase policies.</div></td></tr>';return}allItems=data||[];filteredItems=[...allItems];buildCropFilter(allItems);renderDashboard(filteredItems)}
-function applyFilters(){const searchValue=document.getElementById("searchFilter").value.toLowerCase().trim();const cropValue=document.getElementById("cropFilter").value;const dateValue=document.getElementById("dateFilter").value;filteredItems=allItems.filter(item=>{const searchText=`${getCrop(item)} ${getUserName(item)} ${getPhone(item)} ${getCoordinatesText(item)}`.toLowerCase();return (!searchValue||searchText.includes(searchValue))&&(!cropValue||getCrop(item)===cropValue)&&(!dateValue||getDateOnly(getCreatedAt(item))===dateValue)});renderDashboard(filteredItems)}
-function renderDashboard(items){markersLayer.clearLayers();mapObjects=[];const boundsPoints=[];items.forEach((item,index)=>{const points=getPolygonPoints(item);if(!points)return;points.forEach(p=>boundsPoints.push(p));const coordinatesText=points.map((p,i)=>`${i+1}: ${p[0]}, ${p[1]}`).join(" | ");const polygon=L.polygon(points,{color:"#2F5DA8",weight:2,opacity:.95,fillColor:"#2F5DA8",fillOpacity:.16}).bindPopup(buildPopup(item,coordinatesText)).addTo(markersLayer);polygon.on("mouseover",function(){this.setStyle({weight:4,fillOpacity:.26});this.openPopup()});polygon.on("mouseout",function(){this.setStyle({weight:2,fillOpacity:.16})});mapObjects[index]=polygon});if(boundsPoints.length>0)map.fitBounds(boundsPoints,{padding:[40,40],maxZoom:13});else map.setView([26.8206,30.8025],6);renderStats(items);renderTable(items);document.getElementById("mapStatus").textContent=`${items.length} plots loaded`;document.getElementById("tableStatus").textContent=`${items.length} records`}
-function openMapObject(index){const object=mapObjects[index];if(!object)return;if(object.getBounds)map.fitBounds(object.getBounds(),{padding:[60,60],maxZoom:16});object.openPopup()}
-function renderTable(items){const tbody=document.getElementById("recordsTable");if(!items.length){tbody.innerHTML='<tr><td colspan="4"><div class="empty-state">No records found.</div></td></tr>';return}tbody.innerHTML=items.slice(0,500).map((item,index)=>`<tr onmouseenter="openMapObject(${index})" onclick="openMapObject(${index})"><td><span class="crop-pill">${safeText(getCrop(item))}</span></td><td><div><b>${safeText(getUserName(item))}</b></div><div style="color:#64748B;margin-top:3px;">${safeText(getPhone(item))}</div></td><td>${safeText(formatDate(getCreatedAt(item)))}</td><td><div class="coord-text">${safeText(getCoordinatesText(item))}</div></td></tr>`).join("")}
+    <section class="stats-grid">
+      <div class="stat-card">
+  <div class="stat-top">
+    <div class="stat-icon blue">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <rect x="4" y="4" width="6" height="6" rx="1"></rect>
+        <rect x="14" y="4" width="6" height="6" rx="1"></rect>
+        <rect x="4" y="14" width="6" height="6" rx="1"></rect>
+        <rect x="14" y="14" width="6" height="6" rx="1"></rect>
+      </svg>
+    </div>
+
+    <div class="stat-copy">
+      <div class="stat-label">Total Plots</div>
+      <div class="stat-value" id="totalPlotsCount">50</div>
+      <div class="stat-sub">All time plots</div>
+    </div>
+  </div>
+</div>
+
+<div class="stat-card">
+  <div class="stat-top">
+    <div class="stat-icon green">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <circle cx="12" cy="12" r="9"></circle>
+        <path d="M8 12.5l2.5 2.5L16 9.5"></path>
+      </svg>
+    </div>
+
+    <div class="stat-copy">
+      <div class="stat-label">AI Ready</div>
+      <div class="stat-value" id="aiReadyCount">4</div>
+      <div class="stat-sub">Pending your action</div>
+    </div>
+  </div>
+</div>
+
+<div class="stat-card">
+  <div class="stat-top">
+    <div class="stat-icon amber">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <circle cx="9" cy="8" r="3"></circle>
+        <path d="M4 18c0-2.5 2.2-4.5 5-4.5s5 2 5 4.5"></path>
+        <path d="M17 8l1.5 1.5L21 7"></path>
+      </svg>
+    </div>
+
+    <div class="stat-copy">
+      <div class="stat-label">Manual Approved</div>
+      <div class="stat-value" id="manualApprovedCount">4</div>
+      <div class="stat-sub">Approved by you</div>
+    </div>
+  </div>
+</div>
+
+<div class="stat-card">
+  <div class="stat-top">
+    <div class="stat-icon red">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <circle cx="12" cy="12" r="9"></circle>
+        <path d="M9 9l6 6"></path>
+        <path d="M15 9l-6 6"></path>
+      </svg>
+    </div>
+
+    <div class="stat-copy">
+      <div class="stat-label">Manual Rejected</div>
+      <div class="stat-value" id="manualRejectedCount">46</div>
+      <div class="stat-sub">Rejected plots</div>
+    </div>
+  </div>
+</div>
+    </section>
+
+    
+
+    <section class="dashboard-grid">
+      <div class="table-card">
+      <div class="card-head">
+  <div class="card-title">RCI Records</div>
+
+  <div style="display:flex;align-items:center;gap:8px;">
+    <div class="status" id="tableStatus">—</div>
+    <button class="clear-table-btn" onclick="clearFilters()">Clear</button>
+  </div>
+</div>
+
+        <div class="table-wrap">
+          <table>
+ <thead>
+  <tr>
+    <th>
+  <div class="th-filter left">
+    <span>User</span>
+    <button class="title-filter-btn" id="userFilterBtn" onclick="event.stopPropagation();setUserFilter()">⌕</button>
+    <input class="hidden-filter-input" id="userColumnFilter" type="text" oninput="applyFilters()" />
+  </div>
+</th>
+
+    <th>
+      <div class="th-filter">
+        <span>Crop</span>
+        <select class="th-filter-select" id="cropColumnFilter" onchange="applyFilters()" onclick="event.stopPropagation()">
+          <option value="">All</option>
+        </select>
+      </div>
+    </th>
+
+    <th>
+  <div class="th-filter">
+    <span>Date</span>
+    <select class="th-filter-select" id="dateQuickFilter" onchange="applyDateQuickFilter(this.value)" onclick="event.stopPropagation()">
+      <option value="">All</option>
+      <option value="today">Today</option>
+      <option value="yesterday">Yesterday</option>
+      <option value="last7">Last 7 days</option>
+      <option value="custom">Pick date</option>
+    </select>
+    <input class="hidden-filter-input" id="dateColumnFilter" type="date" onchange="applyFilters();updateFilterButtons()" />
+  </div>
+</th>
+
+    <th>
+      <div class="th-filter">
+        <span>AI Outcome</span>
+        <select class="th-filter-select" id="aiColumnFilter" onchange="applyFilters()" onclick="event.stopPropagation()">
+          <option value="">All</option>
+          <option value="ai-approves">Approves</option>
+          <option value="ai-rejects">Rejects</option>
+        </select>
+      </div>
+    </th>
+
+    <th>
+      <div class="th-filter">
+        <span>Manual</span>
+        <select class="th-filter-select" id="manualColumnFilter" onchange="applyFilters()" onclick="event.stopPropagation()">
+          <option value="">All</option>
+          <option value="manual-pending">Pending</option>
+          <option value="manual-confirmed">Confirmed</option>
+          <option value="manual-overridden">Overridden</option>
+        </select>
+      </div>
+    </th>
+
+    <th>
+      <div class="th-filter">
+        <span>Final Decision</span>
+        <select class="th-filter-select" id="finalColumnFilter" onchange="applyFilters()" onclick="event.stopPropagation()">
+          <option value="">All</option>
+          <option value="approved">Approved</option>
+          <option value="rejected">Rejected</option>
+          <option value="pending">Needs review</option>
+        </select>
+      </div>
+    </th>
+
+    <th>Confirm Decision</th>
+
+    <th>
+      <div class="th-filter">
+        <span>Sentinel Queue</span>
+        <select class="th-filter-select" id="sentinelColumnFilter" onchange="applyFilters()" onclick="event.stopPropagation()">
+          <option value="">All</option>
+          <option value="not_sent">Not sent</option>
+          <option value="queued">Queued</option>
+          <option value="processing">Processing</option>
+          <option value="completed">Completed</option>
+          <option value="failed">Failed</option>
+        </select>
+      </div>
+    </th>
+
+    <th>Sentinel Result</th>
+  </tr>
+</thead>
+
+            <tbody id="recordsTable"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="map-card">
+        <div class="card-head">
+          <div class="card-title">Plot Map</div>
+          <div class="status" id="mapStatus">Loading...</div>
+        </div>
+
+        <div id="map"></div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+   const client=supabase.createClient(
+  "https://dcomyartrveufwgkitvq.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRjb215YXJ0cnZldWZ3Z2tpdHZxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkwMDc2MTQsImV4cCI6MjA5NDU4MzYxNH0.O5PeG7gasjDn_pxVdYNHsd3nwDvhimVNWnAG-PlcjZc"
+);
+
+    let allItems=[];
+    let filteredItems=[];
+    let mapObjects=[];
+    let pendingManualChoices={};
+
+    const map=L.map("map").setView([26.8206,30.8025],6);
+
+    L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{
+      attribution:"Tiles &copy; Esri",
+      maxZoom:19
+    }).addTo(map);
+
+    let markersLayer=L.layerGroup().addTo(map);
+
+    function formatDate(dateString){
+      if(!dateString)return "—";
+
+      const d=new Date(dateString);
+      const day=String(d.getDate()).padStart(2,"0");
+      const month=String(d.getMonth()+1).padStart(2,"0");
+      const year=d.getFullYear();
+
+      return `${day}/${month}/${year}`;
+    }
+
+    function getDateOnly(dateString){
+      if(!dateString)return "";
+      return new Date(dateString).toISOString().split("T")[0];
+    }
+
+    function safeText(value){
+      if(value===null||value===undefined||value==="")return "—";
+      return String(value);
+    }
+
+    function getCrop(item){
+      return item.crop||item.selected_crop||item.crop_name||item.crop_type||"—";
+    }
+
+    function getUserName(item){
+      return item.username||item.user_name||item.name||item.full_name||item.created_by||"—";
+    }
+
+    function getPhone(item){
+      return item.user_phone||item.phone||item.mobile||item.user_mobile||"—";
+    }
+
+    function getCreatedAt(item){
+      return item.created_at||item.inserted_at||item.saved_at||item.date||item.createdAt||null;
+    }
+
+    function toNumber(value){
+      const n=Number(value);
+      return Number.isFinite(n)?n:null;
+    }
+
+    function renderMetrics(metrics){
+      if(!metrics)return "";
+
+      let parsed=metrics;
+
+      if(typeof metrics==="string"){
+        try{
+          parsed=JSON.parse(metrics);
+        }catch{
+          return "";
+        }
+      }
+
+      if(typeof parsed!=="object")return "";
+
+      const rows=Object.entries(parsed).slice(0,8).map(([k,v])=>{
+        return `<div class="metric-line"><b>${k}:</b> ${v}</div>`;
+      }).join("");
+
+      return rows?`<div class="popup-metrics"><div class="popup-line"><b>Metrics</b></div>${rows}</div>`:"";
+    }
+
+    function buildCropFilter(items){
+  const cropFilter=document.getElementById("cropColumnFilter");
+  if(!cropFilter)return;
+
+  const current=cropFilter.value;
+  const crops=[...new Set(items.map(getCrop).filter(c=>c&&c!=="—"))];
+
+  cropFilter.innerHTML='<option value="">All</option>';
+
+  crops.forEach(c=>{
+    cropFilter.innerHTML+=`<option value="${c}">${c}</option>`;
+  });
+
+  cropFilter.value=current;
+}
+
+    function clearFilters(){
+  const ids=[
+    "userColumnFilter",
+    "cropColumnFilter",
+    "dateColumnFilter",
+    "aiColumnFilter",
+    "manualColumnFilter",
+    "finalColumnFilter",
+    "sentinelColumnFilter"
+  ];
+
+  ids.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el)el.value="";
+  });
+
+  filteredItems=[...allItems];
+  renderDashboard(filteredItems);
+}
+
+   function renderStats(items){
+  const autoReady=items.filter(i=>i._auto&&i._auto.isValid).length;
+  const manualApproved=items.filter(i=>getManualStatus(i)==="approved").length;
+  const manualRejected=items.filter(i=>getManualStatus(i)==="rejected").length;
+
+  document.getElementById("totalPlotsCount").textContent=items.length;
+  document.getElementById("aiReadyCount").textContent=autoReady;
+  document.getElementById("manualApprovedCount").textContent=manualApproved;
+  document.getElementById("manualRejectedCount").textContent=manualRejected;
+}
+
+    async function signOutAdmin(){
+      await client.auth.signOut();
+      location.href="login.html";
+    }
+
+    async function requireSession(){
+      const {data}=await client.auth.getSession();
+
+      if(!data.session){
+        location.href="login.html";
+      }
+    }
+
+    function parseCoordinateString(value){
+      if(!value||typeof value!=="string")return null;
+
+      const parts=value.split(",").map(p=>Number(p.trim()));
+
+      if(parts.length<2||!Number.isFinite(parts[0])||!Number.isFinite(parts[1])){
+        return null;
+      }
+
+      return [parts[0],parts[1]];
+    }
+
+    function getPolygonPoints(item){
+      const possibleArray=item.coordinates||item.points||item.polygon||item.field_coordinates;
+
+      if(Array.isArray(possibleArray)&&possibleArray.length>=4){
+        const parsed=possibleArray.map(p=>{
+          if(Array.isArray(p))return [toNumber(p[0]),toNumber(p[1])];
+
+          if(typeof p==="object"&&p!==null){
+            return [toNumber(p.lat||p.latitude),toNumber(p.lng||p.lon||p.longitude)];
+          }
+
+          return parseCoordinateString(p);
+        }).filter(p=>p&&p[0]!==null&&p[1]!==null);
+
+        if(parsed.length>=4)return parsed.slice(0,4);
+      }
+
+      if(typeof possibleArray==="string"){
+        try{
+          const parsedJson=JSON.parse(possibleArray);
+
+          if(Array.isArray(parsedJson)){
+            const parsed=parsedJson.map(p=>{
+              if(Array.isArray(p))return [toNumber(p[0]),toNumber(p[1])];
+              return [toNumber(p.lat||p.latitude),toNumber(p.lng||p.lon||p.longitude)];
+            }).filter(p=>p[0]!==null&&p[1]!==null);
+
+            if(parsed.length>=4)return parsed.slice(0,4);
+          }
+        }catch{}
+      }
+
+      const c1=parseCoordinateString(item.coordinate_1||item.coord_1||item.point_1);
+      const c2=parseCoordinateString(item.coordinate_2||item.coord_2||item.point_2);
+      const c3=parseCoordinateString(item.coordinate_3||item.coord_3||item.point_3);
+      const c4=parseCoordinateString(item.coordinate_4||item.coord_4||item.point_4);
+
+      if(c1&&c2&&c3&&c4)return [c1,c2,c3,c4];
+
+      const points=[
+        [
+          toNumber(item.coordinate_1_lat||item.coord1_lat||item.lat_1||item.point1_lat),
+          toNumber(item.coordinate_1_lng||item.coord1_lng||item.lng_1||item.point1_lng)
+        ],
+        [
+          toNumber(item.coordinate_2_lat||item.coord2_lat||item.lat_2||item.point2_lat),
+          toNumber(item.coordinate_2_lng||item.coord2_lng||item.lng_2||item.point2_lng)
+        ],
+        [
+          toNumber(item.coordinate_3_lat||item.coord3_lat||item.lat_3||item.point3_lat),
+          toNumber(item.coordinate_3_lng||item.coord3_lng||item.lng_3||item.point3_lng)
+        ],
+        [
+          toNumber(item.coordinate_4_lat||item.coord4_lat||item.lat_4||item.point4_lat),
+          toNumber(item.coordinate_4_lng||item.coord4_lng||item.lng_4||item.point4_lng)
+        ]
+      ];
+
+      if(points.every(p=>p[0]!==null&&p[1]!==null))return points;
+
+      return null;
+    }
+
+    function getCoordinatesText(item){
+      const points=getPolygonPoints(item);
+
+      if(!points)return "Missing 4 coordinates";
+
+      return points.map((p,i)=>`${i+1}: ${p[0]}, ${p[1]}`).join(" | ");
+    }
+
+    function getRecordKey(item){
+      return String(
+        item.id||
+        item.record_id||
+        item.uuid||
+        `${getCreatedAt(item)||"no-date"}_${getPhone(item)}_${getCrop(item)}_${getCoordinatesText(item)}`
+      );
+    }
+
+    function getManualStatus(item){
+      return item.manual_status||item._manualStatus||"pending";
+    }
+
+    function getPrimaryKeyInfo(item){
+      if(item.id!==undefined&&item.id!==null)return {column:"id",value:item.id};
+      if(item.record_id!==undefined&&item.record_id!==null)return {column:"record_id",value:item.record_id};
+      if(item.uuid!==undefined&&item.uuid!==null)return {column:"uuid",value:item.uuid};
+
+      return null;
+    }
+
+    async function setManualStatus(recordKey,status){
+      const item=allItems.find(i=>i._recordKey===recordKey);
+
+      if(!item){
+        alert("Could not find this record in the dashboard.");
+        return false;
+      }
+
+      const keyInfo=getPrimaryKeyInfo(item);
+
+      if(!keyInfo){
+        alert("This record has no id/record_id/uuid column, so I cannot save verification to Supabase.");
+        return false;
+      }
+
+      const nextStatus=status||"pending";
+
+      const updateData={
+        manual_status:nextStatus,
+        manual_verified_at:nextStatus==="pending"?null:new Date().toISOString(),
+        manual_verified_by:nextStatus==="pending"?null:"admin"
+      };
+
+      const previousItems=allItems;
+
+      allItems=allItems.map(i=>{
+        return i._recordKey===recordKey?{...i,...updateData,_manualStatus:nextStatus}:i;
+      });
+
+      applyFilters();
+
+      const {error}=await client
+        .from("rci_records")
+        .update(updateData)
+        .eq(keyInfo.column,keyInfo.value);
+
+      if(error){
+        console.error(error);
+
+        allItems=previousItems;
+        applyFilters();
+
+        alert("Could not save manual verification to Supabase: "+(error.message||"Unknown error"));
+        return false;
+      }
+
+      return true;
+    }
+
+   function getAIOutcomeBadge(auto){
+  if(auto&&auto.isValid){
+    return `
+      <span class="badge badge-ready ai-pill">
+        AI approves
+        <span class="ai-plus">+</span>
+      </span>
+    `;
+  }
+
+  return `
+    <span class="badge badge-reject ai-pill">
+      AI rejects
+      <span class="ai-plus">+</span>
+    </span>
+  `;
+}
+
+    function getConfirmAIStatus(item){
+      const auto=item._auto||validateCoordinates(item);
+      return auto.isValid?"approved":"rejected";
+    }
+
+    function getOverrideAIStatus(item){
+      const auto=item._auto||validateCoordinates(item);
+      return auto.isValid?"rejected":"approved";
+    }
+
+    function getDisplayFinalStatus(item){
+      return pendingManualChoices[item._recordKey]||getManualStatus(item);
+    }
+
+    function getManualBadge(item){
+      const saved=getManualStatus(item);
+      const pending=pendingManualChoices[item._recordKey];
+      const chosen=pending||saved;
+
+      if(!pending&&saved==="pending"){
+        return '<span class="badge badge-pending">Choose manual</span>';
+      }
+
+      if(chosen===getConfirmAIStatus(item)){
+        return pending
+          ? '<span class="badge badge-ready">Confirm AI selected</span>'
+          : '<span class="badge badge-ready">AI confirmed</span>';
+      }
+
+      return pending
+        ? '<span class="badge badge-reject">Override AI selected</span>'
+        : '<span class="badge badge-reject">AI overridden</span>';
+    }
+
+    function getFinalBadge(item){
+      const status=getDisplayFinalStatus(item);
+
+      if(status==="approved"){
+        return '<span class="badge badge-ready">Approved</span>';
+      }
+
+      if(status==="rejected"){
+        return '<span class="badge badge-reject">Rejected</span>';
+      }
+
+      return '<span class="badge badge-pending">Needs review</span>';
+    }
+
+    function chooseManualDecision(recordKey,status){
+      pendingManualChoices[recordKey]=status;
+      applyFilters();
+    }
+
+    function handleManualSelect(selectEl,recordKey){
+      const status=selectEl.value;
+
+      if(!status)return;
+
+      pendingManualChoices[recordKey]=status;
+      applyFilters();
+    }
+function getUserPhoneLine(item){
+      const phone=getPhone(item);
+
+      if(!phone||phone==="—")return "";
+
+      return `<div style="color:#64748B;margin-top:2px;font-size:10px;">${safeText(phone)}</div>`;
+    }
+
+    async function confirmFinalDecision(recordKey){
+      const status=pendingManualChoices[recordKey];
+
+      if(!status){
+        alert("Choose Confirm AI or Override AI first.");
+        return;
+      }
+
+      const saved=await setManualStatus(recordKey,status);
+
+      if(saved){
+        delete pendingManualChoices[recordKey];
+        applyFilters();
+      }
+    }
+
+    async function rejectFinalDecision(recordKey){
+      delete pendingManualChoices[recordKey];
+      await setManualStatus(recordKey,"pending");
+      applyFilters();
+    }
+
+    function isFinalReady(item){
+      return getManualStatus(item)==="approved";
+    }
+
+    function calculateAreaFeddan(points){
+      if(!points||points.length<4)return null;
+
+      const lat0=points.reduce((s,p)=>s+p[0],0)/points.length;
+
+      const meters=points.map(p=>{
+        const x=p[1]*111320*Math.cos(lat0*Math.PI/180);
+        const y=p[0]*110540;
+        return [x,y];
+      });
+
+      let area=0;
+
+      for(let i=0;i<meters.length;i++){
+        const j=(i+1)%meters.length;
+        area+=meters[i][0]*meters[j][1]-meters[j][0]*meters[i][1];
+      }
+
+      area=Math.abs(area/2);
+
+      return area/4200;
+    }
+
+    function ccw(a,b,c){
+      return (c[0]-a[0])*(b[1]-a[1])>(b[0]-a[0])*(c[1]-a[1]);
+    }
+
+    function segmentsIntersect(a,b,c,d){
+      return ccw(a,c,d)!==ccw(b,c,d)&&ccw(a,b,c)!==ccw(a,b,d);
+    }
+
+    function validateCoordinates(item){
+      const reasons=[];
+      const points=getPolygonPoints(item);
+
+      if(!points||points.length<4){
+        return {
+          isValid:false,
+          reasons:["Missing 4 coordinates"],
+          areaFeddan:null
+        };
+      }
+
+      points.forEach((p,i)=>{
+        if(p[0]<22||p[0]>32||p[1]<24||p[1]>37){
+          reasons.push(`Point ${i+1} outside Egypt range`);
+        }
+      });
+
+      const rounded=new Set(points.map(p=>`${p[0].toFixed(6)},${p[1].toFixed(6)}`));
+
+      if(rounded.size<4){
+        reasons.push("Duplicate / repeated points");
+      }
+
+      if(
+        segmentsIntersect(points[0],points[1],points[2],points[3])||
+        segmentsIntersect(points[1],points[2],points[3],points[0])
+      ){
+        reasons.push("Polygon corners cross each other");
+      }
+
+      const areaFeddan=calculateAreaFeddan(points);
+
+      if(areaFeddan===null){
+        reasons.push("Could not calculate area");
+      }else{
+        if(areaFeddan<0.15)reasons.push("Area too small for Sentinel");
+        if(areaFeddan>5000)reasons.push("Area unusually huge");
+      }
+
+      return {
+        isValid:reasons.length===0,
+        reasons:reasons,
+        areaFeddan:areaFeddan
+      };
+    }
+
+    function prepareRecord(item){
+      const auto=validateCoordinates(item);
+      const key=getRecordKey(item);
+
+      return {
+        ...item,
+        _auto:auto,
+        _recordKey:key,
+        _manualStatus:getManualStatus(item)
+      };
+    }
+
+
+    function getSentinelStatus(item){
+      return item.sentinel_status||"not_sent";
+    }
+
+    function getSentinelStatusBadge(item){
+      const status=getSentinelStatus(item);
+
+      if(status==="queued"){
+        return '<span class="badge badge-pending">Queued</span>';
+      }
+
+      if(status==="processing"){
+        return '<span class="badge badge-pending">Processing</span>';
+      }
+
+      if(status==="completed"){
+        return '<span class="badge badge-ready">Completed</span>';
+      }
+
+      if(status==="failed"){
+        return '<span class="badge badge-reject">Failed</span>';
+      }
+
+      return '<span class="badge badge-pending">Not sent</span>';
+    }
+
+    function parseSentinelResult(item){
+      if(!item.sentinel_result)return null;
+
+      if(typeof item.sentinel_result==="string"){
+        try{
+          return JSON.parse(item.sentinel_result);
+        }catch{
+          return null;
+        }
+      }
+
+      return item.sentinel_result;
+    }
+
+    function getSentinelSourceLabel(result){
+      if(!result||!result.source)return "—";
+
+      if(result.source==="demo_result_not_real_sentinel"){
+        return '<span class="sentinel-source-demo">Demo</span>';
+      }
+
+      if(result.source==="sentinel_hub_statistical_api"){
+        return '<span class="sentinel-source-real">Real Sentinel</span>';
+      }
+
+      return safeText(result.source);
+    }
+
+    function getSentinelResultHtml(item){
+  const status=getSentinelStatus(item);
+  const result=parseSentinelResult(item);
+
+  if(!result){
+    if(status==="queued"){
+      return '<div class="sentinel-result"><b>Waiting</b> · run npm start</div>';
+    }
+
+    if(status==="processing"){
+      return '<div class="sentinel-result"><b>Processing</b></div>';
+    }
+
+    if(status==="failed"){
+      return '<div class="sentinel-result"><b>Failed</b></div>';
+    }
+
+    return '<div class="sentinel-result">—</div>';
+  }
+
+  if(result.error){
+    return `
+      <div class="sentinel-result">
+        <b>Error:</b> ${safeText(result.error)} · ${getSentinelSourceLabel(result)}
+      </div>
+    `;
+  }
+
+  const latest=result.ndvi_latest ?? result.summary?.ndvi_latest ?? result.ndvi_mean ?? "—";
+  const peak=result.ndvi_peak ?? result.summary?.ndvi_peak ?? "—";
+  const signal=result.vegetation_signal ?? result.summary?.vegetation_signal ?? "—";
+  const stage=result.growth_stage ?? result.summary?.growth_stage ?? "—";
+  const confidence=result.confidence ?? result.summary?.confidence ?? "—";
+  const usable=result.usable_for_rci===true||result.summary?.usable_for_rci===true
+    ? "Yes"
+    : result.usable_for_rci===false||result.summary?.usable_for_rci===false
+      ? "No"
+      : "—";
+
+  const previews=Array.isArray(result.satellite_images)?result.satellite_images:[];
+  const previewHtml=previews.length
+  ? `
+    <div style="display:flex;gap:6px;align-items:center;justify-content:center;">
+      ${previews.map(p=>`
+        <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+          <img
+            class="sentinel-preview"
+            src="${p.url}"
+            title="${safeText(p.label)}"
+            onclick="event.stopPropagation();window.open('${p.url}','_blank')"
+          />
+          <span style="font-size:8px;color:#64748B;font-weight:700;max-width:54px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+            ${safeText(p.label).replace("_days_ago","d").replace("latest","now")}
+          </span>
+        </div>
+      `).join("")}
+    </div>
+  `
+  : "";
+  return `
+    <div class="sentinel-result-wrap">
+      ${previewHtml}
+
+      <div class="sentinel-result" title="Latest NDVI: ${safeText(latest)} | Peak NDVI: ${safeText(peak)} | Signal: ${safeText(signal)} | Stage: ${safeText(stage)} | Confidence: ${safeText(confidence)} | Usable: ${safeText(usable)}">
+        <b>L:</b> ${safeText(latest)} · <b>P:</b> ${safeText(peak)} · ${safeText(signal)} · ${safeText(stage)} · ${safeText(confidence)} · <b>Usable:</b> ${safeText(usable)}
+      </div>
+    </div>
+  `;
+}
+
+    function getSentinelQueueHtml(item){
+      const manual=getManualStatus(item);
+      const status=getSentinelStatus(item);
+
+      if(manual!=="approved"){
+        return getSentinelStatusBadge(item);
+      }
+
+      if(status==="not_sent"||!status){
+        return `
+          <div class="verify-actions">
+            <button class="sentinel-queue-btn" onclick="event.stopPropagation();sendToSentinel('${item._recordKey}')">Send to Sentinel</button>
+          </div>
+        `;
+      }
+
+      return getSentinelStatusBadge(item);
+    }
+
+    async function sendToSentinel(recordKey){
+      const item=allItems.find(i=>i._recordKey===recordKey);
+
+      if(!item){
+        alert("Could not find this record in the dashboard.");
+        return false;
+      }
+
+      if(getManualStatus(item)!=="approved"){
+        alert("Only final approved plots can be sent to Sentinel.");
+        return false;
+      }
+
+      const keyInfo=getPrimaryKeyInfo(item);
+
+      if(!keyInfo){
+        alert("This record has no id/record_id/uuid column, so I cannot send it to Sentinel.");
+        return false;
+      }
+
+      const updateData={
+        sentinel_status:"queued",
+        sentinel_requested_at:new Date().toISOString(),
+        sentinel_processed_at:null,
+        sentinel_result:null
+      };
+
+      const previousItems=allItems;
+
+      allItems=allItems.map(i=>{
+        return i._recordKey===recordKey?{...i,...updateData}:i;
+      });
+
+      applyFilters();
+
+      const {error}=await client
+        .from("rci_records")
+        .update(updateData)
+        .eq(keyInfo.column,keyInfo.value);
+
+      if(error){
+        console.error(error);
+        allItems=previousItems;
+        applyFilters();
+        alert("Could not send to Sentinel queue: "+(error.message||"Unknown error"));
+        return false;
+      }
+
+      alert("Sent to Sentinel queue. Now run npm start in VS Code.");
+      return true;
+    }
+
+
+    function buildPopup(item,coordinatesText){
+      const imageUrl=item.image_url||item.photo_url||"";
+      const imageHtml=imageUrl?`<img class="popup-image" src="${imageUrl}" alt="Record image" />`:"";
+
+      const auto=item._auto||validateCoordinates(item);
+      const manual=getManualStatus(item);
+
+      const areaText=auto.areaFeddan!==null?`${auto.areaFeddan.toFixed(2)} feddan`:"—";
+      const reasonText=auto.reasons.length?auto.reasons.join("; "):"Passed automatic coordinate checks";
+
+      return `
+        <div>
+          ${imageHtml}
+
+          <div class="popup-title">Shunah RCI Plot</div>
+
+          <div class="popup-line"><b>User:</b> ${safeText(getUserName(item))}</div>
+          <div class="popup-line"><b>Phone:</b> ${safeText(getPhone(item))}</div>
+          <div class="popup-line"><b>Crop:</b> ${safeText(getCrop(item))}</div>
+          <div class="popup-line"><b>Date:</b> ${safeText(formatDate(getCreatedAt(item)))}</div>
+          <div class="popup-line"><b>AI Outcome:</b> ${auto.isValid?"AI approves":"AI rejects"}</div>
+          <div class="popup-line"><b>Manual:</b> ${getManualBadge(item).replace(/<[^>]*>/g,"")}</div>
+          <div class="popup-line"><b>Final Decision:</b> ${getDisplayFinalStatus(item)==="approved"?"Approved":getDisplayFinalStatus(item)==="rejected"?"Rejected":"Needs review"}</div>
+          <div class="popup-line"><b>Sentinel:</b> ${safeText(getSentinelStatus(item))}</div>
+          <div class="popup-line"><b>Area:</b> ${areaText}</div>
+          <div class="popup-line"><b>Reason:</b> ${safeText(reasonText)}</div>
+          <div class="popup-line"><b>Coordinates:</b> ${safeText(coordinatesText)}</div>
+
+          ${item.land_type?`<div class="popup-line"><b>Land:</b> ${safeText(item.land_type)}</div>`:""}
+          ${item.notes?`<div class="popup-line"><b>Notes:</b> ${safeText(item.notes)}</div>`:""}
+        </div>
+      `;
+    }
+
+    async function loadRecords(){
+      markersLayer.clearLayers();
+      mapObjects=[];
+
+      document.getElementById("mapStatus").textContent="Loading...";
+      document.getElementById("tableStatus").textContent="Loading...";
+
+      const {data,error}=await client
+        .from("rci_records")
+        .select("*")
+        .order("created_at",{ascending:false});
+
+      if(error){
+        console.error(error);
+
+        document.getElementById("mapStatus").textContent="Could not load rci_records";
+        document.getElementById("tableStatus").textContent="Error";
+
+        document.getElementById("recordsTable").innerHTML=`
+          <tr>
+            <td colspan="9">
+              <div class="empty-state">
+                Could not load rci_records: ${safeText(error.message||error.details||"Check table name and Supabase policies.")}
+              </div>
+            </td>
+          </tr>
+        `;
+
+        return;
+      }
+
+      allItems=(data||[]).map(prepareRecord);
+      filteredItems=[...allItems];
+
+      buildCropFilter(allItems);
+      renderDashboard(filteredItems);
+    }
+
+function setUserFilter(){
+  const input=document.getElementById("userColumnFilter");
+  const current=input.value||"";
+  const next=prompt("Filter user / phone:",current);
+
+  if(next===null)return;
+
+  input.value=next.trim();
+  applyFilters();
+  updateFilterButtons();
+}
+
+function openDateFilter(){
+  const input=document.getElementById("dateColumnFilter");
+
+  if(input.showPicker){
+    input.showPicker();
+  }else{
+    input.click();
+  }
+}
+
+function updateFilterButtons(){
+  const userInput=document.getElementById("userColumnFilter");
+  const dateInput=document.getElementById("dateColumnFilter");
+  const userBtn=document.getElementById("userFilterBtn");
+  const dateBtn=document.getElementById("dateFilterBtn");
+
+  if(userBtn){
+    userBtn.classList.toggle("active",!!userInput.value);
+  }
+
+  if(dateBtn){
+    dateBtn.classList.toggle("active",!!dateInput.value);
+  }
+}
+    
+    function applyFilters(){
+  const userValue=document.getElementById("userColumnFilter").value.toLowerCase().trim();
+  const cropValue=document.getElementById("cropColumnFilter").value;
+  const dateValue=document.getElementById("dateColumnFilter").value;
+  const aiValue=document.getElementById("aiColumnFilter").value;
+  const manualValue=document.getElementById("manualColumnFilter").value;
+  const finalValue=document.getElementById("finalColumnFilter").value;
+  const sentinelValue=document.getElementById("sentinelColumnFilter").value;
+
+  filteredItems=allItems.filter(item=>{
+    const manual=getManualStatus(item);
+    const auto=item._auto||validateCoordinates(item);
+    const finalStatus=getDisplayFinalStatus(item);
+    const sentinelStatus=getSentinelStatus(item);
+
+    const userText=`
+      ${getUserName(item)}
+      ${getPhone(item)}
+    `.toLowerCase();
+
+    const aiOk=
+      !aiValue||
+      (aiValue==="ai-approves"&&auto.isValid)||
+      (aiValue==="ai-rejects"&&!auto.isValid);
+
+    const manualChoice=getManualSelectValue(item);
+
+    const manualOk=
+      !manualValue||
+      (manualValue==="manual-pending"&&manual==="pending")||
+      (manualValue==="manual-confirmed"&&manualChoice==="confirm_ai")||
+      (manualValue==="manual-overridden"&&manualChoice==="override_ai");
+
+    const finalOk=
+      !finalValue||
+      finalStatus===finalValue;
+
+    const sentinelOk=
+      !sentinelValue||
+      sentinelStatus===sentinelValue;
+
+    return (
+      (!userValue||userText.includes(userValue))&&
+      (!cropValue||getCrop(item)===cropValue)&&
+      (!dateValue||getDateOnly(getCreatedAt(item))===dateValue)&&
+      aiOk&&
+      manualOk&&
+      finalOk&&
+      sentinelOk
+    );
+  });
+
+ renderDashboard(filteredItems);
+updateFilterButtons();
+}
+
+    function renderDashboard(items){
+      markersLayer.clearLayers();
+      mapObjects=[];
+
+      const boundsPoints=[];
+
+      items.forEach((item,index)=>{
+        const points=getPolygonPoints(item);
+
+        if(!points)return;
+
+        points.forEach(p=>boundsPoints.push(p));
+
+        const coordinatesText=points.map((p,i)=>`${i+1}: ${p[0]}, ${p[1]}`).join(" | ");
+
+        const manual=getManualStatus(item);
+        const finalReady=isFinalReady(item);
+
+        const color=manual==="rejected"?"#B91C1C":finalReady?"#2F5DA8":"#D97706";
+        const fillOpacity=manual==="rejected"?.14:finalReady?.16:.12;
+
+        const polygon=L.polygon(points,{
+          color:color,
+          weight:2,
+          opacity:.95,
+          fillColor:color,
+          fillOpacity:fillOpacity
+        })
+        .bindPopup(buildPopup(item,coordinatesText))
+        .addTo(markersLayer);
+
+        polygon.on("mouseover",function(){
+          this.setStyle({
+            weight:4,
+            fillOpacity:.26
+          });
+
+          this.openPopup();
+        });
+
+        polygon.on("mouseout",function(){
+          this.setStyle({
+            weight:2,
+            fillOpacity:fillOpacity
+          });
+        });
+
+        mapObjects[index]=polygon;
+      });
+
+      if(boundsPoints.length>0){
+        map.fitBounds(boundsPoints,{
+          padding:[40,40],
+          maxZoom:13
+        });
+      }else{
+        map.setView([26.8206,30.8025],6);
+      }
+
+      renderStats(items);
+      renderTable(items);
+
+      document.getElementById("mapStatus").textContent=`${items.length} plots loaded`;
+      document.getElementById("tableStatus").textContent=`${items.length} out of ${allItems.length} records`;
+    }
+
+    function openMapObject(index){
+      const object=mapObjects[index];
+
+      if(!object)return;
+
+      if(object.getBounds){
+        map.fitBounds(object.getBounds(),{
+          padding:[60,60],
+          maxZoom:16
+        });
+      }
+
+      object.openPopup();
+    }
+
+function getAIReasonsHtml(auto){
+  const reasons=auto&&auto.reasons&&auto.reasons.length
+    ? auto.reasons
+    : ["Passed automatic coordinate checks"];
+
+  const list=reasons.map(r=>`<li>${safeText(r)}</li>`).join("");
+
+  return `
+    <details class="ai-details" onclick="event.stopPropagation()">
+      <summary>${getAIOutcomeBadge(auto)}</summary>
+      <div class="ai-reasons-pop">
+        <ul>${list}</ul>
+      </div>
+    </details>
+  `;
+}
+
+function getAIOutcomeHtml(auto){
+  return `
+    <div class="ai-outcome-wrap">
+      ${getAIReasonsHtml(auto)}
+    </div>
+  `;
+}
+
+function getManualSelectValue(item){
+  const saved=getManualStatus(item);
+  const pending=pendingManualChoices[item._recordKey];
+
+  if(!pending && saved==="pending"){
+    return "";
+  }
+
+  const chosen=pending||saved;
+
+  if(chosen===getConfirmAIStatus(item)){
+    return "confirm_ai";
+  }
+
+  return "override_ai";
+}
+
+function getManualSelectClass(item){
+  const value=getManualSelectValue(item);
+
+  if(value==="confirm_ai"){
+    return "select-confirm";
+  }
+
+  if(value==="override_ai"){
+    return "select-override";
+  }
+
+  return "select-empty";
+}
+
+function handleManualSelect(recordKey,value){
+  const item=allItems.find(i=>i._recordKey===recordKey);
+
+  if(!item)return;
+
+  if(!value)return;
+
+  if(value==="confirm_ai"){
+    chooseManualDecision(recordKey,getConfirmAIStatus(item));
+    return;
+  }
+
+  if(value==="override_ai"){
+    chooseManualDecision(recordKey,getOverrideAIStatus(item));
+    return;
+  }
+}
+
+function getConfirmFinalSelectValue(item){
+  const saved=getManualStatus(item);
+  const pending=pendingManualChoices[item._recordKey];
+
+  if(pending)return "";
+
+  if(saved==="approved"||saved==="rejected"){
+    return "accept";
+  }
+
+  return "";
+}
+
+function getConfirmFinalSelectClass(item){
+  const value=getConfirmFinalSelectValue(item);
+
+  if(value==="accept"){
+    return "select-accept";
+  }
+
+  if(value==="reject"){
+    return "select-reject";
+  }
+
+  return "select-empty";
+}
+
+async function handleFinalConfirmSelect(recordKey,value){
+  if(!value)return;
+
+  if(value==="accept"){
+    await confirmFinalDecision(recordKey);
+    return;
+  }
+
+  if(value==="reject"){
+    await rejectFinalDecision(recordKey);
+    return;
+  }
+}
+
+function getConfirmFinalHtml(item){
+  const manualValue=getManualSelectValue(item);
+
+  if(!manualValue){
+    return '<span class="confirm-placeholder">—</span>';
+  }
+
+  const selectedValue=getConfirmFinalSelectValue(item);
+
+  return `
+    <div class="select-pill-wrap ${getConfirmFinalSelectClass(item)}">
+  <select onclick="event.stopPropagation()" onchange="handleFinalConfirmSelect('${item._recordKey}',this.value)">
+    <option value="" ${selectedValue===""?"selected":""} disabled hidden>Choose...</option>
+    <option value="accept" ${selectedValue==="accept"?"selected":""}>Accept</option>
+    <option value="reject" ${selectedValue==="reject"?"selected":""}>Reject</option>
+  </select>
+</div>
+  `;
+}
+
+    function renderTable(items){
+  const tbody=document.getElementById("recordsTable");
+
+  if(!items.length){
+    tbody.innerHTML='<tr><td colspan="9"><div class="empty-state">No records found.</div></td></tr>';
+    return;
+  }
+
+  tbody.innerHTML=items.slice(0,500).map((item,index)=>{
+    const auto=item._auto||validateCoordinates(item);
+
+    const area=auto.areaFeddan!==null
+      ? `<div class="area-text">${auto.areaFeddan.toFixed(2)} feddan</div>`
+      : "";
+
+    const reasons=auto.reasons.length
+      ? auto.reasons.join("; ")
+      : "Passed automatic coordinate checks";
+
+    const manualSelectValue=getManualSelectValue(item);
+
+    return `
+      <tr onmouseenter="openMapObject(${index})" onclick="openMapObject(${index})">
+        <td>
+  <div style="font-weight:500;color:var(--navy);">${safeText(getUserName(item))}</div>
+  ${getUserPhoneLine(item)}
+</td>
+
+<td>
+  <span class="crop-pill">${safeText(getCrop(item))}</span>
+</td>
+
+        <td>
+          ${safeText(formatDate(getCreatedAt(item)))}
+        </td>
+
+        <td>
+          ${getAIOutcomeHtml(auto)}
+        </td>
+
+        <td>
+          <div class="select-pill-wrap ${getManualSelectClass(item)}">
+  <select onclick="event.stopPropagation()" onchange="handleManualSelect('${item._recordKey}',this.value)">
+    <option value="" ${manualSelectValue===""?"selected":""} disabled hidden>Choose...</option>
+    <option value="confirm_ai" ${manualSelectValue==="confirm_ai"?"selected":""}>Confirm AI</option>
+    <option value="override_ai" ${manualSelectValue==="override_ai"?"selected":""}>Override AI</option>
+  </select>
+</div>
+        </td>
+
+        <td>
+          ${getFinalBadge(item)}
+        </td>
+
+        <td>
+          ${getConfirmFinalHtml(item)}
+        </td>
+
+        <td>
+          ${getSentinelQueueHtml(item)}
+        </td>
+
+        <td>
+          ${getSentinelResultHtml(item)}
+        </td>
+      </tr>
+    `;
+  }).join("");
+}
+
 requireSession().then(loadRecords);
-</script>
-</body></html>
+  </script>
+</body>
+</html>
