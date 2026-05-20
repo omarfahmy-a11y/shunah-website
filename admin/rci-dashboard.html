@@ -731,6 +731,395 @@ th:first-child{
   cursor:pointer;
   flex:0 0 54px;
 }
+
+.satellite-modal{
+  position:fixed;
+  inset:0;
+  background:rgba(11,26,45,.58);
+  z-index:9999;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+}
+
+.satellite-modal.open{
+  display:flex;
+}
+
+.satellite-modal-card{
+  width:min(1120px,96vw);
+  max-height:90vh;
+  overflow:auto;
+  background:#fff;
+  border-radius:24px;
+  box-shadow:0 30px 80px rgba(11,26,45,.28);
+  border:1px solid rgba(229,234,241,.9);
+}
+
+.satellite-modal-head{
+  padding:18px 22px;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.satellite-modal-title{
+  font-size:18px;
+  font-weight:900;
+  color:var(--navy);
+}
+
+.satellite-modal-close{
+  width:34px;
+  height:34px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background:#fff;
+  color:var(--text-soft);
+  font-size:20px;
+  cursor:pointer;
+}
+
+.satellite-modal-body{
+  padding:18px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+}
+
+.satellite-tile{
+  border:1px solid var(--border);
+  border-radius:18px;
+  overflow:hidden;
+  background:#FAFBFD;
+}
+
+.satellite-tile img{
+  width:100%;
+  height:210px;
+  object-fit:cover;
+  display:block;
+  cursor:pointer;
+}
+
+.satellite-tile-label{
+  padding:10px 12px;
+  font-size:12px;
+  font-weight:800;
+  color:var(--navy);
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+}
+.crop-signal-card{
+  grid-column:1/-1;
+  border:1px solid var(--border);
+  border-radius:18px;
+  background:#fff;
+  padding:14px 16px;
+}
+
+.crop-signal-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:12px;
+}
+
+.crop-signal-title{
+  font-size:14px;
+  font-weight:900;
+  color:var(--navy);
+}
+
+.crop-signal-sub{
+  margin-top:3px;
+  font-size:11px;
+  color:var(--text-soft);
+  font-weight:600;
+}
+
+.crop-signal-grid{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:10px;
+}
+
+.crop-signal-box{
+  border:1px solid var(--border);
+  border-radius:14px;
+  background:#FAFBFD;
+  padding:10px 11px;
+}
+
+.crop-signal-label{
+  font-size:10px;
+  font-weight:800;
+  color:var(--text-soft);
+  margin-bottom:5px;
+}
+
+.crop-signal-value{
+  font-size:12px;
+  font-weight:900;
+  color:var(--navy);
+  line-height:1.25;
+}
+
+.crop-signal-note{
+  margin-top:10px;
+  font-size:11px;
+  line-height:1.45;
+  color:var(--text-soft);
+  font-weight:600;
+}
+
+.multi-index-strip{
+  margin-top:12px;
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:8px;
+}
+
+.multi-index-pill{
+  border:1px solid var(--border);
+  background:#FAFBFD;
+  border-radius:999px;
+  padding:7px 10px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  min-width:0;
+}
+
+.multi-index-pill span{
+  font-size:9px;
+  font-weight:900;
+  color:var(--text-soft);
+  white-space:nowrap;
+}
+
+.multi-index-pill b{
+  font-size:10px;
+  font-weight:900;
+  color:var(--navy);
+  white-space:nowrap;
+}
+
+@media(max-width:900px){
+  .multi-index-strip{
+    grid-template-columns:repeat(3,1fr);
+  }
+}
+
+@media(max-width:520px){
+  .multi-index-strip{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+.crop-signal-pill{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:999px;
+  padding:5px 9px;
+  font-size:10px;
+  font-weight:900;
+  background:rgba(47,93,168,.08);
+  color:var(--shunah-blue);
+  border:1px solid rgba(47,93,168,.20);
+  white-space:nowrap;
+}
+
+@media(max-width:900px){
+  .crop-signal-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:520px){
+  .crop-signal-grid{
+    grid-template-columns:1fr;
+  }
+}
+.ndvi-chart-card{
+  grid-column:1/-1;
+  border:1px solid var(--border);
+  border-radius:18px;
+  background:#fff;
+  padding:14px 16px;
+}
+
+.ndvi-chart-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:10px;
+}
+
+.ndvi-chart-title{
+  font-size:14px;
+  font-weight:900;
+  color:var(--navy);
+}
+
+.ndvi-chart-sub{
+  margin-top:3px;
+  font-size:11px;
+  color:var(--text-soft);
+  font-weight:600;
+}
+
+.ndvi-chart-stats{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+
+.ndvi-mini-stat{
+  border:1px solid var(--border);
+  border-radius:999px;
+  padding:5px 9px;
+  font-size:10px;
+  font-weight:800;
+  color:var(--text-soft);
+  background:#FAFBFD;
+}
+
+.chart-legend{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:8px;
+}
+
+.chart-legend-item{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-size:10px;
+  font-weight:900;
+  color:var(--text-soft);
+}
+
+.chart-legend-line{
+  width:22px;
+  height:0;
+  border-top:3px solid #2F5DA8;
+  border-radius:999px;
+}
+
+.chart-legend-line.average{
+  border-top-color:#16A34A;
+  border-top-style:dashed;
+}
+
+.metric-select{
+  border:1px solid var(--border);
+  background:#fff;
+  color:var(--navy);
+  border-radius:999px;
+  padding:6px 10px;
+  font-size:11px;
+  font-weight:900;
+  outline:none;
+  cursor:pointer;
+}
+.ndvi-chart-svg{
+  width:100%;
+  height:220px;
+  display:block;
+}
+
+.ndvi-chart-empty{
+  padding:18px;
+  text-align:center;
+  color:var(--text-soft);
+  font-size:12px;
+  font-weight:700;
+}
+
+.crop-signal-mini{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:4px;
+  min-width:120px;
+}
+
+.crop-signal-mini-main{
+  font-size:11px;
+  font-weight:900;
+  color:var(--navy);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  max-width:130px;
+}
+
+.crop-signal-mini-sub{
+  display:flex;
+  gap:5px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+
+.crop-signal-mini-pill{
+  border-radius:999px;
+  padding:3px 7px;
+  font-size:9px;
+  font-weight:900;
+  background:rgba(47,93,168,.08);
+  color:var(--shunah-blue);
+  border:1px solid rgba(47,93,168,.18);
+  white-space:nowrap;
+}
+
+.crop-signal-mini-pill.good{
+  background:rgba(22,163,74,.10);
+  color:var(--green);
+  border-color:rgba(22,163,74,.20);
+}
+
+.crop-signal-mini-pill.warn{
+  background:rgba(217,119,6,.12);
+  color:var(--amber);
+  border-color:rgba(217,119,6,.20);
+}
+
+.timeline-btn{
+  border:1px solid rgba(47,93,168,.25);
+  background:rgba(47,93,168,.06);
+  color:var(--shunah-blue);
+  border-radius:999px;
+  padding:5px 9px;
+  font-size:10px;
+  font-weight:900;
+  cursor:pointer;
+  white-space:nowrap;
+}
+
+@media(max-width:900px){
+  .satellite-modal-body{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:520px){
+  .satellite-modal-body{
+    grid-template-columns:1fr;
+  }
+}
+
     .sentinel-result b{
       color:var(--navy);
     }
@@ -1076,7 +1465,8 @@ th:first-child{
       </div>
     </th>
 
-    <th>Sentinel Result</th>
+    <th>RCI Signal</th>
+<th>Sentinel Result</th>
   </tr>
 </thead>
 
@@ -1094,7 +1484,21 @@ th:first-child{
         <div id="map"></div>
       </div>
     </section>
-  </main>
+  <div class="satellite-modal" id="satelliteModal" onclick="closeSatelliteModal()">
+  <div class="satellite-modal-card" onclick="event.stopPropagation()">
+    <div class="satellite-modal-head">
+      <div>
+        <div class="satellite-modal-title">Satellite Timeline</div>
+        <div class="status" id="satelliteModalSubtitle">Historical Sentinel previews</div>
+      </div>
+
+      <button class="satellite-modal-close" onclick="closeSatelliteModal()">×</button>
+    </div>
+
+    <div class="satellite-modal-body" id="satelliteModalBody"></div>
+  </div>
+</div>
+</main>
 
   <script>
    const client=supabase.createClient(
@@ -1103,6 +1507,7 @@ th:first-child{
 );
 
     let allItems=[];
+    let cropSignaturesByCrop={};
     let filteredItems=[];
     let mapObjects=[];
     let pendingManualChoices={};
@@ -1650,8 +2055,553 @@ function getUserPhoneLine(item){
 
       return safeText(result.source);
     }
+function formatChartDate(dateString){
+  if(!dateString)return "—";
 
-    function getSentinelResultHtml(item){
+  const d=new Date(dateString);
+  const day=String(d.getDate()).padStart(2,"0");
+  const month=String(d.getMonth()+1).padStart(2,"0");
+
+  return `${day}/${month}`;
+}
+function analyzeCropSignal(result){
+  const series=Array.isArray(result?.time_series)
+    ? result.time_series
+        .filter(p=>Number.isFinite(Number(p.ndvi_mean)))
+        .sort((a,b)=>new Date(a.to||a.from)-new Date(b.to||b.from))
+    : [];
+
+  if(series.length<3){
+    return {
+      pattern:"Not enough data",
+      status:"Needs more points",
+      confidence:"low",
+      rciUse:"Not enough NDVI history yet",
+      note:"This plot does not have enough usable NDVI points to read a growth pattern."
+    };
+  }
+
+  const values=series.map(p=>Number(p.ndvi_mean));
+  const first=values[0];
+  const latest=values[values.length-1];
+  const peak=Math.max(...values);
+  const min=Math.min(...values);
+  const peakIndex=values.indexOf(peak);
+  const range=peak-min;
+  const totalChange=latest-first;
+  const recentChange=values.length>=2 ? latest-values[values.length-2] : 0;
+
+  let pattern="Moderate vegetation cycle";
+let status="Usable but not decisive";
+let confidence="medium";
+let rciUse="Usable as supporting signal";
+
+  if(peak>=0.55 && range>=0.25 && peakIndex<values.length-2 && totalChange<-0.20){
+    pattern="Peak then decline";
+    status="Likely declining / harvested";
+    confidence="high";
+    rciUse="Good crop-cycle signal";
+  }else if(first<0.35 && latest>first+0.20 && recentChange>0.05){
+    pattern="Rising vegetation";
+    status="Likely active growth";
+    confidence="medium";
+    rciUse="Good early growth signal";
+  }else if(peak<0.35 && range<0.18){
+    pattern="Low vegetation";
+    status="Bare / weak vegetation";
+    confidence="medium";
+    rciUse="Weak crop signal";
+  }else if(latest>=0.50 && Math.abs(recentChange)<0.08){
+    pattern="High stable vegetation";
+    status="Standing healthy vegetation";
+    confidence="medium";
+    rciUse="Useful, but needs crop reference";
+  }
+
+  return {
+    pattern,
+    status,
+    confidence,
+    rciUse,
+    note:"This is rule-based crop-signal logic. It reads the NDVI curve shape, but it is not a trained crop classifier yet."
+  };
+}
+
+function buildCropSignalHtml(result){
+  const signal=result?.rci_crop_signal||analyzeCropSignal(result);
+const summary=result?.summary||{};
+
+const vegetation=signal?.vegetation_signal||summary.vegetation_signal||result?.vegetation_signal||"—";
+const cropMatch=signal?.crop_match||summary.crop_match||result?.crop_match||"unknown_first_stage";
+const signature=signal?.signature_match||{};
+const diagnosis=signal?.multi_index_diagnosis||{
+  ndvi_latest: signal?.ndvi_latest ?? result?.ndvi_latest ?? summary?.ndvi_latest,
+  ndvi_recent_change: signal?.ndvi_recent_change ?? result?.ndvi_recent_change ?? summary?.ndvi_recent_change,
+
+  ndmi_latest: signal?.ndmi_latest ?? result?.ndmi_latest ?? summary?.ndmi_latest,
+  ndmi_recent_change: signal?.ndmi_recent_change ?? result?.ndmi_recent_change ?? summary?.ndmi_recent_change,
+
+  ndwi_latest: signal?.ndwi_latest ?? result?.ndwi_latest ?? summary?.ndwi_latest,
+
+  evi_latest: signal?.evi_latest ?? result?.evi_latest ?? summary?.evi_latest,
+  evi_recent_change: signal?.evi_recent_change ?? result?.evi_recent_change ?? summary?.evi_recent_change
+};
+  return `
+    <div class="crop-signal-card">
+      <div class="crop-signal-head">
+        <div>
+          <div class="crop-signal-title">RCI Crop Signal</div>
+          <div class="crop-signal-sub">First rule-based crop-detection layer from NDVI shape</div>
+        </div>
+
+        <div class="crop-signal-pill">${safeText(vegetation)}</div>
+      </div>
+
+      <div class="crop-signal-grid">
+  <div class="crop-signal-box">
+    <div class="crop-signal-label">Growth Pattern</div>
+    <div class="crop-signal-value">${safeText(signal.pattern)}</div>
+  </div>
+
+  <div class="crop-signal-box">
+    <div class="crop-signal-label">Likely Status</div>
+    <div class="crop-signal-value">${safeText(signal.status)}</div>
+  </div>
+
+  <div class="crop-signal-box">
+    <div class="crop-signal-label">Signal Confidence</div>
+    <div class="crop-signal-value">${safeText(signal.confidence)}</div>
+  </div>
+
+  <div class="crop-signal-box">
+    <div class="crop-signal-label">Selected Crop</div>
+    <div class="crop-signal-value">${safeText(signature.selected_crop||"—")}</div>
+  </div>
+
+  <div class="crop-signal-box">
+    <div class="crop-signal-label">Signature Match</div>
+    <div class="crop-signal-value">${safeText(signature.match_level||cropMatch)}</div>
+  </div>
+
+  <div class="crop-signal-box">
+    <div class="crop-signal-label">Training Status</div>
+    <div class="crop-signal-value">${safeText(signature.training_status||"needs_verified_samples")}</div>
+  </div>
+</div>
+   <div class="crop-signal-note">
+  ${safeText(signal.rci_use||signal.rciUse)} · ${safeText(signature.reason||signal.note)}
+</div>
+
+<div class="multi-index-strip">
+  <div class="multi-index-pill">
+    <span>NDVI</span>
+    <b>${safeText(diagnosis.ndvi_latest)}</b>
+  </div>
+
+  <div class="multi-index-pill">
+    <span>NDMI</span>
+    <b>${safeText(diagnosis.ndmi_latest)}</b>
+  </div>
+
+  <div class="multi-index-pill">
+    <span>NDWI</span>
+    <b>${safeText(diagnosis.ndwi_latest)}</b>
+  </div>
+
+  <div class="multi-index-pill">
+    <span>EVI</span>
+    <b>${safeText(diagnosis.evi_latest)}</b>
+  </div>
+
+  <div class="multi-index-pill">
+    <span>NDMI Δ</span>
+    <b>${safeText(diagnosis.ndmi_recent_change)}</b>
+  </div>
+
+  <div class="multi-index-pill">
+    <span>EVI Δ</span>
+    <b>${safeText(diagnosis.evi_recent_change)}</b>
+  </div>
+</div>
+    </div>
+  `;
+}
+
+
+function getCropSignature(crop){
+  if(!crop)return null;
+  return cropSignaturesByCrop[String(crop).trim()]||null;
+}
+
+function getCropAverageForMetric(crop,metric){
+  const signature=getCropSignature(crop);
+  if(!signature)return null;
+
+  const averageKeys={
+    ndvi:"avg_ndvi_latest",
+    ndmi:"avg_ndmi_latest",
+    ndwi:"avg_ndwi_latest",
+    evi:"avg_evi_latest"
+  };
+
+  const key=averageKeys[metric]||averageKeys.ndvi;
+  const value=Number(signature[key]);
+
+  return Number.isFinite(value)?value:null;
+}
+
+
+function getCropAverageSeriesForMetric(crop, metric){
+  const signature=getCropSignature(crop);
+  const averageSeries=Array.isArray(signature?.average_time_series)
+    ? signature.average_time_series
+    : [];
+
+  const config=getMetricConfig(metric);
+
+  return averageSeries
+    .filter(p=>Number.isFinite(Number(p[config.key])))
+    .map((p,index)=>({
+      index,
+      label:p.label||`${index}`,
+      value:Number(p[config.key]),
+      sample_count:p.sample_count||0
+    }));
+}
+
+function getMetricConfig(metric){
+  const configs={
+    ndvi:{
+      key:"ndvi_mean",
+      title:"NDVI Timeline",
+      sub:"Vegetation strength across the processed Sentinel time-series",
+      label:"NDVI"
+    },
+    ndmi:{
+      key:"ndmi_mean",
+      title:"NDMI / Moisture Timeline",
+      sub:"Crop moisture and water-stress signal across the Sentinel time-series",
+      label:"NDMI"
+    },
+    ndwi:{
+      key:"ndwi_mean",
+      title:"NDWI / Water Timeline",
+      sub:"Water and wetness signal across the Sentinel time-series",
+      label:"NDWI"
+    },
+    evi:{
+      key:"evi_mean",
+      title:"EVI Timeline",
+      sub:"Enhanced vegetation signal across the Sentinel time-series",
+      label:"EVI"
+    }
+  };
+
+  return configs[metric]||configs.ndvi;
+}
+
+function buildNdviChartHtml(result, metric="ndvi", crop=null){
+  const config=getMetricConfig(metric);
+const averageValue=getCropAverageForMetric(crop,metric);
+
+const averageSeries=getCropAverageSeriesForMetric(crop,metric);
+  const series=Array.isArray(result?.time_series)
+    ? result.time_series
+        .filter(p=>Number.isFinite(Number(p[config.key])))
+        .sort((a,b)=>new Date(a.to||a.from)-new Date(b.to||b.from))
+    : [];
+
+  const selectHtml=`
+    <select class="metric-select" onchange="changeSatelliteMetric(this.value)">
+      <option value="ndvi" ${metric==="ndvi"?"selected":""}>NDVI</option>
+      <option value="ndmi" ${metric==="ndmi"?"selected":""}>NDMI / Moisture</option>
+      <option value="ndwi" ${metric==="ndwi"?"selected":""}>NDWI / Water</option>
+      <option value="evi" ${metric==="evi"?"selected":""}>EVI</option>
+    </select>
+  `;
+
+  if(!series.length){
+    return `
+      <div class="ndvi-chart-card">
+        <div class="ndvi-chart-head">
+          <div>
+            <div class="ndvi-chart-title">${config.title}</div>
+            <div class="ndvi-chart-sub">${config.sub}</div>
+
+<div class="chart-legend">
+  <div class="chart-legend-item">
+    <span class="chart-legend-line"></span>
+    <span>This plot</span>
+  </div>
+
+  <div class="chart-legend-item">
+    <span class="chart-legend-line average"></span>
+    <span>Crop average</span>
+  </div>
+</div>
+          </div>
+          ${selectHtml}
+        </div>
+
+        <div class="ndvi-chart-empty">No ${config.label} time-series available.</div>
+      </div>
+    `;
+  }
+
+  const width=600;
+  const height=220;
+  const padL=42;
+  const padR=18;
+  const padT=18;
+  const padB=42;
+  const chartW=width-padL-padR;
+  const chartH=height-padT-padB;
+
+const values=series.map(p=>Number(p[config.key]));
+
+const averageValues=averageSeries.map(p=>p.value);
+
+const valuesForScale=averageValues.length
+  ? [...values,...averageValues]
+  : values;
+
+const minValue=Math.min(...valuesForScale);
+const maxValue=Math.max(...valuesForScale);
+
+const yMin=Math.min(0,minValue);
+const yMax=Math.max(1,maxValue);
+const yRange=yMax-yMin || 1;
+
+  const points=series.map((p,index)=>{
+    const value=Number(p[config.key]);
+    const x=series.length===1
+      ? padL+chartW/2
+      : padL+(index/(series.length-1))*chartW;
+
+    const y=padT+(1-((value-yMin)/yRange))*chartH;
+
+    return {
+      x,
+      y,
+      value,
+      label:formatChartDate(p.to||p.from)
+    };
+  });
+const averagePoints=averageSeries.map((p,index)=>{
+  const x=averageSeries.length===1
+    ? padL+chartW/2
+    : padL+(index/(averageSeries.length-1))*chartW;
+
+  const y=padT+(1-((p.value-yMin)/yRange))*chartH;
+
+  return {
+    x,
+    y,
+    value:p.value,
+    label:p.label,
+    sample_count:p.sample_count
+  };
+});
+
+const averageLinePoints=averagePoints.map(p=>`${p.x},${p.y}`).join(" ");
+  const linePoints=points.map(p=>`${p.x},${p.y}`).join(" ");
+  const latest=points[points.length-1]?.value ?? 0;
+  const peak=Math.max(...points.map(p=>p.value));
+  const first=points[0]?.value ?? 0;
+  const change=latest-first;
+
+  const grid=[0,0.25,0.5,0.75,1];
+
+  return `
+    <div class="ndvi-chart-card" id="metricChartCard">
+      <div class="ndvi-chart-head">
+        <div>
+  <div class="ndvi-chart-title">${config.title}</div>
+  <div class="ndvi-chart-sub">${config.sub}</div>
+
+  <div class="chart-legend">
+    <div class="chart-legend-item">
+      <span class="chart-legend-line"></span>
+      <span>This plot</span>
+    </div>
+
+    <div class="chart-legend-item">
+      <span class="chart-legend-line average"></span>
+      <span>Crop average</span>
+    </div>
+  </div>
+</div>
+
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end;">
+          ${selectHtml}
+
+          <div class="ndvi-chart-stats">
+            <div class="ndvi-mini-stat">Latest ${latest.toFixed(3)}</div>
+<div class="ndvi-mini-stat">Peak ${peak.toFixed(3)}</div>
+<div class="ndvi-mini-stat">Change ${change>=0?"+":""}${change.toFixed(3)}</div>
+${averagePoints.length?`<div class="ndvi-mini-stat" style="color:#16A34A;">Avg Curve ${averagePoints.length} pts</div>`:""}
+          </div>
+        </div>
+      </div>
+
+      <svg class="ndvi-chart-svg" viewBox="0 0 ${width} ${height}" preserveAspectRatio="none">
+        ${grid.map(v=>{
+          const realValue=yMin+(v*yRange);
+          const y=padT+(1-v)*chartH;
+          return `
+            <line x1="${padL}" y1="${y}" x2="${width-padR}" y2="${y}" stroke="#E5EAF1" stroke-width="1" />
+            <text x="8" y="${y+4}" font-size="10" fill="#64748B">${realValue.toFixed(2)}</text>
+          `;
+        }).join("")}
+
+
+${averagePoints.length?"":""}
+${averagePoints.length?`
+  <polyline
+    points="${averageLinePoints}"
+    fill="none"
+    stroke="#16A34A"
+    stroke-width="3"
+    stroke-dasharray="8 6"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  ${averagePoints.map(p=>`
+    <circle cx="${p.x}" cy="${p.y}" r="4" fill="#16A34A">
+      <title>${p.label} · Crop average ${config.label} ${p.value.toFixed(4)} · samples ${p.sample_count}</title>
+    </circle>
+  `).join("")}
+`: ""}
+        <polyline
+          points="${linePoints}"
+          fill="none"
+          stroke="#2F5DA8"
+          stroke-width="3"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+
+        ${points.map(p=>`
+          <circle cx="${p.x}" cy="${p.y}" r="4.5" fill="#2F5DA8">
+            <title>${p.label} · ${config.label} ${p.value.toFixed(4)}</title>
+          </circle>
+        `).join("")}
+
+        ${points.map((p,index)=>{
+          if(index%2!==0 && points.length>5)return "";
+          return `<text x="${p.x}" y="${height-14}" text-anchor="middle" font-size="10" fill="#64748B">${p.label}</text>`;
+        }).join("")}
+      </svg>
+    </div>
+  `;
+}
+
+function formatSatelliteLabel(label){
+  return safeText(label)
+    .replace("_days_ago"," days ago")
+    .replace("latest","Latest")
+    .replaceAll("_"," ");
+}
+let activeSatelliteRecordKey=null;
+let activeSatelliteMetric="ndvi";
+
+function changeSatelliteMetric(metric){
+  activeSatelliteMetric=metric;
+  if(activeSatelliteRecordKey){
+    openSatelliteModal(activeSatelliteRecordKey, metric);
+  }
+}
+
+function openSatelliteModal(recordKey, metric=activeSatelliteMetric){
+  activeSatelliteRecordKey=recordKey;
+  activeSatelliteMetric=metric;
+  const item=allItems.find(i=>i._recordKey===recordKey);
+
+  if(!item)return;
+
+  const result=parseSentinelResult(item);
+  const allPreviews=Array.isArray(result?.satellite_images)?result.satellite_images:[];
+
+const previews=allPreviews
+  .filter(p=>p.usable_image!==false)
+  .sort((a,b)=>Number(b.offset_days||0)-Number(a.offset_days||0));
+
+  const modal=document.getElementById("satelliteModal");
+  const body=document.getElementById("satelliteModalBody");
+  const subtitle=document.getElementById("satelliteModalSubtitle");
+
+  subtitle.textContent=`${safeText(getCrop(item))} · ${safeText(formatDate(getCreatedAt(item)))}`;
+
+  const imagesHtml=previews.length
+  ? previews.map(p=>`
+    <div class="satellite-tile">
+      <img src="${p.url}" onclick="window.open('${p.url}','_blank')" />
+      <div class="satellite-tile-label">
+        <span>${formatSatelliteLabel(p.label)}</span>
+        <span>${p.width||""}×${p.height||""}</span>
+      </div>
+    </div>
+  `).join("")
+  : `<div class="empty-state">No satellite images available.</div>`;
+
+body.innerHTML=`
+  ${buildCropSignalHtml(result)}
+  ${buildNdviChartHtml(result, activeSatelliteMetric, getCrop(item))}
+  ${imagesHtml}
+`;
+
+  modal.classList.add("open");
+}
+
+function closeSatelliteModal(){
+  const modal=document.getElementById("satelliteModal");
+  if(modal)modal.classList.remove("open");
+}
+function getCropSignalMiniHtml(result){
+  const signal=result?.rci_crop_signal||analyzeCropSignal(result);
+  const signature=signal?.signature_match||{};
+
+  if(!signal){
+    return `
+      <div class="crop-signal-mini">
+        <div class="crop-signal-mini-main">—</div>
+      </div>
+    `;
+  }
+
+  const confidenceClass=signal.confidence==="high" ? "good" : "warn";
+  const vegetationClass=signal.vegetation_signal==="strong" ? "good" : "";
+  const matchClass=signature.match_level==="possible" ? "good" : "warn";
+
+  return `
+    <div class="crop-signal-mini">
+      <div class="crop-signal-mini-main" title="${safeText(signal.pattern)}">
+        ${safeText(signal.pattern)}
+      </div>
+
+      <div class="crop-signal-mini-sub">
+        <span class="crop-signal-mini-pill ${confidenceClass}">
+          ${safeText(signal.confidence)}
+        </span>
+
+        <span class="crop-signal-mini-pill ${vegetationClass}">
+          ${safeText(signal.vegetation_signal)}
+        </span>
+
+        <span class="crop-signal-mini-pill ${matchClass}">
+          ${safeText(signature.match_level||"—")}
+        </span>
+      </div>
+
+      <div style="font-size:9px;color:#64748B;font-weight:800;max-width:145px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+        ${safeText(signature.training_status||"—")}
+      </div>
+    </div>
+  `;
+}
+
+function getSentinelResultHtml(item){
   const status=getSentinelStatus(item);
   const result=parseSentinelResult(item);
 
@@ -1690,7 +2640,11 @@ function getUserPhoneLine(item){
       ? "No"
       : "—";
 
-  const previews=Array.isArray(result.satellite_images)?result.satellite_images:[];
+  const allPreviews=Array.isArray(result.satellite_images)?result.satellite_images:[];
+
+const previews=allPreviews
+  .filter(p=>p.usable_image!==false)
+  .sort((a,b)=>Number(b.offset_days||0)-Number(a.offset_days||0));
   const previewHtml=previews.length
   ? `
     <div style="display:flex;gap:6px;align-items:center;justify-content:center;">
@@ -1707,6 +2661,10 @@ function getUserPhoneLine(item){
           </span>
         </div>
       `).join("")}
+
+      <button class="timeline-btn" onclick="event.stopPropagation();openSatelliteModal('${item._recordKey}')">
+        View
+      </button>
     </div>
   `
   : "";
@@ -1839,6 +2797,24 @@ function getUserPhoneLine(item){
         .select("*")
         .order("created_at",{ascending:false});
 
+const {data:signatureData,error:signatureError}=await client
+  .from("rci_crop_signatures")
+  .select("*");
+
+if(signatureError){
+  console.warn("Could not load rci_crop_signatures",signatureError);
+  cropSignaturesByCrop={};
+}else{
+  cropSignaturesByCrop={};
+
+  (signatureData||[]).forEach(signature=>{
+    if(signature.crop){
+      cropSignaturesByCrop[String(signature.crop).trim()]=signature;
+    }
+  });
+}
+
+
       if(error){
         console.error(error);
 
@@ -1847,7 +2823,7 @@ function getUserPhoneLine(item){
 
         document.getElementById("recordsTable").innerHTML=`
           <tr>
-            <td colspan="9">
+            <td colspan="10">
               <div class="empty-state">
                 Could not load rci_records: ${safeText(error.message||error.details||"Check table name and Supabase policies.")}
               </div>
@@ -2178,7 +3154,7 @@ function getConfirmFinalHtml(item){
   const tbody=document.getElementById("recordsTable");
 
   if(!items.length){
-    tbody.innerHTML='<tr><td colspan="9"><div class="empty-state">No records found.</div></td></tr>';
+    tbody.innerHTML='<tr><td colspan="10"><div class="empty-state">No records found.</div></td></tr>';
     return;
   }
 
@@ -2233,12 +3209,16 @@ function getConfirmFinalHtml(item){
         </td>
 
         <td>
-          ${getSentinelQueueHtml(item)}
-        </td>
+  ${getSentinelQueueHtml(item)}
+</td>
 
-        <td>
-          ${getSentinelResultHtml(item)}
-        </td>
+<td>
+  ${getCropSignalMiniHtml(parseSentinelResult(item))}
+</td>
+
+<td>
+  ${getSentinelResultHtml(item)}
+</td>
       </tr>
     `;
   }).join("");
