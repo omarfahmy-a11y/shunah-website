@@ -1,0 +1,1899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CAV Dashboard</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <style>
+    :root {
+      --navy: #0b1a2d;
+      --blue: #2f5da8;
+      --blue2: #4176f6;
+      --border: #e5eaf2;
+      --border2: #dbe5f2;
+      --text: #243044;
+      --muted: #6b7280;
+      --bg: #f5f8fc;
+      --white: #ffffff;
+      --green: #16a34a;
+      --red: #dc2626;
+      --shadow: 0 18px 50px rgba(11, 26, 45, 0.07);
+      --shadow-soft: 0 12px 34px rgba(11, 26, 45, 0.055);
+    }
+
+    * { box-sizing: border-box; }
+
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      min-height: 100%;
+      font-family: Inter, Arial, sans-serif;
+      background:
+        radial-gradient(circle at 8% 8%, rgba(47, 93, 168, 0.06), transparent 28%),
+        radial-gradient(circle at 90% 88%, rgba(65, 118, 246, 0.06), transparent 32%),
+        var(--bg);
+      color: var(--text);
+    }
+
+    body { overflow: hidden; }
+
+    button,
+    select,
+    input { font-family: inherit; }
+
+    button { cursor: pointer; }
+
+    .page {
+      width: min(100%, 1600px);
+      height: 100vh;
+      margin: 0 auto;
+      padding: clamp(14px, 2vh, 24px) clamp(16px, 2.2vw, 32px);
+      display: grid;
+      grid-template-rows: auto auto minmax(0, 1fr);
+      gap: clamp(12px, 1.6vh, 18px);
+    }
+
+    .header {
+      min-height: 82px;
+      background: linear-gradient(135deg, #ffffff 0%, #f7faff 100%);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 14px 24px;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      overflow: hidden;
+    }
+
+    .header-left {
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+
+    .user-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(11, 26, 45, 0.38);
+  backdrop-filter: blur(10px);
+}
+
+.user-modal.show {
+  display: flex;
+}
+
+.user-panel {
+  width: min(1180px, 96vw);
+  height: min(760px, 92vh);
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  box-shadow: 0 28px 90px rgba(11, 26, 45, 0.22);
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr);
+}
+
+.user-panel-head {
+  height: 74px;
+  padding: 0 22px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  background: linear-gradient(135deg, #ffffff 0%, #f7faff 100%);
+}
+
+.user-panel-title {
+  min-width: 0;
+}
+
+.user-panel-title h2 {
+  margin: 0;
+  color: var(--navy);
+  font-size: 20px;
+  letter-spacing: -0.04em;
+}
+
+.user-panel-subtitle {
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.user-close {
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 14px;
+  background: #f1f3f7;
+  color: var(--navy);
+  font-size: 22px;
+  line-height: 1;
+}
+
+.user-stats {
+  padding: 14px 18px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  border-bottom: 1px solid var(--border);
+  background: #fbfdff;
+}
+
+.user-stat {
+  min-height: 74px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: #ffffff;
+  box-shadow: 0 10px 24px rgba(11, 26, 45, 0.045);
+}
+
+.user-stat-label {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.user-stat-value {
+  margin-top: 8px;
+  color: var(--navy);
+  font-size: 20px;
+  font-weight: 850;
+  letter-spacing: -0.04em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-body {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(340px, .75fr);
+  gap: 14px;
+  padding: 14px;
+}
+
+.user-records {
+  min-height: 0;
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  overflow: auto;
+  background: #fff;
+}
+
+.user-record {
+  padding: 13px 14px;
+  border-bottom: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: 62px minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+}
+
+.user-record:last-child {
+  border-bottom: 0;
+}
+
+.user-record-main {
+  min-width: 0;
+}
+
+.user-record-title {
+  color: var(--navy);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.user-record-meta {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 11.5px;
+  line-height: 1.45;
+}
+
+.user-record-metrics {
+  max-width: 280px;
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.user-map-wrap {
+  min-height: 0;
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  overflow: hidden;
+  background: #e9eef5;
+}
+
+#userProfileMap {
+  width: 100%;
+  height: 100%;
+  min-height: 360px;
+}
+
+@media (max-width: 900px) {
+  .user-panel {
+    height: 94vh;
+  }
+
+  .user-stats {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .user-body {
+    grid-template-columns: 1fr;
+  }
+
+  .user-map-wrap {
+    min-height: 340px;
+  }
+}
+
+    .header-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--blue), var(--blue2));
+      color: #fff;
+      box-shadow: 0 14px 28px rgba(47, 93, 168, 0.22);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 auto;
+    }
+
+    .header-icon svg {
+      width: 24px;
+      height: 24px;
+      stroke-width: 2;
+    }
+
+    .eyebrow {
+      color: var(--blue);
+      font-size: 11px;
+      font-weight: 850;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(23px, 2vw, 31px);
+      line-height: 1.05;
+      color: var(--navy);
+      letter-spacing: -0.055em;
+    }
+
+    .subtitle {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .dots {
+      width: 88px;
+      height: 54px;
+      opacity: .22;
+      background-image: radial-gradient(circle, #4176f6 2px, transparent 2px);
+      background-size: 16px 16px;
+      flex: 0 0 auto;
+    }
+
+    .btn {
+      height: 42px;
+      border: 0;
+      border-radius: 15px;
+      padding: 0 16px;
+      font-size: 12px;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--blue), var(--blue2));
+      color: #fff;
+      box-shadow: 0 16px 30px rgba(47, 93, 168, 0.22);
+    }
+
+    .btn-soft {
+      background: #f1f3f7;
+      color: #4b5565;
+    }
+
+    .btn-soft:hover { background: #e8ebf1; }
+
+    .filters-card,
+    .table-card,
+    .map-card {
+      background: rgba(255, 255, 255, .92);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .filters-card {
+      width: 100%;
+      border-radius: 22px;
+      padding: 12px;
+      display: grid;
+      grid-template-columns: minmax(420px, 2fr) minmax(220px, .9fr) minmax(190px, .75fr) 120px;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .filter-input,
+    .filter-select {
+      width: 100%;
+      height: 42px;
+      border: 1px solid #d8e6ff;
+      border-radius: 15px;
+      padding: 0 13px;
+      background: #f8fbff;
+      color: #4b5565;
+      outline: none;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .filter-input:focus,
+    .filter-select:focus {
+      border-color: var(--blue2);
+      box-shadow: 0 0 0 4px rgba(65, 118, 246, .10);
+    }
+
+    .main-grid {
+      min-height: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(320px, 1fr);
+      gap: clamp(14px, 1.7vw, 24px);
+      align-items: stretch;
+    }
+
+    .table-card,
+    .map-card {
+      min-height: 0;
+      border-radius: 26px;
+      overflow: hidden;
+      display: grid;
+      grid-template-rows: 50px minmax(0, 1fr);
+    }
+
+    .card-head {
+      height: 50px;
+      padding: 0 18px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      background: linear-gradient(180deg, #fff, #fbfdff);
+    }
+
+    .card-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .card-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 11px;
+      background: #eef4ff;
+      color: var(--blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 auto;
+    }
+
+    .card-icon svg {
+      width: 17px;
+      height: 17px;
+      stroke-width: 2;
+    }
+
+    .card-title {
+      color: var(--navy);
+      font-size: 13px;
+      font-weight: 800;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+
+    .table-head-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sort-select {
+  height: 34px;
+  border: 1px solid #d8e6ff;
+  border-radius: 12px;
+  padding: 0 10px;
+  background: #f8fbff;
+  color: #4b5565;
+  outline: none;
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.sort-select:focus {
+  border-color: var(--blue2);
+  box-shadow: 0 0 0 4px rgba(65, 118, 246, .10);
+}
+    .status {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 650;
+      white-space: nowrap;
+    }
+
+    .table-wrap {
+      min-height: 0;
+      overflow: auto;
+      background: rgba(255,255,255,.7);
+    }
+
+    .table-wrap::-webkit-scrollbar { width: 10px; height: 10px; }
+    .table-wrap::-webkit-scrollbar-track { background: transparent; }
+    .table-wrap::-webkit-scrollbar-thumb {
+      background: #d8e2f0;
+      border: 3px solid #fff;
+      border-radius: 999px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-size: 12.5px;
+      min-width: 1180px;
+    }
+
+    th,
+    td {
+      padding: 12px 13px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      vertical-align: middle;
+      font-weight: 400;
+    }
+
+    th {
+      position: sticky;
+      top: 0;
+      z-index: 4;
+      color: #7b8798;
+      background: #fafbfd;
+      font-size: 11px;
+      font-weight: 850;
+      letter-spacing: .02em;
+      white-space: nowrap;
+    }
+
+    tbody tr {
+      cursor: pointer;
+      transition: background .15s ease, transform .15s ease;
+    }
+
+    tbody tr:hover { background: #f8fafd; }
+
+    .id-cell {
+      max-width: 150px;
+      color: var(--text);
+      font-weight: 400;
+      font-variant-numeric: tabular-nums;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .crop-text {
+      background: transparent;
+      border: 0;
+      padding: 0;
+      color: var(--text);
+      font-size: 12.5px;
+      font-weight: 400;
+      white-space: nowrap;
+    }
+
+    .user-main { font-weight: 400; color: var(--text); }
+    .muted-line { color: var(--muted); font-size: 11.5px; margin-top: 3px; }
+
+    .thumb {
+      width: 54px;
+      height: 40px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #f4f7fb;
+      display: block;
+    }
+
+    .thumb-empty {
+      width: 54px;
+      height: 40px;
+      border-radius: 12px;
+      border: 1px dashed #d5deeb;
+      background: #f8fafc;
+      color: #9aa7bd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 400;
+    }
+
+    .metric-text {
+      color: var(--text);
+      font-size: 12.5px;
+      font-weight: 400;
+      white-space: nowrap;
+    }
+
+    .coord-text {
+      color: var(--muted);
+      font-size: 11.5px;
+      line-height: 1.35;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    .metric-chip-row {
+      max-width: 280px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .metric-muted {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .metric-chip {
+      display: inline-flex;
+      align-items: center;
+      max-width: 135px;
+      min-height: 24px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: #f2f5fa;
+      color: #596579;
+      font-size: 11px;
+      font-weight: 400;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .metric-key {
+      color: var(--text);
+      margin-right: 4px;
+      font-weight: 400;
+    }
+
+
+    tbody td,
+    tbody td *,
+    .id-cell,
+    .crop-text,
+    .user-main,
+    .metric-text,
+    .metric-chip,
+    .metric-key {
+      font-weight: 400 !important;
+    }
+
+    #map {
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      background: #e9eef5;
+    }
+
+    .leaflet-container { font-family: Inter, Arial, sans-serif; }
+
+    .popup-image {
+      width: 190px;
+      height: 124px;
+      object-fit: cover;
+      border-radius: 14px;
+      margin-bottom: 9px;
+      border: 1px solid var(--border);
+    }
+
+    .popup-title {
+      color: var(--navy);
+      font-weight: 850;
+      margin-bottom: 6px;
+    }
+
+    .popup-line { margin: 3px 0; font-size: 12.5px; }
+
+    .popup-metrics {
+      margin-top: 7px;
+      padding-top: 7px;
+      border-top: 1px solid var(--border);
+    }
+
+    .metric-line { font-size: 12px; margin: 2px 0; }
+
+    .empty-state {
+      padding: 26px;
+      color: var(--muted);
+      text-align: center;
+      font-weight: 700;
+    }
+
+
+    .screen-hidden { display: none !important; }
+
+    .detail-screen {
+      width: min(100%, 1600px);
+      height: 100vh;
+      margin: 0 auto;
+      padding: clamp(14px, 2vh, 24px) clamp(16px, 2.2vw, 32px);
+      display: grid;
+      grid-template-rows: auto auto minmax(0, 1fr);
+      gap: clamp(12px, 1.6vh, 18px);
+    }
+
+    .detail-stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .detail-stat {
+      min-height: 74px;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: #ffffff;
+      box-shadow: 0 10px 24px rgba(11, 26, 45, 0.045);
+    }
+
+    .detail-stat-label {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .detail-stat-value {
+      margin-top: 8px;
+      color: var(--navy);
+      font-size: 20px;
+      font-weight: 850;
+      letter-spacing: -0.04em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .detail-grid {
+      min-height: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(320px, 1fr);
+      gap: clamp(14px, 1.7vw, 24px);
+      align-items: stretch;
+    }
+
+    #detailMap {
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      background: #e9eef5;
+    }
+
+    .flag-reason {
+      max-width: 260px;
+      white-space: normal;
+      line-height: 1.35;
+      color: #7c2d12;
+      font-size: 11.5px;
+      font-weight: 650;
+    }
+
+    @media (max-width: 1250px) {
+      .detail-screen { height: auto; min-height: 100vh; }
+      .detail-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 900px) {
+      .detail-stats { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 1250px) {
+      body { overflow: auto; }
+      .page { height: auto; min-height: 100vh; }
+      .main-grid { grid-template-columns: 1fr; }
+      .map-card { min-height: 460px; }
+    }
+
+    @media (max-width: 800px) {
+      .header { align-items: flex-start; flex-direction: column; }
+      .dots { display: none; }
+      .filters-card { grid-template-columns: 1fr; }
+      .btn { width: 100%; }
+      .header-actions { width: 100%; }
+      .subtitle { display: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page" id="mainScreen">
+    <section class="header">
+      <div class="header-left">
+        <div class="header-icon">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path d="M12 3.75 20.25 8.5v7L12 20.25 3.75 15.5v-7L12 3.75Z"/>
+            <path d="M12 8.25 15.25 10.1v3.8L12 15.75 8.75 13.9v-3.8L12 8.25Z"/>
+            <path d="M12 15.75v4.5"/>
+          </svg>
+        </div>
+
+        <div>
+          <h1>CAV Dashboard</h1>
+          <div class="subtitle">Inspection records, user identity, crop, image, coordinates, and captured metrics.</div>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button class="btn btn-soft" onclick="location.href='login.html'">Switch System</button>
+        <button class="btn btn-primary" onclick="loadRecords()">Refresh Data</button>
+        <button class="btn btn-soft" onclick="openFlaggedUsers()">Flagged Users</button>
+        <button class="btn btn-soft" onclick="signOutAdmin()">Logout</button>
+      </div>
+    </section>
+
+    <section class="filters-card">
+      <input class="filter-input" id="searchFilter" type="text" placeholder="Search ID, user, phone, crop, GPS..." oninput="applyFilters()" />
+      <select class="filter-select" id="cropFilter" onchange="applyFilters()">
+        <option value="">All crops</option>
+      </select>
+      <input class="filter-input" id="dateFilter" type="date" onchange="applyFilters()" />
+      <button class="btn btn-soft" onclick="clearFilters()">Clear</button>
+    </section>
+
+    <section class="main-grid">
+      <section class="table-card">
+        <div class="card-head">
+          <div class="card-title-wrap">
+            <div class="card-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path d="M4.75 6.75h14.5"/>
+                <path d="M4.75 12h14.5"/>
+                <path d="M4.75 17.25h14.5"/>
+                <path d="M8.25 4.75v14.5"/>
+              </svg>
+            </div>
+            <div class="card-title">CAV Records Table</div>
+          </div>
+          <div class="table-head-actions">
+  <button class="btn btn-soft" onclick="downloadMainTableExcel()">Download Excel</button>
+
+  <select class="sort-select" id="tableSort" onchange="applyFilters()">
+    <option value="date_desc">Newest first</option>
+    <option value="date_asc">Oldest first</option>
+    <option value="name_asc">Name A → Z</option>
+    <option value="name_desc">Name Z → A</option>
+  </select>
+
+  <div class="status" id="tableStatus">—</div>
+</div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Unique ID</th>
+                <th>Crop Name</th>
+                <th>User Name</th>
+                <th>Phone</th>
+                <th>Date</th>
+                <th>Picture</th>
+                <th>Coordinates</th>
+                <th>Count</th>
+<th>Defects</th>
+<th>Breakage</th>
+<th>Impurities</th>
+<th>Price</th>
+              </tr>
+            </thead>
+            <tbody id="recordsTable"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <aside class="map-card">
+        <div class="card-head">
+          <div class="card-title-wrap">
+            <div class="card-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path d="M12 20.25s6.25-5.35 6.25-10.3A6.25 6.25 0 0 0 5.75 9.95c0 4.95 6.25 10.3 6.25 10.3Z"/>
+                <circle cx="12" cy="9.95" r="2.25"/>
+              </svg>
+            </div>
+            <div class="card-title">Inspection Map</div>
+          </div>
+          <div class="status" id="mapStatus">Loading...</div>
+        </div>
+        <div id="map"></div>
+      </aside>
+    </section>
+  </main>
+
+
+  <main class="detail-screen screen-hidden" id="detailScreen">
+    <section class="header">
+      <div class="header-left">
+        <div class="header-icon">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path d="M4.75 6.75h14.5"/>
+            <path d="M4.75 12h14.5"/>
+            <path d="M4.75 17.25h14.5"/>
+            <path d="M8.25 4.75v14.5"/>
+          </svg>
+        </div>
+
+        <div>
+          <h1 id="detailTitle">User Details</h1>
+          <div class="subtitle" id="detailSubtitle">—</div>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button class="btn btn-soft" onclick="showMainScreen()">Back</button>
+        <button class="btn btn-primary" onclick="downloadDetailExcel()">Download Excel</button>
+      </div>
+    </section>
+
+    <section class="detail-stats">
+      <div class="detail-stat">
+        <div class="detail-stat-label" id="detailStat1Label">Total Detections</div>
+        <div class="detail-stat-value" id="detailStat1Value">—</div>
+      </div>
+      <div class="detail-stat">
+        <div class="detail-stat-label" id="detailStat2Label">Highest Crop Detected</div>
+        <div class="detail-stat-value" id="detailStat2Value">—</div>
+      </div>
+      <div class="detail-stat">
+        <div class="detail-stat-label" id="detailStat3Label">Locations</div>
+        <div class="detail-stat-value" id="detailStat3Value">—</div>
+      </div>
+      <div class="detail-stat">
+        <div class="detail-stat-label" id="detailStat4Label">Latest Detection</div>
+        <div class="detail-stat-value" id="detailStat4Value">—</div>
+      </div>
+    </section>
+
+    <section class="detail-grid">
+      <section class="table-card">
+        <div class="card-head">
+          <div class="card-title-wrap">
+            <div class="card-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path d="M4.75 6.75h14.5"/>
+                <path d="M4.75 12h14.5"/>
+                <path d="M4.75 17.25h14.5"/>
+                <path d="M8.25 4.75v14.5"/>
+              </svg>
+            </div>
+            <div class="card-title" id="detailTableTitle">Connected Records Table</div>
+          </div>
+          <div class="status" id="detailTableStatus">—</div>
+        </div>
+
+        <div class="table-wrap">
+          <table id="detailTable">
+            <thead id="detailTableHead"></thead>
+            <tbody id="detailRecordsTable"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <aside class="map-card">
+        <div class="card-head">
+          <div class="card-title-wrap">
+            <div class="card-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path d="M12 20.25s6.25-5.35 6.25-10.3A6.25 6.25 0 0 0 5.75 9.95c0 4.95 6.25 10.3 6.25 10.3Z"/>
+                <circle cx="12" cy="9.95" r="2.25"/>
+              </svg>
+            </div>
+            <div class="card-title" id="detailMapTitle">Connected Locations</div>
+          </div>
+          <div class="status" id="detailMapStatus">—</div>
+        </div>
+        <div id="detailMap"></div>
+      </aside>
+    </section>
+  </main>
+
+<div class="user-modal" id="userModal">
+  <div class="user-panel">
+    <div class="user-panel-head">
+      <div class="user-panel-title">
+        <h2 id="userModalTitle">User Profile</h2>
+        <div class="user-panel-subtitle" id="userModalSubtitle">—</div>
+      </div>
+
+      <button class="user-close" onclick="closeUserProfile()">×</button>
+    </div>
+
+    <div class="user-stats">
+      <div class="user-stat">
+        <div class="user-stat-label">Total Detections</div>
+        <div class="user-stat-value" id="userTotalDetections">—</div>
+      </div>
+
+      <div class="user-stat">
+        <div class="user-stat-label">Highest Crop Detected</div>
+        <div class="user-stat-value" id="userTopCrop">—</div>
+      </div>
+
+      <div class="user-stat">
+        <div class="user-stat-label">Locations</div>
+        <div class="user-stat-value" id="userLocationCount">—</div>
+      </div>
+
+      <div class="user-stat">
+        <div class="user-stat-label">Latest Detection</div>
+        <div class="user-stat-value" id="userLatestDetection">—</div>
+      </div>
+    </div>
+
+    <div class="user-body">
+      <div class="user-records" id="userConnectedRecords"></div>
+
+      <div class="user-map-wrap">
+        <div id="userProfileMap"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <script>
+    const client = supabase.createClient(
+      "https://evnzrcubbgfirhrttpzb.supabase.co",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV2bnpyY3ViYmdmaXJocnR0cHpiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg0MzgyODMsImV4cCI6MjA5NDAxNDI4M30.BPHkIpxa2o2s-gVuStzo_7nUj_1g8VpiNPRVF1BMhnk"
+    );
+
+    let allItems = [];
+    let filteredItems = [];
+    let mapObjects = [];
+
+    const map = L.map("map", { zoomControl: true }).setView([26.8206, 30.8025], 6);
+
+    L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", {
+      attribution: "Tiles &copy; Esri",
+      maxZoom: 19,
+    }).addTo(map);
+
+    const markersLayer = L.layerGroup().addTo(map);
+
+
+let userProfileMap = null;
+let userProfileMarkersLayer = null;
+
+    function formatDate(dateString) {
+      if (!dateString) return "—";
+      return new Date(dateString).toLocaleString("en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+    }
+
+    function getDateOnly(dateString) {
+      if (!dateString) return "";
+      return new Date(dateString).toISOString().split("T")[0];
+    }
+
+    function safeText(value) {
+      if (value === null || value === undefined || value === "") return "—";
+      return String(value);
+    }
+
+    function escapeHtml(value) {
+      return safeText(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function getUniqueId(item) {
+      return item.unique_id || item.install_id || item.device_install_id || item.device_id || item.user_id || item.id || "—";
+    }
+
+    function getCrop(item) {
+      return item.crop || item.selected_crop || item.crop_name || item.crop_type || "—";
+    }
+
+    function getUserName(item) {
+      return item.username || item.user_name || item.name || item.full_name || item.created_by || "—";
+    }
+
+    function getPhone(item) {
+      return item.user_phone || item.phone || item.mobile || item.user_mobile || "—";
+    }
+
+    function getCreatedAt(item) {
+      return item.created_at || item.inserted_at || item.saved_at || item.date || item.createdAt || null;
+    }
+
+    function getImageUrl(item) {
+      return item.image_url || item.photo_url || item.picture_url || item.image || item.photo || "";
+    }
+
+    function toNumber(value) {
+      const n = Number(value);
+      return Number.isFinite(n) ? n : null;
+    }
+
+    function getPoint(item) {
+      const lat = toNumber(item.latitude || item.lat || item.location_latitude);
+      const lng = toNumber(item.longitude || item.lng || item.lon || item.location_longitude);
+      if (lat === null || lng === null) return null;
+      return [lat, lng];
+    }
+
+    function getCoordinatesText(item) {
+      const point = getPoint(item);
+      return point ? `${point[0].toFixed(6)}, ${point[1].toFixed(6)}` : "—";
+    }
+
+    function normalizeMetrics(metrics) {
+      if (!metrics) return null;
+      let parsed = metrics;
+
+      if (typeof metrics === "string") {
+        try {
+          parsed = JSON.parse(metrics);
+        } catch {
+          return null;
+        }
+      }
+
+      if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) return null;
+      return parsed;
+    }
+
+    function formatMetricValue(value) {
+      if (value === null || value === undefined || value === "") return "—";
+
+      if (Array.isArray(value)) {
+        return value
+          .map((item) => formatMetricValue(item))
+          .filter((item) => item && item !== "—")
+          .join(", ") || "—";
+      }
+
+      if (typeof value === "object") {
+        return Object.entries(value)
+          .filter(([, nestedValue]) => nestedValue !== null && nestedValue !== undefined && nestedValue !== "")
+          .map(([nestedKey, nestedValue]) => `${nestedKey}: ${formatMetricValue(nestedValue)}`)
+          .join(" · ") || "—";
+      }
+
+      return String(value);
+    }
+
+    function getMetricEntries(item) {
+      const ignoreKeys = new Set([
+        "id",
+        "unique_id",
+        "install_id",
+        "device_install_id",
+        "device_id",
+        "user_id",
+        "crop",
+        "selected_crop",
+        "crop_name",
+        "crop_type",
+        "username",
+        "user_name",
+        "name",
+        "full_name",
+        "created_by",
+        "user_phone",
+        "phone",
+        "mobile",
+        "user_mobile",
+        "created_at",
+        "inserted_at",
+        "saved_at",
+        "date",
+        "createdAt",
+        "image_url",
+        "photo_url",
+        "picture_url",
+        "image",
+        "photo",
+        "latitude",
+        "lat",
+        "location_latitude",
+        "longitude",
+        "lng",
+        "lon",
+        "location_longitude",
+        "accuracy",
+        "location_accuracy",
+        "metrics",
+      ]);
+
+      const fromMetrics = normalizeMetrics(item.metrics);
+      const sourceEntries = fromMetrics ? Object.entries(fromMetrics) : Object.entries(item).filter(([key]) => !ignoreKeys.has(key));
+
+      return sourceEntries
+        .map(([key, value]) => [key, formatMetricValue(value)])
+        .filter(([, value]) => value && value !== "—" && value !== "[object Object]");
+    }
+
+    function renderMetricChips(item, limit = 6) {
+      const entries = getMetricEntries(item).slice(0, limit);
+
+      if (!entries.length) return `<span class="metric-muted">—</span>`;
+
+      return entries.map(([key, value]) => `
+        <span class="metric-chip" title="${escapeHtml(key)}: ${escapeHtml(value)}">
+          <span class="metric-key">${escapeHtml(key)}:</span> ${escapeHtml(value)}
+        </span>
+      `).join("");
+    }
+
+    function renderMetricsForPopup(item) {
+      const entries = getMetricEntries(item).slice(0, 10);
+      if (!entries.length) return "";
+
+      const rows = entries.map(([key, value]) => `
+        <div class="metric-line"><span class="metric-key">${escapeHtml(key)}:</span> ${escapeHtml(value)}</div>
+      `).join("");
+
+      return `<div class="popup-metrics"><div class="popup-line"><b>Metrics</b></div>${rows}</div>`;
+    }
+
+    function renderPictureCell(item) {
+      const imageUrl = getImageUrl(item);
+      if (!imageUrl) return `<div class="thumb-empty">No img</div>`;
+      return `<img class="thumb" src="${escapeHtml(imageUrl)}" alt="CAV record image" loading="lazy" />`;
+    }
+
+    function buildCropFilter(items) {
+      const cropFilter = document.getElementById("cropFilter");
+      const current = cropFilter.value;
+      const crops = [...new Set(items.map(getCrop).filter((c) => c && c !== "—"))];
+
+      cropFilter.innerHTML = '<option value="">All crops</option>';
+      crops.forEach((crop) => {
+        cropFilter.innerHTML += `<option value="${escapeHtml(crop)}">${escapeHtml(crop)}</option>`;
+      });
+      cropFilter.value = current;
+    }
+
+    function clearFilters() {
+      document.getElementById("searchFilter").value = "";
+      document.getElementById("cropFilter").value = "";
+      document.getElementById("dateFilter").value = "";
+    filteredItems = sortTableItems([...allItems]);
+renderDashboard(filteredItems);
+    }
+
+    function renderStats(items) { }
+
+    async function signOutAdmin() {
+      await client.auth.signOut();
+      location.href = "login.html";
+    }
+
+    async function requireSession() {
+      const { data } = await client.auth.getSession();
+     if (!data.session) location.href = "login.html?next=cav";
+    }
+
+    function buildPopup(item, coordinatesText) {
+      const imageUrl = getImageUrl(item);
+      const imageHtml = imageUrl ? `<img class="popup-image" src="${escapeHtml(imageUrl)}" alt="Record image" />` : "";
+      const accuracy = item.location_accuracy || item.accuracy || "—";
+
+      return `
+        <div>
+          ${imageHtml}
+          <div class="popup-title">Shunah CAV Inspection</div>
+          <div class="popup-line"><b>ID:</b> ${escapeHtml(getUniqueId(item))}</div>
+          <div class="popup-line"><b>Crop:</b> ${escapeHtml(getCrop(item))}</div>
+          <div class="popup-line"><b>User:</b> ${escapeHtml(getUserName(item))}</div>
+          <div class="popup-line"><b>Phone:</b> ${escapeHtml(getPhone(item))}</div>
+          <div class="popup-line"><b>Date:</b> ${escapeHtml(formatDate(getCreatedAt(item)))}</div>
+          <div class="popup-line"><b>Accuracy:</b> ${escapeHtml(accuracy)} m</div>
+          <div class="popup-line"><b>GPS:</b> ${escapeHtml(coordinatesText)}</div>
+          ${renderMetricsForPopup(item)}
+        </div>
+      `;
+    }
+
+    async function loadRecords() {
+      markersLayer.clearLayers();
+      mapObjects = [];
+
+      document.getElementById("mapStatus").textContent = "Loading...";
+      document.getElementById("tableStatus").textContent = "Loading...";
+
+      const { data, error } = await client
+        .from("cav_inspections")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        console.error(error);
+        document.getElementById("mapStatus").textContent = "Could not load";
+        document.getElementById("tableStatus").textContent = "Error";
+        document.getElementById("recordsTable").innerHTML = `
+          <tr>
+            <td colspan="12"><div class="empty-state">Could not load cav_inspections. Check table name and Supabase policies.</div></td>
+          </tr>
+        `;
+        return;
+      }
+
+      allItems = data || [];
+      filteredItems = [...allItems];
+      buildCropFilter(allItems);
+      renderDashboard(filteredItems);
+    }
+
+function sortTableItems(items) {
+  const sortValue = document.getElementById("tableSort")?.value || "date_desc";
+
+  return [...items].sort((a, b) => {
+    if (sortValue === "name_asc") {
+      return getUserName(a).localeCompare(getUserName(b), undefined, { sensitivity: "base" });
+    }
+
+    if (sortValue === "name_desc") {
+      return getUserName(b).localeCompare(getUserName(a), undefined, { sensitivity: "base" });
+    }
+
+    const dateA = new Date(getCreatedAt(a) || 0).getTime();
+    const dateB = new Date(getCreatedAt(b) || 0).getTime();
+
+    if (sortValue === "date_asc") {
+      return dateA - dateB;
+    }
+
+    return dateB - dateA;
+  });
+}
+    function applyFilters() {
+      const searchValue = document.getElementById("searchFilter").value.toLowerCase().trim();
+      const cropValue = document.getElementById("cropFilter").value;
+      const dateValue = document.getElementById("dateFilter").value;
+
+      filteredItems = allItems.filter((item) => {
+        const metricsText = getMetricEntries(item).map(([key, value]) => `${key} ${value}`).join(" ");
+        const searchText = `${getUniqueId(item)} ${getCrop(item)} ${getUserName(item)} ${getPhone(item)} ${getCoordinatesText(item)} ${metricsText}`.toLowerCase();
+
+        return (!searchValue || searchText.includes(searchValue)) &&
+          (!cropValue || getCrop(item) === cropValue) &&
+          (!dateValue || getDateOnly(getCreatedAt(item)) === dateValue);
+      });
+
+      filteredItems = sortTableItems(filteredItems);
+renderDashboard(filteredItems);
+    }
+
+    function renderDashboard(items) {
+      markersLayer.clearLayers();
+      mapObjects = [];
+      const boundsPoints = [];
+
+      items.forEach((item, index) => {
+        const point = getPoint(item);
+        if (!point) return;
+
+        boundsPoints.push(point);
+        const coordinatesText = `${point[0].toFixed(6)}, ${point[1].toFixed(6)}`;
+        const marker = L.marker(point)
+          .bindPopup(buildPopup(item, coordinatesText))
+          .addTo(markersLayer);
+
+        mapObjects[index] = marker;
+      });
+
+      if (boundsPoints.length > 0) {
+        map.fitBounds(boundsPoints, { padding: [38, 38], maxZoom: 13 });
+      } else {
+        map.setView([26.8206, 30.8025], 6);
+      }
+
+      setTimeout(() => map.invalidateSize(), 80);
+
+      renderStats(items);
+      renderTable(items);
+
+      document.getElementById("mapStatus").textContent = `${boundsPoints.length} pinned`;
+      document.getElementById("tableStatus").textContent = `${items.length} records`;
+    }
+
+    function openMapObject(index) {
+      const object = mapObjects[index];
+      if (!object) return;
+      if (object.getLatLng) map.setView(object.getLatLng(), 15);
+      object.openPopup();
+    }
+
+function getMetricValue(item, possibleKeys) {
+  const metrics = normalizeMetrics(item.metrics) || item;
+
+  for (const key of possibleKeys) {
+    if (
+      metrics[key] !== null &&
+      metrics[key] !== undefined &&
+      metrics[key] !== "" &&
+      metrics[key] !== "[object Object]"
+    ) {
+      return formatMetricValue(metrics[key]);
+    }
+  }
+
+  return "—";
+}
+
+function getItemsForUniqueUser(uniqueId) {
+  return allItems.filter((item) => getUniqueId(item) === uniqueId);
+}
+
+function getTopCropForUser(items) {
+  const counts = {};
+
+  items.forEach((item) => {
+    const crop = getCrop(item);
+    if (!crop || crop === "—") return;
+    counts[crop] = (counts[crop] || 0) + 1;
+  });
+
+  const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+
+  if (!sorted.length) return "—";
+
+  return `${sorted[0][0]} (${sorted[0][1]})`;
+}
+
+function getLocationCountForUser(items) {
+  return items.filter((item) => getPoint(item)).length;
+}
+
+function getLatestDetectionForUser(items) {
+  const dates = items
+    .map((item) => getCreatedAt(item))
+    .filter(Boolean)
+    .map((date) => new Date(date))
+    .filter((date) => !Number.isNaN(date.getTime()))
+    .sort((a, b) => b - a);
+
+  if (!dates.length) return "—";
+
+  return dates[0].toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
+}
+
+function initUserProfileMap() {
+  if (userProfileMap) return;
+
+  userProfileMap = L.map("userProfileMap", { zoomControl: true }).setView([26.8206, 30.8025], 6);
+
+  L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", {
+    attribution: "Tiles &copy; Esri",
+    maxZoom: 19,
+  }).addTo(userProfileMap);
+
+  userProfileMarkersLayer = L.layerGroup().addTo(userProfileMap);
+}
+
+function renderUserProfileMap(items) {
+  initUserProfileMap();
+
+  userProfileMarkersLayer.clearLayers();
+
+  const boundsPoints = [];
+
+  items.forEach((item) => {
+    const point = getPoint(item);
+    if (!point) return;
+
+    boundsPoints.push(point);
+
+    const coordinatesText = `${point[0].toFixed(6)}, ${point[1].toFixed(6)}`;
+
+    L.marker(point)
+      .bindPopup(buildPopup(item, coordinatesText))
+      .addTo(userProfileMarkersLayer);
+  });
+
+  setTimeout(() => {
+    userProfileMap.invalidateSize();
+
+    if (boundsPoints.length > 0) {
+      userProfileMap.fitBounds(boundsPoints, { padding: [34, 34], maxZoom: 14 });
+    } else {
+      userProfileMap.setView([26.8206, 30.8025], 6);
+    }
+  }, 120);
+}
+
+function renderUserConnectedRecords(items) {
+  const container = document.getElementById("userConnectedRecords");
+
+  if (!items.length) {
+    container.innerHTML = `<div class="empty-state">No connected records found.</div>`;
+    return;
+  }
+
+  container.innerHTML = items.map((item) => `
+    <div class="user-record">
+      <div>
+        ${renderPictureCell(item)}
+      </div>
+
+      <div class="user-record-main">
+        <div class="user-record-title">${escapeHtml(getCrop(item))}</div>
+        <div class="user-record-meta">
+          ${escapeHtml(formatDate(getCreatedAt(item)))}<br>
+          ${escapeHtml(getCoordinatesText(item))}
+        </div>
+      </div>
+
+      <div class="user-record-metrics">
+        ${renderMetricChips(item, 4)}
+      </div>
+    </div>
+  `).join("");
+}
+
+
+function getPlainMetricValue(item, possibleKeys) {
+  const value = getMetricValue(item, possibleKeys);
+  return value === "—" ? "" : value;
+}
+
+function makeSafeFileName(value) {
+  return String(value || "export")
+    .replace(/[^a-z0-9\-_]+/gi, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "") || "export";
+}
+
+function getExportRow(item) {
+  return {
+    "Unique ID": getUniqueId(item),
+    "Crop Name": getCrop(item),
+    "User Name": getUserName(item),
+    "Phone": getPhone(item),
+    "Date": formatDate(getCreatedAt(item)),
+    "Picture URL": getImageUrl(item),
+    "Coordinates": getCoordinatesText(item),
+    "Count": getPlainMetricValue(item, ["count", "seed_count", "total_count", "number", "detected_count"]),
+    "Defects": getPlainMetricValue(item, ["defects", "defect", "defect_percentage", "defect_percent", "defect_rate"]),
+    "Breakage": getPlainMetricValue(item, ["breakage", "broken", "broken_percentage", "broken_percent", "breakage_rate"]),
+    "Impurities": getPlainMetricValue(item, ["impurities", "impurity", "foreign_matter", "foreign_objects"]),
+    "Price": getPlainMetricValue(item, ["price", "price_range", "estimated_price", "market_price"]),
+  };
+}
+
+function downloadRowsAsExcel(rows, fileName, sheetName) {
+  if (!rows.length) {
+    alert("No records to download.");
+    return;
+  }
+
+  if (!window.XLSX) {
+    alert("Excel library did not load. Check your internet connection and refresh the dashboard.");
+    return;
+  }
+
+  const worksheet = XLSX.utils.json_to_sheet(rows);
+  const workbook = XLSX.utils.book_new();
+  worksheet["!cols"] = Object.keys(rows[0]).map((key) => ({
+    wch: Math.min(Math.max(key.length + 8, 14), 36),
+  }));
+
+  XLSX.utils.book_append_sheet(workbook, worksheet, sheetName || "CAV Records");
+  XLSX.writeFile(workbook, fileName);
+}
+
+function downloadMainTableExcel() {
+  const rows = filteredItems.map(getExportRow);
+  const today = new Date().toISOString().split("T")[0];
+  downloadRowsAsExcel(rows, `cav-main-table-${today}.xlsx`, "Main Table");
+}
+
+
+let detailItems = [];
+let detailExportName = "cav-detail";
+let detailMap = null;
+let detailMarkersLayer = null;
+let detailPathLayer = null;
+
+function initDetailMap() {
+  if (detailMap) return;
+
+  detailMap = L.map("detailMap", { zoomControl: true }).setView([26.8206, 30.8025], 6);
+
+  L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", {
+    attribution: "Tiles &copy; Esri",
+    maxZoom: 19,
+  }).addTo(detailMap);
+
+  detailMarkersLayer = L.layerGroup().addTo(detailMap);
+  detailPathLayer = L.layerGroup().addTo(detailMap);
+}
+
+function setDetailStats(label1, value1, label2, value2, label3, value3, label4, value4) {
+  document.getElementById("detailStat1Label").textContent = label1;
+  document.getElementById("detailStat1Value").textContent = value1;
+  document.getElementById("detailStat2Label").textContent = label2;
+  document.getElementById("detailStat2Value").textContent = value2;
+  document.getElementById("detailStat3Label").textContent = label3;
+  document.getElementById("detailStat3Value").textContent = value3;
+  document.getElementById("detailStat4Label").textContent = label4;
+  document.getElementById("detailStat4Value").textContent = value4;
+}
+
+function showDetailScreen() {
+  document.getElementById("mainScreen").classList.add("screen-hidden");
+  document.getElementById("detailScreen").classList.remove("screen-hidden");
+  setTimeout(() => {
+    if (detailMap) detailMap.invalidateSize();
+  }, 80);
+}
+
+function showMainScreen() {
+  document.getElementById("detailScreen").classList.add("screen-hidden");
+  document.getElementById("mainScreen").classList.remove("screen-hidden");
+  setTimeout(() => map.invalidateSize(), 80);
+}
+
+function renderDetailMap(items) {
+  initDetailMap();
+
+  detailMarkersLayer.clearLayers();
+  detailPathLayer.clearLayers();
+
+  const datedPoints = items
+    .map((item) => {
+      const point = getPoint(item);
+      if (!point) return null;
+
+      return {
+        point,
+        item,
+        time: new Date(getCreatedAt(item) || 0).getTime(),
+      };
+    })
+    .filter(Boolean)
+    .sort((a, b) => a.time - b.time);
+
+  const points = datedPoints.map((entry) => entry.point);
+
+  datedPoints.forEach((entry, index) => {
+    const coordinatesText = `${entry.point[0].toFixed(6)}, ${entry.point[1].toFixed(6)}`;
+    L.marker(entry.point)
+      .bindPopup(buildPopup(entry.item, coordinatesText))
+      .addTo(detailMarkersLayer);
+  });
+
+  if (points.length > 1) {
+    L.polyline(points, {
+      weight: 3,
+      opacity: 0.85,
+      dashArray: "7 8",
+    }).addTo(detailPathLayer);
+  }
+
+  setTimeout(() => {
+    detailMap.invalidateSize();
+
+    if (points.length > 0) {
+      detailMap.fitBounds(points, { padding: [38, 38], maxZoom: 14 });
+    } else {
+      detailMap.setView([26.8206, 30.8025], 6);
+    }
+  }, 120);
+
+  document.getElementById("detailMapStatus").textContent =
+    points.length > 1 ? `${points.length} pinned · connected` : `${points.length} pinned`;
+}
+
+function renderDetailTable(items, options = {}) {
+  const includeFlagReason = options.includeFlagReason === true;
+  const head = document.getElementById("detailTableHead");
+  const tbody = document.getElementById("detailRecordsTable");
+  const table = document.getElementById("detailTable");
+
+  table.style.minWidth = includeFlagReason ? "1380px" : "1180px";
+
+  head.innerHTML = `
+    <tr>
+      <th>Unique ID</th>
+      <th>Crop Name</th>
+      <th>User Name</th>
+      <th>Phone</th>
+      <th>Date</th>
+      <th>Picture</th>
+      <th>Coordinates</th>
+      <th>Count</th>
+      <th>Defects</th>
+      <th>Breakage</th>
+      <th>Impurities</th>
+      <th>Price</th>
+      ${includeFlagReason ? "<th>Flag Reason</th>" : ""}
+    </tr>
+  `;
+
+  if (!items.length) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="${includeFlagReason ? 13 : 12}"><div class="empty-state">No records found.</div></td>
+      </tr>
+    `;
+    return;
+  }
+
+  tbody.innerHTML = items.slice(0, 500).map((item) => `
+    <tr>
+      <td><div class="id-cell" title="${escapeHtml(getUniqueId(item))}">${escapeHtml(getUniqueId(item))}</div></td>
+      <td><span class="crop-text">${escapeHtml(getCrop(item))}</span></td>
+      <td><div class="user-main">${escapeHtml(getUserName(item))}</div></td>
+      <td>${escapeHtml(getPhone(item))}</td>
+      <td>${escapeHtml(formatDate(getCreatedAt(item)))}</td>
+      <td>${renderPictureCell(item)}</td>
+      <td><div class="coord-text">${escapeHtml(getCoordinatesText(item))}</div></td>
+      <td><div class="metric-text">${escapeHtml(getMetricValue(item, ["count", "seed_count", "total_count", "number", "detected_count"]))}</div></td>
+      <td><div class="metric-text">${escapeHtml(getMetricValue(item, ["defects", "defect", "defect_percentage", "defect_percent", "defect_rate"]))}</div></td>
+      <td><div class="metric-text">${escapeHtml(getMetricValue(item, ["breakage", "broken", "broken_percentage", "broken_percent", "breakage_rate"]))}</div></td>
+      <td><div class="metric-text">${escapeHtml(getMetricValue(item, ["impurities", "impurity", "foreign_matter", "foreign_objects"]))}</div></td>
+      <td><div class="metric-text">${escapeHtml(getMetricValue(item, ["price", "price_range", "estimated_price", "market_price"]))}</div></td>
+      ${includeFlagReason ? `<td><div class="flag-reason">${escapeHtml(getFlagReasons(item).join(" · "))}</div></td>` : ""}
+    </tr>
+  `).join("");
+}
+
+function openUserProfile(uniqueId) {
+  const items = getItemsForUniqueUser(uniqueId);
+
+  if (!items.length) return;
+
+  const firstItem = items[0];
+
+  detailItems = items;
+  detailExportName = `cav-user-${makeSafeFileName(uniqueId)}.xlsx`;
+
+  document.getElementById("detailTitle").textContent = `Unique User: ${uniqueId}`;
+  document.getElementById("detailSubtitle").textContent = `${getUserName(firstItem)} · ${getPhone(firstItem)}`;
+  document.getElementById("detailTableTitle").textContent = "Connected Records Table";
+  document.getElementById("detailTableStatus").textContent = `${items.length} records`;
+  document.getElementById("detailMapTitle").textContent = "Connected Locations";
+
+  setDetailStats(
+    "Total Detections",
+    items.length,
+    "Highest Crop Detected",
+    getTopCropForUser(items),
+    "Locations",
+    getLocationCountForUser(items),
+    "Latest Detection",
+    getLatestDetectionForUser(items)
+  );
+
+  renderDetailTable(items);
+  showDetailScreen();
+  renderDetailMap(items);
+}
+
+function normalizePhoneForFlags(value) {
+  const text = safeText(value);
+  if (!text || text === "—") return "";
+  return text.replace(/[^0-9+]/g, "").trim();
+}
+
+function buildFlagMaps() {
+  const uniqueToPhones = new Map();
+  const phoneToUniques = new Map();
+
+  allItems.forEach((item) => {
+    const uniqueId = getUniqueId(item);
+    const phone = normalizePhoneForFlags(getPhone(item));
+
+    if (uniqueId && uniqueId !== "—" && phone) {
+      if (!uniqueToPhones.has(uniqueId)) uniqueToPhones.set(uniqueId, new Set());
+      uniqueToPhones.get(uniqueId).add(phone);
+    }
+
+    if (phone && uniqueId && uniqueId !== "—") {
+      if (!phoneToUniques.has(phone)) phoneToUniques.set(phone, new Set());
+      phoneToUniques.get(phone).add(uniqueId);
+    }
+  });
+
+  return { uniqueToPhones, phoneToUniques };
+}
+
+function getFlagReasons(item) {
+  const { uniqueToPhones, phoneToUniques } = buildFlagMaps();
+  const uniqueId = getUniqueId(item);
+  const phone = normalizePhoneForFlags(getPhone(item));
+  const reasons = [];
+
+  if (uniqueId && uniqueId !== "—" && uniqueToPhones.get(uniqueId)?.size > 1) {
+    reasons.push("Same unique ID has different phone numbers");
+  }
+
+  if (phone && phoneToUniques.get(phone)?.size > 1) {
+    reasons.push("Same phone number has different unique IDs");
+  }
+
+  if (!getPoint(item)) {
+    reasons.push("No location captured");
+  }
+
+  return reasons;
+}
+
+function getFlaggedItems() {
+  return allItems.filter((item) => getFlagReasons(item).length > 0);
+}
+
+function openFlaggedUsers() {
+  const items = getFlaggedItems();
+  const missingLocations = items.filter((item) => !getPoint(item)).length;
+  const uniqueIds = new Set(items.map(getUniqueId).filter((id) => id && id !== "—"));
+
+  detailItems = items;
+  detailExportName = `cav-flagged-users-${new Date().toISOString().split("T")[0]}.xlsx`;
+
+  document.getElementById("detailTitle").textContent = "Flagged Users";
+  document.getElementById("detailSubtitle").textContent = "Unique ID / phone mismatches and users without location.";
+  document.getElementById("detailTableTitle").textContent = "Flagged Records Table";
+  document.getElementById("detailTableStatus").textContent = `${items.length} flagged records`;
+  document.getElementById("detailMapTitle").textContent = "Flagged Locations";
+
+  setDetailStats(
+    "Flagged Records",
+    items.length,
+    "Flagged Unique IDs",
+    uniqueIds.size,
+    "No Location",
+    missingLocations,
+    "With Location",
+    items.length - missingLocations
+  );
+
+  renderDetailTable(items, { includeFlagReason: true });
+  showDetailScreen();
+  renderDetailMap(items);
+}
+
+function closeUserProfile() {
+  showMainScreen();
+}
+
+    function renderTable(items) {
+      const tbody = document.getElementById("recordsTable");
+
+      if (!items.length) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="12"><div class="empty-state">No records found.</div></td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = items.slice(0, 500).map((item, index) => `
+        <tr data-unique-id="${escapeHtml(getUniqueId(item))}" onclick="openUserProfile(this.dataset.uniqueId)">
+          <td><div class="id-cell" title="${escapeHtml(getUniqueId(item))}">${escapeHtml(getUniqueId(item))}</div></td>
+          <td><span class="crop-text">${escapeHtml(getCrop(item))}</span></td>
+          <td><div class="user-main">${escapeHtml(getUserName(item))}</div></td>
+          <td>${escapeHtml(getPhone(item))}</td>
+          <td>${escapeHtml(formatDate(getCreatedAt(item)))}</td>
+          <td>${renderPictureCell(item)}</td>
+         <td><div class="coord-text">${escapeHtml(getCoordinatesText(item))}</div></td>
+
+<td><div class="metric-text">${escapeHtml(getMetricValue(item, ["count", "seed_count", "total_count", "number", "detected_count"]))}</div></td>
+
+<td><div class="metric-text">${escapeHtml(getMetricValue(item, ["defects", "defect", "defect_percentage", "defect_percent", "defect_rate"]))}</div></td>
+
+<td><div class="metric-text">${escapeHtml(getMetricValue(item, ["breakage", "broken", "broken_percentage", "broken_percent", "breakage_rate"]))}</div></td>
+
+<td><div class="metric-text">${escapeHtml(getMetricValue(item, ["impurities", "impurity", "foreign_matter", "foreign_objects"]))}</div></td>
+
+<td><div class="metric-text">${escapeHtml(getMetricValue(item, ["price", "price_range", "estimated_price", "market_price"]))}</div></td>
+
+</tr>
+      `).join("");
+    }
+
+    document.getElementById("userModal").addEventListener("click", function (event) {
+  if (event.target === this) closeUserProfile();
+});
+
+    requireSession().then(loadRecords);
+  </script>
+</body>
+</html>
