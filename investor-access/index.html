@@ -1,0 +1,3895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shunah Investor Command Center</title>
+  <!-- Search FINANCIAL_CSV_URL in this file to paste your published Google Sheet CSV link. -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <style>
+    :root{
+      --blue:#2f8cff;
+      --blue2:#135ee8;
+      --navy:#0f172a;
+      --muted:#667085;
+      --line:#dbe4ef;
+      --bg:#f4f8fc;
+      --card:#fff;
+      --shadow:0 18px 42px rgba(15,23,42,.08);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      overflow-x:hidden;
+      background:var(--bg);
+      color:var(--navy);
+      font-family:Inter, Satoshi, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    }
+
+    .sidebar{
+      position:fixed;
+      top:0;left:0;bottom:0;
+      width:280px;
+      height:100dvh;
+      overflow:hidden;
+      z-index:100;
+      padding:22px 22px 18px;
+      background:linear-gradient(180deg,#fbfdff 0%,#eef6ff 100%);
+      border-right:3px solid var(--blue);
+      box-shadow:12px 0 28px rgba(47,140,255,.12);
+      transition:width .22s ease;
+    }
+    body.nav-collapsed .sidebar{width:76px;padding-left:0;padding-right:0;cursor:pointer}
+    .page{margin-left:280px;width:calc(100vw - 280px);min-height:100vh;padding:18px 22px;transition:.22s ease}
+    body.nav-collapsed .page{margin-left:76px;width:calc(100vw - 76px)}
+
+    .sidebar-top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:10px}
+    .brand-name{font-size:19px;font-weight:800;line-height:1.05;max-width:178px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .collapse-btn{
+      width:38px;height:38px;flex:0 0 38px;border-radius:50%;
+      display:grid;place-items:center;padding:0;border:1px solid #bcd3ff;background:#fff;color:var(--blue2);
+      box-shadow:0 10px 26px rgba(19,94,232,.14);cursor:pointer
+    }
+    .collapse-svg{width:20px;height:20px;stroke:var(--blue2);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;fill:none}
+
+    .side-section-title{
+      display:grid;grid-template-columns:auto 1fr;align-items:center;gap:12px;
+      margin:0 0 12px;color:var(--muted);font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap
+    }
+    .side-section-title:after{content:"";height:1px;background:var(--line);display:block}
+
+    .side-nav{display:grid;gap:8px;margin:14px 0 0;padding:0}
+    .side-tab{
+      display:grid;grid-template-columns:40px minmax(0,1fr);gap:10px;align-items:center;
+      min-height:54px;padding:8px 10px;border-radius:15px;border:1px solid transparent;background:transparent;color:#111827;cursor:pointer;text-align:left
+    }
+    .side-tab.active{background:#fff;box-shadow:0 12px 26px rgba(15,23,42,.07), inset 4px 0 0 var(--blue)}
+    .side-icon{
+      width:36px;height:36px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+      background:#fff;border:1px solid #e5edf8;box-shadow:0 8px 18px rgba(15,23,42,.05)
+    }
+    .side-icon svg{width:18px;height:18px;stroke:#111827;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+    .side-tab.active .side-icon svg{stroke:var(--blue2)}
+    .side-title{font-size:13px;font-weight:700;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .side-sub{font-size:10.5px;line-height:1.15;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+
+    .user-access-card,.last-updated-card{display:block;margin:14px 0 0;padding:0 8px;background:transparent}
+    .user-line{display:grid;grid-template-columns:36px minmax(0,1fr);align-items:center;gap:9px;margin-bottom:8px}
+    .user-avatar{width:36px;height:36px;border-radius:50%;background:#f1f7ff;border:1px solid #dceaff;color:#2f78ff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px}
+    .user-name{font-size:13px;line-height:1.15;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .user-meta-line{display:grid;grid-template-columns:18px auto minmax(0,1fr);gap:6px;align-items:center;margin-top:5px;min-width:0}
+    .user-meta-icon{width:18px;height:18px;display:flex;align-items:center;justify-content:center;color:var(--muted)}
+    .user-meta-icon svg{width:15px;height:15px;stroke:var(--muted);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+    .user-meta-label,.user-meta-line strong{font-size:10.2px;line-height:1.1;white-space:nowrap}
+    .user-meta-label{color:var(--muted);font-weight:600}
+    .user-meta-line strong{color:#344054;font-weight:600;overflow:hidden;text-overflow:ellipsis}
+
+    .last-updated-card{padding-left:10px}
+    .side-update-row{position:relative;padding-left:24px;padding-bottom:10px;display:grid;gap:2px;margin-left:2px}
+    .side-update-row:before{content:"";position:absolute;left:4px;top:4px;width:7px;height:7px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 4px #e7f1ff}
+    .side-update-row:after{content:"";position:absolute;left:7px;top:13px;bottom:-1px;width:1px;background:var(--line)}
+    .side-update-row:last-child:after{display:none}
+    .side-update-row span{font-size:11.2px;line-height:1.15;color:#111827;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .side-update-row strong{font-size:10.2px;line-height:1.15;color:var(--muted);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+    .sidebar-footer{position:absolute;left:22px;right:22px;bottom:12px;background:transparent;border:0;padding:0}
+    .logout{min-height:46px;display:grid;grid-template-columns:34px minmax(0,1fr);gap:9px;align-items:center;background:#fff;border:0;border-radius:14px;box-shadow:0 12px 26px rgba(15,23,42,.06);padding:6px 10px;margin:0 0 8px;color:#111827;cursor:pointer}
+    .logout .side-icon{width:32px;height:32px;border-radius:11px}
+    .version{text-align:center;font-size:10.5px;line-height:1.15;color:var(--muted);padding:0;margin:0;width:100%;display:block}
+
+    body.nav-collapsed .brand-text-only,
+    body.nav-collapsed .side-section-title,
+    body.nav-collapsed .user-access-card,
+    body.nav-collapsed .last-updated-card,
+    body.nav-collapsed .side-title,
+    body.nav-collapsed .side-sub,
+    body.nav-collapsed .logout span:last-child,
+    body.nav-collapsed .version{display:none!important}
+    body.nav-collapsed .sidebar{display:flex;flex-direction:column;align-items:center}
+    body.nav-collapsed .sidebar-top{width:100%;justify-content:center}
+    body.nav-collapsed .side-nav{align-items:center;margin-top:14px;gap:14px;width:100%;display:flex;flex-direction:column}
+    body.nav-collapsed .side-tab{width:42px;height:42px;min-height:42px;display:flex;align-items:center;justify-content:center;padding:0;background:transparent;border:0;box-shadow:none}
+    body.nav-collapsed .side-icon{background:transparent;border:0;box-shadow:none;width:32px;height:32px}
+    body.nav-collapsed .sidebar-footer{left:0;right:0;bottom:16px;display:flex;align-items:center;justify-content:center}
+    body.nav-collapsed .logout{width:42px;height:42px;min-height:42px;display:flex;align-items:center;justify-content:center;background:transparent;box-shadow:none;padding:0;margin:0}
+
+    .section{display:none}.section.active{display:block}
+    .panel{background:rgba(255,255,255,.92);border:1px solid rgba(203,213,225,.75);border-radius:24px;box-shadow:var(--shadow);padding:20px 22px;margin-bottom:16px;overflow:hidden}
+    .panel-head{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:16px}
+    .panel h2{margin:0;font-size:26px;font-weight:700;letter-spacing:-.03em}
+    .panel p{margin:6px 0 0;color:var(--muted);font-size:12.5px}
+    .pill{color:#195bd8;border:1px solid #bcd3ff;background:#f7fbff;border-radius:999px;padding:8px 12px;font-size:12px;font-weight:600;white-space:nowrap}
+
+    .tech-stack{display:grid;gap:12px}
+    .tech-row{border:1px solid var(--line);border-radius:22px;background:#fff;overflow:hidden;box-shadow:0 8px 22px rgba(15,23,42,.035)}
+    .tech-row-head{width:100%;border:0;background:#fff;display:grid;grid-template-columns:58px 1fr 38px;gap:14px;align-items:center;padding:16px;cursor:pointer;text-align:left}
+    .tech-icon{width:58px;height:58px;display:flex;align-items:center;justify-content:center;background:transparent;border:0}
+    .tech-icon img{width:50px;height:50px;object-fit:contain}
+    .tech-title{font-size:15px;font-weight:800;margin:0}
+    .tech-subtitle{margin:5px 0 0;color:var(--muted);font-size:12px;line-height:1.35}
+    .tech-plus,.expand-btn{border:1px solid #bdd4ff;background:#dbeafe;color:#0f172a;border-radius:50%;display:grid;place-items:center;padding:0;cursor:pointer;font-weight:800}
+    .tech-plus{width:34px;height:34px;font-size:22px}
+    .tech-row.open .tech-plus span{transform:rotate(45deg)}
+    .tech-body{display:none;padding:0 18px 18px 86px}
+    .tech-row.open .tech-body{display:block}
+    .tech-table{display:grid;border:1px solid var(--line);border-radius:18px;background:#fff;overflow:hidden;margin-top:18px}
+    .tech-table-head,.tech-sub-row{display:grid;grid-template-columns:1.55fr .85fr .85fr .75fr .85fr 86px;gap:10px;align-items:center;padding:12px 14px;text-align:center}
+    .tech-table-head{background:#f8fafc;color:var(--muted);font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid var(--line)}
+    .tech-sub-row{min-height:62px;border-bottom:1px solid #eef2f7;font-size:12.5px}
+    .tech-sub-row:last-child{border-bottom:0}
+    .tech-table-head>div:first-child,.tech-sub-row>div:first-child{text-align:left;justify-content:flex-start}
+    .tech-main-cell{display:flex;align-items:center;gap:12px;min-width:0}
+    .sub-icon-placeholder{width:36px;height:36px;border-radius:14px;border:1px dashed #b9c7d8;background:#f8fafc;display:flex;align-items:center;justify-content:center;color:#94a3b8;font-weight:800;flex:0 0 auto}
+    .tech-name{font-weight:800;line-height:1.25;text-align:left}
+    .status-text{font-size:12.5px;font-weight:700;color:#334155}.status-text.operational{color:#166534}
+    .tech-cell-muted{color:#64748b;font-weight:600}
+    .files-action{min-width:74px;height:38px;border:1px solid #dbe4ef;background:#fff;border-radius:10px;box-shadow:0 6px 16px rgba(15,23,42,.06);display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:0 12px;color:#0f172a;font-size:12.5px;font-weight:800;cursor:pointer}
+    .files-row{display:none;grid-column:1/-1;padding:0 14px 14px 0;background:#fbfdff;border-bottom:1px solid #eef2f7}
+    .tech-sub-row.open + .files-row{display:block}
+    .tech-file{display:flex;justify-content:space-between;gap:12px;align-items:center;border-top:1px solid #eef2f7;padding:12px 0}
+    .tech-file-name{font-weight:800;font-size:12px}.tech-file-meta{font-size:11px;color:var(--muted);margin-top:3px}
+    .btns{display:flex;gap:8px}.btn{border:1px solid #dbe4ef;border-radius:10px;background:#fff;padding:7px 10px;font-weight:700;cursor:pointer}.btn.primary{background:#0f172a;color:#fff}
+
+    .das-hero{border:1px solid #c7dbff;background:radial-gradient(circle at 80% 28%,rgba(25,140,255,.12),transparent 20%),linear-gradient(135deg,#fff,#f4f8ff);border-radius:24px;box-shadow:0 18px 42px rgba(25,140,255,.10);text-align:center;padding:28px 24px 24px;margin-bottom:18px;position:relative}
+    .das-label{display:flex;justify-content:center;align-items:center;gap:10px;color:#135ee8;font-size:13px;font-weight:800;letter-spacing:.09em;text-transform:uppercase}
+    .ai-stars{width:40px;height:40px;border-radius:50%;background:#eef5ff;border:1px solid #bdd4ff;display:flex;align-items:center;justify-content:center;color:#135ee8}
+    .das-value{font-size:72px;line-height:.94;font-weight:800;color:#135ee8;margin-top:12px;text-shadow:0 12px 30px rgba(19,94,232,.16)}
+    .das-sub{color:#2f3745;font-size:12.5px;margin-top:8px}
+    .kpi-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+    .kpi{position:relative;min-height:136px;padding:20px 18px;border-radius:20px;border:1px solid rgba(203,213,225,.85);box-shadow:0 14px 32px rgba(15,23,42,.08);background:#fff}
+    .kpi-symbol{position:absolute;left:18px;top:18px;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#eef5ff;color:#195bd8;font-weight:800}
+    .kpi.good .kpi-symbol{color:#0f8a5f;background:#ecfdf5}.kpi.warn .kpi-symbol{color:#f97316;background:#fff7ed}
+    .kpi-title{font-size:11.5px;font-weight:800;letter-spacing:.08em;margin-left:44px;min-height:30px;padding-right:28px;display:flex;align-items:center}
+    .kpi-value{font-size:33px;font-weight:800;line-height:1;margin-top:22px}.kpi-sub{font-size:12.5px;color:var(--muted);margin-top:9px}
+    .expand-btn{position:absolute;right:16px;top:18px;width:30px;height:30px;font-size:20px}
+
+    .snapshot-chart,.op-chart{display:none;border:1px solid var(--line);border-radius:22px;background:#fff;padding:16px;box-shadow:0 8px 22px rgba(15,23,42,.035)}
+    .snapshot-chart.active,.op-chart.active{display:block}
+    .chart-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:12px}.chart-top h3{margin:0}.chart-top p{font-size:12px;color:var(--muted)}
+    .close-chart{border:1px solid #dbe4ef;border-radius:999px;background:#fff;padding:8px 12px;font-weight:800;cursor:pointer}
+    .legend{display:flex;justify-content:center;gap:16px;margin:0 0 12px;font-size:12px;color:#475569;font-weight:700}.dot{width:11px;height:11px;border-radius:4px;background:#0b2a66;display:inline-block}.dot.line{height:3px;width:22px;border-radius:999px;background:#d9a441}
+    .chart-wrap{height:340px;border:1px solid #eef2f7;border-radius:18px;background:#fbfdff;padding:10px;position:relative}canvas{width:100%;height:100%;display:block}
+    .chart-tooltip{position:fixed;pointer-events:none;background:#0f172a;color:#fff;border-radius:12px;padding:9px 10px;font-size:12px;line-height:1.45;opacity:0;transform:translate(14px,14px);z-index:999;white-space:nowrap}
+
+    .efficiency-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    .statement-table-wrap{overflow:auto;border:1px solid var(--line);border-radius:18px;max-height:560px}
+    table{width:100%;border-collapse:collapse;min-width:980px;font-size:12.5px;background:#fff}th{position:sticky;top:0;z-index:4;background:#0b2a66;color:#fff;padding:12px;text-align:right}th:first-child{text-align:left;left:0;z-index:6}td{padding:11px 12px;border-bottom:1px solid #eef2f7;text-align:right;font-weight:700}td:first-child{position:sticky;left:0;background:#fff;z-index:3;text-align:left}.section-row td{background:#fff7ed!important;color:#9a3412;font-weight:800}
+
+    .market-map-panel{min-height:calc(100vh - 40px);display:flex;flex-direction:column}.map-shell{display:grid;grid-template-columns:230px minmax(0,1fr);gap:14px;flex:1;min-height:calc(100vh - 175px)}
+    .map-filters{border:1px solid var(--line);border-radius:20px;background:#fff;padding:14px;display:grid;gap:8px;align-content:start}.map-filter-title{font-size:12px;font-weight:800}.map-filter{border:1px solid var(--line);border-radius:15px;padding:10px;background:#fff;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-size:12px;font-weight:700}.filter-check{width:22px;height:22px;border-radius:8px;display:flex;align-items:center;justify-content:center;border:1px solid #cbd5e1;color:transparent}.map-filter.active .filter-check{background:#eaf3ff;border-color:#9cc7ff;color:#135ee8}
+    .map-canvas{min-height:calc(100vh - 175px);height:100%;border-radius:24px;border:1px solid var(--line);overflow:hidden;background:#fff}.leaflet-map{width:100%;height:100%;min-height:calc(100vh - 175px)}
+
+    @media(max-height:760px) and (min-width:900px){
+      .sidebar{width:252px;padding:12px 16px 8px}.page{margin-left:252px;width:calc(100vw - 252px)}
+      .brand-name{font-size:16px;max-width:145px}.collapse-btn{width:32px;height:32px;flex-basis:32px}
+      .side-section-title{font-size:9.5px;margin-bottom:7px;gap:8px}.side-nav{gap:5px;margin-top:8px}
+      .side-tab{min-height:41px;padding:5px 7px;grid-template-columns:30px minmax(0,1fr);gap:7px}.side-icon{width:28px;height:28px}.side-icon svg{width:15px;height:15px}
+      .side-title{font-size:11.2px}.side-sub{font-size:9px}.user-access-card,.last-updated-card{margin-top:8px;padding:0 6px}
+      .user-line{grid-template-columns:28px minmax(0,1fr);gap:7px;margin-bottom:5px}.user-avatar{width:28px;height:28px;font-size:10px}.user-name{font-size:11.2px}
+      .user-meta-line{grid-template-columns:15px auto minmax(0,1fr);gap:4px;margin-top:3px}.user-meta-icon,.user-meta-icon svg{width:13px;height:13px}.user-meta-label,.user-meta-line strong{font-size:8.4px}
+      .side-update-row{padding-left:18px;padding-bottom:6px}.side-update-row span{font-size:9.5px}.side-update-row strong{font-size:8.6px}
+      .sidebar-footer{left:16px;right:16px;bottom:6px}.logout{min-height:36px;grid-template-columns:28px minmax(0,1fr);margin-bottom:4px}.logout .side-icon{width:26px;height:26px}.version{font-size:8.8px}
+    }
+    @media(max-width:1250px){.kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:900px){.kpi-grid,.efficiency-grid{grid-template-columns:1fr}.map-shell{grid-template-columns:1fr}}
+  
+/* v32 sidebar subtitles, updated section sizing, KPI circles, logout floating */
+.side-tab > span:last-child{
+  display:grid!important;
+  grid-template-rows:auto auto!important;
+  gap:3px!important;
+  min-width:0!important;
+}
+
+.side-title{
+  display:block!important;
+}
+
+.side-sub{
+  display:block!important;
+  font-size:11.2px!important;
+  line-height:1.2!important;
+  color:#667085!important;
+  margin:0!important;
+}
+
+.side-update-row span{
+  font-size:12.8px!important;
+  line-height:1.2!important;
+  font-weight:800!important;
+}
+
+.side-update-row strong{
+  font-size:11.8px!important;
+  line-height:1.2!important;
+  font-weight:600!important;
+  color:#5f6f86!important;
+}
+
+@media(max-height:760px) and (min-width:900px){
+  .side-update-row span{
+    font-size:10.4px!important;
+  }
+  .side-update-row strong{
+    font-size:9.6px!important;
+  }
+  .side-sub{
+    font-size:9.4px!important;
+  }
+}
+
+/* KPI card circle backgrounds restored */
+.kpi .kpi-title{
+  margin-left:44px!important;
+}
+
+.kpi .kpi-title::before{
+  content:""!important;
+  position:absolute!important;
+  left:18px!important;
+  top:18px!important;
+  width:34px!important;
+  height:34px!important;
+  border-radius:50%!important;
+  background:#eef5ff!important;
+  border:1px solid #d4e4ff!important;
+  box-shadow:0 8px 20px rgba(25,140,255,.08)!important;
+}
+
+.kpi.good .kpi-title::before{
+  background:#ecfdf5!important;
+  border-color:#bbf7d0!important;
+}
+
+.kpi.warn .kpi-title::before{
+  background:#fff7ed!important;
+  border-color:#fed7aa!important;
+}
+
+.kpi.bad .kpi-title::before{
+  background:#fef2f2!important;
+  border-color:#fecaca!important;
+}
+
+/* Do not double-circle operational cards that already have symbols */
+.kpi .kpi-symbol + .kpi-title::before{
+  display:none!important;
+}
+
+/* Floating full-width logout */
+.sidebar-footer{
+  left:22px!important;
+  right:22px!important;
+}
+
+.logout{
+  width:100%!important;
+  min-height:54px!important;
+  display:grid!important;
+  grid-template-columns:38px 1fr 38px!important;
+  align-items:center!important;
+  justify-items:center!important;
+  border-radius:16px!important;
+  background:#ffffff!important;
+  box-shadow:0 18px 38px rgba(15,23,42,.14)!important;
+  border:1px solid rgba(219,228,239,.75)!important;
+  padding:8px 12px!important;
+}
+
+.logout .side-icon{
+  grid-column:1!important;
+  justify-self:start!important;
+}
+
+.logout span:last-child{
+  grid-column:2!important;
+  justify-self:center!important;
+  text-align:center!important;
+  font-weight:700!important;
+  color:#111827!important;
+}
+
+.version{
+  margin-top:12px!important;
+}
+
+body.nav-collapsed .logout{
+  width:42px!important;
+  height:42px!important;
+  min-height:42px!important;
+  grid-template-columns:1fr!important;
+  box-shadow:none!important;
+  border:0!important;
+  background:transparent!important;
+}
+
+
+/* v33 nav polish */
+.side-update-row{
+  padding-bottom:16px!important;
+  margin-bottom:4px!important;
+}
+
+.side-update-row span{
+  font-weight:500!important;
+}
+
+.side-update-row strong{
+  font-weight:500!important;
+}
+
+@media(max-height:760px) and (min-width:900px){
+  .side-update-row{
+    padding-bottom:10px!important;
+    margin-bottom:2px!important;
+  }
+  .side-update-row span,
+  .side-update-row strong{
+    font-weight:500!important;
+  }
+}
+
+.side-tab.active{
+  border:1px solid #dbe4ef!important;
+  box-shadow:0 12px 26px rgba(15,23,42,.06), inset 4px 0 0 #2f8cff!important;
+}
+
+body.nav-collapsed .side-tab.active{
+  border:0!important;
+  box-shadow:none!important;
+}
+
+
+/* v34 operational KPI title + premium DAS AI details */
+#operations .kpi-title{
+  font-size:13.8px!important;
+  line-height:1.2!important;
+  letter-spacing:.06em!important;
+  font-weight:800!important;
+}
+
+@media(max-height:760px) and (min-width:900px){
+  #operations .kpi-title{
+    font-size:12px!important;
+  }
+}
+
+.das-hero{
+  overflow:hidden!important;
+}
+
+.das-hero::before{
+  content:""!important;
+  position:absolute!important;
+  inset:18px!important;
+  border-radius:22px!important;
+  background:
+    linear-gradient(90deg, rgba(19,94,232,.08) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(19,94,232,.08) 1px, transparent 1px)!important;
+  background-size:34px 34px!important;
+  opacity:.42!important;
+  pointer-events:none!important;
+}
+
+.das-hero::after{
+  content:"AI  ✦  ML  ✧  CV"!important;
+  position:absolute!important;
+  right:28px!important;
+  top:22px!important;
+  color:#135ee8!important;
+  opacity:.12!important;
+  font-size:34px!important;
+  font-weight:900!important;
+  letter-spacing:.16em!important;
+  pointer-events:none!important;
+}
+
+.ai-stars{
+  position:relative!important;
+  box-shadow:0 10px 26px rgba(19,94,232,.16), inset 0 0 0 6px rgba(19,94,232,.04)!important;
+}
+
+.ai-stars::before,
+.ai-stars::after{
+  content:"✦"!important;
+  position:absolute!important;
+  width:15px!important;
+  height:15px!important;
+  border-radius:6px!important;
+  background:#ffffff!important;
+  border:1px solid #cfe2ff!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  color:#135ee8!important;
+  font-size:9px!important;
+  box-shadow:0 6px 14px rgba(19,94,232,.13)!important;
+}
+
+.ai-stars::before{
+  right:-7px!important;
+  top:-6px!important;
+}
+
+.ai-stars::after{
+  left:-7px!important;
+  bottom:-6px!important;
+}
+
+.das-label,
+.das-value,
+.das-sub,
+.das-hero .expand-btn{
+  position:relative!important;
+  z-index:2!important;
+}
+
+.das-ai-boxes{
+  position:absolute;
+  left:28px;
+  bottom:24px;
+  display:flex;
+  gap:8px;
+  z-index:1;
+  pointer-events:none;
+}
+
+.das-ai-boxes span{
+  min-width:34px;
+  height:28px;
+  border-radius:10px;
+  background:rgba(255,255,255,.72);
+  border:1px solid #cfe2ff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#135ee8;
+  font-size:10px;
+  font-weight:900;
+  box-shadow:0 8px 18px rgba(19,94,232,.09);
+}
+
+@media(max-width:900px){
+  .das-ai-boxes{
+    display:none;
+  }
+}
+
+
+/* v35 requested map filter categories */
+.map-filters{
+  grid-template-columns:1fr!important;
+  gap:7px!important;
+}
+.map-filter{
+  min-height:42px!important;
+  text-align:left!important;
+}
+.map-filter span:first-child{
+  white-space:normal!important;
+  line-height:1.15!important;
+}
+
+
+/* v36 download column/button */
+.files-action{
+  gap:7px!important;
+}
+
+.download-icon{
+  width:18px!important;
+  height:18px!important;
+  border-radius:6px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  background:#eef5ff!important;
+  border:1px solid #cfe2ff!important;
+  color:#135ee8!important;
+  font-size:13px!important;
+  font-weight:900!important;
+  line-height:1!important;
+}
+
+
+/* v38 stable restore: premium visuals without deleting content/functions */
+.sidebar{
+  border-right:0!important;
+  border-radius:0 26px 26px 0!important;
+  margin:14px 0!important;
+  height:calc(100dvh - 28px)!important;
+  box-shadow:0 26px 60px rgba(15,23,42,.10), 0 8px 22px rgba(47,140,255,.08)!important;
+}
+
+.page{
+  padding:16px 18px 18px!important;
+}
+
+.brand-mini{
+  display:flex!important;
+  align-items:center!important;
+  gap:12px!important;
+  min-width:0!important;
+}
+
+.brand-logo{
+  width:32px!important;
+  height:32px!important;
+  border-radius:10px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  flex:0 0 auto!important;
+}
+
+.brand-logo svg{
+  width:30px!important;
+  height:30px!important;
+  fill:#1d64ff!important;
+  stroke:#1d64ff!important;
+  stroke-width:1.5!important;
+  stroke-linejoin:round!important;
+  stroke-linecap:round!important;
+}
+
+.brand-copy{
+  display:flex!important;
+  flex-direction:column!important;
+  gap:2px!important;
+  min-width:0!important;
+}
+
+.brand-subtitle{
+  font-size:12px!important;
+  color:#667085!important;
+  line-height:1.1!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+
+.side-tab.active{
+  border:1px solid #e2e8f0!important;
+  box-shadow:0 14px 30px rgba(15,23,42,.06)!important;
+}
+
+.side-tab.active .side-icon{
+  background:#1d64ff!important;
+  border-color:#1d64ff!important;
+  box-shadow:0 12px 26px rgba(29,100,255,.22)!important;
+}
+
+.side-tab.active .side-icon svg{
+  stroke:#fff!important;
+}
+
+.side-tab:not(.active) .side-icon svg{
+  stroke:#111827!important;
+}
+
+body.nav-collapsed .side-tab.active .side-icon{
+  background:#1d64ff!important;
+  border-color:#1d64ff!important;
+}
+
+body.nav-collapsed .side-tab.active .side-icon svg{
+  stroke:#fff!important;
+}
+
+/* Financial top controls */
+.finance-hero-head{
+  display:flex!important;
+  justify-content:space-between!important;
+  align-items:flex-start!important;
+  gap:18px!important;
+  margin-bottom:18px!important;
+}
+
+.finance-hero-copy h2{
+  margin:0!important;
+  font-size:29px!important;
+  font-weight:800!important;
+  letter-spacing:-.04em!important;
+}
+
+.finance-hero-sub{
+  margin-top:8px!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:10px!important;
+  flex-wrap:wrap!important;
+  color:#667085!important;
+  font-size:14px!important;
+}
+
+.live-dot{
+  width:8px!important;
+  height:8px!important;
+  border-radius:50%!important;
+  background:#22c55e!important;
+  display:inline-block!important;
+  box-shadow:0 0 0 4px rgba(34,197,94,.15)!important;
+}
+
+.finance-actions{
+  display:flex!important;
+  align-items:center!important;
+  gap:12px!important;
+  flex-wrap:wrap!important;
+  justify-content:flex-end!important;
+}
+
+.finance-chip,
+.export-btn{
+  height:42px!important;
+  border-radius:14px!important;
+  border:1px solid #cfe2ff!important;
+  background:#f7fbff!important;
+  padding:0 16px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:10px!important;
+  font-size:14px!important;
+  font-weight:700!important;
+  color:#1d64ff!important;
+  box-shadow:0 8px 18px rgba(29,100,255,.06)!important;
+  cursor:pointer!important;
+}
+
+.finance-chip svg,
+.export-btn svg,
+.synced-pill svg{
+  width:18px!important;
+  height:18px!important;
+  stroke:currentColor!important;
+  fill:none!important;
+  stroke-width:2!important;
+  stroke-linecap:round!important;
+  stroke-linejoin:round!important;
+}
+
+.finance-select{
+  height:42px!important;
+  min-width:130px!important;
+  border-radius:14px!important;
+  border:1px solid #dbe4ef!important;
+  background:#fff!important;
+  color:#344054!important;
+  padding:0 14px!important;
+  font-size:14px!important;
+  font-weight:700!important;
+  outline:none!important;
+  box-shadow:0 8px 18px rgba(15,23,42,.04)!important;
+}
+
+.export-btn{
+  background:linear-gradient(180deg,#2970ff,#1d64ff)!important;
+  color:#fff!important;
+  border-color:#1d64ff!important;
+  box-shadow:0 18px 30px rgba(29,100,255,.24)!important;
+}
+
+/* Financial cards: premium screenshot-like without changing JS */
+#financials .kpi{
+  position:relative!important;
+  min-height:178px!important;
+  background:linear-gradient(180deg,#fff,#fbfdff)!important;
+  border:1px solid #e8eef6!important;
+  box-shadow:0 12px 26px rgba(15,23,42,.06)!important;
+  border-radius:22px!important;
+  padding:18px 16px 14px!important;
+  overflow:hidden!important;
+}
+
+#financials .kpi-symbol{
+  position:absolute!important;
+  left:14px!important;
+  top:14px!important;
+  width:50px!important;
+  height:50px!important;
+  border-radius:50%!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  font-weight:900!important;
+  font-size:18px!important;
+}
+
+#financials .kpi.blue .kpi-symbol{background:#e8f0ff!important;color:#1d64ff!important}
+#financials .kpi.good .kpi-symbol{background:#e7f8ed!important;color:#16a34a!important}
+#financials .kpi.violet .kpi-symbol{background:#f0e8ff!important;color:#7c3aed!important}
+#financials .kpi.amber .kpi-symbol{background:#fff4dd!important;color:#f59e0b!important}
+#financials .kpi.bad .kpi-symbol{background:#feefef!important;color:#ef4444!important}
+
+#financials .kpi-title{
+  margin-left:62px!important;
+  font-size:14px!important;
+  line-height:1.2!important;
+  font-weight:800!important;
+  letter-spacing:-.01em!important;
+  padding-right:40px!important;
+}
+
+#financials .kpi-value{
+  margin-top:10px!important;
+  font-size:28px!important;
+  line-height:1.05!important;
+}
+
+#financials .kpi-sub{
+  margin-top:8px!important;
+  font-size:13px!important;
+  color:#667085!important;
+}
+
+#financials .expand-btn{
+  right:14px!important;
+  top:14px!important;
+  width:32px!important;
+  height:32px!important;
+  border-radius:10px!important;
+  background:#fff!important;
+  border:1px solid #e5edf8!important;
+  box-shadow:0 6px 14px rgba(15,23,42,.05)!important;
+  color:transparent!important;
+}
+
+#financials .expand-btn::before{
+  content:"⋮"!important;
+  color:#111827!important;
+  font-size:20px!important;
+  line-height:1!important;
+  font-weight:900!important;
+}
+
+#financials .kpi::after{
+  content:""!important;
+  position:absolute!important;
+  left:14px!important;
+  right:14px!important;
+  bottom:10px!important;
+  height:42px!important;
+  opacity:.75!important;
+  background-repeat:no-repeat!important;
+  background-size:100% 100%!important;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 48' preserveAspectRatio='none'><defs><linearGradient id='g' x1='0' x2='0' y1='0' y2='1'><stop offset='0%' stop-color='%239cc0ff' stop-opacity='.35'/><stop offset='100%' stop-color='%239cc0ff' stop-opacity='0'/></linearGradient></defs><polygon points='0,36 12,26 24,34 36,28 48,24 60,30 72,22 84,20 96,14 108,18 120,10 132,16 144,28 156,24 168,30 180,26 180,48 0,48' fill='url(%23g)'/><polyline points='0,36 12,26 24,34 36,28 48,24 60,30 72,22 84,20 96,14 108,18 120,10 132,16 144,28 156,24 168,30 180,26' fill='none' stroke='%232970ff' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/></svg>")!important;
+}
+
+#financials .kpi.good::after{
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 48' preserveAspectRatio='none'><defs><linearGradient id='g' x1='0' x2='0' y1='0' y2='1'><stop offset='0%' stop-color='%238ce1a9' stop-opacity='.36'/><stop offset='100%' stop-color='%238ce1a9' stop-opacity='0'/></linearGradient></defs><polygon points='0,36 12,28 24,34 36,30 48,26 60,32 72,24 84,27 96,20 108,18 120,12 132,17 144,26 156,24 168,22 180,20 180,48 0,48' fill='url(%23g)'/><polyline points='0,36 12,28 24,34 36,30 48,26 60,32 72,24 84,27 96,20 108,18 120,12 132,17 144,26 156,24 168,22 180,20' fill='none' stroke='%2322c55e' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/></svg>")!important;
+}
+
+#financials .kpi.warn::after,
+#financials .kpi.amber::after{
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 48' preserveAspectRatio='none'><defs><linearGradient id='g' x1='0' x2='0' y1='0' y2='1'><stop offset='0%' stop-color='%23ffd677' stop-opacity='.4'/><stop offset='100%' stop-color='%23ffd677' stop-opacity='0'/></linearGradient></defs><polygon points='0,32 12,24 24,30 36,29 48,26 60,32 72,28 84,26 96,20 108,22 120,14 132,10 144,18 156,28 168,24 180,30 180,48 0,48' fill='url(%23g)'/><polyline points='0,32 12,24 24,30 36,29 48,26 60,32 72,28 84,26 96,20 108,22 120,14 132,10 144,18 156,28 168,24 180,30' fill='none' stroke='%23f6b21b' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/></svg>")!important;
+}
+
+/* Working capital cards */
+.finance-subpanel-head{
+  display:flex!important;
+  justify-content:space-between!important;
+  align-items:flex-start!important;
+  gap:14px!important;
+  margin-bottom:14px!important;
+}
+
+.finance-subpanel-head h2{
+  margin:0!important;
+  font-size:22px!important;
+  font-weight:800!important;
+  letter-spacing:-.03em!important;
+}
+
+.finance-subpanel-head p{
+  margin:4px 0 0!important;
+  font-size:14px!important;
+  color:#98a2b3!important;
+}
+
+.synced-pill{
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:8px!important;
+  color:#667085!important;
+  font-weight:600!important;
+  font-size:14px!important;
+}
+
+#efficiencyGrid .kpi{
+  min-height:128px!important;
+  border-radius:22px!important;
+  background:linear-gradient(180deg,#fff,#fbfdff)!important;
+  border:1px solid #e8eef6!important;
+  box-shadow:0 12px 26px rgba(15,23,42,.06)!important;
+}
+
+#efficiencyGrid .kpi-title{
+  font-size:14px!important;
+  font-weight:800!important;
+}
+
+#efficiencyGrid .kpi-value{
+  font-size:28px!important;
+}
+
+@media(max-width:1180px){
+  .finance-hero-head,
+  .finance-subpanel-head{
+    flex-direction:column!important;
+    align-items:flex-start!important;
+  }
+  .finance-actions{
+    justify-content:flex-start!important;
+  }
+}
+
+
+/* v39 requested refinements */
+
+/* Command Center smaller and no subtitle */
+.brand-name{
+  font-size:16.5px!important;
+  max-width:150px!important;
+}
+.brand-copy{
+  gap:0!important;
+}
+.brand-subtitle{
+  display:none!important;
+}
+
+/* active nav: left chip + blue only inside icon */
+.side-tab.active{
+  position:relative!important;
+  border:1px solid #dbe4ef!important;
+  box-shadow:0 14px 30px rgba(15,23,42,.06)!important;
+  background:#fff!important;
+  overflow:hidden!important;
+}
+.side-tab.active::before{
+  content:""!important;
+  position:absolute!important;
+  left:0!important;
+  top:12px!important;
+  bottom:12px!important;
+  width:5px!important;
+  border-radius:0 999px 999px 0!important;
+  background:#1d64ff!important;
+}
+.side-tab.active .side-icon{
+  background:#1d64ff!important;
+  border-color:#1d64ff!important;
+}
+.side-tab.active .side-icon svg{
+  stroke:#fff!important;
+}
+.side-tab:not(.active) .side-icon svg{
+  stroke:#111827!important;
+}
+
+/* add gap between Updated heading and first audited quarter item */
+.last-updated-card .side-section-title{
+  margin-bottom:20px!important;
+}
+
+/* Tech table: download icon only + status slightly left */
+.files-action.icon-only{
+  width:38px!important;
+  min-width:38px!important;
+  height:38px!important;
+  padding:0!important;
+  border-radius:12px!important;
+}
+.files-action.icon-only .download-icon{
+  margin:0!important;
+}
+.tech-table-head,
+.tech-sub-row{
+  grid-template-columns:1.6fr .7fr .9fr .78fr .9fr 74px!important;
+}
+.tech-table-head>div:nth-child(2),
+.tech-sub-row>div:nth-child(2){
+  text-align:left!important;
+  justify-self:start!important;
+  padding-left:2px!important;
+}
+
+/* Financial KPI: million format layout, number starts under title */
+#financials .kpi{
+  min-height:178px!important;
+  padding:18px 16px 14px!important;
+}
+#financials .kpi-title{
+  margin-left:62px!important;
+  padding-right:38px!important;
+  min-height:auto!important;
+}
+#financials .kpi-value{
+  margin-left:62px!important;
+  margin-top:8px!important;
+  font-size:27px!important;
+  line-height:1.05!important;
+}
+#financials .kpi-sub{
+  margin-left:62px!important;
+  margin-top:7px!important;
+}
+#financials .kpi-symbol{
+  width:50px!important;
+  height:50px!important;
+  border-radius:50%!important;
+  font-size:18px!important;
+  font-weight:900!important;
+}
+#financials .kpi.blue .kpi-symbol{
+  background:#e8f0ff!important;
+  color:#0b4eea!important;
+}
+#financials .kpi.good .kpi-symbol{
+  background:#dff7ea!important;
+  color:#078245!important;
+}
+#financials .kpi.violet .kpi-symbol{
+  background:#efe4ff!important;
+  color:#6d28d9!important;
+}
+#financials .kpi.amber .kpi-symbol{
+  background:#fff0cf!important;
+  color:#d97706!important;
+}
+
+/* Working capital icons */
+#efficiencyGrid .wc-kpi{
+  position:relative!important;
+  padding:18px 18px 16px!important;
+}
+.wc-circle{
+  position:absolute!important;
+  left:18px!important;
+  top:18px!important;
+  width:42px!important;
+  height:42px!important;
+  border-radius:50%!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  background:#e8f0ff!important;
+  color:#1d64ff!important;
+}
+.wc-kpi.ar .wc-circle{
+  background:#e7f8ed!important;
+  color:#16a34a!important;
+}
+.wc-kpi.ap .wc-circle{
+  background:#f0e8ff!important;
+  color:#7c3aed!important;
+}
+.wc-kpi.ccc .wc-circle{
+  background:#fff4dd!important;
+  color:#f59e0b!important;
+}
+.wc-circle svg{
+  width:21px!important;
+  height:21px!important;
+  stroke:currentColor!important;
+  fill:none!important;
+  stroke-width:2!important;
+  stroke-linecap:round!important;
+  stroke-linejoin:round!important;
+}
+#efficiencyGrid .wc-kpi .kpi-title{
+  margin-left:54px!important;
+  padding-right:0!important;
+}
+#efficiencyGrid .wc-kpi .kpi-value{
+  margin-left:0!important;
+  margin-top:28px!important;
+}
+#efficiencyGrid .wc-kpi .kpi-sub{
+  margin-left:0!important;
+}
+
+
+/* v40 fixes */
+
+/* Active nav chip like screenshot */
+.side-tab{
+  position:relative!important;
+  border-radius:18px!important;
+  min-height:72px!important;
+  padding:12px 14px 12px 16px!important;
+  grid-template-columns:46px minmax(0,1fr)!important;
+  gap:12px!important;
+}
+.side-tab.active{
+  background:#ffffff!important;
+  border:1px solid #e4ebf5!important;
+  box-shadow:0 16px 32px rgba(15,23,42,.07)!important;
+}
+.side-tab.active::before{
+  content:""!important;
+  position:absolute!important;
+  left:8px!important;
+  top:8px!important;
+  bottom:8px!important;
+  width:6px!important;
+  border-radius:999px!important;
+  background:#1d64ff!important;
+  box-shadow:0 0 18px rgba(29,100,255,.28)!important;
+}
+.side-tab.active .side-icon{
+  background:#1d64ff!important;
+  border-color:#1d64ff!important;
+  box-shadow:0 10px 24px rgba(29,100,255,.24)!important;
+}
+.side-tab.active .side-icon svg{
+  stroke:#ffffff!important;
+}
+.side-tab:not(.active) .side-icon{
+  background:#ffffff!important;
+}
+.side-tab:not(.active) .side-icon svg{
+  stroke:#111827!important;
+}
+body.nav-collapsed .side-tab{
+  min-height:42px!important;
+  padding:0!important;
+}
+body.nav-collapsed .side-tab.active::before{
+  left:0!important;
+  top:4px!important;
+  bottom:4px!important;
+  width:4px!important;
+}
+
+/* Member since / Last access bigger */
+.user-meta-label,
+.user-meta-line strong{
+  font-size:11.4px!important;
+  line-height:1.18!important;
+}
+.user-name{
+  font-size:14px!important;
+}
+@media(max-height:760px) and (min-width:900px){
+  .user-meta-label,
+  .user-meta-line strong{
+    font-size:9.2px!important;
+  }
+  .user-name{
+    font-size:11.8px!important;
+  }
+}
+
+/* Bigger gap after Updated heading */
+.last-updated-card .side-section-title{
+  margin-bottom:22px!important;
+}
+
+/* Sync row smaller like requested */
+.synced-pill{
+  font-size:12px!important;
+  color:#98a2b3!important;
+  font-weight:600!important;
+  gap:6px!important;
+}
+.synced-pill .chip-icon{
+  width:14px!important;
+  height:14px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+.synced-pill svg{
+  width:14px!important;
+  height:14px!important;
+  stroke:#98a2b3!important;
+}
+
+/* No graphs in working capital */
+#efficiencyGrid .kpi::after{
+  display:none!important;
+  content:none!important;
+}
+#efficiencyGrid .spark-wrap{
+  display:none!important;
+}
+
+/* Financial values without red dollar look; use clean number styling */
+#financials .kpi-value{
+  letter-spacing:-.02em!important;
+}
+
+/* EBITDA spark/line purple */
+#financials .kpi.violet::after{
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 48' preserveAspectRatio='none'><defs><linearGradient id='g' x1='0' x2='0' y1='0' y2='1'><stop offset='0%%' stop-color='%23d8b5ff' stop-opacity='.40'/><stop offset='100%%' stop-color='%23d8b5ff' stop-opacity='0'/></linearGradient></defs><polygon points='0,30 12,22 24,34 36,28 48,24 60,28 72,24 84,26 96,20 108,22 120,14 132,10 144,18 156,30 168,26 180,28 180,48 0,48' fill='url(%23g)'/><polyline points='0,30 12,22 24,34 36,28 48,24 60,28 72,24 84,26 96,20 108,22 120,14 132,10 144,18 156,30 168,26 180,28' fill='none' stroke='%23b26cff' stroke-width='2.1' stroke-linecap='round' stroke-linejoin='round'/></svg>")!important;
+}
+
+/* Financial KPIs nav icon: bar chart feel */
+.side-tab[data-tab="financials"] .side-icon svg{
+  stroke-width:2.4!important;
+}
+
+/* Download icon only button centered */
+.files-action.icon-only{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+
+
+/* v42 safe WC icons only, keeps all content and click handlers */
+#efficiencyGrid .wc-kpi{
+  position:relative!important;
+  padding:18px 18px 16px!important;
+  min-height:132px!important;
+}
+
+#efficiencyGrid .wc-circle{
+  position:absolute!important;
+  left:18px!important;
+  top:18px!important;
+  width:42px!important;
+  height:42px!important;
+  border-radius:50%!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  background:#e8f0ff!important;
+  color:#1d64ff!important;
+  box-shadow:0 8px 18px rgba(15,23,42,.05)!important;
+}
+
+#efficiencyGrid .wc-kpi.ar .wc-circle{
+  background:#e7f8ed!important;
+  color:#16a34a!important;
+}
+
+#efficiencyGrid .wc-kpi.ap .wc-circle{
+  background:#f0e8ff!important;
+  color:#7c3aed!important;
+}
+
+#efficiencyGrid .wc-kpi.ccc .wc-circle{
+  background:#fff4dd!important;
+  color:#f59e0b!important;
+}
+
+#efficiencyGrid .wc-circle svg{
+  width:21px!important;
+  height:21px!important;
+  stroke:currentColor!important;
+  fill:none!important;
+  stroke-width:2!important;
+  stroke-linecap:round!important;
+  stroke-linejoin:round!important;
+}
+
+#efficiencyGrid .wc-kpi .kpi-title{
+  margin-left:54px!important;
+  padding-right:0!important;
+  min-height:auto!important;
+}
+
+#efficiencyGrid .wc-kpi .kpi-value{
+  margin-left:0!important;
+  margin-top:28px!important;
+}
+
+#efficiencyGrid .wc-kpi .kpi-sub{
+  margin-left:0!important;
+}
+
+
+/* v43 sizing cleanup */
+
+/* Command Center smaller */
+.brand-name{
+  font-size:14.8px!important;
+  max-width:132px!important;
+  letter-spacing:-.03em!important;
+}
+
+/* Make the 3 financial header buttons compact, not wide */
+.finance-actions{
+  gap:8px!important;
+}
+
+.finance-chip,
+.finance-select,
+.export-btn{
+  height:36px!important;
+  min-width:0!important;
+  width:auto!important;
+  padding-left:11px!important;
+  padding-right:11px!important;
+  border-radius:12px!important;
+  font-size:12px!important;
+  white-space:nowrap!important;
+}
+
+.finance-select{
+  min-width:92px!important;
+  padding-left:10px!important;
+  padding-right:10px!important;
+}
+
+.finance-chip .chip-icon,
+.export-btn .chip-icon{
+  width:15px!important;
+  height:15px!important;
+}
+
+.finance-chip svg,
+.export-btn svg{
+  width:15px!important;
+  height:15px!important;
+}
+
+/* Add breathing space between Member Since and Last Access */
+.user-meta-line{
+  margin-top:9px!important;
+}
+
+.user-meta-line + .user-meta-line{
+  margin-top:12px!important;
+}
+
+/* Financial metric boxes: smaller typography */
+#financials .kpi{
+  min-height:156px!important;
+  padding:15px 14px 12px!important;
+}
+
+#financials .kpi-symbol{
+  width:42px!important;
+  height:42px!important;
+  font-size:15px!important;
+  left:14px!important;
+  top:14px!important;
+}
+
+#financials .kpi-title{
+  margin-left:52px!important;
+  font-size:12.5px!important;
+  line-height:1.15!important;
+  padding-right:34px!important;
+}
+
+#financials .kpi-value{
+  margin-left:52px!important;
+  margin-top:7px!important;
+  font-size:22px!important;
+  line-height:1.05!important;
+}
+
+#financials .kpi-sub{
+  margin-left:52px!important;
+  font-size:11.2px!important;
+  margin-top:6px!important;
+}
+
+/* Replace three-dots with circular plus button */
+#financials .expand-btn{
+  right:14px!important;
+  top:14px!important;
+  width:30px!important;
+  height:30px!important;
+  border-radius:50%!important;
+  background:#e8f0ff!important;
+  border:1px solid #cfe2ff!important;
+  color:#0f172a!important;
+  box-shadow:0 8px 18px rgba(29,100,255,.10)!important;
+  font-size:20px!important;
+  font-weight:900!important;
+  line-height:1!important;
+  display:grid!important;
+  place-items:center!important;
+}
+
+#financials .expand-btn::before{
+  content:none!important;
+  display:none!important;
+}
+
+#financials .expand-btn{
+  color:#0f172a!important;
+}
+
+/* If any fin-menu button exists from earlier versions, make it look like a plus too */
+.fin-menu-btn{
+  border-radius:50%!important;
+  background:#e8f0ff!important;
+  border:1px solid #cfe2ff!important;
+  color:#0f172a!important;
+}
+
+.fin-menu-btn span{
+  display:none!important;
+}
+
+.fin-menu-btn::before{
+  content:"+"!important;
+  font-size:20px!important;
+  font-weight:900!important;
+  color:#0f172a!important;
+  line-height:1!important;
+}
+
+/* Make sparkline area fit smaller boxes */
+#financials .kpi::after{
+  height:34px!important;
+  bottom:8px!important;
+}
+
+@media(max-height:760px) and (min-width:900px){
+  .brand-name{
+    font-size:13.5px!important;
+    max-width:118px!important;
+  }
+
+  .finance-chip,
+  .finance-select,
+  .export-btn{
+    height:32px!important;
+    font-size:11px!important;
+    padding-left:9px!important;
+    padding-right:9px!important;
+  }
+
+  #financials .kpi-title{
+    font-size:11.4px!important;
+  }
+
+  #financials .kpi-value{
+    font-size:20px!important;
+  }
+
+  .user-meta-line + .user-meta-line{
+    margin-top:8px!important;
+  }
+}
+
+
+/* v44 sidebar nav width + curved active chip */
+.side-nav{
+  padding-right:10px!important;
+}
+
+.side-tab{
+  width:92%!important;
+  max-width:214px!important;
+  min-height:58px!important;
+  padding:9px 12px 9px 14px!important;
+  grid-template-columns:38px minmax(0,1fr)!important;
+  gap:10px!important;
+  justify-self:start!important;
+  border-radius:16px!important;
+}
+
+.side-icon{
+  width:34px!important;
+  height:34px!important;
+  border-radius:12px!important;
+}
+
+.side-title{
+  font-size:12.5px!important;
+}
+
+.side-sub{
+  font-size:10.4px!important;
+}
+
+/* curved blue chip inside selected nav card */
+.side-tab.active{
+  overflow:hidden!important;
+  border:1px solid #e4ebf5!important;
+  box-shadow:0 14px 30px rgba(15,23,42,.06)!important;
+}
+
+.side-tab.active::before{
+  content:""!important;
+  position:absolute!important;
+  left:0!important;
+  top:8px!important;
+  bottom:8px!important;
+  width:7px!important;
+  border-radius:0 999px 999px 0!important;
+  background:#1d64ff!important;
+  box-shadow:0 0 18px rgba(29,100,255,.28)!important;
+}
+
+/* keep collapsed icons centered */
+body.nav-collapsed .side-nav{
+  padding-right:0!important;
+}
+
+body.nav-collapsed .side-tab{
+  width:42px!important;
+  max-width:42px!important;
+  min-height:42px!important;
+  padding:0!important;
+  justify-self:center!important;
+}
+
+body.nav-collapsed .side-tab.active::before{
+  left:0!important;
+  top:6px!important;
+  bottom:6px!important;
+  width:4px!important;
+  border-radius:0 999px 999px 0!important;
+}
+
+@media(max-height:760px) and (min-width:900px){
+  .side-tab{
+    width:90%!important;
+    max-width:195px!important;
+    min-height:42px!important;
+    padding:5px 8px 5px 11px!important;
+    grid-template-columns:28px minmax(0,1fr)!important;
+    gap:7px!important;
+    border-radius:13px!important;
+  }
+  .side-tab.active::before{
+    top:6px!important;
+    bottom:6px!important;
+    width:5px!important;
+  }
+}
+
+
+/* v45 restore sidebar nav text sizing + add breathing space from icons */
+.side-tab{
+  grid-template-columns:38px minmax(0,1fr)!important;
+  gap:16px!important;
+  padding-left:14px!important;
+  padding-right:12px!important;
+}
+
+.side-title{
+  font-size:13px!important;
+  line-height:1.16!important;
+}
+
+.side-sub{
+  font-size:10.8px!important;
+  line-height:1.18!important;
+}
+
+.side-icon{
+  justify-self:start!important;
+}
+
+body.nav-collapsed .side-tab{
+  gap:0!important;
+  padding:0!important;
+}
+
+@media(max-height:760px) and (min-width:900px){
+  .side-tab{
+    gap:11px!important;
+    grid-template-columns:28px minmax(0,1fr)!important;
+  }
+  .side-title{
+    font-size:11.2px!important;
+  }
+  .side-sub{
+    font-size:9px!important;
+  }
+}
+
+
+/* v46 exact requested small patch only */
+
+/* 1) Operational KPI metric title same size as Financial KPI titles */
+#operations .kpi-title{
+  font-size:12.5px!important;
+  line-height:1.15!important;
+  letter-spacing:-.01em!important;
+  font-weight:800!important;
+}
+@media(max-height:760px) and (min-width:900px){
+  #operations .kpi-title{
+    font-size:11.4px!important;
+  }
+}
+
+/* 2) Sidebar nav buttons across the nav bar + chip like screenshot */
+.side-nav{
+  padding-right:0!important;
+}
+
+.side-tab{
+  width:100%!important;
+  max-width:none!important;
+  min-height:64px!important;
+  padding:10px 14px 10px 16px!important;
+  grid-template-columns:42px minmax(0,1fr)!important;
+  gap:16px!important;
+  border-radius:18px!important;
+  justify-self:stretch!important;
+}
+
+.side-tab.active{
+  background:#ffffff!important;
+  border:1px solid #e1e8f2!important;
+  box-shadow:0 16px 34px rgba(15,23,42,.07)!important;
+  overflow:hidden!important;
+}
+
+.side-tab.active::before{
+  content:""!important;
+  position:absolute!important;
+  left:0!important;
+  top:0!important;
+  bottom:0!important;
+  width:7px!important;
+  border-radius:18px 0 0 18px!important;
+  background:#1d64ff!important;
+  box-shadow:0 0 20px rgba(29,100,255,.25)!important;
+}
+
+.side-tab.active .side-icon{
+  background:#1d64ff!important;
+  border-color:#1d64ff!important;
+  color:#fff!important;
+  box-shadow:0 12px 28px rgba(29,100,255,.24)!important;
+}
+
+.side-tab.active .side-icon svg{
+  stroke:#ffffff!important;
+}
+
+.side-icon{
+  width:38px!important;
+  height:38px!important;
+  border-radius:13px!important;
+}
+
+/* 3) Logout normal width, not oversized */
+.sidebar-footer{
+  left:22px!important;
+  right:22px!important;
+}
+
+.logout{
+  width:100%!important;
+  max-width:214px!important;
+  min-height:46px!important;
+  grid-template-columns:34px 1fr!important;
+  padding:6px 10px!important;
+  border-radius:14px!important;
+  box-shadow:0 12px 26px rgba(15,23,42,.08)!important;
+  justify-items:start!important;
+}
+
+.logout .side-icon{
+  justify-self:start!important;
+}
+
+.logout span:last-child{
+  justify-self:start!important;
+  text-align:left!important;
+}
+
+/* 4) Tech rows less wide */
+.tech-stack{
+  max-width:96%!important;
+}
+
+.tech-row{
+  width:100%!important;
+}
+
+@media(max-height:760px) and (min-width:900px){
+  .side-tab{
+    min-height:48px!important;
+    grid-template-columns:32px minmax(0,1fr)!important;
+    gap:11px!important;
+    padding:6px 10px 6px 13px!important;
+    border-radius:14px!important;
+  }
+
+  .side-tab.active::before{
+    width:6px!important;
+    border-radius:14px 0 0 14px!important;
+  }
+
+  .side-icon{
+    width:30px!important;
+    height:30px!important;
+  }
+
+  .logout{
+    max-width:195px!important;
+  }
+}
+
+body.nav-collapsed .side-tab{
+  width:42px!important;
+  max-width:42px!important;
+  min-height:42px!important;
+  padding:0!important;
+  gap:0!important;
+  justify-self:center!important;
+}
+
+body.nav-collapsed .side-tab.active::before{
+  top:6px!important;
+  bottom:6px!important;
+  width:4px!important;
+  border-radius:0 999px 999px 0!important;
+}
+
+
+/* v47 requested code changes only */
+
+/* 1) Tech rows: reduce row length, not full-width */
+.tech-stack{
+  max-width:92%!important;
+  margin-left:0!important;
+  margin-right:auto!important;
+}
+.tech-row{
+  width:100%!important;
+}
+
+/* 2) DAS: plus top-right like other cards, remove bottom AI/ML/CV boxes, move AI ML CV text to top-left */
+.das-hero{
+  position:relative!important;
+  overflow:hidden!important;
+}
+
+.das-hero .expand-btn{
+  position:absolute!important;
+  top:22px!important;
+  right:22px!important;
+  left:auto!important;
+  width:30px!important;
+  height:30px!important;
+  border-radius:50%!important;
+  background:#e8f0ff!important;
+  border:1px solid #cfe2ff!important;
+  color:#0f172a!important;
+  font-size:20px!important;
+  font-weight:900!important;
+  line-height:1!important;
+  display:grid!important;
+  place-items:center!important;
+  box-shadow:0 8px 18px rgba(29,100,255,.10)!important;
+  z-index:3!important;
+}
+
+.das-hero .expand-btn::before{
+  content:none!important;
+  display:none!important;
+}
+
+.das-ai-boxes{
+  display:none!important;
+}
+
+.das-hero::after{
+  content:"AI  ✦  ML  ✧  CV"!important;
+  position:absolute!important;
+  left:34px!important;
+  top:22px!important;
+  right:auto!important;
+  color:#135ee8!important;
+  opacity:.16!important;
+  font-size:30px!important;
+  font-weight:900!important;
+  letter-spacing:.14em!important;
+  pointer-events:none!important;
+  z-index:1!important;
+}
+
+.das-hero::before{
+  opacity:.24!important;
+}
+
+/* 3) Operational cards more premium like reference */
+#operations .kpi{
+  min-height:174px!important;
+  border-radius:22px!important;
+  background:linear-gradient(180deg,#fff,#fcfdff)!important;
+  border:1px solid #e7edf6!important;
+  box-shadow:0 14px 28px rgba(15,23,42,.055)!important;
+  padding:20px 18px 16px!important;
+}
+
+#operations .kpi .kpi-symbol{
+  position:absolute!important;
+  width:52px!important;
+  height:52px!important;
+  border-radius:50%!important;
+  left:16px!important;
+  top:16px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  font-size:21px!important;
+  font-weight:900!important;
+}
+
+#operations .kpi.blue .kpi-symbol{
+  background:#e8f0ff!important;
+  color:#1d64ff!important;
+}
+#operations .kpi.good .kpi-symbol{
+  background:#e8f7ec!important;
+  color:#16a34a!important;
+}
+#operations .kpi.warn .kpi-symbol{
+  background:#fff3e4!important;
+  color:#f97316!important;
+}
+
+#operations .kpi-title{
+  margin-left:72px!important;
+  margin-top:2px!important;
+  font-size:13px!important;
+  line-height:1.18!important;
+  letter-spacing:-.01em!important;
+  font-weight:800!important;
+  min-height:auto!important;
+  padding-right:34px!important;
+}
+
+#operations .kpi-value{
+  margin-top:24px!important;
+  font-size:31px!important;
+  line-height:1.02!important;
+  letter-spacing:-.035em!important;
+}
+
+#operations .kpi-sub{
+  margin-top:12px!important;
+  font-size:12px!important;
+  color:#6b7a90!important;
+}
+
+#operations .kpi .expand-btn{
+  top:20px!important;
+  right:18px!important;
+  width:30px!important;
+  height:30px!important;
+  border-radius:50%!important;
+  background:#e8f0ff!important;
+  border:1px solid #cfe2ff!important;
+  color:#0f172a!important;
+  font-size:20px!important;
+  font-weight:900!important;
+  line-height:1!important;
+  display:grid!important;
+  place-items:center!important;
+  box-shadow:0 8px 18px rgba(29,100,255,.10)!important;
+}
+
+#operations .kpi .expand-btn::before{
+  content:none!important;
+  display:none!important;
+}
+
+/* 4) Logout: same width as nav buttons, centered text */
+.sidebar-footer{
+  left:22px!important;
+  right:22px!important;
+}
+
+.logout{
+  width:100%!important;
+  max-width:none!important;
+  min-height:50px!important;
+  grid-template-columns:36px 1fr 36px!important;
+  padding:7px 12px!important;
+  border-radius:16px!important;
+  justify-items:center!important;
+  box-shadow:0 14px 30px rgba(15,23,42,.09)!important;
+}
+
+.logout .side-icon{
+  grid-column:1!important;
+  justify-self:start!important;
+}
+
+.logout span:last-child{
+  grid-column:2!important;
+  justify-self:center!important;
+  text-align:center!important;
+  font-weight:700!important;
+}
+
+@media(max-height:760px) and (min-width:900px){
+  .tech-stack{
+    max-width:92%!important;
+  }
+
+  .das-hero::after{
+    font-size:24px!important;
+    left:26px!important;
+    top:18px!important;
+  }
+
+  #operations .kpi{
+    min-height:152px!important;
+    padding:16px 14px 12px!important;
+  }
+
+  #operations .kpi .kpi-symbol{
+    width:44px!important;
+    height:44px!important;
+    left:14px!important;
+    top:14px!important;
+  }
+
+  #operations .kpi-title{
+    margin-left:60px!important;
+    font-size:11.8px!important;
+  }
+
+  #operations .kpi-value{
+    font-size:26px!important;
+    margin-top:18px!important;
+  }
+
+  #operations .kpi-sub{
+    font-size:10.8px!important;
+    margin-top:9px!important;
+  }
+
+  .logout{
+    max-width:none!important;
+  }
+}
+
+
+/* v48 hard fixes requested */
+
+/* Tech product rows: shorter width */
+.tech-stack{
+  max-width:84%!important;
+  width:84%!important;
+  margin-left:0!important;
+  margin-right:auto!important;
+}
+.tech-row{
+  width:100%!important;
+}
+
+/* all circular + buttons: smaller, premium shadow */
+.tech-plus,
+.expand-btn{
+  width:28px!important;
+  height:28px!important;
+  border-radius:50%!important;
+  background:#ffffff!important;
+  border:1px solid #9fc7ff!important;
+  color:#1d64ff!important;
+  box-shadow:0 8px 18px rgba(29,100,255,.16)!important;
+  font-size:18px!important;
+  font-weight:900!important;
+  display:grid!important;
+  place-items:center!important;
+}
+.tech-plus span{
+  line-height:1!important;
+}
+
+/* logout slightly smaller but centered */
+.logout{
+  width:92%!important;
+  max-width:92%!important;
+  min-height:46px!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+  grid-template-columns:34px 1fr 34px!important;
+}
+.logout span:last-child{
+  grid-column:2!important;
+  justify-self:center!important;
+  text-align:center!important;
+}
+
+/* DAS: remove circular AI star before label */
+.ai-stars{
+  display:none!important;
+}
+.das-label{
+  gap:0!important;
+}
+
+/* DAS plus top-right smaller white/blue with shadow */
+.das-hero .expand-btn{
+  top:22px!important;
+  right:22px!important;
+  width:28px!important;
+  height:28px!important;
+  background:#ffffff!important;
+  border:1px solid #9fc7ff!important;
+  color:#1d64ff!important;
+  box-shadow:0 8px 18px rgba(29,100,255,.16)!important;
+  font-size:18px!important;
+}
+
+/* Operational metric cards: align icon/title/value, no overlap */
+#operations .kpi{
+  min-height:168px!important;
+  padding:18px 16px 14px!important;
+}
+
+#operations .kpi .kpi-symbol{
+  left:16px!important;
+  top:16px!important;
+  width:46px!important;
+  height:46px!important;
+  box-shadow:0 10px 22px rgba(15,23,42,.10)!important;
+}
+
+#operations .kpi-title{
+  margin-left:60px!important;
+  margin-top:6px!important;
+  padding-right:36px!important;
+  min-height:38px!important;
+  display:flex!important;
+  align-items:center!important;
+  font-size:12.5px!important;
+  line-height:1.16!important;
+  letter-spacing:-.01em!important;
+}
+
+#operations .kpi-value{
+  margin-left:0!important;
+  margin-top:26px!important;
+  font-size:30px!important;
+  line-height:1.02!important;
+  clear:both!important;
+}
+
+#operations .kpi-sub{
+  margin-left:0!important;
+  margin-top:10px!important;
+  font-size:11.5px!important;
+}
+
+#operations .kpi .expand-btn{
+  top:18px!important;
+  right:16px!important;
+  width:28px!important;
+  height:28px!important;
+  background:#ffffff!important;
+  border:1px solid #9fc7ff!important;
+  color:#1d64ff!important;
+  box-shadow:0 8px 18px rgba(29,100,255,.16)!important;
+  font-size:18px!important;
+}
+
+/* Working Capital: ONE circle with SVG inside, no empty/double circles */
+#efficiencyGrid .kpi::before,
+#efficiencyGrid .kpi::after,
+#efficiencyGrid .kpi-title::before{
+  display:none!important;
+  content:none!important;
+}
+
+#efficiencyGrid .wc-kpi{
+  position:relative!important;
+  padding:18px 18px 16px!important;
+  min-height:132px!important;
+}
+
+#efficiencyGrid .wc-circle{
+  position:absolute!important;
+  left:18px!important;
+  top:18px!important;
+  width:42px!important;
+  height:42px!important;
+  border-radius:50%!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  background:#e8f0ff!important;
+  color:#1d64ff!important;
+  box-shadow:0 8px 18px rgba(15,23,42,.06)!important;
+}
+
+#efficiencyGrid .wc-kpi.ar .wc-circle{
+  background:#e7f8ed!important;
+  color:#16a34a!important;
+}
+
+#efficiencyGrid .wc-kpi.ap .wc-circle{
+  background:#f0e8ff!important;
+  color:#7c3aed!important;
+}
+
+#efficiencyGrid .wc-kpi.ccc .wc-circle{
+  background:#fff4dd!important;
+  color:#f59e0b!important;
+}
+
+#efficiencyGrid .wc-circle svg{
+  display:block!important;
+  width:21px!important;
+  height:21px!important;
+  stroke:currentColor!important;
+  fill:none!important;
+  stroke-width:2!important;
+  stroke-linecap:round!important;
+  stroke-linejoin:round!important;
+}
+
+#efficiencyGrid .wc-kpi .kpi-title{
+  margin-left:54px!important;
+  padding-right:0!important;
+  min-height:auto!important;
+  font-size:13px!important;
+  display:block!important;
+}
+
+#efficiencyGrid .wc-kpi .kpi-value{
+  margin-left:0!important;
+  margin-top:30px!important;
+}
+
+#efficiencyGrid .wc-kpi .kpi-sub{
+  margin-left:0!important;
+}
+
+@media(max-height:760px) and (min-width:900px){
+  .tech-stack{
+    max-width:84%!important;
+    width:84%!important;
+  }
+  #operations .kpi{
+    min-height:148px!important;
+  }
+  #operations .kpi .kpi-symbol{
+    width:40px!important;
+    height:40px!important;
+  }
+  #operations .kpi-title{
+    margin-left:52px!important;
+    min-height:32px!important;
+    font-size:11.5px!important;
+  }
+  #operations .kpi-value{
+    font-size:25px!important;
+    margin-top:20px!important;
+  }
+}
+
+
+/* v49 Tech rows: full-width across again, but shorter vertically */
+.tech-stack{
+  max-width:100%!important;
+  width:100%!important;
+  margin-left:0!important;
+  margin-right:0!important;
+}
+
+.tech-row{
+  width:100%!important;
+  max-width:100%!important;
+}
+
+.tech-row-head{
+  min-height:64px!important;
+  padding:10px 14px!important;
+  grid-template-columns:46px 1fr 30px!important;
+  gap:12px!important;
+}
+
+.tech-icon{
+  width:46px!important;
+  height:46px!important;
+}
+
+.tech-icon img{
+  width:40px!important;
+  height:40px!important;
+}
+
+.tech-title{
+  font-size:14px!important;
+  line-height:1.15!important;
+}
+
+.tech-subtitle{
+  font-size:11.3px!important;
+  line-height:1.25!important;
+  margin-top:3px!important;
+}
+
+.tech-plus{
+  width:28px!important;
+  height:28px!important;
+}
+
+.tech-body{
+  padding:0 14px 14px 72px!important;
+}
+
+@media(max-height:760px) and (min-width:900px){
+  .tech-stack{
+    max-width:100%!important;
+    width:100%!important;
+  }
+
+  .tech-row-head{
+    min-height:54px!important;
+    padding:8px 12px!important;
+    grid-template-columns:40px 1fr 28px!important;
+    gap:10px!important;
+  }
+
+  .tech-icon{
+    width:40px!important;
+    height:40px!important;
+  }
+
+  .tech-icon img{
+    width:34px!important;
+    height:34px!important;
+  }
+
+  .tech-title{
+    font-size:12.8px!important;
+  }
+
+  .tech-subtitle{
+    font-size:10.2px!important;
+  }
+
+  .tech-body{
+    padding:0 12px 12px 62px!important;
+  }
+}
+
+
+/* v50 requested final polish */
+
+/* 1) Logout taller, but still premium */
+.logout{
+  min-height:58px!important;
+  height:58px!important;
+  width:92%!important;
+  max-width:92%!important;
+  border-radius:18px!important;
+  box-shadow:0 16px 34px rgba(15,23,42,.10)!important;
+}
+
+/* 2) Financial nav graph icon: columns closer */
+.side-tab[data-tab="financials"] .side-icon svg rect{
+  fill:currentColor!important;
+  stroke:none!important;
+}
+.side-tab[data-tab="financials"] .side-icon svg path{
+  stroke:currentColor!important;
+}
+.side-tab.active[data-tab="financials"] .side-icon svg{
+  color:#ffffff!important;
+}
+.side-tab:not(.active)[data-tab="financials"] .side-icon svg{
+  color:#111827!important;
+}
+
+/* 3) Gap between Last Access and Updated */
+.last-updated-card{
+  margin-top:22px!important;
+}
+
+/* 5) Financial subtitle removed: tighten heading spacing */
+.finance-hero-head{
+  align-items:center!important;
+  margin-bottom:18px!important;
+}
+.finance-hero-copy h2{
+  margin-bottom:0!important;
+}
+
+/* 6) Removed quarter dropdown: keep actions compact */
+.finance-actions{
+  gap:10px!important;
+}
+.finance-chip{
+  height:38px!important;
+  padding:0 14px!important;
+}
+
+/* Remove WC subtitle spacing */
+.finance-subpanel-head h2{
+  margin-bottom:0!important;
+}
+.finance-subpanel-head p{
+  display:none!important;
+}
+
+/* Better CCC icon visibility */
+#efficiencyGrid .wc-kpi.ccc .wc-circle svg{
+  width:22px!important;
+  height:22px!important;
+}
+
+/* keep file stable */
+
+
+/* v51 small requested fixes */
+
+/* 2) Financial nav bars closer/wider */
+.side-tab[data-tab="financials"] .side-icon svg rect{
+  fill:currentColor!important;
+  stroke:none!important;
+}
+.side-tab[data-tab="financials"] .side-icon svg{
+  transform:scale(1.06)!important;
+}
+
+/* 5) Collapsed nav: no blue side chip, only active icon highlighted */
+body.nav-collapsed .side-tab.active::before{
+  display:none!important;
+  content:none!important;
+}
+body.nav-collapsed .side-tab.active .side-icon{
+  background:#1d64ff!important;
+  border-color:#1d64ff!important;
+  box-shadow:0 10px 22px rgba(29,100,255,.24)!important;
+}
+body.nav-collapsed .side-tab.active .side-icon svg{
+  stroke:#ffffff!important;
+  color:#ffffff!important;
+}
+
+/* 6) Logout: not thick, across nav same width as buttons */
+.logout{
+  width:100%!important;
+  max-width:none!important;
+  height:50px!important;
+  min-height:50px!important;
+  border-radius:16px!important;
+  grid-template-columns:36px 1fr 36px!important;
+  padding:7px 12px!important;
+}
+.logout span:last-child{
+  grid-column:2!important;
+  justify-self:center!important;
+  text-align:center!important;
+}
+
+
+/* v52 requested polish */
+
+/* logo.png placeholder instead of inline SVG */
+.brand-logo{
+  width:32px!important;
+  height:32px!important;
+  border-radius:10px!important;
+  overflow:hidden!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+.brand-logo img{
+  width:32px!important;
+  height:32px!important;
+  object-fit:contain!important;
+  display:block!important;
+}
+
+/* update status dots: red blinking 5 times, blue twice, then green */
+.side-update-row::before{
+  animation:updateStatusSequence 13s ease-in-out 1 forwards!important;
+}
+
+@keyframes updateStatusSequence{
+  0%, 6%, 12%, 18%, 24%{
+    background:#ef4444;
+    box-shadow:0 0 0 4px rgba(239,68,68,.16);
+    opacity:1;
+  }
+  3%, 9%, 15%, 21%, 27%{
+    background:#ef4444;
+    box-shadow:0 0 0 7px rgba(239,68,68,.10);
+    opacity:.28;
+  }
+  34%, 46%{
+    background:#1d64ff;
+    box-shadow:0 0 0 4px rgba(29,100,255,.16);
+    opacity:1;
+  }
+  40%, 52%{
+    background:#1d64ff;
+    box-shadow:0 0 0 7px rgba(29,100,255,.10);
+    opacity:.45;
+  }
+  62%, 100%{
+    background:#22c55e;
+    box-shadow:0 0 0 4px rgba(34,197,94,.16);
+    opacity:1;
+  }
+}
+
+/* logout thinner, still full nav width */
+.logout{
+  height:44px!important;
+  min-height:44px!important;
+  border-radius:15px!important;
+}
+
+/* financial nav graph: slightly more gap between columns */
+.side-tab[data-tab="financials"] .side-icon svg{
+  transform:scale(1.02)!important;
+}
+
+/* DAS label cleanup */
+.das-label{
+  text-transform:uppercase!important;
+}
+
+
+/* v54 remove box around download icon */
+.files-action,
+.files-action.icon-only{
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  width:auto!important;
+  min-width:0!important;
+  height:auto!important;
+  padding:0!important;
+  border-radius:0!important;
+}
+
+.files-action .download-icon,
+.files-action.icon-only .download-icon{
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  width:22px!important;
+  height:22px!important;
+  color:#135ee8!important;
+  font-size:18px!important;
+}
+
+
+/* v55 put download icon back inside a small clean box */
+.files-action,
+.files-action.icon-only{
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  width:auto!important;
+  min-width:0!important;
+  height:auto!important;
+  padding:0!important;
+}
+
+.files-action .download-icon,
+.files-action.icon-only .download-icon{
+  width:32px!important;
+  height:32px!important;
+  border-radius:10px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  background:#ffffff!important;
+  border:1px solid #dbe4ef!important;
+  box-shadow:0 6px 14px rgba(15,23,42,.06)!important;
+  color:#135ee8!important;
+  font-size:17px!important;
+  font-weight:900!important;
+}
+
+
+/* v56 Tech Product Suite open state like screenshot + Recognition tab */
+#technology .panel{
+  padding:22px 24px!important;
+}
+
+.tech-stack{
+  max-width:100%!important;
+  width:100%!important;
+}
+
+.tech-row{
+  border-radius:22px!important;
+  border:1px solid #dbe6f3!important;
+  box-shadow:0 14px 32px rgba(15,23,42,.06)!important;
+}
+
+.tech-row-head{
+  min-height:72px!important;
+  padding:18px 22px!important;
+  grid-template-columns:58px 1fr 38px!important;
+  gap:18px!important;
+}
+
+.tech-row.open .tech-row-head{
+  align-items:start!important;
+  padding-bottom:14px!important;
+}
+
+.tech-row.open .tech-plus span{
+  transform:rotate(45deg)!important;
+}
+
+.tech-row.open .tech-plus{
+  transform:rotate(45deg)!important;
+}
+
+.tech-icon{
+  width:54px!important;
+  height:54px!important;
+  border-radius:14px!important;
+}
+
+.tech-icon img{
+  width:48px!important;
+  height:48px!important;
+}
+
+.tech-body{
+  padding:0 22px 22px 22px!important;
+}
+
+.tech-table{
+  margin-top:18px!important;
+  margin-left:0!important;
+  border-radius:18px!important;
+  border:1px solid #d4e0ef!important;
+  overflow:hidden!important;
+}
+
+.tech-table-head,
+.tech-sub-row{
+  grid-template-columns:1.55fr .95fr .75fr .75fr .78fr 1.05fr .85fr .68fr!important;
+  gap:10px!important;
+  align-items:center!important;
+  padding:14px 16px!important;
+}
+
+.tech-table-head{
+  background:#f6f9fd!important;
+  color:#52627a!important;
+  font-size:11px!important;
+  letter-spacing:.08em!important;
+}
+
+.tech-sub-row{
+  min-height:74px!important;
+  background:#fff!important;
+  font-size:13px!important;
+}
+
+.sub-open{
+  width:34px!important;
+  height:34px!important;
+  border-radius:50%!important;
+  border:1px dashed #aac4e6!important;
+  background:#fff!important;
+  color:#1d64ff!important;
+  font-size:20px!important;
+  font-weight:800!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  flex:0 0 auto!important;
+  cursor:pointer!important;
+}
+
+.tech-main-cell{
+  gap:16px!important;
+}
+
+.status-pill{
+  min-height:34px!important;
+  padding:0 12px!important;
+  border-radius:10px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:8px!important;
+  font-weight:800!important;
+  font-size:12px!important;
+  white-space:nowrap!important;
+}
+
+.status-pill i{
+  width:8px!important;
+  height:8px!important;
+  border-radius:50%!important;
+  display:inline-block!important;
+}
+
+.status-pill.operational{
+  background:#ecfdf5!important;
+  color:#15803d!important;
+}
+.status-pill.operational i{background:#22c55e!important;}
+
+.status-pill.testing{
+  background:#fff7ed!important;
+  color:#f97316!important;
+}
+.status-pill.testing i{background:#fb923c!important;}
+
+.status-pill.prototype{
+  background:#f3e8ff!important;
+  color:#7c3aed!important;
+}
+.status-pill.prototype i{background:#8b5cf6!important;}
+
+.status-pill.training{
+  background:#eef5ff!important;
+  color:#1d64ff!important;
+}
+.status-pill.training i{background:#1d64ff!important;}
+
+.version-pill{
+  min-height:32px!important;
+  padding:0 12px!important;
+  border-radius:9px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  background:#f3f7ff!important;
+  border:1px solid #dce8ff!important;
+  color:#1d64ff!important;
+  font-weight:800!important;
+  font-size:12px!important;
+  white-space:nowrap!important;
+}
+
+.progress-cell{
+  display:grid!important;
+  grid-template-columns:42px 1fr!important;
+  gap:8px!important;
+  align-items:center!important;
+  color:#0f172a!important;
+  font-weight:800!important;
+  font-size:12px!important;
+}
+
+.progress-track{
+  height:8px!important;
+  border-radius:999px!important;
+  background:#e5edf7!important;
+  overflow:hidden!important;
+  box-shadow:inset 0 1px 2px rgba(15,23,42,.08)!important;
+}
+
+.progress-track b{
+  display:block!important;
+  height:100%!important;
+  border-radius:999px!important;
+  background:linear-gradient(90deg,#2f8cff,#1d64ff)!important;
+}
+
+.files-action.icon-only .download-icon{
+  width:34px!important;
+  height:34px!important;
+  border-radius:12px!important;
+  background:#fff!important;
+  border:1px solid #d6e5ff!important;
+  box-shadow:0 8px 18px rgba(29,100,255,.10)!important;
+  color:#1d64ff!important;
+  font-size:18px!important;
+}
+
+.recognition-grid{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:16px!important;
+}
+
+.recognition-card{
+  border:1px solid #dbe6f3!important;
+  border-radius:22px!important;
+  background:#fff!important;
+  box-shadow:0 14px 32px rgba(15,23,42,.06)!important;
+  padding:22px!important;
+}
+
+.recognition-icon{
+  width:52px!important;
+  height:52px!important;
+  border-radius:16px!important;
+  background:#e8f0ff!important;
+  color:#1d64ff!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  font-weight:900!important;
+  margin-bottom:16px!important;
+}
+
+.recognition-card h3{
+  margin:0 0 8px!important;
+  font-size:18px!important;
+}
+
+.recognition-card p{
+  margin:0!important;
+  color:#667085!important;
+  font-size:13px!important;
+  line-height:1.45!important;
+}
+
+@media(max-width:1100px){
+  .tech-table-head,
+  .tech-sub-row{
+    grid-template-columns:1.5fr .95fr .75fr .75fr .75fr 1fr .85fr .65fr!important;
+    gap:8px!important;
+    padding:12px!important;
+  }
+  .recognition-grid{
+    grid-template-columns:1fr!important;
+  }
+}
+
+@media(max-height:760px) and (min-width:900px){
+  .tech-row-head{
+    min-height:60px!important;
+    padding:14px 18px!important;
+    grid-template-columns:48px 1fr 34px!important;
+  }
+  .tech-icon{
+    width:46px!important;
+    height:46px!important;
+  }
+  .tech-icon img{
+    width:40px!important;
+    height:40px!important;
+  }
+  .tech-sub-row{
+    min-height:62px!important;
+  }
+}
+
+
+/* v57 tech table typography/alignment + cleaner download icon */
+
+/* same font/weight across table cells */
+.tech-table-head,
+.tech-sub-row,
+.tech-name,
+.status-pill,
+.version-pill,
+.progress-cell,
+.tech-cell-muted{
+  font-family:Inter, Satoshi, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif!important;
+  font-size:12px!important;
+  line-height:1.2!important;
+}
+
+/* make names consistent with the rest, not too bold/different */
+.tech-name{
+  font-weight:700!important;
+  color:#0f172a!important;
+}
+
+.status-pill,
+.version-pill{
+  font-weight:700!important;
+}
+
+/* align every cell from the same vertical starting point */
+.tech-sub-row{
+  align-items:center!important;
+}
+
+.tech-sub-row > div{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  min-height:40px!important;
+}
+
+.tech-sub-row > div:first-child{
+  justify-content:flex-start!important;
+}
+
+.tech-table-head > div{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+
+.tech-table-head > div:first-child{
+  justify-content:flex-start!important;
+}
+
+/* status/version boxes same height and starting position */
+.status-pill,
+.version-pill{
+  height:32px!important;
+  min-height:32px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  box-sizing:border-box!important;
+  white-space:nowrap!important;
+}
+
+/* progress starts aligned in its own cell */
+.progress-cell{
+  width:100%!important;
+  display:grid!important;
+  grid-template-columns:42px minmax(70px,1fr)!important;
+  align-items:center!important;
+  justify-content:stretch!important;
+}
+
+/* cleaner download icon: shorter arrow + straight line under it */
+.files-action.icon-only .download-icon{
+  position:relative!important;
+  font-size:0!important;
+  line-height:0!important;
+}
+
+.files-action.icon-only .download-icon::before{
+  content:""!important;
+  position:absolute!important;
+  left:50%!important;
+  top:8px!important;
+  width:8px!important;
+  height:10px!important;
+  transform:translateX(-50%)!important;
+  background:
+    linear-gradient(#1d64ff,#1d64ff) center top/2px 9px no-repeat!important;
+}
+
+.files-action.icon-only .download-icon::after{
+  content:""!important;
+  position:absolute!important;
+  left:50%!important;
+  top:16px!important;
+  width:14px!important;
+  height:8px!important;
+  transform:translateX(-50%)!important;
+  background:
+    linear-gradient(135deg, transparent 0 42%, #1d64ff 43% 57%, transparent 58%) left top/8px 8px no-repeat,
+    linear-gradient(45deg, transparent 0 42%, #1d64ff 43% 57%, transparent 58%) right top/8px 8px no-repeat,
+    linear-gradient(#1d64ff,#1d64ff) center bottom/14px 2px no-repeat!important;
+}
+
+/* make download column centered exactly */
+.tech-sub-row > div:last-child,
+.tech-table-head > div:last-child{
+  justify-content:center!important;
+}
+
+
+/* v58 tech table column alignment + safer widths */
+
+/* smaller column headers */
+.tech-table-head{
+  font-size:9.8px!important;
+  letter-spacing:.07em!important;
+  line-height:1.05!important;
+}
+
+/* fixed/safe columns so no cell pushes the next column */
+.tech-table-head,
+.tech-sub-row{
+  grid-template-columns:
+    minmax(230px,1.55fr)
+    minmax(120px,.85fr)
+    minmax(80px,.7fr)
+    minmax(70px,.62fr)
+    minmax(105px,.75fr)
+    minmax(125px,.9fr)
+    minmax(105px,.75fr)
+    minmax(72px,.52fr)!important;
+  column-gap:8px!important;
+}
+
+.tech-table-head > div,
+.tech-sub-row > div{
+  min-width:0!important;
+  overflow:hidden!important;
+}
+
+/* all columns centered by default */
+.tech-table-head > div,
+.tech-sub-row > div{
+  justify-content:center!important;
+  text-align:center!important;
+}
+
+/* except Tech, Status, Version left-aligned */
+.tech-table-head > div:nth-child(1),
+.tech-sub-row > div:nth-child(1),
+.tech-table-head > div:nth-child(2),
+.tech-sub-row > div:nth-child(2),
+.tech-table-head > div:nth-child(5),
+.tech-sub-row > div:nth-child(5){
+  justify-content:flex-start!important;
+  text-align:left!important;
+}
+
+/* stop long metric names from pushing later columns */
+.tech-main-cell{
+  min-width:0!important;
+  width:100%!important;
+}
+
+.tech-name{
+  min-width:0!important;
+  max-width:100%!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+}
+
+.status-pill,
+.version-pill,
+.tech-cell-muted,
+.progress-cell{
+  max-width:100%!important;
+  overflow:hidden!important;
+}
+
+.status-pill,
+.version-pill{
+  white-space:nowrap!important;
+  text-overflow:ellipsis!important;
+}
+
+.progress-cell{
+  min-width:0!important;
+  grid-template-columns:38px minmax(60px,1fr)!important;
+}
+
+.progress-track{
+  min-width:0!important;
+  width:100%!important;
+}
+
+/* Download remains centered */
+.tech-table-head > div:nth-child(8),
+.tech-sub-row > div:nth-child(8){
+  justify-content:center!important;
+  text-align:center!important;
+}
+
+@media(max-width:1200px){
+  .tech-table-head,
+  .tech-sub-row{
+    grid-template-columns:
+      minmax(200px,1.45fr)
+      minmax(110px,.82fr)
+      minmax(72px,.65fr)
+      minmax(64px,.58fr)
+      minmax(94px,.7fr)
+      minmax(112px,.85fr)
+      minmax(92px,.7fr)
+      minmax(64px,.5fr)!important;
+    column-gap:6px!important;
+  }
+  .tech-table-head{
+    font-size:9px!important;
+  }
+}
+
+
+/* v59 subcategory files: align under first-column text and show only download icon */
+.files-row{
+  padding:0 16px 14px 16px!important;
+  background:#fbfdff!important;
+}
+
+.tech-file{
+  display:grid!important;
+  grid-template-columns:minmax(230px,1.55fr) 42px!important;
+  gap:12px!important;
+  align-items:center!important;
+  justify-content:start!important;
+  padding:12px 0 12px 50px!important; /* starts under text after the plus circle */
+  border-top:1px solid #eef2f7!important;
+}
+
+.tech-file-main{
+  min-width:0!important;
+}
+
+.tech-file-name{
+  font-family:Inter, Satoshi, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif!important;
+  font-size:12px!important;
+  line-height:1.2!important;
+  font-weight:700!important;
+  color:#0f172a!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+
+.tech-file-meta,
+.tech-file .btns{
+  display:none!important;
+}
+
+.file-download-icon{
+  width:34px!important;
+  height:34px!important;
+  border:0!important;
+  background:transparent!important;
+  padding:0!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  cursor:pointer!important;
+}
+
+.file-download-icon .download-icon{
+  width:32px!important;
+  height:32px!important;
+  border-radius:10px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  background:#ffffff!important;
+  border:1px solid #d6e5ff!important;
+  box-shadow:0 8px 18px rgba(29,100,255,.10)!important;
+  color:#1d64ff!important;
+  font-size:0!important;
+  position:relative!important;
+}
+
+.file-download-icon .download-icon::before{
+  content:""!important;
+  position:absolute!important;
+  left:50%!important;
+  top:8px!important;
+  width:8px!important;
+  height:10px!important;
+  transform:translateX(-50%)!important;
+  background:linear-gradient(#1d64ff,#1d64ff) center top/2px 9px no-repeat!important;
+}
+
+.file-download-icon .download-icon::after{
+  content:""!important;
+  position:absolute!important;
+  left:50%!important;
+  top:16px!important;
+  width:14px!important;
+  height:8px!important;
+  transform:translateX(-50%)!important;
+  background:
+    linear-gradient(135deg, transparent 0 42%, #1d64ff 43% 57%, transparent 58%) left top/8px 8px no-repeat,
+    linear-gradient(45deg, transparent 0 42%, #1d64ff 43% 57%, transparent 58%) right top/8px 8px no-repeat,
+    linear-gradient(#1d64ff,#1d64ff) center bottom/14px 2px no-repeat!important;
+}
+
+
+/* v63 sheet link status */
+.sheet-status{
+  color:#0f8a5f!important;
+  border-color:#bbf7d0!important;
+  background:#ecfdf5!important;
+}
+
+
+/* v64 faster sheet-loading status */
+.sheet-status{
+  min-width:116px!important;
+  justify-content:center!important;
+}
+
+
+/* v65 financial loading: hide default/static figures until the Google Sheet loads */
+body.financial-loading #kpiGrid,
+body.financial-loading #efficiencyGrid,
+body.financial-loading #statementTable,
+body.financial-loading #snapshotChart{
+  display:none!important;
+}
+
+.financial-loading-box{
+  border:1px dashed #cfe2ff;
+  background:#f8fbff;
+  color:#667085;
+  border-radius:20px;
+  min-height:140px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  font-size:14px;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.5);
+}
+
+body:not(.financial-loading) .financial-loading-box{
+  display:none!important;
+}
+
+
+/* v68 rewritten financial loader */
+.sheet-status.sheet-loading{color:#1d64ff!important;border-color:#cfe2ff!important;background:#eff6ff!important}
+.sheet-status.sheet-ok{color:#0f8a5f!important;border-color:#bbf7d0!important;background:#ecfdf5!important}
+.sheet-status.sheet-fail{color:#b42318!important;border-color:#fecaca!important;background:#fff1f2!important}
+
+body.financial-loading #kpiGrid,
+body.financial-loading #efficiencyGrid,
+body.financial-loading #statementTable,
+body.financial-loading #snapshotChart{display:none!important}
+
+.financial-loading-box{
+  border:1px dashed #cfe2ff;
+  background:#f8fbff;
+  color:#667085;
+  border-radius:20px;
+  min-height:140px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  font-size:14px;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.5);
+  padding:18px;
+}
+body:not(.financial-loading) .financial-loading-box{display:none!important}
+.paste-fallback{width:min(720px,100%);text-align:center}
+.paste-title{font-size:15px;font-weight:900;color:#b42318;margin-bottom:5px}
+.paste-sub{font-size:12px;color:#667085;margin-bottom:12px}
+.paste-fallback textarea{
+  width:100%;height:105px;border:1px solid #d6e5ff;border-radius:14px;
+  padding:12px;font-family:ui-monospace,Consolas,monospace;font-size:12px;resize:vertical;background:white;
+}
+.paste-actions{display:flex;gap:10px;justify-content:center;margin-top:10px}
+.paste-actions button{
+  border:0;background:#2f6fff;color:white;border-radius:12px;padding:10px 14px;font-weight:800;cursor:pointer;
+}
+.paste-actions button+button{background:white;color:#2f6fff;border:1px solid #cfe2ff}
+
+
+
+/* v73 hosted/admin loader polish */
+.hosted-loader{
+  display:flex;align-items:center;justify-content:center;gap:12px;color:#667085;font-weight:800;text-align:center;
+}
+.hosted-spinner{
+  width:18px;height:18px;border-radius:50%;border:3px solid #dbeafe;border-top-color:#1d64ff;animation:hostedSpin .85s linear infinite;
+}
+@keyframes hostedSpin{to{transform:rotate(360deg)}}
+.hosted-error{width:min(680px,100%);margin:auto;text-align:center;color:#667085;font-weight:800;}
+.hosted-error-title{font-size:14px;color:#475467;margin-bottom:8px;}
+.hosted-debug{font-size:11px;line-height:1.35;color:#98a2b3;word-break:break-word;margin-top:8px;}
+.hosted-retry{margin-top:12px;border:1px solid #cfe2ff;background:#fff;color:#1d64ff;border-radius:12px;height:36px;padding:0 14px;font-weight:800;cursor:pointer;}
+
+</style>
+</head>
+<body class="financial-loading">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-top">
+      <div class="brand-mini brand-text-only">
+  <div class="brand-logo" aria-hidden="true"><img src="logo.png" alt="Shunah logo"></div>
+  <div class="brand-copy">
+    <div class="brand-name">Command Center</div>
+    
+  </div>
+</div>
+      <button class="collapse-btn" id="sidebarToggle" onclick="event.stopPropagation();toggleSidebar()" title="Collapse navigation">
+        <svg class="collapse-svg" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg>
+      </button>
+    </div>
+
+    <nav class="side-nav">
+      <div class="side-section-title">Navigation</div>
+      <button class="side-tab active" data-tab="technology" title="Tech Product Suite"><span class="side-icon"><svg viewBox="0 0 24 24"><path d="M12 3 3.5 7.5 12 12l8.5-4.5L12 3Z"/><path d="M3.5 12 12 16.5 20.5 12"/><path d="M3.5 16.5 12 21l8.5-4.5"/></svg></span><span><span class="side-title">Tech Product Suite</span><span class="side-sub">Files, tools and demos</span></span></button>
+      <button class="side-tab" data-tab="operations" title="Operational KPIs"><span class="side-icon"><svg viewBox="0 0 24 24"><path d="M12 21V8"/><path d="M12 11c-4 0-7-2.5-7-6 4 0 7 2.5 7 6Z"/><path d="M12 14c4 0 7-2.5 7-6-4 0-7 2.5-7 6Z"/></svg></span><span><span class="side-title">Operational KPIs</span><span class="side-sub">Tons and network</span></span></button>
+      <button class="side-tab" data-tab="financials" title="Financial KPIs"><span class="side-icon"><svg viewBox="0 0 24 24"><rect x="5.8" y="12" width="3.1" height="7" rx="1"></rect><rect x="10.45" y="8" width="3.1" height="11" rx="1"></rect><rect x="15.1" y="4" width="3.1" height="15" rx="1"></rect><path d="M4 20h16"></path></svg></span><span><span class="side-title">Financial KPIs</span><span class="side-sub">Quarter and margins</span></span></button>
+      <button class="side-tab" data-tab="recognition" title="Recognition"><span class="side-icon"><svg viewBox="0 0 24 24"><path d="M8 21h8"></path><path d="M12 17v4"></path><path d="M7 4h10v5a5 5 0 0 1-10 0V4Z"></path><path d="M5 6H3v2a4 4 0 0 0 4 4"></path><path d="M19 6h2v2a4 4 0 0 1-4 4"></path></svg></span><span><span class="side-title">Recognition</span><span class="side-sub">G20, ABH and Charter</span></span></button>
+    </nav>
+
+    <div class="side-card user-access-card">
+      <div class="side-section-title">User</div>
+      <div class="user-line"><div class="user-avatar">IG</div><div class="user-name" id="accessUser">Investor Guest</div></div>
+      <div class="user-meta-line"><span class="user-meta-icon"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16"/></svg></span><span class="user-meta-label">Member Since:</span><strong id="memberSince">June 2026</strong></div>
+      <div class="user-meta-line"><span class="user-meta-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 8v5l3 2"/><path d="M9 2h6"/></svg></span><span class="user-meta-label">Last Access:</span><strong id="lastVisit">—</strong></div>
+    </div>
+
+    <div class="side-card last-updated-card">
+      <div class="side-section-title">Updated</div>
+      <div class="side-update-row"><span>Audited Quarter</span><strong id="dataQuarter">Q1 2026</strong></div>
+      <div class="side-update-row"><span>Tech Update</span><strong id="techUpdateTime">Jun 2026 · 2:00 PM</strong></div>
+      <div class="side-update-row"><span>Operational Update</span><strong id="opsUpdateTime">Jun 2026 · 2:00 PM</strong></div>
+    </div>
+
+    <div class="sidebar-footer">
+      <button class="logout" onclick="showToast('Logged out')"><span class="side-icon"><svg viewBox="0 0 24 24"><path d="M10 17l5-5-5-5"/><path d="M15 12H3"/><path d="M12 3h6a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3h-6"/></svg></span><span>Log Out</span></button>
+      <div class="version">Version 12.01.4</div>
+    </div>
+  </aside>
+
+  <main class="page">
+    <section id="technology" class="section active">
+      <div class="panel">
+        <div class="panel-head"><div><h2>Tech Product Suite</h2><p>Seven technology verticals shown as expandable rows. Each row opens into tools, statuses, accuracy, AI-powered status and files.</p></div></div>
+        <div class="tech-stack" id="techStack"></div>
+      </div>
+    </section>
+
+    <section id="operations" class="section">
+      <div class="panel">
+        <div class="panel-head"><div><h2>Operational KPIs</h2></div><div class="pill" id="opRecentQuarterPill">Audited Quarter Q1 2026</div></div>
+        <div id="dasHero" class="das-hero"></div>
+        <div id="opKpiGrid" class="kpi-grid"></div>
+        <div id="opChart" class="op-chart">
+          <div class="chart-top"><div><h3 id="opChartTitle">Historical Operational Performance</h3><p id="opChartSubtitle">Quarterly historical trend.</p></div><button class="close-chart" onclick="closeOperationalChart()">Back</button></div>
+          <div class="legend"><span><i class="dot"></i> <span id="opBarLegend">Metric</span></span></div>
+          <div class="chart-wrap"><canvas id="opComboChart"></canvas></div>
+        </div>
+      </div>
+      <div class="panel market-map-panel">
+        <div class="panel-head"><div><h2>Shunah Market Atlas</h2><p>Live network map for farmers, aggregation nodes, suppliers, buyers and social infrastructure.</p></div><div class="pill">Network Visibility Layer</div></div>
+        <div class="map-shell">
+          <div class="map-filters">
+            <div class="map-filter-title">Map Filters</div>
+            <button class="map-filter active" data-map-filter="all"><span>All Network</span><span class="filter-check">✓</span></button>
+            <button class="map-filter active" data-map-filter="farmer"><span>Farmers</span><span class="filter-check">✓</span></button>
+            <button class="map-filter active" data-map-filter="intermediary"><span>Intermediaries</span><span class="filter-check">✓</span></button>
+            <button class="map-filter active" data-map-filter="buyer"><span>Buyers</span><span class="filter-check">✓</span></button>
+            <button class="map-filter active" data-map-filter="scale"><span>Scales</span><span class="filter-check">✓</span></button>
+            <button class="map-filter active" data-map-filter="processing"><span>Processing Stations</span><span class="filter-check">✓</span></button>
+            <button class="map-filter active" data-map-filter="storage"><span>Storage</span><span class="filter-check">✓</span></button>
+            <button class="map-filter active" data-map-filter="vehicle"><span>Vehicles</span><span class="filter-check">✓</span></button>
+            <button class="map-filter active" data-map-filter="lab"><span>Labs</span><span class="filter-check">✓</span></button>
+          </div>
+          <div class="map-canvas"><div id="leafletMap" class="leaflet-map"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="financials" class="section">
+      <div class="panel">
+        <div class="finance-hero-head">
+  <div class="finance-hero-copy">
+    <h2>Executive Financial Summary</h2>
+    
+  </div>
+  <div class="finance-actions">
+    <button class="finance-chip" type="button">
+      <span class="chip-icon"><svg viewBox="0 0 24 24"><path d="M12 3 5 6v6c0 4.5 3 7.4 7 9 4-1.6 7-4.5 7-9V6l-7-3Z"></path><path d="m9.2 12 1.8 1.8 3.8-4"></path></svg></span>
+      <span>Audited</span>
+    </button>
+    <span class="finance-chip sheet-status" id="sheetStatusPill">Loading Sheet…</span>
+    <button class="export-btn" type="button" onclick="window.print()">
+      <span class="chip-icon"><svg viewBox="0 0 24 24"><path d="M12 3v11"></path><path d="m8 10 4 4 4-4"></path><path d="M5 21h14"></path></svg></span>
+      <span>Export PDF</span>
+    </button>
+  </div>
+</div>
+        <div id="financialLoadingBox" class="financial-loading-box">Loading financials from Google Sheet…</div><div id="kpiGrid" class="kpi-grid"></div>
+        <div id="snapshotChart" class="snapshot-chart">
+          <div class="chart-top"><div><h3 id="chartTitle">Historical Quarter Performance</h3><p id="chartSubtitle">Bar chart and margin/growth line.</p></div><button class="close-chart" onclick="closeChart()">Back</button></div>
+          <div class="legend"><span><i class="dot"></i> <span id="barLegend">Performance</span></span><span><i class="dot line"></i> <span id="lineLegend">Margin / Growth</span></span></div>
+          <div class="chart-wrap"><canvas id="comboChart"></canvas></div>
+        </div>
+      </div>
+      <div class="panel"><div class="finance-subpanel-head">
+  <div><h2>Working Capital Efficiency</h2></div>
+  <div class="synced-pill">
+    <span class="chip-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"></circle><path d="M12 8v4l3 2"></path></svg></span>
+    <span>Synced now</span>
+  </div>
+</div><div id="workingCapitalLoadingBox" class="financial-loading-box">Loading working capital…</div><div id="efficiencyGrid" class="efficiency-grid"></div></div>
+      <div class="panel"><div class="panel-head"><div><h2>Clean Financial Statement View</h2></div></div><div id="statementLoadingBox" class="financial-loading-box">Loading financial statement…</div><div class="statement-table-wrap"><table id="statementTable"></table></div></div>
+    </section>
+
+    <section id="recognition" class="section">
+      <div class="panel recognition-panel">
+        <div class="panel-head">
+          <div>
+            <h2>Recognition & Policy Access</h2>
+            <p>Institutional visibility, ecosystem access, founder programs and public-sector recognition.</p>
+          </div>
+          <div class="pill">External Validation</div>
+        </div>
+        <div class="recognition-grid">
+          <div class="recognition-card">
+            <div class="recognition-icon">G20</div>
+            <h3>G20 Startup Track</h3>
+            <p>International startup exposure and policy-facing ecosystem visibility.</p>
+          </div>
+          <div class="recognition-card">
+            <div class="recognition-icon">ABH</div>
+            <h3>Africa’s Business Heroes</h3>
+            <p>Founder recognition, investor visibility and Africa-focused venture credibility.</p>
+          </div>
+          <div class="recognition-card">
+            <div class="recognition-icon">EG</div>
+            <h3>Egypt Startup Charter</h3>
+            <p>Startup ecosystem alignment, regulatory engagement and national innovation positioning.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+  <div class="chart-tooltip" id="chartTooltip"></div>
+
+<script>
+const quarterlyData=[
+{quarter:"Q1",year:2025,sales:62000000,cogs:-57900000,grossProfit:4100000,gna:-2100000,sellingMarketing:-220000,ebitda:1780000,ebit:1780000,interestIncome:180000,interestExpense:-320000,netProfit:1640000,cash:3400000,inventory:18800000,receivables:9200000,payables:7400000,debt:11200000,salesGrowth:null,inventoryDOH:38,arDOH:21,apDOH:15,ccc:44},
+{quarter:"Q2",year:2025,sales:78000000,cogs:-72500000,grossProfit:5500000,gna:-2500000,sellingMarketing:-260000,ebitda:2740000,ebit:2740000,interestIncome:210000,interestExpense:-410000,netProfit:2540000,cash:4100000,inventory:22400000,receivables:11700000,payables:8600000,debt:13800000,salesGrowth:25.8,inventoryDOH:41,arDOH:22,apDOH:16,ccc:47},
+{quarter:"Q3",year:2025,sales:103000000,cogs:-96400000,grossProfit:6600000,gna:-2850000,sellingMarketing:-310000,ebitda:3440000,ebit:3440000,interestIncome:280000,interestExpense:-520000,netProfit:3200000,cash:5200000,inventory:28700000,receivables:13900000,payables:10300000,debt:16800000,salesGrowth:32.1,inventoryDOH:44,arDOH:23,apDOH:17,ccc:50},
+{quarter:"Q4",year:2025,sales:134000000,cogs:-126000000,grossProfit:8000000,gna:-3300000,sellingMarketing:-360000,ebitda:4340000,ebit:4340000,interestIncome:350000,interestExpense:-640000,netProfit:4050000,cash:6900000,inventory:33100000,receivables:16400000,payables:12800000,debt:19700000,salesGrowth:30.1,inventoryDOH:42,arDOH:24,apDOH:18,ccc:48},
+{quarter:"Q1",year:2026,sales:10420000,cogs:-10011757,grossProfit:485602,gna:-322065,sellingMarketing:-150,ebitda:153388,ebit:153388,interestIncome:52415,interestExpense:0,netProfit:205803,cash:0,inventory:0,receivables:0,payables:0,debt:0,salesGrowth:-92.2,inventoryDOH:0,arDOH:0,apDOH:0,ccc:0}
+];
+const operationalData=[
+{quarter:"Q1",year:2025,das:55,tonsTraded:4200,tonsProcessed:2600,tonsAssessed:24000,farmerInteractions:7400,hubs:52,activeBuyers:18,activeSuppliers:620,rejectedPct:4.9},
+{quarter:"Q2",year:2025,das:61,tonsTraded:5700,tonsProcessed:3400,tonsAssessed:31500,farmerInteractions:9100,hubs:63,activeBuyers:24,activeSuppliers:810,rejectedPct:4.4},
+{quarter:"Q3",year:2025,das:68,tonsTraded:6900,tonsProcessed:4100,tonsAssessed:42000,farmerInteractions:10500,hubs:74,activeBuyers:31,activeSuppliers:980,rejectedPct:3.9},
+{quarter:"Q4",year:2025,das:72,tonsTraded:8200,tonsProcessed:5000,tonsAssessed:52500,farmerInteractions:12100,hubs:85,activeBuyers:39,activeSuppliers:1180,rejectedPct:3.6},
+{quarter:"Q1",year:2026,das:75,tonsTraded:6250,tonsProcessed:3900,tonsAssessed:150000,farmerInteractions:37000,hubs:85,activeBuyers:42,activeSuppliers:1260,rejectedPct:3.4}
+];
+const technologies=[
+{id:"remote",icon:"tech1.png",title:"Remote Crop Identification",subtitle:"Satellite and remote sensing tools for crop area identification, field segmentation and supply visibility.",subcategories:[{title:"Field Segmentation Tool",status:"Operational",aiPowered:"Yes",accuracy:"XX%",workingDays:"120+",files:[["Field Segmentation Overview","PDF · Investor view"],["Remote Sensing Methodology","PDF · Restricted"]]}, {title:"Crop Identification Model",status:"Testing",aiPowered:"Yes",accuracy:"XX%",workingDays:"120+",files:[["Crop Identification Overview","PDF · Investor view"],["Model Summary","PDF · Restricted"]]}, {title:"Procurement Zone Mapping",status:"Prototype",aiPowered:"No",accuracy:"N/A",workingDays:"45+",files:[["Procurement Zone Map","PDF · Viewable"]]}]},
+{id:"cav",icon:"tech2.png",title:"Computer-Aided Vision",subtitle:"AI crop grading, count, segmentation and quality assessment models for dry crops.",subcategories:[{title:"White Bean Quality Model",status:"Operational / Training",aiPowered:"Yes",accuracy:"XX%",workingDays:"120+",files:[["White Bean Quality Model Summary","PDF · Viewable"],["ONNX Quality Model","ONNX · Restricted"]]}, {title:"White Bean Count Model",status:"Testing",aiPowered:"Yes",accuracy:"XX%",workingDays:"120+",files:[["Count Model Summary","PDF · Viewable"]]}, {title:"Segmentation Model",status:"Training",aiPowered:"Yes",accuracy:"XX%",workingDays:"120+",files:[["Segmentation Model Summary","PDF · Viewable"]]}]},
+{id:"iot",icon:"tech3.png",title:"IoT",subtitle:"Network platform connecting farmers, buyers, processors, storage, scales, labs and vehicles.",subcategories:[{title:"Agri Network Logic",status:"Prototype",aiPowered:"No",accuracy:"N/A",workingDays:"45+",files:[["IoT Platform Overview","PDF · Investor view"]]}]},
+{id:"mobile",icon:"tech4.png",title:"Mobile Apps",subtitle:"Android APKs, crop grading app, marketplace apps, demo builds and release notes.",subcategories:[{title:"Crop Grading APK",status:"Demo Build",aiPowered:"Yes",accuracy:"N/A",workingDays:"45+",files:[["Crop Grading APK","APK · Restricted"]]}]},
+{id:"samplers",icon:"tech5.png",title:"AI Labeling Tool and ML",subtitle:"AI labeling workflows, ML training support, datasets, annotations and model improvement logic.",subcategories:[{title:"AI Labeling Workflow",status:"Design",aiPowered:"No",accuracy:"N/A",workingDays:"45+",files:[["AI Labeling Workflow Overview","PDF · Viewable"]]}]},
+{id:"scraper",icon:"tech6.png",title:"Social Scraping Tool",subtitle:"Market listening, buyer/seller signals, crop price mentions and regional trading intelligence.",subcategories:[{title:"Market Signal Scraper",status:"Prototype",aiPowered:"Yes",accuracy:"XX%",workingDays:"45+",files:[["Social Scraping Tool Overview","PDF · Investor view"]]}]},
+{id:"saas",icon:"tech7.png",title:"SaaS",subtitle:"Future subscription layer for grading, pricing, supplier intelligence and market access tools.",subcategories:[{title:"SaaS Product Roadmap",status:"Planned",aiPowered:"Yes",accuracy:"N/A",workingDays:"45+",files:[["SaaS Roadmap","PDF · Investor view"]]}]}
+];
+
+function fmt(n){const v=Number(n||0),a=Math.abs(v).toLocaleString("en-US",{maximumFractionDigits:0});return v<0?`(${a})`:a}
+function fmtMoney(n){return `$${fmt(n)}`}
+function fmtPct(n){return n===null||n===undefined||!isFinite(n)?"—":`${Number(n).toFixed(1)}%`}
+function ratio(a,b){return b?a/b:0}
+function margin(metric,row){return ratio(row[metric],row.sales)*100}
+function recent(){return quarterlyData[quarterlyData.length-1]}
+function recentOp(){return operationalData[operationalData.length-1]}
+
+
+
+
+
+/* v71: Google Sheet loader fixed for local file:// Chrome
+   Uses the real Google Visualization JSONP callback syntax first:
+   tqx=out:json;responseHandler:__shunahSheetCallback
+   This avoids fetch/CORS blocking when opening the HTML as a local file.
+*/
+const FINANCIAL_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ7ICQLNTQz5aMwDPHq-WKUc40SmD2XbTvXmOa2f0Vun9umA1vlwvevi_Qhm50bFjUTm9jrxwmSq2RX/pub?gid=341070788&single=true&output=csv";
+const FINANCIAL_CACHE_KEY = "shunah_investor_financial_csv_v71";
+const FINANCIAL_GVIZ_DEBUG_KEY = "shunah_investor_last_loader_error_v71";
+
+function setSheetStatus(text, tone="loading"){
+  const p = document.getElementById("sheetStatusPill");
+  if(!p) return;
+  p.textContent = text;
+  p.classList.remove("sheet-ok","sheet-fail","sheet-loading");
+  p.classList.add(tone === "ok" ? "sheet-ok" : tone === "fail" ? "sheet-fail" : "sheet-loading");
+}
+
+function parseCsv(text){
+  const rows = [];
+  let row = [], cell = "", quote = false;
+  text = String(text || "").replace(/^\uFEFF/, "");
+  for(let i=0;i<text.length;i++){
+    const c = text[i], n = text[i+1];
+    if(c === '"' && quote && n === '"'){ cell += '"'; i++; continue; }
+    if(c === '"'){ quote = !quote; continue; }
+    if(c === "," && !quote){ row.push(cell); cell = ""; continue; }
+    if((c === "\n" || c === "\r") && !quote){
+      if(c === "\r" && n === "\n") i++;
+      row.push(cell); rows.push(row); row = []; cell = "";
+      continue;
+    }
+    cell += c;
+  }
+  if(cell.length || row.length){ row.push(cell); rows.push(row); }
+  return rows.filter(r => r.some(x => String(x || "").trim() !== ""));
+}
+
+function csvEscape(v){
+  const s = String(v ?? "");
+  return /[",\n\r]/.test(s) ? '"' + s.replace(/"/g,'""') + '"' : s;
+}
+
+function normalizeMetricName(x){
+  return String(x || "")
+    .trim()
+    .toLowerCase()
+    .replace(/&/g,"and")
+    .replace(/[_\-\/]+/g," ")
+    .replace(/[^a-z0-9 ]+/g," ")
+    .replace(/\s+/g," ")
+    .trim();
+}
+
+function parseFinancialNumber(value){
+  let s = String(value ?? "").trim();
+  if(!s || s === "—" || s === "-") return 0;
+  const negative = /^\(.*\)$/.test(s) || /^-/.test(s);
+  s = s.replace(/[٠-٩]/g, d => "٠١٢٣٤٥٦٧٨٩".indexOf(d));
+  s = s.replace(/[۰-۹]/g, d => "۰۱۲۳۴۵۶۷۸۹".indexOf(d));
+  s = s.replace(/[^0-9.\-]/g, "");
+  const parts = s.split(".");
+  if(parts.length > 2) s = parts.shift() + "." + parts.join("");
+  const n = Number(s.replace(/-/g,""));
+  if(!isFinite(n)) return 0;
+  return negative ? -n : n;
+}
+
+function parsePeriod(label){
+  const s = String(label || "").trim().replace(/_/g," ");
+  let m = s.match(/Q\s*([1-4])\s*[- ]?\s*(20\d{2})/i);
+  if(m) return { quarter:`Q${m[1]}`, year:Number(m[2]) };
+  m = s.match(/(20\d{2})\s*[- ]?\s*Q\s*([1-4])/i);
+  if(m) return { quarter:`Q${m[2]}`, year:Number(m[1]) };
+  return null;
+}
+
+function gvizUrlFromCsvUrl(useHandler=true){
+  const idMatch = FINANCIAL_CSV_URL.match(/\/spreadsheets\/d\/e\/([^/]+)\//);
+  const gidMatch = FINANCIAL_CSV_URL.match(/[?&]gid=([^&]+)/);
+  if(!idMatch) throw new Error("Could not read published sheet ID from FINANCIAL_CSV_URL.");
+  const id = idMatch[1];
+  const gid = gidMatch ? decodeURIComponent(gidMatch[1]) : "0";
+  const tqx = useHandler ? "out:json;responseHandler:__shunahSheetCallback" : "out:json";
+  return `https://docs.google.com/spreadsheets/d/e/${id}/gviz/tq?gid=${encodeURIComponent(gid)}&tqx=${encodeURIComponent(tqx)}&tq=${encodeURIComponent("select *")}&_=${Date.now()}`;
+}
+
+function gvizValue(cell){
+  if(!cell) return "";
+  if(cell.f !== undefined && cell.f !== null) return cell.f;
+  if(cell.v !== undefined && cell.v !== null) return cell.v;
+  return "";
+}
+
+function gvizToCsv(resp){
+  if(!resp) throw new Error("Google returned an empty response.");
+  if(resp.status === "error") throw new Error((resp.errors || []).map(e => e.detailed_message || e.message).join(" | ") || "Google Visualization returned an error.");
+  const table = resp.table;
+  if(!table || !Array.isArray(table.cols) || !Array.isArray(table.rows)) throw new Error("Google Visualization table was empty.");
+
+  let header = table.cols.map((c,i)=> String(c.label || c.id || (i === 0 ? "Metric" : "")).trim());
+  const dataRows = table.rows.map(r => {
+    const cells = [];
+    for(let i=0;i<table.cols.length;i++) cells.push(gvizValue((r.c || [])[i]));
+    return cells;
+  }).filter(r => r.some(x => String(x || "").trim() !== ""));
+
+  /* Some Google sheets expose the first row as data instead of column labels. Detect and promote it. */
+  const headerHasQuarters = header.slice(1).some(h => parsePeriod(h));
+  if(!headerHasQuarters && dataRows.length && dataRows[0].slice(1).some(h => parsePeriod(h))){
+    header = dataRows.shift().map(x => String(x || "").trim());
+  }
+
+  const lines = [header.map(csvEscape).join(",")];
+  dataRows.forEach(r => {
+    while(r.length < header.length) r.push("");
+    lines.push(r.slice(0, header.length).map(csvEscape).join(","));
+  });
+  return lines.join("\n");
+}
+
+function loadGoogleSheetViaJsonp(){
+  return new Promise((resolve,reject)=>{
+    const script = document.createElement("script");
+    const callbackName = "__shunahSheetCallback";
+    let done = false;
+    const timer = setTimeout(()=>finish(false, new Error("Google Sheet timed out after 18 seconds.")), 18000);
+
+    function cleanup(){
+      clearTimeout(timer);
+      if(script.parentNode) script.parentNode.removeChild(script);
+      try{ delete window[callbackName]; }catch(e){ window[callbackName] = undefined; }
+    }
+    function finish(ok,payload){
+      if(done) return;
+      done = true;
+      cleanup();
+      ok ? resolve(payload) : reject(payload);
+    }
+
+    window[callbackName] = function(resp){
+      try{ finish(true, gvizToCsv(resp)); }
+      catch(e){ finish(false, e); }
+    };
+
+    script.onerror = () => finish(false, new Error("Google Sheet script could not load. Check internet or published sheet permission."));
+    script.src = gvizUrlFromCsvUrl(true);
+    document.head.appendChild(script);
+  });
+}
+
+function applyFinancialCsv(csvText){
+  const rows = parseCsv(csvText);
+  if(rows.length < 2) return false;
+
+  const headers = rows[0].map(h => String(h || "").trim());
+  const usableCols = headers.slice(1).map((h,i)=>parsePeriod(h) ? i+1 : null).filter(i=>i !== null);
+  if(!usableCols.length){
+    console.warn("No quarter headers found. Headers were:", headers);
+    localStorage.setItem(FINANCIAL_GVIZ_DEBUG_KEY, "No quarter headers found: " + headers.join(" | "));
+    return false;
+  }
+
+  const rowMap = {};
+  rows.slice(1).forEach(r => {
+    const key = normalizeMetricName(r[0]);
+    if(key) rowMap[key] = r;
+  });
+
+  function rowFor(names){
+    for(const name of names){
+      const exact = rowMap[normalizeMetricName(name)];
+      if(exact) return exact;
+    }
+    const keys = Object.keys(rowMap);
+    for(const name of names){
+      const target = normalizeMetricName(name);
+      const found = keys.find(k => k === target || k.includes(target) || target.includes(k));
+      if(found) return rowMap[found];
+    }
+    return null;
+  }
+
+  const aliases = {
+    sales:["sales","revenue","total revenue","net sales","turnover"],
+    cogs:["cogs","cost of goods sold","cost of sales","cost of revenue"],
+    grossProfit:["gross profit","grossprofit"],
+    gna:["g and a","g&a","gna","general and administrative","admin expenses","administrative expenses","general admin"],
+    sellingMarketing:["selling marketing","selling and marketing","sales and marketing","marketing","selling expenses"],
+    ebitda:["ebitda"],
+    ebit:["ebit","operating profit"],
+    interestIncome:["interest income","finance income"],
+    interestExpense:["interest expense","finance cost","finance costs"],
+    netProfit:["net profit","net income","profit after tax","profit for the period"],
+    cash:["cash","cash balance","cash and bank","bank balance"],
+    inventory:["inventory","stock","ending inventory"],
+    receivables:["receivables","accounts receivable","trade receivables","ar"],
+    payables:["payables","accounts payable","trade payables","ap"],
+    debt:["debt","loans","borrowings","loan balance"],
+    inventoryDOH:["inventory doh","inventory days","days inventory","doh","dio"],
+    arDOH:["ar doh","ar days","receivable days","receivables days","dso"],
+    apDOH:["ap doh","ap days","payable days","payables days","dpo"],
+    ccc:["ccc","cash conversion cycle"]
+  };
+
+  const loaded = usableCols.map(colIndex => {
+    const p = parsePeriod(headers[colIndex]);
+    const obj = {
+      quarter:p.quarter, year:p.year,
+      sales:0,cogs:0,grossProfit:0,gna:0,sellingMarketing:0,ebitda:0,ebit:0,
+      interestIncome:0,interestExpense:0,netProfit:0,cash:0,inventory:0,receivables:0,
+      payables:0,debt:0,salesGrowth:null,inventoryDOH:0,arDOH:0,apDOH:0,ccc:0
+    };
+    Object.entries(aliases).forEach(([prop,names]) => {
+      const r = rowFor(names);
+      if(r) obj[prop] = parseFinancialNumber(r[colIndex]);
+    });
+    if(!obj.grossProfit && (obj.sales || obj.cogs)) obj.grossProfit = obj.sales + obj.cogs;
+    if(!obj.ebitda && obj.ebit) obj.ebitda = obj.ebit;
+    if(!obj.ebit) obj.ebit = obj.ebitda;
+    if(!obj.ccc) obj.ccc = obj.inventoryDOH + obj.arDOH - obj.apDOH;
+    return obj;
+  }).filter(x => x && x.year && x.quarter);
+
+  const hasRealNumbers = loaded.some(x => x.sales || x.grossProfit || x.netProfit || x.cash || x.inventory || x.receivables || x.payables || x.debt);
+  if(!loaded.length || !hasRealNumbers){
+    localStorage.setItem(FINANCIAL_GVIZ_DEBUG_KEY, "Loaded sheet but no recognized metric rows. Found rows: " + Object.keys(rowMap).slice(0,40).join(" | "));
+    return false;
+  }
+
+  for(let i=0;i<loaded.length;i++){
+    loaded[i].salesGrowth = i === 0 || !loaded[i-1].sales ? null : ((loaded[i].sales - loaded[i-1].sales) / Math.abs(loaded[i-1].sales)) * 100;
+  }
+
+  quarterlyData.splice(0, quarterlyData.length, ...loaded);
+  return true;
+}
+
+function showFinancialLoaded(label="Sheet Linked"){
+  document.body.classList.remove("financial-loading");
+  renderKPIs();
+  renderEfficiency();
+  renderTable();
+  initVisitorInfo();
+  setSheetStatus(label, "ok");
+}
+
+function showFinancialPasteFallback(message="Sheet Load Failed", detail=""){
+  setSheetStatus(message, "fail");
+  const safeDetail = String(detail || localStorage.getItem(FINANCIAL_GVIZ_DEBUG_KEY) || "").replace(/[<>&]/g, c => ({"<":"&lt;",">":"&gt;","&":"&amp;"}[c]));
+  const boxes = ["financialLoadingBox","workingCapitalLoadingBox","statementLoadingBox"];
+  boxes.forEach((id,idx) => {
+    const el = document.getElementById(id);
+    if(el) el.innerHTML = `
+      <div class="paste-fallback">
+        <div class="paste-title">${message}</div>
+        <div class="paste-sub">Google did not return the sheet to this local HTML file. Choose the CSV file once, or paste the CSV. After that it is saved in this browser.</div>
+        ${idx === 0 ? `<input id="csvFileInput" type="file" accept=".csv,text/csv" style="margin:10px auto 12px;display:block;max-width:100%;">
+        <textarea id="csvPasteBox" placeholder="Paste CSV here: Metric,Q2 2022,Q3 2022..."></textarea>
+        <div class="paste-actions">
+          <button onclick="applyPastedFinancialCsv()">Use pasted CSV</button>
+          <button onclick="loadFinancialCsv()">Retry Google Sheet</button>
+          <button onclick="window.open(FINANCIAL_CSV_URL, '_blank')">Open CSV Link</button>
+        </div>
+        ${safeDetail ? `<div style="margin-top:10px;color:#98a2b3;font-size:11px;word-break:break-word;">Debug: ${safeDetail}</div>` : ``}` : `<div class="paste-sub">Use the box in Executive Financial Summary above.</div>`}
+      </div>`;
+  });
+  setTimeout(()=>{
+    const input = document.getElementById("csvFileInput");
+    if(input && !input.dataset.bound){
+      input.dataset.bound = "yes";
+      input.addEventListener("change", async () => {
+        const file = input.files && input.files[0];
+        if(!file) return;
+        const text = await file.text();
+        if(!applyFinancialCsv(text)) return alert("CSV format not recognized. First row must include Metric and Q2 2022 / Q3 2022 headers.");
+        localStorage.setItem(FINANCIAL_CACHE_KEY, text);
+        showFinancialLoaded("CSV File Loaded");
+      });
+    }
+  },0);
+}
+
+function applyPastedFinancialCsv(){
+  const box = document.getElementById("csvPasteBox");
+  const text = box ? box.value : "";
+  if(!text.trim()) return alert("Paste the CSV first.");
+  if(!applyFinancialCsv(text)) return alert("CSV format not recognized. First row must include Metric and Q2 2022 / Q3 2022 headers.");
+  localStorage.setItem(FINANCIAL_CACHE_KEY, text);
+  showFinancialLoaded("Pasted CSV Loaded");
+}
+
+function withCacheBust(url){
+  return url + (url.includes("?") ? "&" : "?") + "cachebust=" + Date.now();
+}
+
+async function fetchWithTimeout(url, label, timeoutMs=16000){
+  const controller = new AbortController();
+  const timer = setTimeout(()=>controller.abort(), timeoutMs);
+  try{
+    const res = await fetch(url, { method:"GET", cache:"no-store", signal:controller.signal });
+    if(!res.ok) throw new Error(label + " HTTP " + res.status);
+    const txt = await res.text();
+    if(!txt || txt.trim().length < 10) throw new Error(label + " returned empty text.");
+    if(/^\s*</.test(txt)) throw new Error(label + " returned HTML instead of CSV.");
+    return txt;
+  }finally{
+    clearTimeout(timer);
+  }
+}
+
+async function tryDirectCsvFetch(){
+  return await fetchWithTimeout(withCacheBust(FINANCIAL_CSV_URL), "Direct Google CSV", 14000);
+}
+
+async function tryProxyCsvFetch(){
+  /* Google published CSV redirects to googleusercontent and Chrome often blocks it from file://.
+     These read-only proxy URLs fetch the SAME public CSV server-side and return it with browser-friendly CORS headers. */
+  const target = withCacheBust(FINANCIAL_CSV_URL);
+  const attempts = [
+    {label:"AllOrigins proxy", url:"https://api.allorigins.win/raw?url=" + encodeURIComponent(target)},
+    {label:"CodeTabs proxy", url:"https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent(target)},
+    {label:"CorsProxy proxy", url:"https://corsproxy.io/?" + encodeURIComponent(target)}
+  ];
+  const errors = [];
+  for(const a of attempts){
+    try{
+      const csv = await fetchWithTimeout(a.url, a.label, 18000);
+      if(csv && csv.includes(",")) return csv;
+      throw new Error(a.label + " did not look like CSV.");
+    }catch(e){
+      errors.push((e && e.message) ? e.message : String(e));
+      console.warn(a.label + " failed:", e);
+    }
+  }
+  throw new Error(errors.join(" | ") || "All CSV proxy attempts failed.");
+}
+
+async function loadFinancialCsv(){
+  document.body.classList.add("financial-loading");
+  setSheetStatus("Loading Sheet…", "loading");
+
+  let loadedFromCache = false;
+  const cached = localStorage.getItem(FINANCIAL_CACHE_KEY);
+  if(cached && applyFinancialCsv(cached)){
+    loadedFromCache = true;
+    showFinancialLoaded("Local CSV Loaded");
+    setSheetStatus("Refreshing…", "loading");
+  }
+
+  try{
+    let csv = "";
+    const errors = [];
+
+    try{
+      setSheetStatus("Loading via Proxy…", "loading");
+      csv = await tryProxyCsvFetch();
+    }catch(proxyErr){
+      errors.push("Proxy: " + ((proxyErr && proxyErr.message) ? proxyErr.message : String(proxyErr)));
+      console.warn("Proxy CSV failed, trying GViz JSONP:", proxyErr);
+      try{
+        setSheetStatus("Loading via Google…", "loading");
+        csv = await loadGoogleSheetViaJsonp();
+      }catch(jsonpErr){
+        errors.push("GViz: " + ((jsonpErr && jsonpErr.message) ? jsonpErr.message : String(jsonpErr)));
+        console.warn("GViz JSONP failed, trying direct CSV fetch:", jsonpErr);
+        try{
+          csv = await tryDirectCsvFetch();
+        }catch(directErr){
+          errors.push("Direct: " + ((directErr && directErr.message) ? directErr.message : String(directErr)));
+          throw new Error(errors.join(" || "));
+        }
+      }
+    }
+
+    if(!applyFinancialCsv(csv)) throw new Error(localStorage.getItem(FINANCIAL_GVIZ_DEBUG_KEY) || "Sheet loaded, but format was not recognized.");
+    localStorage.setItem(FINANCIAL_CACHE_KEY, csv);
+    showFinancialLoaded("Sheet Linked");
+  }catch(err){
+    console.warn("Google sheet load failed:", err);
+    if(loadedFromCache){
+      showFinancialLoaded("Local CSV Loaded");
+    }else{
+      showFinancialPasteFallback("Sheet Load Failed", err && err.message ? err.message : String(err));
+    }
+  }
+}
+
+function initVisitorInfo(){
+  const params=new URLSearchParams(location.search), user=params.get("user")||"Investor Guest", member=params.get("memberSince")||"June 2026";
+  const now=new Date(), dateOnly=now.toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"}), dateTime=now.toLocaleString(undefined,{year:"numeric",month:"short",day:"numeric",hour:"numeric",minute:"2-digit"});
+  document.getElementById("accessUser").textContent=user;document.getElementById("memberSince").textContent=member;document.getElementById("lastVisit").textContent=dateOnly;document.getElementById("dataQuarter").textContent=`${recent().quarter} ${recent().year}`;document.getElementById("techUpdateTime").textContent=dateTime;document.getElementById("opsUpdateTime").textContent=dateTime;
+}
+function updateSidebarToggleIcon(){const btn=document.getElementById("sidebarToggle");const c=document.body.classList.contains("nav-collapsed");btn.innerHTML=c?'<svg class="collapse-svg" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>':'<svg class="collapse-svg" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg>'}
+function toggleSidebar(){document.body.classList.toggle("nav-collapsed");updateSidebarToggleIcon()}
+function expandSidebar(){if(document.body.classList.contains("nav-collapsed")){document.body.classList.remove("nav-collapsed");updateSidebarToggleIcon()}}
+document.getElementById("sidebar").addEventListener("click",()=>expandSidebar());
+
+document.querySelectorAll(".side-tab").forEach(btn=>btn.addEventListener("click",()=>{expandSidebar();const tab=btn.dataset.tab;document.querySelectorAll(".side-tab").forEach(x=>x.classList.remove("active"));document.querySelectorAll(".section").forEach(x=>x.classList.remove("active"));btn.classList.add("active");document.getElementById(tab).classList.add("active");if(tab==="operations")setTimeout(renderMarketMap,120)}));
+
+function techVersion(index){
+  return ["v2.4.1","v1.9.0","v0.8 Beta","v1.2.0","v0.9.3"][index] || "v1.0.0";
+}
+function techProgress(index){
+  return [92,68,43,76,58][index] || 60;
+}
+function techStatusClass(status){
+  const s = String(status||"").toLowerCase();
+  if(s.includes("operational")) return "operational";
+  if(s.includes("test")) return "testing";
+  if(s.includes("prototype")) return "prototype";
+  if(s.includes("training")) return "training";
+  return "";
+}
+function renderTechStack(){document.getElementById("techStack").innerHTML=technologies.map((tech,techIndex)=>`
+<div class="tech-row" id="tech-${tech.id}">
+<button class="tech-row-head" onclick="toggleTech('${tech.id}')"><div class="tech-icon"><img src="${tech.icon}" alt="${tech.title} icon"></div><div><h3 class="tech-title">${tech.title}</h3><p class="tech-subtitle">${tech.subtitle}</p></div><div class="tech-plus"><span>+</span></div></button>
+<div class="tech-body"><div class="tech-table"><div class="tech-table-head"><div>Tech</div><div>Status</div><div>AI Powered</div><div>Accuracy</div><div>Version</div><div>Progress</div><div>Working Days</div><div>Download</div></div>
+${tech.subcategories.map((sub,i)=>{const progress=techProgress(i);const statusClass=techStatusClass(sub.status);return `<div class="tech-sub-row" id="sub-${tech.id}-${i}">
+  <div class="tech-main-cell"><button class="sub-open" onclick="toggleSubcategory('${tech.id}',${i});event.stopPropagation();">+</button><div class="tech-name">${sub.title}</div></div>
+  <div><span class="status-pill ${statusClass}"><i></i>${sub.status}</span></div>
+  <div class="tech-cell-muted">${sub.aiPowered}</div>
+  <div class="tech-cell-muted">${sub.accuracy}</div>
+  <div><span class="version-pill">${techVersion(i)}</span></div>
+  <div class="progress-cell"><span>${progress}%</span><div class="progress-track"><b style="width:${progress}%"></b></div></div>
+  <div class="tech-cell-muted">${sub.workingDays}</div>
+  <div><button class="files-action icon-only" onclick="toggleSubcategory('${tech.id}',${i})" title="Download"><span class="download-icon">↓</span></button></div>
+</div><div class="files-row">${sub.files.map(f=>`<div class="tech-file"><div class="tech-file-main"><div class="tech-file-name">${f[0]}</div></div><button class="file-download-icon" onclick="requestDownload('${f[0]}')" title="Download"><span class="download-icon">↓</span></button></div>`).join("")}</div>`}).join("")}
+</div></div></div>`).join("")}
+function toggleTech(id){document.querySelectorAll(".tech-row").forEach(row=>row.id===`tech-${id}`?row.classList.toggle("open"):row.classList.remove("open"))}
+function toggleSubcategory(id,i){document.getElementById(`sub-${id}-${i}`).classList.toggle("open")}
+function viewFile(f){alert(`${f}\\n\\nPreview placeholder.`)}
+function requestDownload(f){prompt(`Request download access for: ${f}`,"Investment review")}
+
+const chartConfig={sales:{title:"Sales Historical Quarter Performance",barKey:"sales",lineKey:"salesGrowth",barLabel:"Sales",lineLabel:"Sales Growth"},grossProfit:{title:"Gross Profit Historical Quarter Performance",barKey:"grossProfit",lineCalc:r=>margin("grossProfit",r),barLabel:"Gross Profit",lineLabel:"Gross Margin"},ebitda:{title:"EBITDA Historical Quarter Performance",barKey:"ebitda",lineCalc:r=>margin("ebitda",r),barLabel:"EBITDA",lineLabel:"EBITDA Margin"},netProfit:{title:"Net Profit Historical Quarter Performance",barKey:"netProfit",lineCalc:r=>margin("netProfit",r),barLabel:"Net Profit",lineLabel:"Net Profit Margin"},salesGrowth:{title:"Sales Growth Historical Quarter Performance",barKey:"sales",lineKey:"salesGrowth",barLabel:"Sales",lineLabel:"Sales Growth"},grossMargin:{title:"Gross Margin Historical Quarter Performance",barKey:"grossProfit",lineCalc:r=>margin("grossProfit",r),barLabel:"Gross Profit",lineLabel:"Gross Margin"},ebitdaMargin:{title:"EBITDA Margin Historical Quarter Performance",barKey:"ebitda",lineCalc:r=>margin("ebitda",r),barLabel:"EBITDA",lineLabel:"EBITDA Margin"},netProfitMargin:{title:"Net Profit Margin Historical Quarter Performance",barKey:"netProfit",lineCalc:r=>margin("netProfit",r),barLabel:"Net Profit",lineLabel:"Net Profit Margin"}};
+function getFinancialIcon(t){
+  return {"Sales":"$","Gross Profit":"GP","EBITDA":"E","Net Profit":"NP","Sales Growth":"%","Gross Margin":"%","EBITDA Margin":"%","NP Margin":"%"}[t] || "•";
+}
+function kpiCard(t,v,s,tone,key){return `<div class="kpi ${tone||""}"><button class="expand-btn" onclick="openChart('${key}')">+</button><div class="kpi-symbol">${getFinancialIcon(t)}</div><div class="kpi-title">${t}</div><div class="kpi-value">${v}</div><div class="kpi-sub">${s||""}</div></div>`}
+function fmtM(n){
+  const v = Number(n||0) / 1000000;
+  const abs = Math.abs(v);
+  const txt = abs >= 10 ? abs.toFixed(1) : abs.toFixed(2);
+  return `${n < 0 ? "-" : ""}$${txt}M`;
+}
+function renderKPIs(){const r=recent();if(document.getElementById("recentQuarterPill")) document.getElementById("recentQuarterPill").textContent=`${r.quarter} ${r.year}`;document.getElementById("kpiGrid").innerHTML=[kpiCard("Sales",fmtM(r.sales),`${r.quarter} ${r.year}`,"blue","sales"),kpiCard("Gross Profit",fmtM(r.grossProfit),`${r.quarter} ${r.year}`,"good","grossProfit"),kpiCard("EBITDA",fmtM(r.ebitda),`${r.quarter} ${r.year}`,"violet","ebitda"),kpiCard("Net Profit",fmtM(r.netProfit),`${r.quarter} ${r.year}`,"amber","netProfit"),kpiCard("Sales Growth",fmtPct(r.salesGrowth),"Quarter-on-quarter","blue","salesGrowth"),kpiCard("Gross Margin",fmtPct(margin("grossProfit",r)),"Gross profit / sales","good","grossMargin"),kpiCard("EBITDA Margin",fmtPct(margin("ebitda",r)),"EBITDA / sales","violet","ebitdaMargin"),kpiCard("NP Margin",fmtPct(margin("netProfit",r)),"Net profit / sales","amber","netProfitMargin")].join("")}
+function openChart(key){const c=chartConfig[key];document.getElementById("kpiGrid").style.display="none";document.getElementById("snapshotChart").classList.add("active");document.getElementById("chartTitle").textContent=c.title;document.getElementById("barLegend").textContent=c.barLabel;document.getElementById("lineLegend").textContent=c.lineLabel;drawComboChart("comboChart",quarterlyData,c)}
+function closeChart(){document.getElementById("snapshotChart").classList.remove("active");document.getElementById("kpiGrid").style.display="grid"}
+
+const operationalChartConfig={das:{title:"DAS Historical Performance",key:"das",label:"DAS",suffix:"%"},tonsTraded:{title:"Tons Traded Historical Performance",key:"tonsTraded",label:"Tons Traded"},tonsProcessed:{title:"Tons Processed Historical Performance",key:"tonsProcessed",label:"Tons Processed"},tonsAssessed:{title:"Tons Assessed Historical Performance",key:"tonsAssessed",label:"Tons Assessed"},farmerInteractions:{title:"Farmer Interactions Historical Performance",key:"farmerInteractions",label:"Farmer Interactions"},hubs:{title:"Hubs Historical Performance",key:"hubs",label:"Hubs"},activeBuyers:{title:"Active Buyers Historical Performance",key:"activeBuyers",label:"Active Buyers"},activeSuppliers:{title:"Active Suppliers Historical Performance",key:"activeSuppliers",label:"Active Suppliers"},rejectedPct:{title:"Rejected % Historical Performance",key:"rejectedPct",label:"Rejected %",suffix:"%"}}
+function getOperationalIcon(t){return {"Tons Traded":"↗","Tons Processed":"⚙","Tons Assessed":"◈","Farmer Interactions":"♙","Hubs":"⌘","Active Buyers":"♙","Active Suppliers":"▣","Rejected %":"⌁"}[t]||"•"}
+function opCard(t,v,s,tone,key){return `<div class="kpi ${tone||""}"><button class="expand-btn" onclick="openOperationalChart('${key}')">+</button><div class="kpi-symbol">${getOperationalIcon(t)}</div><div class="kpi-title">${t}</div><div class="kpi-value">${v}</div><div class="kpi-sub">${s}</div></div>`}
+function renderOperationalKPIs(){const r=recentOp();document.getElementById("opRecentQuarterPill").textContent=`Audited Quarter ${r.quarter} ${r.year}`;document.getElementById("dasHero").innerHTML=`<button class="expand-btn" onclick="openOperationalChart('das')">+</button><div class="das-label"><span class="ai-stars">✦</span>Digital Aggregation Share</div><div class="das-value">${r.das}%</div><div class="das-sub">AI-Assisted Aggregation Crop Flow</div><div class="das-ai-boxes"><span>AI</span><span>ML</span><span>CV</span></div>`;document.getElementById("opKpiGrid").innerHTML=[opCard("Tons Traded",fmt(r.tonsTraded),`${r.quarter} ${r.year}`,"blue","tonsTraded"),opCard("Tons Processed",fmt(r.tonsProcessed),`${r.quarter} ${r.year}`,"blue","tonsProcessed"),opCard("Tons Assessed",fmt(r.tonsAssessed),`${r.quarter} ${r.year}`,"blue","tonsAssessed"),opCard("Farmer Interactions",fmt(r.farmerInteractions),`${r.quarter} ${r.year}`,"good","farmerInteractions"),opCard("Hubs",fmt(r.hubs),`${r.quarter} ${r.year}`,"good","hubs"),opCard("Active Buyers",fmt(r.activeBuyers),`${r.quarter} ${r.year}`,"good","activeBuyers"),opCard("Active Suppliers",fmt(r.activeSuppliers),`${r.quarter} ${r.year}`,"good","activeSuppliers"),opCard("Rejected %",`${r.rejectedPct.toFixed(1)}%`,`${r.quarter} ${r.year}`,"warn","rejectedPct")].join("")}
+function openOperationalChart(key){const c=operationalChartConfig[key];document.getElementById("dasHero").style.display="none";document.getElementById("opKpiGrid").style.display="none";document.getElementById("opChart").classList.add("active");document.getElementById("opChartTitle").textContent=c.title;document.getElementById("opBarLegend").textContent=c.label;drawBarChart("opComboChart",operationalData,c)}
+function closeOperationalChart(){document.getElementById("opChart").classList.remove("active");document.getElementById("dasHero").style.display="block";document.getElementById("opKpiGrid").style.display="grid"}
+
+function drawComboChart(id,data,c){const canvas=document.getElementById(id),rect=canvas.getBoundingClientRect(),dpr=devicePixelRatio||1;canvas.width=rect.width*dpr;canvas.height=rect.height*dpr;const ctx=canvas.getContext("2d");ctx.scale(dpr,dpr);const w=rect.width,h=rect.height,p={left:64,right:58,top:24,bottom:52},cw=w-p.left-p.right,ch=h-p.top-p.bottom,bar=data.map(r=>r[c.barKey]||0),line=data.map(r=>c.lineCalc?c.lineCalc(r):r[c.lineKey]);const max=Math.max(...bar.map(v=>Math.abs(v)),1),space=cw/data.length,bw=Math.min(56,space*.46),zero=p.top+ch;ctx.clearRect(0,0,w,h);data.forEach((r,i)=>{const x=p.left+i*space+space/2,v=r[c.barKey]||0,bh=Math.abs(v)/max*ch,y=zero-bh;ctx.fillStyle=v>=0?"#0b2a66":"#b42318";topRoundedRect(ctx,x-bw/2,y,bw,bh,8);ctx.fill();ctx.fillStyle="#475569";ctx.textAlign="center";ctx.fillText(`${r.quarter} ${String(r.year).slice(2)}`,x,h-25)});const valid=line.filter(v=>v!==null&&isFinite(v)),maxL=Math.max(...valid.map(v=>Math.abs(v)),1),minL=Math.min(...valid,0),range=Math.max(maxL-minL,1);function ly(v){return p.top+ch-((v-minL)/range)*ch}ctx.strokeStyle="#d9a441";ctx.lineWidth=3;ctx.beginPath();let started=false;line.forEach((v,i)=>{if(v===null||!isFinite(v))return;const x=p.left+i*space+space/2,y=ly(v);if(!started){ctx.moveTo(x,y);started=true}else ctx.lineTo(x,y)});ctx.stroke();line.forEach((v,i)=>{if(v===null||!isFinite(v))return;const x=p.left+i*space+space/2,y=ly(v);ctx.fillStyle="#d9a441";ctx.beginPath();ctx.arc(x,y,5,0,Math.PI*2);ctx.fill();ctx.fillStyle="#334155";ctx.fillText(`${v.toFixed(1)}%`,x,y-10)})}
+function drawBarChart(id,data,c){const canvas=document.getElementById(id),rect=canvas.getBoundingClientRect(),dpr=devicePixelRatio||1;canvas.width=rect.width*dpr;canvas.height=rect.height*dpr;const ctx=canvas.getContext("2d");ctx.scale(dpr,dpr);const w=rect.width,h=rect.height,p={left:64,right:34,top:24,bottom:52},cw=w-p.left-p.right,ch=h-p.top-p.bottom,vals=data.map(r=>r[c.key]||0),max=Math.max(...vals.map(v=>Math.abs(v)),1),space=cw/data.length,bw=Math.min(62,space*.48),zero=p.top+ch;ctx.clearRect(0,0,w,h);data.forEach((r,i)=>{const x=p.left+i*space+space/2,v=r[c.key]||0,bh=Math.abs(v)/max*ch,y=zero-bh;ctx.fillStyle=c.key==="rejectedPct"?"#f97316":"#0b2a66";topRoundedRect(ctx,x-bw/2,y,bw,bh,8);ctx.fill();ctx.fillStyle="#475569";ctx.textAlign="center";ctx.fillText(`${r.quarter} ${String(r.year).slice(2)}`,x,h-25);ctx.fillStyle="#334155";ctx.fillText(c.suffix==="%"?`${v.toFixed(1)}%`:fmt(v),x,Math.max(15,y-8))})}
+function topRoundedRect(ctx,x,y,w,h,r){r=Math.min(r,w/2,h/2);ctx.beginPath();ctx.moveTo(x,y+h);ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);ctx.lineTo(x+w,y+h);ctx.closePath()}
+
+function wcIconHtml(t){
+  const icons={
+    "Inventory DOH":`<svg viewBox="0 0 24 24"><path d="M12 3 4 7.5v9L12 21l8-4.5v-9L12 3Z"></path><path d="M4 7.5 12 12l8-4.5"></path><path d="M12 12v9"></path></svg>`,
+    "AR DOH":`<svg viewBox="0 0 24 24"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"></path><path d="M5 20c0-3.1 3-5 7-5s7 1.9 7 5"></path></svg>`,
+    "AP DOH":`<svg viewBox="0 0 24 24"><rect x="4" y="6" width="16" height="12" rx="2"></rect><path d="M4 10h16"></path><path d="M8 14h4"></path></svg>`,
+    "CCC":`<svg viewBox="0 0 24 24"><path d="M20 7v5h-5"></path><path d="M4 17v-5h5"></path><path d="M7 8a8 8 0 0 1 12-1"></path><path d="M17 16A8 8 0 0 1 5 17"></path></svg>`
+  };
+  return icons[t]||"";
+}
+function wcIconHtml(t){
+  const icons = {
+    "Inventory DOH": `<svg viewBox="0 0 24 24"><path d="M12 3 4 7.5v9L12 21l8-4.5v-9L12 3Z"></path><path d="M4 7.5 12 12l8-4.5"></path><path d="M12 12v9"></path></svg>`,
+    "AR DOH": `<svg viewBox="0 0 24 24"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"></path><path d="M5 20c0-3.1 3-5 7-5s7 1.9 7 5"></path></svg>`,
+    "AP DOH": `<svg viewBox="0 0 24 24"><rect x="4" y="6" width="16" height="12" rx="2"></rect><path d="M4 10h16"></path><path d="M8 14h4"></path></svg>`,
+    "CCC": `<svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 1 8.3 5.5"></path><path d="M20.5 4.5v4.5H16"></path><path d="M12 21a9 9 0 0 1-8.3-5.5"></path><path d="M3.5 19.5v-4.5H8"></path></svg>`
+  };
+  return icons[t] || "";
+}
+function wcIconHtml(t){
+  const icons = {
+    "Inventory DOH": `<svg viewBox="0 0 24 24"><path d="M12 3 4 7.5v9L12 21l8-4.5v-9L12 3Z"></path><path d="M4 7.5 12 12l8-4.5"></path><path d="M12 12v9"></path></svg>`,
+    "AR DOH": `<svg viewBox="0 0 24 24"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"></path><path d="M5 20c0-3.1 3-5 7-5s7 1.9 7 5"></path></svg>`,
+    "AP DOH": `<svg viewBox="0 0 24 24"><rect x="4" y="6" width="16" height="12" rx="2"></rect><path d="M4 10h16"></path><path d="M8 14h4"></path></svg>`,
+    "CCC": `<svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 1 8.3 5.5"></path><path d="M20.5 4.5v4.5H16"></path><path d="M12 21a9 9 0 0 1-8.3-5.5"></path><path d="M3.5 19.5v-4.5H8"></path></svg>`
+  };
+  return icons[t] || "";
+}
+function renderEfficiency(){
+  const r = recent();
+  const rows = [
+    ["Inventory DOH", r.inventoryDOH, "inventory"],
+    ["AR DOH", r.arDOH, "ar"],
+    ["AP DOH", r.apDOH, "ap"],
+    ["CCC", r.ccc, "ccc"]
+  ];
+  document.getElementById("efficiencyGrid").innerHTML = rows.map(([t,v,kind]) => `
+    <div class="kpi wc-kpi ${kind}">
+      <div class="wc-circle">${wcIconHtml(t)}</div>
+      <div class="kpi-title">${t}</div>
+      <div class="kpi-value">${v ? fmt(v) : "—"}</div>
+      <div class="kpi-sub">${v ? "Days" : "Not available"}</div>
+    </div>
+  `).join("");
+}
+
+function renderTable(){const rows=[["Income Statement","section"],["Sales","sales"],["COGS","cogs"],["Gross Profit","grossProfit"],["G&A","gna"],["Selling & Marketing","sellingMarketing"],["EBITDA","ebitda"],["EBIT","ebit"],["Interest Income","interestIncome"],["Interest Expense","interestExpense"],["Net Profit","netProfit"],["Balance Sheet","section"],["Cash","cash"],["Inventory","inventory"],["Receivables","receivables"],["Payables","payables"],["Debt","debt"],["Working Capital Efficiency","section"],["Inventory DOH","inventoryDOH"],["AR DOH","arDOH"],["AP DOH","apDOH"],["CCC","ccc"]];document.getElementById("statementTable").innerHTML=`<thead><tr><th>Metric</th>${quarterlyData.map(r=>`<th>${r.quarter}<br>${r.year}</th>`).join("")}</tr></thead><tbody>${rows.map(([l,k])=>k==="section"?`<tr class="section-row"><td>${l}</td>${quarterlyData.map(()=>"<td></td>").join("")}</tr>`:`<tr><td>${l}</td>${quarterlyData.map(r=>`<td>${fmt(r[k])}</td>`).join("")}</tr>`).join("")}</tbody>`}
+
+const marketMapPoints=[
+{type:"farmer",name:"Farmer Cluster · Dakahlia",meta:"1,260 active farmers",lat:31.05,lng:31.38},
+{type:"farmer",name:"Farmer Cluster · Beheira",meta:"White beans / corn supply",lat:30.85,lng:30.35},
+{type:"intermediary",name:"Intermediary Network · Delta",meta:"Aggregation and farmer sourcing",lat:30.72,lng:31.18},
+{type:"intermediary",name:"Intermediary Network · Upper Egypt",meta:"Regional crop brokers",lat:27.65,lng:30.82},
+{type:"buyer",name:"Buyer Demand · Alexandria Export",meta:"Repeat buyer cluster",lat:31.20,lng:29.92},
+{type:"buyer",name:"Buyer Demand · Cairo",meta:"Domestic dry crop buyers",lat:30.04,lng:31.24},
+{type:"scale",name:"Scale Station · Mansoura",meta:"Weight verification point",lat:31.04,lng:31.37},
+{type:"scale",name:"Scale Station · Fayoum",meta:"Inbound truck weighing",lat:29.31,lng:30.84},
+{type:"processing",name:"Processing Station · Delta",meta:"Cleaning and grading",lat:30.55,lng:31.10},
+{type:"processing",name:"Processing Station · Upper Egypt",meta:"Regional processing capacity",lat:27.18,lng:31.18},
+{type:"storage",name:"Storage Hub · Giza",meta:"Dry crop storage capacity",lat:29.97,lng:31.13},
+{type:"storage",name:"Storage Hub · Beheira",meta:"Seasonal warehouse",lat:30.78,lng:30.10},
+{type:"vehicle",name:"Vehicle Fleet · Delta Routes",meta:"Tractor and truck movement",lat:30.90,lng:31.02},
+{type:"vehicle",name:"Vehicle Fleet · Upper Egypt Routes",meta:"Long-haul crop transport",lat:28.08,lng:30.74},
+{type:"lab",name:"Lab Partner · Cairo",meta:"Quality and moisture testing",lat:30.06,lng:31.20},
+{type:"lab",name:"Lab Partner · Delta",meta:"Sample testing point",lat:31.00,lng:31.25}
+];
+let leafletMap=null, leafletMarkers=[];
+function markerIcon(type){const colors={farmer:"#0f8a5f",intermediary:"#d9a441",buyer:"#f97316",scale:"#0b2a66",processing:"#135ee8",storage:"#8b5cf6",vehicle:"#64748b",lab:"#14b8a6"};return L.divIcon({className:"",html:`<div style="width:14px;height:14px;border-radius:50%;border:2px solid white;background:${colors[type]||"#0b2a66"};box-shadow:0 6px 18px rgba(15,23,42,.30)"></div>`,iconSize:[18,18],iconAnchor:[9,9]})}
+function renderMarketMap(){if(typeof L==="undefined")return;const el=document.getElementById("leafletMap");if(!el)return;if(!leafletMap){leafletMap=L.map("leafletMap",{zoomControl:true,scrollWheelZoom:true}).setView([28.8,30.8],6);L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:18,attribution:"© OpenStreetMap"}).addTo(leafletMap);attachMapFilters()}setTimeout(()=>leafletMap.invalidateSize(),80);renderLeafletMarkers()}
+function renderLeafletMarkers(){if(!leafletMap)return;leafletMarkers.forEach(m=>m.remove());leafletMarkers=[];const active=new Set([...document.querySelectorAll(".map-filter.active")].map(b=>b.dataset.mapFilter));marketMapPoints.forEach(p=>{if(!(active.has("all")||active.has(p.type)))return;const m=L.marker([p.lat,p.lng],{icon:markerIcon(p.type)}).bindPopup(`<strong>${p.name}</strong><br>${p.meta}`).addTo(leafletMap);leafletMarkers.push(m)})}
+function attachMapFilters(){document.querySelectorAll(".map-filter").forEach(b=>{if(b.dataset.attached)return;b.dataset.attached="yes";b.addEventListener("click",()=>{const f=b.dataset.mapFilter;if(f==="all"){const on=!b.classList.contains("active");document.querySelectorAll(".map-filter").forEach(x=>x.classList.toggle("active",on))}else{b.classList.toggle("active");const filters=[...document.querySelectorAll(".map-filter")].filter(x=>x.dataset.mapFilter!=="all");document.querySelector('[data-map-filter="all"]').classList.toggle("active",filters.every(x=>x.classList.contains("active")))}renderLeafletMarkers()})})}
+function showToast(t){console.log(t)}
+
+
+
+/* v73 HOSTED ADMIN LOADER
+   This version is meant to be uploaded to your admin/site and opened from https:// or localhost,
+   not from file://. It removes investor-facing paste/upload fallback and shows only a clean loading state.
+   Load order:
+   1) Direct published Google CSV fetch with cache-bust.
+   2) Google Visualization JSONP fallback.
+   If both fail, figures stay hidden and only a small admin debug line appears.
+*/
+function setHostedLoadingMessage(text){
+  ["financialLoadingBox","workingCapitalLoadingBox","statementLoadingBox"].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.innerHTML = `<div class="hosted-loader"><div class="hosted-spinner"></div><div>${text}</div></div>`;
+  });
+}
+
+function showHostedSheetError(detail){
+  document.body.classList.add("financial-loading");
+  setSheetStatus("Sheet Error", "fail");
+  const safeDetail = String(detail || "Unknown error").replace(/[<>&]/g, c => ({"<":"&lt;",">":"&gt;","&":"&amp;"}[c]));
+  const investorMsg = `Financial data is temporarily syncing. Please refresh in a moment.`;
+  const adminMsg = `Admin debug: ${safeDetail}`;
+  ["financialLoadingBox","workingCapitalLoadingBox","statementLoadingBox"].forEach((id,idx)=>{
+    const el=document.getElementById(id);
+    if(el) el.innerHTML = `
+      <div class="hosted-error">
+        <div class="hosted-error-title">${investorMsg}</div>
+        ${idx === 0 ? `<div class="hosted-debug">${adminMsg}</div><button class="hosted-retry" onclick="loadFinancialCsv()">Retry Sync</button>` : ``}
+      </div>`;
+  });
+}
+
+async function tryHostedDirectCsvFetch(){
+  const url = FINANCIAL_CSV_URL + (FINANCIAL_CSV_URL.includes("?") ? "&" : "?") + "cachebust=" + Date.now();
+  const controller = new AbortController();
+  const timer = setTimeout(()=>controller.abort(), 18000);
+  try{
+    const res = await fetch(url, {
+      method:"GET",
+      cache:"no-store",
+      redirect:"follow",
+      credentials:"omit",
+      signal:controller.signal
+    });
+    if(!res.ok) throw new Error("Direct CSV HTTP " + res.status);
+    const txt = await res.text();
+    if(!txt || txt.trim().length < 10) throw new Error("Direct CSV returned empty text.");
+    if(/^\s*</.test(txt)) throw new Error("Direct CSV returned HTML instead of CSV.");
+    return txt;
+  }finally{
+    clearTimeout(timer);
+  }
+}
+
+async function loadFinancialCsv(){
+  document.body.classList.add("financial-loading");
+  setSheetStatus("Syncing…", "loading");
+  setHostedLoadingMessage("Syncing financials from Google Sheet…");
+
+  try{
+    let csv = "";
+    const errors = [];
+
+    try{
+      setSheetStatus("Loading Sheet…", "loading");
+      csv = await tryHostedDirectCsvFetch();
+    }catch(directErr){
+      errors.push("Direct CSV: " + ((directErr && directErr.message) ? directErr.message : String(directErr)));
+      console.warn("Hosted direct CSV failed, trying Google JSONP:", directErr);
+      try{
+        setSheetStatus("Loading via Google…", "loading");
+        csv = await loadGoogleSheetViaJsonp();
+      }catch(jsonpErr){
+        errors.push("Google JSONP: " + ((jsonpErr && jsonpErr.message) ? jsonpErr.message : String(jsonpErr)));
+        throw new Error(errors.join(" || "));
+      }
+    }
+
+    if(!applyFinancialCsv(csv)){
+      throw new Error(localStorage.getItem(FINANCIAL_GVIZ_DEBUG_KEY) || "Sheet loaded but metric rows were not recognized. First column must be Metric and columns must be Q2 2022, Q3 2022, etc.");
+    }
+
+    localStorage.setItem(FINANCIAL_CACHE_KEY, csv);
+    showFinancialLoaded("Sheet Linked");
+  }catch(err){
+    console.warn("Hosted Google Sheet load failed:", err);
+    showHostedSheetError((err && err.message) ? err.message : String(err));
+  }
+}
+
+initVisitorInfo();renderTechStack();renderOperationalKPIs();renderMarketMap();updateSidebarToggleIcon();loadFinancialCsv();
+</script>
+</body>
+</html>
