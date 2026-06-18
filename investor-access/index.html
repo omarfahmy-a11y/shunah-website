@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Shunah Investor Command Center</title>
   <!-- Search FINANCIAL_CSV_URL in this file to paste your published Google Sheet CSV link. -->
+  <!-- Deployment asset paths: put PNGs inside investor-access/pics/ :
+       pics/logo.png, pics/tech1.png ... pics/tech7.png -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <style>
@@ -3084,7 +3086,7 @@ body:not(.financial-loading) .financial-loading-box{display:none!important}
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-top">
       <div class="brand-mini brand-text-only">
-  <div class="brand-logo" aria-hidden="true"><img src="logo.png" alt="Shunah logo"></div>
+  <div class="brand-logo" aria-hidden="true"><img src="pics/logo.png" alt="Shunah logo"></div>
   <div class="brand-copy">
     <div class="brand-name">Command Center</div>
     
@@ -3119,7 +3121,7 @@ body:not(.financial-loading) .financial-loading-box{display:none!important}
 
     <div class="sidebar-footer">
       <button class="logout" onclick="showToast('Logged out')"><span class="side-icon"><svg viewBox="0 0 24 24"><path d="M10 17l5-5-5-5"/><path d="M15 12H3"/><path d="M12 3h6a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3h-6"/></svg></span><span>Log Out</span></button>
-      <div class="version">Version 12.01.4</div>
+      <div class="version">Version 12.01.6</div>
     </div>
   </aside>
 
@@ -3246,13 +3248,13 @@ const operationalData=[
 {quarter:"Q1",year:2026,das:75,tonsTraded:6250,tonsProcessed:3900,tonsAssessed:150000,farmerInteractions:37000,hubs:85,activeBuyers:42,activeSuppliers:1260,rejectedPct:3.4}
 ];
 const technologies=[
-{id:"remote",icon:"tech1.png",title:"Remote Crop Identification",subtitle:"Satellite and remote sensing tools for crop area identification, field segmentation and supply visibility.",subcategories:[{title:"Field Segmentation Tool",status:"Operational",aiPowered:"Yes",accuracy:"XX%",workingDays:"120+",files:[["Field Segmentation Overview","PDF · Investor view"],["Remote Sensing Methodology","PDF · Restricted"]]}, {title:"Crop Identification Model",status:"Testing",aiPowered:"Yes",accuracy:"XX%",workingDays:"120+",files:[["Crop Identification Overview","PDF · Investor view"],["Model Summary","PDF · Restricted"]]}, {title:"Procurement Zone Mapping",status:"Prototype",aiPowered:"No",accuracy:"N/A",workingDays:"45+",files:[["Procurement Zone Map","PDF · Viewable"]]}]},
-{id:"cav",icon:"tech2.png",title:"Computer-Aided Vision",subtitle:"AI crop grading, count, segmentation and quality assessment models for dry crops.",subcategories:[{title:"White Bean Quality Model",status:"Operational / Training",aiPowered:"Yes",accuracy:"XX%",workingDays:"120+",files:[["White Bean Quality Model Summary","PDF · Viewable"],["ONNX Quality Model","ONNX · Restricted"]]}, {title:"White Bean Count Model",status:"Testing",aiPowered:"Yes",accuracy:"XX%",workingDays:"120+",files:[["Count Model Summary","PDF · Viewable"]]}, {title:"Segmentation Model",status:"Training",aiPowered:"Yes",accuracy:"XX%",workingDays:"120+",files:[["Segmentation Model Summary","PDF · Viewable"]]}]},
-{id:"iot",icon:"tech3.png",title:"IoT",subtitle:"Network platform connecting farmers, buyers, processors, storage, scales, labs and vehicles.",subcategories:[{title:"Agri Network Logic",status:"Prototype",aiPowered:"No",accuracy:"N/A",workingDays:"45+",files:[["IoT Platform Overview","PDF · Investor view"]]}]},
-{id:"mobile",icon:"tech4.png",title:"Mobile Apps",subtitle:"Android APKs, crop grading app, marketplace apps, demo builds and release notes.",subcategories:[{title:"Crop Grading APK",status:"Demo Build",aiPowered:"Yes",accuracy:"N/A",workingDays:"45+",files:[["Crop Grading APK","APK · Restricted"]]}]},
-{id:"samplers",icon:"tech5.png",title:"AI Labeling Tool and ML",subtitle:"AI labeling workflows, ML training support, datasets, annotations and model improvement logic.",subcategories:[{title:"AI Labeling Workflow",status:"Design",aiPowered:"No",accuracy:"N/A",workingDays:"45+",files:[["AI Labeling Workflow Overview","PDF · Viewable"]]}]},
-{id:"scraper",icon:"tech6.png",title:"Social Scraping Tool",subtitle:"Market listening, buyer/seller signals, crop price mentions and regional trading intelligence.",subcategories:[{title:"Market Signal Scraper",status:"Prototype",aiPowered:"Yes",accuracy:"XX%",workingDays:"45+",files:[["Social Scraping Tool Overview","PDF · Investor view"]]}]},
-{id:"saas",icon:"tech7.png",title:"SaaS",subtitle:"Future subscription layer for grading, pricing, supplier intelligence and market access tools.",subcategories:[{title:"SaaS Product Roadmap",status:"Planned",aiPowered:"Yes",accuracy:"N/A",workingDays:"45+",files:[["SaaS Roadmap","PDF · Investor view"]]}]}
+{id:"remote",icon:"pics/tech1.png",title:"Remote Crop Identification",subtitle:"Satellite and remote sensing tools for crop area identification, field segmentation and supply visibility.",subcategories:[{title:"Field Segmentation Tool",status:"Operational",aiPowered:"Yes",accuracy:"XX%",workingDays:"120+",files:[["Field Segmentation Overview","PDF · Investor view"],["Remote Sensing Methodology","PDF · Restricted"]]}, {title:"Crop Identification Model",status:"Testing",aiPowered:"Yes",accuracy:"XX%",workingDays:"120+",files:[["Crop Identification Overview","PDF · Investor view"],["Model Summary","PDF · Restricted"]]}, {title:"Procurement Zone Mapping",status:"Prototype",aiPowered:"No",accuracy:"N/A",workingDays:"45+",files:[["Procurement Zone Map","PDF · Viewable"]]}]},
+{id:"cav",icon:"pics/tech2.png",title:"Computer-Aided Vision",subtitle:"AI crop grading, count, segmentation and quality assessment models for dry crops.",subcategories:[{title:"White Bean Quality Model",status:"Operational / Training",aiPowered:"Yes",accuracy:"XX%",workingDays:"120+",files:[["White Bean Quality Model Summary","PDF · Viewable"],["ONNX Quality Model","ONNX · Restricted"]]}, {title:"White Bean Count Model",status:"Testing",aiPowered:"Yes",accuracy:"XX%",workingDays:"120+",files:[["Count Model Summary","PDF · Viewable"]]}, {title:"Segmentation Model",status:"Training",aiPowered:"Yes",accuracy:"XX%",workingDays:"120+",files:[["Segmentation Model Summary","PDF · Viewable"]]}]},
+{id:"iot",icon:"pics/tech3.png",title:"IoT",subtitle:"Network platform connecting farmers, buyers, processors, storage, scales, labs and vehicles.",subcategories:[{title:"Agri Network Logic",status:"Prototype",aiPowered:"No",accuracy:"N/A",workingDays:"45+",files:[["IoT Platform Overview","PDF · Investor view"]]}]},
+{id:"mobile",icon:"pics/tech4.png",title:"Mobile Apps",subtitle:"Android APKs, crop grading app, marketplace apps, demo builds and release notes.",subcategories:[{title:"Crop Grading APK",status:"Demo Build",aiPowered:"Yes",accuracy:"N/A",workingDays:"45+",files:[["Crop Grading APK","APK · Restricted"]]}]},
+{id:"samplers",icon:"pics/tech5.png",title:"AI Labeling Tool and ML",subtitle:"AI labeling workflows, ML training support, datasets, annotations and model improvement logic.",subcategories:[{title:"AI Labeling Workflow",status:"Design",aiPowered:"No",accuracy:"N/A",workingDays:"45+",files:[["AI Labeling Workflow Overview","PDF · Viewable"]]}]},
+{id:"scraper",icon:"pics/tech6.png",title:"Social Scraping Tool",subtitle:"Market listening, buyer/seller signals, crop price mentions and regional trading intelligence.",subcategories:[{title:"Market Signal Scraper",status:"Prototype",aiPowered:"Yes",accuracy:"XX%",workingDays:"45+",files:[["Social Scraping Tool Overview","PDF · Investor view"]]}]},
+{id:"saas",icon:"pics/tech7.png",title:"SaaS",subtitle:"Future subscription layer for grading, pricing, supplier intelligence and market access tools.",subcategories:[{title:"SaaS Product Roadmap",status:"Planned",aiPowered:"Yes",accuracy:"N/A",workingDays:"45+",files:[["SaaS Roadmap","PDF · Investor view"]]}]}
 ];
 
 function fmt(n){const v=Number(n||0),a=Math.abs(v).toLocaleString("en-US",{maximumFractionDigits:0});return v<0?`(${a})`:a}
