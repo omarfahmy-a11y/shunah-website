@@ -3026,7 +3026,7 @@ body:not(.financial-loading) .financial-loading-box{
   display:none!important;
 }
 
-/* v83 operational loading: hide fallback/static operational figures until Ops tab loads */
+/* v84 operational loading: hide fallback/static operational figures until Ops tab loads */
 body.operational-loading #dasHero,
 body.operational-loading #opKpiGrid,
 body.operational-loading #opChart{
@@ -3237,7 +3237,7 @@ body.admin-session .admin-only{display:grid!important;}
 
     <div class="sidebar-footer">
       <button class="logout" onclick="authLogout()"><span class="side-icon"><svg viewBox="0 0 24 24"><path d="M10 17l5-5-5-5"/><path d="M15 12H3"/><path d="M12 3h6a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3h-6"/></svg></span><span>Log Out</span></button>
-      <div class="version">Version 12.02.2</div>
+      <div class="version">Version 12.02.3</div>
     </div>
   </aside>
 
@@ -3412,9 +3412,9 @@ const FINANCIAL_GVIZ_DEBUG_KEY = "shunah_investor_last_loader_error_v71";
    Metric | Q2 2022 | ... | Q1 2026.
    This version tries the published Ops tab directly by sheet name first, then Google GViz.
    If Google still does not expose the tab, publish the Ops tab and paste its CSV link below. */
-const OPS_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ7ICQLNTQz5aMwDPHq-WKUc40SmD2XbTvXmOa2f0Vun9umA1vlwvevi_Qhm50bFjUTm9jrxwmSq2RX/pub?output=csv&sheet=Ops";
+const OPS_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ7ICQLNTQz5aMwDPHq-WKUc40SmD2XbTvXmOa2f0Vun9umA1vlwvevi_Qhm50bFjUTm9jrxwmSq2RX/pub?gid=2137490010&single=true&output=csv";
 const OPS_TAB_NAME = "Ops";
-const OPS_CACHE_KEY = "shunah_investor_ops_csv_v83";
+const OPS_CACHE_KEY = "shunah_investor_ops_csv_v84";
 
 function setSheetStatus(text, tone="loading"){
   const p = document.getElementById("sheetStatusPill");
