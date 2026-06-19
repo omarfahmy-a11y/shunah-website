@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Shunah Investor Command Center</title>
-  <!-- Search FINANCIAL_CSV_URL / OPS_CSV_URL in this file to update Google Sheet links. Ops tab format: Metric | Q2 2022 | ... | Q1 2026. -->
+  <!-- Search FINANCIAL_CSV_URL / OPS_CSV_URL in this file to update Shunah1.02 Server links. Ops tab format: Metric | Q2 2022 | ... | Q1 2026. -->
   <!-- Deployment asset paths: put PNGs inside investor-access/pics/ :
        pics/logo.png, pics/tech1.png ... pics/tech7.png -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -3000,7 +3000,7 @@ body.nav-collapsed .side-tab.active .side-icon svg{
 }
 
 
-/* v65 financial loading: hide default/static figures until the Google Sheet loads */
+/* v65 financial loading: hide default/static figures until the Shunah1.02 Server loads */
 body.financial-loading #kpiGrid,
 body.financial-loading #efficiencyGrid,
 body.financial-loading #statementTable,
@@ -3252,7 +3252,7 @@ body.admin-session .admin-only{display:grid!important;}
     <section id="technology" class="section active">
       <div class="panel">
         <div class="panel-head"><div><h2>Tech Product Suite</h2><p>Seven technology verticals shown as expandable rows. Each row opens into tools, statuses, accuracy, AI-powered status and files.</p></div></div>
-        <div id="techLoadingBox" class="operational-loading-box">Syncing Tech Product Suite from Google Sheet…</div>
+        <div id="techLoadingBox" class="operational-loading-box">Uploading Data from Shunah1.02 Server…</div>
         <div class="tech-stack" id="techStack"></div>
       </div>
     </section>
@@ -3260,7 +3260,7 @@ body.admin-session .admin-only{display:grid!important;}
     <section id="operations" class="section">
       <div class="panel">
         <div class="panel-head"><div><h2>Operational KPIs</h2></div><div class="pill" id="opRecentQuarterPill">Audited Quarter Q1 2026</div></div>
-        <div id="operationalLoadingBox" class="operational-loading-box">Syncing operational KPIs from Ops tab…</div>
+        <div id="operationalLoadingBox" class="operational-loading-box">Uploading Data from Shunah1.02 Server…</div>
         <div id="dasHero" class="das-hero"></div>
         <div id="opKpiGrid" class="kpi-grid"></div>
         <div id="opChart" class="op-chart">
@@ -3313,14 +3313,14 @@ body.admin-session .admin-only{display:grid!important;}
       <span class="chip-icon"><svg viewBox="0 0 24 24"><path d="M12 3 5 6v6c0 4.5 3 7.4 7 9 4-1.6 7-4.5 7-9V6l-7-3Z"></path><path d="m9.2 12 1.8 1.8 3.8-4"></path></svg></span>
       <span>Audited</span>
     </button>
-    <span class="finance-chip sheet-status" id="sheetStatusPill">Loading Sheet…</span>
+    <span class="finance-chip sheet-status" id="sheetStatusPill">Uploading Data…</span>
     <button class="export-btn" type="button" onclick="window.print()">
       <span class="chip-icon"><svg viewBox="0 0 24 24"><path d="M12 3v11"></path><path d="m8 10 4 4 4-4"></path><path d="M5 21h14"></path></svg></span>
       <span>Export PDF</span>
     </button>
   </div>
 </div>
-        <div id="financialLoadingBox" class="financial-loading-box">Loading financials from Google Sheet…</div><div id="kpiGrid" class="kpi-grid"></div>
+        <div id="financialLoadingBox" class="financial-loading-box">Uploading Data from Shunah1.02 Server…</div><div id="kpiGrid" class="kpi-grid"></div>
         <div id="snapshotChart" class="snapshot-chart">
           <div class="chart-top"><div><h3 id="chartTitle">Historical Quarter Performance</h3><p id="chartSubtitle">Bar chart and margin/growth line.</p></div><button class="close-chart" onclick="closeChart()">Back</button></div>
           <div class="legend"><span><i class="dot"></i> <span id="barLegend">Performance</span></span><span><i class="dot line"></i> <span id="lineLegend">Margin / Growth</span></span></div>
@@ -3406,8 +3406,8 @@ function recentOp(){return operationalData[operationalData.length-1]}
 
 
 
-/* v71: Google Sheet loader fixed for local file:// Chrome
-   Uses the real Google Visualization JSONP callback syntax first:
+/* v71: Shunah1.02 Server loader fixed for local file:// Chrome
+   Uses the real Shunah1.02 Server JSONP callback syntax first:
    tqx=out:json;responseHandler:__shunahSheetCallback
    This avoids fetch/CORS blocking when opening the HTML as a local file.
 */
@@ -3418,7 +3418,7 @@ const FINANCIAL_GVIZ_DEBUG_KEY = "shunah_investor_last_loader_error_v71";
 /* v83: Ops tab loader.
    The Ops tab must use the same simple format as the financial tab:
    Metric | Q2 2022 | ... | Q1 2026.
-   This version tries the published Ops tab directly by sheet name first, then Google GViz.
+   This version tries the published Ops tab directly by sheet name first, then Shunah1.02 Server sync.
    If Google still does not expose the tab, publish the Ops tab and paste its CSV link below. */
 const OPS_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ7ICQLNTQz5aMwDPHq-WKUc40SmD2XbTvXmOa2f0Vun9umA1vlwvevi_Qhm50bFjUTm9jrxwmSq2RX/pub?gid=2137490010&single=true&output=csv";
 const OPS_TAB_NAME = "Ops";
@@ -3427,7 +3427,7 @@ const OPS_CACHE_KEY = "shunah_investor_ops_csv_v84";
 /* v88: Tech Product Suite loader.
    Tab name: Tech
    Simple columns: Tech Name | Sub Category | Status | AI Powered | Accuracy | Version | Progress | Working Days */
-const TECH_CSV_URL = "";
+const TECH_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ7ICQLNTQz5aMwDPHq-WKUc40SmD2XbTvXmOa2f0Vun9umA1vlwvevi_Qhm50bFjUTm9jrxwmSq2RX/pub?gid=2037721845&single=true&output=csv";
 const TECH_TAB_NAME = "Tech";
 const TECH_CACHE_KEY = "shunah_investor_tech_csv_v88";
 
@@ -3516,10 +3516,10 @@ function gvizValue(cell){
 }
 
 function gvizToCsv(resp){
-  if(!resp) throw new Error("Google returned an empty response.");
-  if(resp.status === "error") throw new Error((resp.errors || []).map(e => e.detailed_message || e.message).join(" | ") || "Google Visualization returned an error.");
+  if(!resp) throw new Error("Shunah1.02 Server returned an empty response.");
+  if(resp.status === "error") throw new Error((resp.errors || []).map(e => e.detailed_message || e.message).join(" | ") || "Shunah1.02 Server returned an error.");
   const table = resp.table;
-  if(!table || !Array.isArray(table.cols) || !Array.isArray(table.rows)) throw new Error("Google Visualization table was empty.");
+  if(!table || !Array.isArray(table.cols) || !Array.isArray(table.rows)) throw new Error("Shunah1.02 Server table was empty.");
 
   let header = table.cols.map((c,i)=> String(c.label || c.id || (i === 0 ? "Metric" : "")).trim());
   const dataRows = table.rows.map(r => {
@@ -3528,7 +3528,7 @@ function gvizToCsv(resp){
     return cells;
   }).filter(r => r.some(x => String(x || "").trim() !== ""));
 
-  /* Some Google sheets expose the first row as data instead of column labels. Detect and promote it. */
+  /* Some Shunah1.02 Servers expose the first row as data instead of column labels. Detect and promote it. */
   const headerHasQuarters = header.slice(1).some(h => parsePeriod(h));
   if(!headerHasQuarters && dataRows.length && dataRows[0].slice(1).some(h => parsePeriod(h))){
     header = dataRows.shift().map(x => String(x || "").trim());
@@ -3547,7 +3547,7 @@ function loadGoogleSheetViaJsonp(){
     const script = document.createElement("script");
     const callbackName = "__shunahSheetCallback";
     let done = false;
-    const timer = setTimeout(()=>finish(false, new Error("Google Sheet timed out after 18 seconds.")), 18000);
+    const timer = setTimeout(()=>finish(false, new Error("Shunah1.02 Server timed out after 18 seconds.")), 18000);
 
     function cleanup(){
       clearTimeout(timer);
@@ -3566,7 +3566,7 @@ function loadGoogleSheetViaJsonp(){
       catch(e){ finish(false, e); }
     };
 
-    script.onerror = () => finish(false, new Error("Google Sheet script could not load. Check internet or published sheet permission."));
+    script.onerror = () => finish(false, new Error("Shunah1.02 Server script could not load. Check internet or published sheet permission."));
     script.src = gvizUrlFromCsvUrl(true);
     document.head.appendChild(script);
   });
@@ -3595,7 +3595,7 @@ function loadOpsSheetViaJsonp(){
     const script = document.createElement("script");
     const callbackName = "__shunahOpsCallback";
     let done = false;
-    const timer = setTimeout(()=>finish(false, new Error("Ops sheet timed out after 18 seconds.")), 18000);
+    const timer = setTimeout(()=>finish(false, new Error("Ops data timed out after 18 seconds.")), 18000);
 
     function cleanup(){
       clearTimeout(timer);
@@ -3614,7 +3614,7 @@ function loadOpsSheetViaJsonp(){
       catch(e){ finish(false, e); }
     };
 
-    script.onerror = () => finish(false, new Error("Ops sheet script could not load. Check published sheet permission."));
+    script.onerror = () => finish(false, new Error("Ops data script could not load. Check published sheet permission."));
     script.src = gvizUrlForOpsTab(true);
     document.head.appendChild(script);
   });
@@ -3692,7 +3692,7 @@ function showOperationalError(detail){
   const el = document.getElementById("operationalLoadingBox");
   if(el) el.innerHTML = `
     <div class="hosted-error">
-      <div class="hosted-error-title">Operational data is syncing from the Ops tab. Please refresh in a moment.</div>
+      <div class="hosted-error-title">Uploading Data from Shunah1.02 Server. Please refresh in a moment.</div>
       <div class="hosted-debug">Admin debug: ${safeDetail}</div>
       <button class="hosted-retry" onclick="loadOperationalCsv()">Retry Sync</button>
     </div>`;
@@ -3751,7 +3751,7 @@ function applyOperationalCsv(csvText){
 
 async function loadOperationalCsv(){
   document.body.classList.add("operational-loading");
-  setOperationalLoadingMessage("Syncing operational KPIs from Ops tab…");
+  setOperationalLoadingMessage("Uploading Data from Shunah1.02 Server…");
   try{
     let csv = "";
     const errors = [];
@@ -3762,20 +3762,20 @@ async function loadOperationalCsv(){
       try{
         csv = await loadOpsSheetViaJsonp();
       }catch(jsonpErr){
-        errors.push("Ops Google JSONP: " + ((jsonpErr && jsonpErr.message) ? jsonpErr.message : String(jsonpErr)));
+        errors.push("Ops Shunah1.02 Server sync: " + ((jsonpErr && jsonpErr.message) ? jsonpErr.message : String(jsonpErr)));
         throw new Error(errors.join(" || "));
       }
     }
 
     if(!applyOperationalCsv(csv)){
-      throw new Error("Ops sheet loaded, but metric rows/quarter columns were not recognized. First row must be: Metric | Q2 2022 | ... | Q1 2026.");
+      throw new Error("Ops data loaded, but metric rows/quarter columns were not recognized. First row must be: Metric | Q2 2022 | ... | Q1 2026.");
     }
 
     localStorage.setItem(OPS_CACHE_KEY, csv);
     showOperationalLoaded();
-    console.log("Ops sheet linked.");
+    console.log("Ops data linked.");
   }catch(err){
-    console.warn("Ops sheet load failed:", err);
+    console.warn("Ops data load failed:", err);
     const cached = localStorage.getItem(OPS_CACHE_KEY);
     if(cached && applyOperationalCsv(cached)){
       showOperationalLoaded();
@@ -3871,7 +3871,7 @@ function applyFinancialCsv(csvText){
   return true;
 }
 
-function showFinancialLoaded(label="Sheet Linked"){
+function showFinancialLoaded(label="Server Synced"){
   document.body.classList.remove("financial-loading");
   renderKPIs();
   renderEfficiency();
@@ -3880,7 +3880,7 @@ function showFinancialLoaded(label="Sheet Linked"){
   setSheetStatus(label, "ok");
 }
 
-function showFinancialPasteFallback(message="Sheet Load Failed", detail=""){
+function showFinancialPasteFallback(message="Server Sync Failed", detail=""){
   setSheetStatus(message, "fail");
   const safeDetail = String(detail || localStorage.getItem(FINANCIAL_GVIZ_DEBUG_KEY) || "").replace(/[<>&]/g, c => ({"<":"&lt;",">":"&gt;","&":"&amp;"}[c]));
   const boxes = ["financialLoadingBox","workingCapitalLoadingBox","statementLoadingBox"];
@@ -3889,12 +3889,12 @@ function showFinancialPasteFallback(message="Sheet Load Failed", detail=""){
     if(el) el.innerHTML = `
       <div class="paste-fallback">
         <div class="paste-title">${message}</div>
-        <div class="paste-sub">Google did not return the sheet to this local HTML file. Choose the CSV file once, or paste the CSV. After that it is saved in this browser.</div>
+        <div class="paste-sub">Shunah1.02 Server did not return data. Retry sync or contact admin.</div>
         ${idx === 0 ? `<input id="csvFileInput" type="file" accept=".csv,text/csv" style="margin:10px auto 12px;display:block;max-width:100%;">
         <textarea id="csvPasteBox" placeholder="Paste CSV here: Metric,Q2 2022,Q3 2022..."></textarea>
         <div class="paste-actions">
           <button onclick="applyPastedFinancialCsv()">Use pasted CSV</button>
-          <button onclick="loadFinancialCsv()">Retry Google Sheet</button>
+          <button onclick="loadFinancialCsv()">Retry Sync</button>
           <button onclick="window.open(FINANCIAL_CSV_URL, '_blank')">Open CSV Link</button>
         </div>
         ${safeDetail ? `<div style="margin-top:10px;color:#98a2b3;font-size:11px;word-break:break-word;">Debug: ${safeDetail}</div>` : ``}` : `<div class="paste-sub">Use the box in Executive Financial Summary above.</div>`}
@@ -3945,11 +3945,11 @@ async function fetchWithTimeout(url, label, timeoutMs=16000){
 }
 
 async function tryDirectCsvFetch(){
-  return await fetchWithTimeout(withCacheBust(FINANCIAL_CSV_URL), "Direct Google CSV", 14000);
+  return await fetchWithTimeout(withCacheBust(FINANCIAL_CSV_URL), "Direct Shunah1.02 Server data", 14000);
 }
 
 async function tryProxyCsvFetch(){
-  /* Google published CSV redirects to googleusercontent and Chrome often blocks it from file://.
+  /* Shunah1.02 Server data redirects to googleusercontent and Chrome often blocks it from file://.
      These read-only proxy URLs fetch the SAME public CSV server-side and return it with browser-friendly CORS headers. */
   const target = withCacheBust(FINANCIAL_CSV_URL);
   const attempts = [
@@ -3973,7 +3973,7 @@ async function tryProxyCsvFetch(){
 
 async function loadFinancialCsv(){
   document.body.classList.add("financial-loading");
-  setSheetStatus("Loading Sheet…", "loading");
+  setSheetStatus("Uploading Data…", "loading");
 
   let loadedFromCache = false;
   const cached = localStorage.getItem(FINANCIAL_CACHE_KEY);
@@ -3988,13 +3988,13 @@ async function loadFinancialCsv(){
     const errors = [];
 
     try{
-      setSheetStatus("Loading via Proxy…", "loading");
+      setSheetStatus("Uploading Data…", "loading");
       csv = await tryProxyCsvFetch();
     }catch(proxyErr){
       errors.push("Proxy: " + ((proxyErr && proxyErr.message) ? proxyErr.message : String(proxyErr)));
       console.warn("Proxy CSV failed, trying GViz JSONP:", proxyErr);
       try{
-        setSheetStatus("Loading via Google…", "loading");
+        setSheetStatus("Uploading Data…", "loading");
         csv = await loadGoogleSheetViaJsonp();
       }catch(jsonpErr){
         errors.push("GViz: " + ((jsonpErr && jsonpErr.message) ? jsonpErr.message : String(jsonpErr)));
@@ -4010,13 +4010,13 @@ async function loadFinancialCsv(){
 
     if(!applyFinancialCsv(csv)) throw new Error(localStorage.getItem(FINANCIAL_GVIZ_DEBUG_KEY) || "Sheet loaded, but format was not recognized.");
     localStorage.setItem(FINANCIAL_CACHE_KEY, csv);
-    showFinancialLoaded("Sheet Linked");
+    showFinancialLoaded("Server Synced");
   }catch(err){
-    console.warn("Google sheet load failed:", err);
+    console.warn("Shunah1.02 Server load failed:", err);
     if(loadedFromCache){
       showFinancialLoaded("Local CSV Loaded");
     }else{
-      showFinancialPasteFallback("Sheet Load Failed", err && err.message ? err.message : String(err));
+      showFinancialPasteFallback("Server Sync Failed", err && err.message ? err.message : String(err));
     }
   }
 }
@@ -4132,7 +4132,7 @@ function showTechLoaded(){
 function showTechError(detail){
   const safeDetail = String(detail || "Unknown error").replace(/[<>&]/g, c => ({"<":"&lt;",">":"&gt;","&":"&amp;"}[c]));
   const el = document.getElementById("techLoadingBox");
-  if(el) el.innerHTML = `<div class="hosted-error"><div class="hosted-error-title">Tech Product Suite is syncing from the Tech tab. Please refresh in a moment.</div><div class="hosted-debug">Admin debug: ${safeDetail}</div><button class="hosted-retry" onclick="loadTechCsv()">Retry Sync</button></div>`;
+  if(el) el.innerHTML = `<div class="hosted-error"><div class="hosted-error-title">Uploading Data from Shunah1.02 Server. Please refresh in a moment.</div><div class="hosted-debug">Admin debug: ${safeDetail}</div><button class="hosted-retry" onclick="loadTechCsv()">Retry Sync</button></div>`;
   const stack = document.getElementById("techStack");
   if(stack) stack.innerHTML = "";
 }
@@ -4158,11 +4158,11 @@ function loadTechSheetViaJsonp(){
     const script = document.createElement("script");
     const callbackName = "__shunahTechCallback";
     let done = false;
-    const timer = setTimeout(()=>finish(false, new Error("Tech sheet timed out after 18 seconds.")), 18000);
+    const timer = setTimeout(()=>finish(false, new Error("Tech data timed out after 18 seconds.")), 18000);
     function cleanup(){clearTimeout(timer); if(script.parentNode) script.parentNode.removeChild(script); try{delete window[callbackName];}catch(e){window[callbackName]=undefined;}}
     function finish(ok,payload){if(done)return; done=true; cleanup(); ok?resolve(payload):reject(payload);}
     window[callbackName] = function(resp){try{finish(true, gvizToCsv(resp));}catch(e){finish(false,e);}};
-    script.onerror = () => finish(false, new Error("Tech sheet script could not load. Check published sheet permission."));
+    script.onerror = () => finish(false, new Error("Tech data script could not load. Check published sheet permission."));
     script.src = gvizUrlForTechTab(true);
     document.head.appendChild(script);
   });
@@ -4198,7 +4198,7 @@ async function tryTechDirectCsvFetch(){
   throw new Error("Tech direct CSV failed: " + errors.join(" | "));
 }
 async function loadTechCsv(){
-  setTechLoadingMessage("Syncing Tech Product Suite from Google Sheet…");
+  setTechLoadingMessage("Uploading Data from Shunah1.02 Server…");
   try{
     let csv = "";
     const errors=[];
@@ -4206,13 +4206,13 @@ async function loadTechCsv(){
     catch(directErr){
       errors.push("Tech direct CSV: " + ((directErr && directErr.message) ? directErr.message : String(directErr)));
       try{ csv = await loadTechSheetViaJsonp(); }
-      catch(jsonpErr){ errors.push("Tech Google JSONP: " + ((jsonpErr && jsonpErr.message) ? jsonpErr.message : String(jsonpErr))); throw new Error(errors.join(" || ")); }
+      catch(jsonpErr){ errors.push("Tech Shunah1.02 Server sync: " + ((jsonpErr && jsonpErr.message) ? jsonpErr.message : String(jsonpErr))); throw new Error(errors.join(" || ")); }
     }
-    if(!applyTechCsv(csv)) throw new Error("Tech sheet loaded, but headers were not recognized. First row must include: Tech Name | Sub Category | Status | AI Powered | Accuracy | Version | Progress | Working Days.");
+    if(!applyTechCsv(csv)) throw new Error("Tech data loaded, but headers were not recognized. First row must include: Tech Name | Sub Category | Status | AI Powered | Accuracy | Version | Progress | Working Days.");
     localStorage.setItem(TECH_CACHE_KEY, csv);
     showTechLoaded();
   }catch(err){
-    console.warn("Tech sheet load failed:", err);
+    console.warn("Tech data load failed:", err);
     const cached = localStorage.getItem(TECH_CACHE_KEY);
     if(cached && applyTechCsv(cached)){ showTechLoaded(); return; }
     showTechError((err && err.message) ? err.message : String(err));
@@ -4582,8 +4582,8 @@ function initAuthGate(){
    This version is meant to be uploaded to your admin/site and opened from https:// or localhost,
    not from file://. It removes investor-facing paste/upload fallback and shows only a clean loading state.
    Load order:
-   1) Direct published Google CSV fetch with cache-bust.
-   2) Google Visualization JSONP fallback.
+   1) Direct published Shunah1.02 Server data fetch with cache-bust.
+   2) Shunah1.02 Server JSONP fallback.
    If both fail, figures stay hidden and only a small admin debug line appears.
 */
 function setHostedLoadingMessage(text){
@@ -4595,7 +4595,7 @@ function setHostedLoadingMessage(text){
 
 function showHostedSheetError(detail){
   document.body.classList.add("financial-loading");
-  setSheetStatus("Sheet Error", "fail");
+  setSheetStatus("Server Error", "fail");
   const safeDetail = String(detail || "Unknown error").replace(/[<>&]/g, c => ({"<":"&lt;",">":"&gt;","&":"&amp;"}[c]));
   const investorMsg = `Financial data is temporarily syncing. Please refresh in a moment.`;
   const adminMsg = `Admin debug: ${safeDetail}`;
@@ -4634,23 +4634,23 @@ async function tryHostedDirectCsvFetch(){
 async function loadFinancialCsv(){
   document.body.classList.add("financial-loading");
   setSheetStatus("Syncing…", "loading");
-  setHostedLoadingMessage("Syncing financials from Google Sheet…");
+  setHostedLoadingMessage("Syncing financials from Shunah1.02 Server…");
 
   try{
     let csv = "";
     const errors = [];
 
     try{
-      setSheetStatus("Loading Sheet…", "loading");
+      setSheetStatus("Uploading Data…", "loading");
       csv = await tryHostedDirectCsvFetch();
     }catch(directErr){
       errors.push("Direct CSV: " + ((directErr && directErr.message) ? directErr.message : String(directErr)));
-      console.warn("Hosted direct CSV failed, trying Google JSONP:", directErr);
+      console.warn("Hosted direct CSV failed, trying Shunah1.02 Server sync:", directErr);
       try{
-        setSheetStatus("Loading via Google…", "loading");
+        setSheetStatus("Uploading Data…", "loading");
         csv = await loadGoogleSheetViaJsonp();
       }catch(jsonpErr){
-        errors.push("Google JSONP: " + ((jsonpErr && jsonpErr.message) ? jsonpErr.message : String(jsonpErr)));
+        errors.push("Shunah1.02 Server sync: " + ((jsonpErr && jsonpErr.message) ? jsonpErr.message : String(jsonpErr)));
         throw new Error(errors.join(" || "));
       }
     }
@@ -4660,9 +4660,9 @@ async function loadFinancialCsv(){
     }
 
     localStorage.setItem(FINANCIAL_CACHE_KEY, csv);
-    showFinancialLoaded("Sheet Linked");
+    showFinancialLoaded("Server Synced");
   }catch(err){
-    console.warn("Hosted Google Sheet load failed:", err);
+    console.warn("Hosted Shunah1.02 Server load failed:", err);
     showHostedSheetError((err && err.message) ? err.message : String(err));
   }
 }
