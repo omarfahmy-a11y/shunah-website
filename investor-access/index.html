@@ -4249,10 +4249,10 @@ function getFinancialIcon(t){
 }
 function kpiCard(t,v,s,tone,key){return `<div class="kpi ${tone||""}"><button class="expand-btn" onclick="openChart('${key}')">+</button><div class="kpi-symbol">${getFinancialIcon(t)}</div><div class="kpi-title">${t}</div><div class="kpi-value">${v}</div><div class="kpi-sub">${s||""}</div></div>`}
 function fmtM(n){
-  const v = Number(n||0) / 1000000;
+  const v = Number(n||0) / 1000;
   const abs = Math.abs(v);
-  const txt = abs >= 10 ? abs.toFixed(1) : abs.toFixed(2);
-  return `${n < 0 ? "-" : ""}$${txt}M`;
+  const txt = abs.toLocaleString("en-US", {maximumFractionDigits: 0});
+  return `${Number(n||0) < 0 ? "-" : ""}${txt}K`;
 }
 function renderKPIs(){const r=recent();if(document.getElementById("recentQuarterPill")) document.getElementById("recentQuarterPill").textContent=`${r.quarter} ${r.year}`;document.getElementById("kpiGrid").innerHTML=[kpiCard("Sales",fmtM(r.sales),`${r.quarter} ${r.year}`,"blue","sales"),kpiCard("Gross Profit",fmtM(r.grossProfit),`${r.quarter} ${r.year}`,"good","grossProfit"),kpiCard("EBITDA",fmtM(r.ebitda),`${r.quarter} ${r.year}`,"violet","ebitda"),kpiCard("Net Profit",fmtM(r.netProfit),`${r.quarter} ${r.year}`,"amber","netProfit"),kpiCard("Sales Growth",fmtPct(r.salesGrowth),"Quarter-on-quarter","blue","salesGrowth"),kpiCard("Gross Margin",fmtPct(margin("grossProfit",r)),"Gross profit / sales","good","grossMargin"),kpiCard("EBITDA Margin",fmtPct(margin("ebitda",r)),"EBITDA / sales","violet","ebitdaMargin"),kpiCard("NP Margin",fmtPct(margin("netProfit",r)),"Net profit / sales","amber","netProfitMargin")].join("")}
 function openChart(key){const c=chartConfig[key];document.getElementById("kpiGrid").style.display="none";document.getElementById("snapshotChart").classList.add("active");document.getElementById("chartTitle").textContent=c.title;document.getElementById("barLegend").textContent=c.barLabel;document.getElementById("lineLegend").textContent=c.lineLabel;drawComboChart("comboChart",quarterlyData,c)}
