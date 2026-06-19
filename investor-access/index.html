@@ -3026,6 +3026,32 @@ body:not(.financial-loading) .financial-loading-box{
   display:none!important;
 }
 
+/* v83 operational loading: hide fallback/static operational figures until Ops tab loads */
+body.operational-loading #dasHero,
+body.operational-loading #opKpiGrid,
+body.operational-loading #opChart{
+  display:none!important;
+}
+
+.operational-loading-box{
+  border:1px dashed #cfe2ff;
+  background:#f8fbff;
+  color:#667085;
+  border-radius:22px;
+  min-height:230px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:800;
+  font-size:14px;
+  margin-bottom:20px;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.5);
+}
+
+body:not(.operational-loading) .operational-loading-box{
+  display:none!important;
+}
+
 
 /* v68 rewritten financial loader */
 .sheet-status.sheet-loading{color:#1d64ff!important;border-color:#cfe2ff!important;background:#eff6ff!important}
@@ -3154,7 +3180,7 @@ body.admin-session .admin-only{display:grid!important;}
 
 </style>
 </head>
-<body class="financial-loading auth-locked">
+<body class="financial-loading operational-loading auth-locked">
   <div class="auth-screen" id="authScreen">
     <form class="auth-card" id="authForm" onsubmit="event.preventDefault();authLogin();">
       <div class="auth-brand"><img src="pics/logo.png" alt="Shunah logo"></div>
@@ -3211,7 +3237,7 @@ body.admin-session .admin-only{display:grid!important;}
 
     <div class="sidebar-footer">
       <button class="logout" onclick="authLogout()"><span class="side-icon"><svg viewBox="0 0 24 24"><path d="M10 17l5-5-5-5"/><path d="M15 12H3"/><path d="M12 3h6a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3h-6"/></svg></span><span>Log Out</span></button>
-      <div class="version">Version 12.02.1</div>
+      <div class="version">Version 12.02.2</div>
     </div>
   </aside>
 
@@ -3226,6 +3252,7 @@ body.admin-session .admin-only{display:grid!important;}
     <section id="operations" class="section">
       <div class="panel">
         <div class="panel-head"><div><h2>Operational KPIs</h2></div><div class="pill" id="opRecentQuarterPill">Audited Quarter Q1 2026</div></div>
+        <div id="operationalLoadingBox" class="operational-loading-box">Syncing operational KPIs from Ops tab…</div>
         <div id="dasHero" class="das-hero"></div>
         <div id="opKpiGrid" class="kpi-grid"></div>
         <div id="opChart" class="op-chart">
@@ -3380,14 +3407,14 @@ const FINANCIAL_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ7IC
 const FINANCIAL_CACHE_KEY = "shunah_investor_financial_csv_v71";
 const FINANCIAL_GVIZ_DEBUG_KEY = "shunah_investor_last_loader_error_v71";
 
-/* v82: Ops tab loader.
+/* v83: Ops tab loader.
    The Ops tab must use the same simple format as the financial tab:
    Metric | Q2 2022 | ... | Q1 2026.
    This version tries the published Ops tab directly by sheet name first, then Google GViz.
    If Google still does not expose the tab, publish the Ops tab and paste its CSV link below. */
 const OPS_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ7ICQLNTQz5aMwDPHq-WKUc40SmD2XbTvXmOa2f0Vun9umA1vlwvevi_Qhm50bFjUTm9jrxwmSq2RX/pub?output=csv&sheet=Ops";
 const OPS_TAB_NAME = "Ops";
-const OPS_CACHE_KEY = "shunah_investor_ops_csv_v82";
+const OPS_CACHE_KEY = "shunah_investor_ops_csv_v83";
 
 function setSheetStatus(text, tone="loading"){
   const p = document.getElementById("sheetStatusPill");
@@ -3630,6 +3657,32 @@ async function tryOpsDirectCsvFetch(){
   }
   throw new Error("Ops direct CSV failed: " + errors.join(" || "));
 }
+function setOperationalLoadingMessage(text){
+  const el = document.getElementById("operationalLoadingBox");
+  if(el) el.innerHTML = `<div class="hosted-loader"><div class="hosted-spinner"></div><div>${text}</div></div>`;
+}
+
+function showOperationalLoaded(){
+  document.body.classList.remove("operational-loading");
+  const box = document.getElementById("operationalLoadingBox");
+  if(box) box.innerHTML = "";
+  renderOperationalKPIs();
+  const opPill = document.getElementById("opRecentQuarterPill");
+  if(opPill && recentOp()) opPill.textContent = `Audited Quarter ${recentOp().quarter} ${recentOp().year}`;
+}
+
+function showOperationalError(detail){
+  document.body.classList.add("operational-loading");
+  const safeDetail = String(detail || "Unknown error").replace(/[<>&]/g, c => ({"<":"&lt;",">":"&gt;","&":"&amp;"}[c]));
+  const el = document.getElementById("operationalLoadingBox");
+  if(el) el.innerHTML = `
+    <div class="hosted-error">
+      <div class="hosted-error-title">Operational data is syncing from the Ops tab. Please refresh in a moment.</div>
+      <div class="hosted-debug">Admin debug: ${safeDetail}</div>
+      <button class="hosted-retry" onclick="loadOperationalCsv()">Retry Sync</button>
+    </div>`;
+}
+
 function applyOperationalCsv(csvText){
   const rows = parseCsv(csvText);
   if(rows.length < 2) return false;
@@ -3678,27 +3731,44 @@ function applyOperationalCsv(csvText){
 
   if(!nextData.length) return false;
   operationalData = nextData;
-  renderOperationalKPIs();
   return true;
 }
 
 async function loadOperationalCsv(){
+  document.body.classList.add("operational-loading");
+  setOperationalLoadingMessage("Syncing operational KPIs from Ops tab…");
   try{
     let csv = "";
-    try{ csv = await tryOpsDirectCsvFetch(); }
-    catch(e){ csv = await loadOpsSheetViaJsonp(); }
-    if(!applyOperationalCsv(csv)) throw new Error("Ops sheet loaded, but metric rows/quarter columns were not recognized. First row must be: Metric | Q2 2022 | ... | Q1 2026.");
+    const errors = [];
+    try{
+      csv = await tryOpsDirectCsvFetch();
+    }catch(directErr){
+      errors.push("Ops direct CSV: " + ((directErr && directErr.message) ? directErr.message : String(directErr)));
+      try{
+        csv = await loadOpsSheetViaJsonp();
+      }catch(jsonpErr){
+        errors.push("Ops Google JSONP: " + ((jsonpErr && jsonpErr.message) ? jsonpErr.message : String(jsonpErr)));
+        throw new Error(errors.join(" || "));
+      }
+    }
+
+    if(!applyOperationalCsv(csv)){
+      throw new Error("Ops sheet loaded, but metric rows/quarter columns were not recognized. First row must be: Metric | Q2 2022 | ... | Q1 2026.");
+    }
+
     localStorage.setItem(OPS_CACHE_KEY, csv);
+    showOperationalLoaded();
     console.log("Ops sheet linked.");
-    const opPill=document.getElementById("opRecentQuarterPill");
-    if(opPill && recentOp()) opPill.textContent=`Audited Quarter ${recentOp().quarter} ${recentOp().year}`;
   }catch(err){
-    console.warn("Ops sheet load failed; using built-in operational fallback:", err);
+    console.warn("Ops sheet load failed:", err);
     const cached = localStorage.getItem(OPS_CACHE_KEY);
-    if(cached) applyOperationalCsv(cached);
+    if(cached && applyOperationalCsv(cached)){
+      showOperationalLoaded();
+      return;
+    }
+    showOperationalError((err && err.message) ? err.message : String(err));
   }
 }
-
 function applyFinancialCsv(csvText){
   const rows = parseCsv(csvText);
   if(rows.length < 2) return false;
@@ -4308,7 +4378,7 @@ async function loadFinancialCsv(){
   }
 }
 
-initVisitorInfo();renderTechStack();renderOperationalKPIs();renderMarketMap();updateSidebarToggleIcon();initAuthGate();loadFinancialCsv();loadOperationalCsv();
+initVisitorInfo();renderTechStack();renderMarketMap();updateSidebarToggleIcon();initAuthGate();loadFinancialCsv();loadOperationalCsv();
 </script>
 </body>
 </html>
