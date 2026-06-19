@@ -3244,7 +3244,7 @@ body.admin-session .admin-only{display:grid!important;}
 
     <div class="sidebar-footer">
       <button class="logout" onclick="authLogout()"><span class="side-icon"><svg viewBox="0 0 24 24"><path d="M10 17l5-5-5-5"/><path d="M15 12H3"/><path d="M12 3h6a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3h-6"/></svg></span><span>Log Out</span></button>
-      <div class="version">Version 12.02.4</div>
+      <div class="version">Version 12.02.5</div>
     </div>
   </aside>
 
@@ -3252,6 +3252,7 @@ body.admin-session .admin-only{display:grid!important;}
     <section id="technology" class="section active">
       <div class="panel">
         <div class="panel-head"><div><h2>Tech Product Suite</h2><p>Seven technology verticals shown as expandable rows. Each row opens into tools, statuses, accuracy, AI-powered status and files.</p></div></div>
+        <div id="techLoadingBox" class="operational-loading-box">Syncing Tech Product Suite from Google Sheet…</div>
         <div class="tech-stack" id="techStack"></div>
       </div>
     </section>
@@ -3422,6 +3423,13 @@ const FINANCIAL_GVIZ_DEBUG_KEY = "shunah_investor_last_loader_error_v71";
 const OPS_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ7ICQLNTQz5aMwDPHq-WKUc40SmD2XbTvXmOa2f0Vun9umA1vlwvevi_Qhm50bFjUTm9jrxwmSq2RX/pub?gid=2137490010&single=true&output=csv";
 const OPS_TAB_NAME = "Ops";
 const OPS_CACHE_KEY = "shunah_investor_ops_csv_v84";
+
+/* v88: Tech Product Suite loader.
+   Tab name: Tech
+   Simple columns: Tech Name | Sub Category | Status | AI Powered | Accuracy | Version | Progress | Working Days */
+const TECH_CSV_URL = "";
+const TECH_TAB_NAME = "Tech";
+const TECH_CACHE_KEY = "shunah_investor_tech_csv_v88";
 
 function setSheetStatus(text, tone="loading"){
   const p = document.getElementById("sheetStatusPill");
@@ -4033,26 +4041,197 @@ function techProgress(index){
 }
 function techStatusClass(status){
   const s = String(status||"").toLowerCase();
-  if(s.includes("operational")) return "operational";
+  if(s.includes("operational") || s.includes("live")) return "operational";
   if(s.includes("test")) return "testing";
-  if(s.includes("prototype")) return "prototype";
+  if(s.includes("prototype") || s.includes("demo")) return "prototype";
   if(s.includes("training")) return "training";
   return "";
+}
+function pctNumber(v, fallback=0){
+  const n = parseFloat(String(v ?? "").replace(/[^0-9.\-]/g,""));
+  if(!isFinite(n)) return fallback;
+  return Math.max(0, Math.min(100, n));
+}
+function techSlug(name){
+  return normalizeMetricName(name).replace(/\s+/g,"-") || ("tech-"+Math.random().toString(36).slice(2,7));
+}
+function existingTechByTitle(title){
+  const key = normalizeMetricName(title);
+  return technologies.find(t => normalizeMetricName(t.title) === key || normalizeMetricName(t.title).includes(key) || key.includes(normalizeMetricName(t.title)));
+}
+function findCol(headers, aliases){
+  const norms = headers.map(h => normalizeMetricName(h));
+  for(const a of aliases){
+    const target = normalizeMetricName(a);
+    const idx = norms.findIndex(h => h === target || h.includes(target) || target.includes(h));
+    if(idx >= 0) return idx;
+  }
+  return -1;
+}
+function applyTechCsv(csvText){
+  const rows = parseCsv(csvText);
+  if(rows.length < 2) return false;
+  const headers = rows[0].map(h => String(h||"").trim());
+  const cTech = findCol(headers,["Tech Name","Tech","Technology","Main Tech Category","Main Category"]);
+  const cSub = findCol(headers,["Sub Category","Subcategory","Sub-category","Tool","Product","Feature"]);
+  const cStatus = findCol(headers,["Status"]);
+  const cAI = findCol(headers,["AI Powered","AI-Powered","AI"]);
+  const cAcc = findCol(headers,["Accuracy"]);
+  const cVer = findCol(headers,["Version"]);
+  const cProg = findCol(headers,["Progress"]);
+  const cDays = findCol(headers,["Working Days","WorkingDays","Days"]);
+  if(cTech < 0 || cSub < 0) return false;
+
+  const iconPool = ["pics/tech1.png","pics/tech2.png","pics/tech3.png","pics/tech4.png","pics/tech5.png","pics/tech6.png","pics/tech7.png"];
+  const byTitle = new Map();
+  const next = [];
+
+  rows.slice(1).forEach((r, rowIndex) => {
+    const techName = String(r[cTech] || "").trim();
+    const subName = String(r[cSub] || "").trim();
+    if(!techName || !subName) return;
+    let tech = byTitle.get(normalizeMetricName(techName));
+    if(!tech){
+      const existing = existingTechByTitle(techName);
+      tech = {
+        id: existing ? existing.id : techSlug(techName),
+        icon: existing ? existing.icon : iconPool[next.length % iconPool.length],
+        title: techName,
+        subtitle: existing ? existing.subtitle : "Investor-linked product suite data from Shunah technology roadmap.",
+        subcategories: []
+      };
+      byTitle.set(normalizeMetricName(techName), tech);
+      next.push(tech);
+    }
+    const existingSub = (existingTechByTitle(techName)?.subcategories || []).find(x => normalizeMetricName(x.title) === normalizeMetricName(subName));
+    tech.subcategories.push({
+      title: subName,
+      status: cStatus >= 0 ? String(r[cStatus] || "").trim() : "—",
+      aiPowered: cAI >= 0 ? String(r[cAI] || "").trim() : "—",
+      accuracy: cAcc >= 0 ? String(r[cAcc] || "").trim() : "—",
+      version: cVer >= 0 ? String(r[cVer] || "").trim() : "—",
+      progress: pctNumber(cProg >= 0 ? r[cProg] : "", 0),
+      workingDays: cDays >= 0 ? String(r[cDays] || "").trim() : "—",
+      files: existingSub && existingSub.files ? existingSub.files : [[subName + " Access", "Investor request"]]
+    });
+  });
+
+  if(!next.length) return false;
+  technologies.splice(0, technologies.length, ...next);
+  return true;
+}
+function setTechLoadingMessage(text){
+  const el = document.getElementById("techLoadingBox");
+  if(el) el.innerHTML = `<div class="hosted-loader"><div class="hosted-spinner"></div><div>${text}</div></div>`;
+}
+function showTechLoaded(){
+  const box = document.getElementById("techLoadingBox");
+  if(box) box.innerHTML = "";
+  renderTechStack();
+}
+function showTechError(detail){
+  const safeDetail = String(detail || "Unknown error").replace(/[<>&]/g, c => ({"<":"&lt;",">":"&gt;","&":"&amp;"}[c]));
+  const el = document.getElementById("techLoadingBox");
+  if(el) el.innerHTML = `<div class="hosted-error"><div class="hosted-error-title">Tech Product Suite is syncing from the Tech tab. Please refresh in a moment.</div><div class="hosted-debug">Admin debug: ${safeDetail}</div><button class="hosted-retry" onclick="loadTechCsv()">Retry Sync</button></div>`;
+  const stack = document.getElementById("techStack");
+  if(stack) stack.innerHTML = "";
+}
+function gvizUrlForTechTab(useHandler=true){
+  if(TECH_CSV_URL && TECH_CSV_URL.trim()){
+    const idMatch = TECH_CSV_URL.match(/\/spreadsheets\/d\/e\/([^/]+)\//);
+    const gidMatch = TECH_CSV_URL.match(/[?&]gid=([^&]+)/);
+    if(idMatch){
+      const id = idMatch[1];
+      const gid = gidMatch ? decodeURIComponent(gidMatch[1]) : "0";
+      const tqx = useHandler ? "out:json;responseHandler:__shunahTechCallback" : "out:json";
+      return `https://docs.google.com/spreadsheets/d/e/${id}/gviz/tq?gid=${encodeURIComponent(gid)}&tqx=${encodeURIComponent(tqx)}&tq=${encodeURIComponent("select *")}&_=${Date.now()}`;
+    }
+  }
+  const idMatch = FINANCIAL_CSV_URL.match(/\/spreadsheets\/d\/e\/([^/]+)\//);
+  if(!idMatch) throw new Error("Could not read published sheet ID from FINANCIAL_CSV_URL.");
+  const id = idMatch[1];
+  const tqx = useHandler ? "out:json;responseHandler:__shunahTechCallback" : "out:json";
+  return `https://docs.google.com/spreadsheets/d/e/${id}/gviz/tq?sheet=${encodeURIComponent(TECH_TAB_NAME)}&tqx=${encodeURIComponent(tqx)}&tq=${encodeURIComponent("select *")}&_=${Date.now()}`;
+}
+function loadTechSheetViaJsonp(){
+  return new Promise((resolve,reject)=>{
+    const script = document.createElement("script");
+    const callbackName = "__shunahTechCallback";
+    let done = false;
+    const timer = setTimeout(()=>finish(false, new Error("Tech sheet timed out after 18 seconds.")), 18000);
+    function cleanup(){clearTimeout(timer); if(script.parentNode) script.parentNode.removeChild(script); try{delete window[callbackName];}catch(e){window[callbackName]=undefined;}}
+    function finish(ok,payload){if(done)return; done=true; cleanup(); ok?resolve(payload):reject(payload);}
+    window[callbackName] = function(resp){try{finish(true, gvizToCsv(resp));}catch(e){finish(false,e);}};
+    script.onerror = () => finish(false, new Error("Tech sheet script could not load. Check published sheet permission."));
+    script.src = gvizUrlForTechTab(true);
+    document.head.appendChild(script);
+  });
+}
+function techCsvCandidateUrls(){
+  const urls = [];
+  if(TECH_CSV_URL && TECH_CSV_URL.trim()) urls.push(TECH_CSV_URL.trim());
+  const base = getPublishedBaseFromFinancialUrl();
+  if(base){
+    urls.push(`${base}/pub?output=csv&sheet=${encodeURIComponent(TECH_TAB_NAME)}`);
+    urls.push(`${base}/pub?single=true&output=csv&sheet=${encodeURIComponent(TECH_TAB_NAME)}`);
+    urls.push(`${base}/gviz/tq?sheet=${encodeURIComponent(TECH_TAB_NAME)}&tqx=${encodeURIComponent("out:csv")}&tq=${encodeURIComponent("select *")}`);
+  }
+  return [...new Set(urls)];
+}
+async function fetchTechCsvUrl(url){
+  const finalUrl = url + (url.includes("?") ? "&" : "?") + "cachebust=" + Date.now();
+  const txt = await fetchWithTimeout(finalUrl, "Tech CSV", 16000);
+  if(/^\s*</.test(txt)) throw new Error("returned HTML instead of CSV");
+  return txt;
+}
+async function tryTechDirectCsvFetch(){
+  const errors = [];
+  for(const url of techCsvCandidateUrls()){
+    try{
+      const txt = await fetchTechCsvUrl(url);
+      const rows = parseCsv(txt);
+      const headers = rows[0] || [];
+      if(findCol(headers,["Tech Name","Tech","Technology","Main Tech Category","Main Category"]) < 0 || findCol(headers,["Sub Category","Subcategory","Tool","Product","Feature"]) < 0) throw new Error("loaded but Tech Name/Sub Category headers not found");
+      return txt;
+    }catch(e){errors.push(((e && e.message) ? e.message : String(e)));}
+  }
+  throw new Error("Tech direct CSV failed: " + errors.join(" | "));
+}
+async function loadTechCsv(){
+  setTechLoadingMessage("Syncing Tech Product Suite from Google Sheet…");
+  try{
+    let csv = "";
+    const errors=[];
+    try{ csv = await tryTechDirectCsvFetch(); }
+    catch(directErr){
+      errors.push("Tech direct CSV: " + ((directErr && directErr.message) ? directErr.message : String(directErr)));
+      try{ csv = await loadTechSheetViaJsonp(); }
+      catch(jsonpErr){ errors.push("Tech Google JSONP: " + ((jsonpErr && jsonpErr.message) ? jsonpErr.message : String(jsonpErr))); throw new Error(errors.join(" || ")); }
+    }
+    if(!applyTechCsv(csv)) throw new Error("Tech sheet loaded, but headers were not recognized. First row must include: Tech Name | Sub Category | Status | AI Powered | Accuracy | Version | Progress | Working Days.");
+    localStorage.setItem(TECH_CACHE_KEY, csv);
+    showTechLoaded();
+  }catch(err){
+    console.warn("Tech sheet load failed:", err);
+    const cached = localStorage.getItem(TECH_CACHE_KEY);
+    if(cached && applyTechCsv(cached)){ showTechLoaded(); return; }
+    showTechError((err && err.message) ? err.message : String(err));
+  }
 }
 function renderTechStack(){document.getElementById("techStack").innerHTML=technologies.map((tech,techIndex)=>`
 <div class="tech-row" id="tech-${tech.id}">
 <button class="tech-row-head" onclick="toggleTech('${tech.id}')"><div class="tech-icon"><img src="${tech.icon}" alt="${tech.title} icon"></div><div><h3 class="tech-title">${tech.title}</h3><p class="tech-subtitle">${tech.subtitle}</p></div><div class="tech-plus"><span>+</span></div></button>
 <div class="tech-body"><div class="tech-table"><div class="tech-table-head"><div>Tech</div><div>Status</div><div>AI Powered</div><div>Accuracy</div><div>Version</div><div>Progress</div><div>Working Days</div><div>Download</div></div>
-${tech.subcategories.map((sub,i)=>{const progress=techProgress(i);const statusClass=techStatusClass(sub.status);return `<div class="tech-sub-row" id="sub-${tech.id}-${i}">
+${tech.subcategories.map((sub,i)=>{const progress=pctNumber(sub.progress, techProgress(i));const statusClass=techStatusClass(sub.status);const version = sub.version || techVersion(i);return `<div class="tech-sub-row" id="sub-${tech.id}-${i}">
   <div class="tech-main-cell"><button class="sub-open" onclick="toggleSubcategory('${tech.id}',${i});event.stopPropagation();">+</button><div class="tech-name">${sub.title}</div></div>
   <div><span class="status-pill ${statusClass}"><i></i>${sub.status}</span></div>
   <div class="tech-cell-muted">${sub.aiPowered}</div>
   <div class="tech-cell-muted">${sub.accuracy}</div>
-  <div><span class="version-pill">${techVersion(i)}</span></div>
+  <div><span class="version-pill">${version}</span></div>
   <div class="progress-cell"><span>${progress}%</span><div class="progress-track"><b style="width:${progress}%"></b></div></div>
   <div class="tech-cell-muted">${sub.workingDays}</div>
   <div><button class="files-action icon-only" onclick="toggleSubcategory('${tech.id}',${i})" title="Download"><span class="download-icon">↓</span></button></div>
-</div><div class="files-row">${sub.files.map(f=>`<div class="tech-file"><div class="tech-file-main"><div class="tech-file-name">${f[0]}</div></div><button class="file-download-icon" onclick="requestDownload('${f[0]}')" title="Download"><span class="download-icon">↓</span></button></div>`).join("")}</div>`}).join("")}
+</div><div class="files-row">${(sub.files||[]).map(f=>`<div class="tech-file"><div class="tech-file-main"><div class="tech-file-name">${f[0]}</div></div><button class="file-download-icon" onclick="requestDownload('${f[0]}')" title="Download"><span class="download-icon">↓</span></button></div>`).join("")}</div>`}).join("")}
 </div></div></div>`).join("")}
 function toggleTech(id){document.querySelectorAll(".tech-row").forEach(row=>row.id===`tech-${id}`?row.classList.toggle("open"):row.classList.remove("open"))}
 function toggleSubcategory(id,i){document.getElementById(`sub-${id}-${i}`).classList.toggle("open")}
@@ -4488,7 +4667,7 @@ async function loadFinancialCsv(){
   }
 }
 
-initVisitorInfo();renderTechStack();renderMarketMap();updateSidebarToggleIcon();initAuthGate();loadFinancialCsv();loadOperationalCsv();
+initVisitorInfo();renderMarketMap();updateSidebarToggleIcon();initAuthGate();loadTechCsv();loadFinancialCsv();loadOperationalCsv();
 </script>
 </body>
 </html>
