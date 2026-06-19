@@ -3397,6 +3397,13 @@ const technologies=[
 function fmt(n){const v=Number(n||0),a=Math.abs(v).toLocaleString("en-US",{maximumFractionDigits:0});return v<0?`(${a})`:a}
 function fmtMoney(n){return `$${fmt(n)}`}
 function fmtPct(n){return n===null||n===undefined||!isFinite(n)?"—":`${Number(n).toFixed(1)}%`}
+function fmtDays(n){
+  const v = Number(n);
+  if(!isFinite(v)) return "—";
+  const abs = Math.abs(v);
+  const txt = abs.toLocaleString("en-US", {maximumFractionDigits: abs < 10 ? 1 : 0});
+  return v < 0 ? `(${txt})` : txt;
+}
 function ratio(a,b){return b?a/b:0}
 function margin(metric,row){return ratio(row[metric],row.sales)*100}
 function recent(){return quarterlyData[quarterlyData.length-1]}
@@ -4305,17 +4312,19 @@ function renderEfficiency(){
     ["AP DOH", r.apDOH, "ap"],
     ["CCC", r.ccc, "ccc"]
   ];
-  document.getElementById("efficiencyGrid").innerHTML = rows.map(([t,v,kind]) => `
+  document.getElementById("efficiencyGrid").innerHTML = rows.map(([t,v,kind]) => {
+    const hasValue = v !== null && v !== undefined && isFinite(Number(v));
+    return `
     <div class="kpi wc-kpi ${kind}">
       <div class="wc-circle">${wcIconHtml(t)}</div>
       <div class="kpi-title">${t}</div>
-      <div class="kpi-value">${v ? fmt(v) : "—"}</div>
-      <div class="kpi-sub">${v ? "Days" : "Not available"}</div>
-    </div>
-  `).join("");
+      <div class="kpi-value">${hasValue ? fmtDays(v) : "—"}</div>
+      <div class="kpi-sub">Days</div>
+    </div>`;
+  }).join("");
 }
 
-function renderTable(){const rows=[["Income Statement","section"],["Sales","sales"],["COGS","cogs"],["Gross Profit","grossProfit"],["G&A","gna"],["Selling & Marketing","sellingMarketing"],["EBITDA","ebitda"],["EBIT","ebit"],["Interest Income","interestIncome"],["Interest Expense","interestExpense"],["Net Profit","netProfit"],["Balance Sheet","section"],["Cash","cash"],["Inventory","inventory"],["Receivables","receivables"],["Payables","payables"],["Debt","debt"],["Working Capital Efficiency","section"],["Inventory DOH","inventoryDOH"],["AR DOH","arDOH"],["AP DOH","apDOH"],["CCC","ccc"]];document.getElementById("statementTable").innerHTML=`<thead><tr><th>Metric</th>${quarterlyData.map(r=>`<th>${r.quarter}<br>${r.year}</th>`).join("")}</tr></thead><tbody>${rows.map(([l,k])=>k==="section"?`<tr class="section-row"><td>${l}</td>${quarterlyData.map(()=>"<td></td>").join("")}</tr>`:`<tr><td>${l}</td>${quarterlyData.map(r=>`<td>${fmt(r[k])}</td>`).join("")}</tr>`).join("")}</tbody>`}
+function renderTable(){const rows=[["Income Statement","section"],["Sales","sales"],["COGS","cogs"],["Gross Profit","grossProfit"],["G&A","gna"],["Selling & Marketing","sellingMarketing"],["EBITDA","ebitda"],["EBIT","ebit"],["Interest Income","interestIncome"],["Interest Expense","interestExpense"],["Net Profit","netProfit"],["Balance Sheet","section"],["Cash","cash"],["Inventory","inventory"],["Receivables","receivables"],["Payables","payables"],["Debt","debt"],["Working Capital Efficiency","section"],["Inventory DOH","inventoryDOH"],["AR DOH","arDOH"],["AP DOH","apDOH"],["CCC","ccc"]];const dayKeys=new Set(["inventoryDOH","arDOH","apDOH","ccc"]);document.getElementById("statementTable").innerHTML=`<thead><tr><th>Metric</th>${quarterlyData.map(r=>`<th>${r.quarter}<br>${r.year}</th>`).join("")}</tr></thead><tbody>${rows.map(([l,k])=>k==="section"?`<tr class="section-row"><td>${l}</td>${quarterlyData.map(()=>"<td></td>").join("")}</tr>`:`<tr><td>${l}</td>${quarterlyData.map(r=>`<td>${dayKeys.has(k)?fmtDays(r[k]):fmt(r[k])}</td>`).join("")}</tr>`).join("")}</tbody>`}
 
 const ATLAS_COUNTS = {
   farmer: 37673,
