@@ -3178,6 +3178,13 @@ body.admin-session .admin-only{display:grid!important;}
   vertical-align:middle!important;
 }
 
+
+
+/* v86: remove legend from Operational historical KPI chart only */
+#opChart .legend{
+  display:none!important;
+}
+
 </style>
 </head>
 <body class="financial-loading operational-loading auth-locked">
@@ -3237,7 +3244,7 @@ body.admin-session .admin-only{display:grid!important;}
 
     <div class="sidebar-footer">
       <button class="logout" onclick="authLogout()"><span class="side-icon"><svg viewBox="0 0 24 24"><path d="M10 17l5-5-5-5"/><path d="M15 12H3"/><path d="M12 3h6a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3h-6"/></svg></span><span>Log Out</span></button>
-      <div class="version">Version 12.02.3</div>
+      <div class="version">Version 12.02.4</div>
     </div>
   </aside>
 
@@ -4126,28 +4133,131 @@ function renderEfficiency(){
 
 function renderTable(){const rows=[["Income Statement","section"],["Sales","sales"],["COGS","cogs"],["Gross Profit","grossProfit"],["G&A","gna"],["Selling & Marketing","sellingMarketing"],["EBITDA","ebitda"],["EBIT","ebit"],["Interest Income","interestIncome"],["Interest Expense","interestExpense"],["Net Profit","netProfit"],["Balance Sheet","section"],["Cash","cash"],["Inventory","inventory"],["Receivables","receivables"],["Payables","payables"],["Debt","debt"],["Working Capital Efficiency","section"],["Inventory DOH","inventoryDOH"],["AR DOH","arDOH"],["AP DOH","apDOH"],["CCC","ccc"]];document.getElementById("statementTable").innerHTML=`<thead><tr><th>Metric</th>${quarterlyData.map(r=>`<th>${r.quarter}<br>${r.year}</th>`).join("")}</tr></thead><tbody>${rows.map(([l,k])=>k==="section"?`<tr class="section-row"><td>${l}</td>${quarterlyData.map(()=>"<td></td>").join("")}</tr>`:`<tr><td>${l}</td>${quarterlyData.map(r=>`<td>${fmt(r[k])}</td>`).join("")}</tr>`).join("")}</tbody>`}
 
-const marketMapPoints=[
-{type:"farmer",name:"Farmer Cluster · Dakahlia",meta:"1,260 active farmers",lat:31.05,lng:31.38},
-{type:"farmer",name:"Farmer Cluster · Beheira",meta:"White beans / corn supply",lat:30.85,lng:30.35},
-{type:"intermediary",name:"Intermediary Network · Delta",meta:"Aggregation and farmer sourcing",lat:30.72,lng:31.18},
-{type:"intermediary",name:"Intermediary Network · Upper Egypt",meta:"Regional crop brokers",lat:27.65,lng:30.82},
-{type:"buyer",name:"Buyer Demand · Alexandria Export",meta:"Repeat buyer cluster",lat:31.20,lng:29.92},
-{type:"buyer",name:"Buyer Demand · Cairo",meta:"Domestic dry crop buyers",lat:30.04,lng:31.24},
-{type:"scale",name:"Scale Station · Mansoura",meta:"Weight verification point",lat:31.04,lng:31.37},
-{type:"scale",name:"Scale Station · Fayoum",meta:"Inbound truck weighing",lat:29.31,lng:30.84},
-{type:"processing",name:"Processing Station · Delta",meta:"Cleaning and grading",lat:30.55,lng:31.10},
-{type:"processing",name:"Processing Station · Upper Egypt",meta:"Regional processing capacity",lat:27.18,lng:31.18},
-{type:"storage",name:"Storage Hub · Giza",meta:"Dry crop storage capacity",lat:29.97,lng:31.13},
-{type:"storage",name:"Storage Hub · Beheira",meta:"Seasonal warehouse",lat:30.78,lng:30.10},
-{type:"vehicle",name:"Vehicle Fleet · Delta Routes",meta:"Tractor and truck movement",lat:30.90,lng:31.02},
-{type:"vehicle",name:"Vehicle Fleet · Upper Egypt Routes",meta:"Long-haul crop transport",lat:28.08,lng:30.74},
-{type:"lab",name:"Lab Partner · Cairo",meta:"Quality and moisture testing",lat:30.06,lng:31.20},
-{type:"lab",name:"Lab Partner · Delta",meta:"Sample testing point",lat:31.00,lng:31.25}
+const ATLAS_COUNTS = {
+  farmer: 37673,
+  intermediary: 2341,
+  buyer: 76,
+  scale: 412,
+  processing: 119,
+  storage: 341,
+  vehicle: 34,
+  lab: 4
+};
+
+const ATLAS_LABELS = {
+  farmer: "Farmer",
+  intermediary: "Intermediary",
+  buyer: "Buyer",
+  scale: "Scale",
+  processing: "Station",
+  storage: "Storage",
+  vehicle: "Vehicle",
+  lab: "Lab"
+};
+
+const ATLAS_CENTERS = [
+  {name:"Dakahlia", lat:31.05, lng:31.38, w:1.25},
+  {name:"Kafr El Sheikh", lat:31.11, lng:30.94, w:1.05},
+  {name:"Beheira", lat:30.86, lng:30.34, w:1.10},
+  {name:"Gharbia", lat:30.88, lng:31.03, w:1.00},
+  {name:"Monufia", lat:30.52, lng:30.99, w:.90},
+  {name:"Sharkia", lat:30.73, lng:31.71, w:.95},
+  {name:"Qalyubia", lat:30.25, lng:31.23, w:.55},
+  {name:"Damietta", lat:31.42, lng:31.81, w:.35},
+  {name:"Alexandria/West Delta", lat:31.05, lng:30.03, w:.45}
 ];
-let leafletMap=null, leafletMarkers=[];
-function markerIcon(type){const colors={farmer:"#0f8a5f",intermediary:"#d9a441",buyer:"#f97316",scale:"#0b2a66",processing:"#135ee8",storage:"#8b5cf6",vehicle:"#64748b",lab:"#14b8a6"};return L.divIcon({className:"",html:`<div style="width:14px;height:14px;border-radius:50%;border:2px solid white;background:${colors[type]||"#0b2a66"};box-shadow:0 6px 18px rgba(15,23,42,.30)"></div>`,iconSize:[18,18],iconAnchor:[9,9]})}
-function renderMarketMap(){if(typeof L==="undefined")return;const el=document.getElementById("leafletMap");if(!el)return;if(!leafletMap){leafletMap=L.map("leafletMap",{zoomControl:true,scrollWheelZoom:true}).setView([28.8,30.8],6);L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:18,attribution:"© OpenStreetMap"}).addTo(leafletMap);attachMapFilters()}setTimeout(()=>leafletMap.invalidateSize(),80);renderLeafletMarkers()}
-function renderLeafletMarkers(){if(!leafletMap)return;leafletMarkers.forEach(m=>m.remove());leafletMarkers=[];const active=new Set([...document.querySelectorAll(".map-filter.active")].map(b=>b.dataset.mapFilter));marketMapPoints.forEach(p=>{if(!(active.has("all")||active.has(p.type)))return;const m=L.marker([p.lat,p.lng],{icon:markerIcon(p.type)}).bindPopup(`<strong>${p.name}</strong><br>${p.meta}`).addTo(leafletMap);leafletMarkers.push(m)})}
+
+function seededRandom(seed){
+  let x = seed >>> 0;
+  return function(){
+    x = (1664525 * x + 1013904223) >>> 0;
+    return x / 4294967296;
+  };
+}
+
+function pickAtlasCenter(rand, type){
+  const boost = {
+    farmer: {"Dakahlia":1.35,"Kafr El Sheikh":1.25,"Beheira":1.25,"Gharbia":1.1},
+    intermediary: {"Gharbia":1.25,"Monufia":1.2,"Sharkia":1.1},
+    buyer: {"Alexandria/West Delta":1.6,"Qalyubia":1.35,"Sharkia":1.1},
+    scale: {"Dakahlia":1.25,"Beheira":1.15,"Sharkia":1.15},
+    processing: {"Gharbia":1.25,"Monufia":1.2,"Qalyubia":1.1},
+    storage: {"Beheira":1.25,"Gharbia":1.15,"Qalyubia":1.1},
+    vehicle: {"Qalyubia":1.25,"Gharbia":1.15,"Alexandria/West Delta":1.1},
+    lab: {"Qalyubia":1.6,"Dakahlia":1.15}
+  }[type] || {};
+  const weighted = ATLAS_CENTERS.map(c => ({...c, ww: c.w * (boost[c.name] || 1)}));
+  const total = weighted.reduce((a,c)=>a+c.ww,0);
+  let r = rand() * total;
+  for(const c of weighted){
+    r -= c.ww;
+    if(r <= 0) return c;
+  }
+  return weighted[0];
+}
+
+function clamp(v,min,max){ return Math.max(min, Math.min(max, v)); }
+
+function buildAtlasPoints(){
+  const points = [];
+  const seedByType = {farmer:11, intermediary:22, buyer:33, scale:44, processing:55, storage:66, vehicle:77, lab:88};
+  Object.entries(ATLAS_COUNTS).forEach(([type,count]) => {
+    const rand = seededRandom(seedByType[type] || 99);
+    for(let i=0;i<count;i++){
+      const c = pickAtlasCenter(rand, type);
+      const tight = type === "buyer" || type === "vehicle" || type === "lab" ? .045 : type === "farmer" ? .085 : .065;
+      const lat = clamp(c.lat + (rand() - .5) * tight * 2.1, 30.05, 31.55);
+      const lng = clamp(c.lng + (rand() - .5) * tight * 2.35, 29.75, 32.15);
+      points.push({
+        type,
+        lat,
+        lng,
+        name: `${ATLAS_LABELS[type]} · ${c.name}`,
+        meta: `${(i+1).toLocaleString()} of ${count.toLocaleString()} ${ATLAS_LABELS[type].toLowerCase()} points · Delta region`
+      });
+    }
+  });
+  return points;
+}
+
+const marketMapPoints = buildAtlasPoints();
+let leafletMap=null, leafletMarkers=[], atlasCanvasRenderer=null;
+function markerStyle(type){
+  const colors={farmer:"#0f8a5f",intermediary:"#d9a441",buyer:"#f97316",scale:"#0b2a66",processing:"#135ee8",storage:"#8b5cf6",vehicle:"#64748b",lab:"#14b8a6"};
+  return {
+    radius: type === "farmer" ? 1.55 : type === "intermediary" ? 2.1 : 3.1,
+    color: "#ffffff",
+    weight: type === "farmer" ? .45 : .7,
+    fillColor: colors[type] || "#0b2a66",
+    fillOpacity: type === "farmer" ? .62 : .82,
+    opacity: .9
+  };
+}
+function renderMarketMap(){
+  if(typeof L==="undefined")return;
+  const el=document.getElementById("leafletMap");
+  if(!el)return;
+  if(!leafletMap){
+    atlasCanvasRenderer = L.canvas({padding:.35});
+    leafletMap=L.map("leafletMap",{zoomControl:true,scrollWheelZoom:true,preferCanvas:true}).setView([30.78,31.02],8);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:18,attribution:"© OpenStreetMap"}).addTo(leafletMap);
+    attachMapFilters();
+  }
+  setTimeout(()=>leafletMap.invalidateSize(),80);
+  renderLeafletMarkers();
+}
+function renderLeafletMarkers(){
+  if(!leafletMap)return;
+  leafletMarkers.forEach(m=>m.remove());
+  leafletMarkers=[];
+  const active=new Set([...document.querySelectorAll(".map-filter.active")].map(b=>b.dataset.mapFilter));
+  const showAll = active.has("all");
+  marketMapPoints.forEach(p=>{
+    if(!(showAll||active.has(p.type)))return;
+    const m=L.circleMarker([p.lat,p.lng], {...markerStyle(p.type), renderer: atlasCanvasRenderer}).bindPopup(`<strong>${p.name}</strong><br>${p.meta}`).addTo(leafletMap);
+    leafletMarkers.push(m);
+  });
+}
 function attachMapFilters(){document.querySelectorAll(".map-filter").forEach(b=>{if(b.dataset.attached)return;b.dataset.attached="yes";b.addEventListener("click",()=>{const f=b.dataset.mapFilter;if(f==="all"){const on=!b.classList.contains("active");document.querySelectorAll(".map-filter").forEach(x=>x.classList.toggle("active",on))}else{b.classList.toggle("active");const filters=[...document.querySelectorAll(".map-filter")].filter(x=>x.dataset.mapFilter!=="all");document.querySelector('[data-map-filter="all"]').classList.toggle("active",filters.every(x=>x.classList.contains("active")))}renderLeafletMarkers()})})}
 function showToast(t){console.log(t)}
 
