@@ -3211,7 +3211,7 @@ body.admin-session .admin-only{display:grid!important;}
 
     <div class="sidebar-footer">
       <button class="logout" onclick="authLogout()"><span class="side-icon"><svg viewBox="0 0 24 24"><path d="M10 17l5-5-5-5"/><path d="M15 12H3"/><path d="M12 3h6a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3h-6"/></svg></span><span>Log Out</span></button>
-      <div class="version">Version 12.02.0</div>
+      <div class="version">Version 12.02.1</div>
     </div>
   </aside>
 
@@ -3380,14 +3380,14 @@ const FINANCIAL_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ7IC
 const FINANCIAL_CACHE_KEY = "shunah_investor_financial_csv_v71";
 const FINANCIAL_GVIZ_DEBUG_KEY = "shunah_investor_last_loader_error_v71";
 
-/* v81: Ops tab loader.
-   Keep the Ops tab simple: Metric | Q2 2022 | ... | Q1 2026.
-   If OPS_CSV_URL is left blank, the dashboard tries to read the published tab named Ops
-   from the same published Google Sheet used for financials.
-   If that does not load, paste the published CSV link for the Ops tab here. */
-const OPS_CSV_URL = "";
+/* v82: Ops tab loader.
+   The Ops tab must use the same simple format as the financial tab:
+   Metric | Q2 2022 | ... | Q1 2026.
+   This version tries the published Ops tab directly by sheet name first, then Google GViz.
+   If Google still does not expose the tab, publish the Ops tab and paste its CSV link below. */
+const OPS_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ7ICQLNTQz5aMwDPHq-WKUc40SmD2XbTvXmOa2f0Vun9umA1vlwvevi_Qhm50bFjUTm9jrxwmSq2RX/pub?output=csv&sheet=Ops";
 const OPS_TAB_NAME = "Ops";
-const OPS_CACHE_KEY = "shunah_investor_ops_csv_v81";
+const OPS_CACHE_KEY = "shunah_investor_ops_csv_v82";
 
 function setSheetStatus(text, tone="loading"){
   const p = document.getElementById("sheetStatusPill");
@@ -3578,23 +3578,58 @@ function loadOpsSheetViaJsonp(){
   });
 }
 
-async function tryOpsDirectCsvFetch(){
-  if(!OPS_CSV_URL || !OPS_CSV_URL.trim()) throw new Error("OPS_CSV_URL is blank; using Ops tab JSONP instead.");
-  const url = OPS_CSV_URL + (OPS_CSV_URL.includes("?") ? "&" : "?") + "cachebust=" + Date.now();
+function getPublishedBaseFromFinancialUrl(){
+  const idMatch = FINANCIAL_CSV_URL.match(/\/spreadsheets\/d\/e\/([^/]+)\//);
+  if(!idMatch) return "";
+  return `https://docs.google.com/spreadsheets/d/e/${idMatch[1]}`;
+}
+
+function opsCsvCandidateUrls(){
+  const urls = [];
+  if(OPS_CSV_URL && OPS_CSV_URL.trim()) urls.push(OPS_CSV_URL.trim());
+  const base = getPublishedBaseFromFinancialUrl();
+  if(base){
+    urls.push(`${base}/pub?output=csv&sheet=${encodeURIComponent(OPS_TAB_NAME)}`);
+    urls.push(`${base}/pub?single=true&output=csv&sheet=${encodeURIComponent(OPS_TAB_NAME)}`);
+    urls.push(`${base}/gviz/tq?sheet=${encodeURIComponent(OPS_TAB_NAME)}&tqx=${encodeURIComponent("out:csv")}&tq=${encodeURIComponent("select *")}`);
+  }
+  return [...new Set(urls)];
+}
+
+async function fetchOpsCsvUrl(url){
+  const finalUrl = url + (url.includes("?") ? "&" : "?") + "cachebust=" + Date.now();
   const controller = new AbortController();
   const timer = setTimeout(()=>controller.abort(), 14000);
   try{
-    const res = await fetch(url, {method:"GET", cache:"no-store", redirect:"follow", credentials:"omit", signal:controller.signal});
-    if(!res.ok) throw new Error("Ops CSV HTTP " + res.status);
+    const res = await fetch(finalUrl, {method:"GET", cache:"no-store", redirect:"follow", credentials:"omit", signal:controller.signal});
+    if(!res.ok) throw new Error("HTTP " + res.status);
     const txt = await res.text();
-    if(!txt || txt.trim().length < 10) throw new Error("Ops CSV returned empty text.");
-    if(/^\s*</.test(txt)) throw new Error("Ops CSV returned HTML instead of CSV.");
+    if(!txt || txt.trim().length < 10) throw new Error("empty text");
+    if(/^\s*</.test(txt)) throw new Error("returned HTML instead of CSV");
     return txt;
   }finally{
     clearTimeout(timer);
   }
 }
 
+async function tryOpsDirectCsvFetch(){
+  const urls = opsCsvCandidateUrls();
+  const errors = [];
+  for(const url of urls){
+    try{
+      const txt = await fetchOpsCsvUrl(url);
+      const rows = parseCsv(txt);
+      const headers = rows[0] || [];
+      if(!headers.slice(1).some(h => parsePeriod(h))){
+        throw new Error("loaded but no quarter headers found");
+      }
+      return txt;
+    }catch(e){
+      errors.push(url.replace(/cachebust=.*/,"") + " => " + ((e && e.message) ? e.message : String(e)));
+    }
+  }
+  throw new Error("Ops direct CSV failed: " + errors.join(" || "));
+}
 function applyOperationalCsv(csvText){
   const rows = parseCsv(csvText);
   if(rows.length < 2) return false;
@@ -3652,9 +3687,11 @@ async function loadOperationalCsv(){
     let csv = "";
     try{ csv = await tryOpsDirectCsvFetch(); }
     catch(e){ csv = await loadOpsSheetViaJsonp(); }
-    if(!applyOperationalCsv(csv)) throw new Error("Ops sheet loaded, but metric rows/quarter columns were not recognized.");
+    if(!applyOperationalCsv(csv)) throw new Error("Ops sheet loaded, but metric rows/quarter columns were not recognized. First row must be: Metric | Q2 2022 | ... | Q1 2026.");
     localStorage.setItem(OPS_CACHE_KEY, csv);
     console.log("Ops sheet linked.");
+    const opPill=document.getElementById("opRecentQuarterPill");
+    if(opPill && recentOp()) opPill.textContent=`Audited Quarter ${recentOp().quarter} ${recentOp().year}`;
   }catch(err){
     console.warn("Ops sheet load failed; using built-in operational fallback:", err);
     const cached = localStorage.getItem(OPS_CACHE_KEY);
