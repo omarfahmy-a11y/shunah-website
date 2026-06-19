@@ -3244,7 +3244,7 @@ body.admin-session .admin-only{display:grid!important;}
 
     <div class="sidebar-footer">
       <button class="logout" onclick="authLogout()"><span class="side-icon"><svg viewBox="0 0 24 24"><path d="M10 17l5-5-5-5"/><path d="M15 12H3"/><path d="M12 3h6a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3h-6"/></svg></span><span>Log Out</span></button>
-      <div class="version">Version 12.02.5</div>
+      <div class="version">Version 12.03.0</div>
     </div>
   </aside>
 
@@ -4253,11 +4253,11 @@ function renderKPIs(){const r=recent();if(document.getElementById("recentQuarter
 function openChart(key){const c=chartConfig[key];document.getElementById("kpiGrid").style.display="none";document.getElementById("snapshotChart").classList.add("active");document.getElementById("chartTitle").textContent=c.title;document.getElementById("barLegend").textContent=c.barLabel;document.getElementById("lineLegend").textContent=c.lineLabel;drawComboChart("comboChart",quarterlyData,c)}
 function closeChart(){document.getElementById("snapshotChart").classList.remove("active");document.getElementById("kpiGrid").style.display="grid"}
 
-const operationalChartConfig={das:{title:"DAS Historical Performance",key:"das",label:"DAS",suffix:"%"},tonsTraded:{title:"Tons Traded Historical Performance",key:"tonsTraded",label:"Tons Traded"},tonsProcessed:{title:"Tons Processed Historical Performance",key:"tonsProcessed",label:"Tons Processed"},tonsAssessed:{title:"Tons Assessed Historical Performance",key:"tonsAssessed",label:"Tons Assessed"},farmerInteractions:{title:"Farmer Interactions Historical Performance",key:"farmerInteractions",label:"Farmer Interactions"},hubs:{title:"Hubs Historical Performance",key:"hubs",label:"Hubs"},activeBuyers:{title:"Active Buyers Historical Performance",key:"activeBuyers",label:"Active Buyers"},activeSuppliers:{title:"Active Suppliers Historical Performance",key:"activeSuppliers",label:"Active Suppliers"},rejectedPct:{title:"Rejected % Historical Performance",key:"rejectedPct",label:"Rejected %",suffix:"%"}}
-function getOperationalIcon(t){return {"Tons Traded":"↗","Tons Processed":"⚙","Tons Assessed":"◈","Farmer Interactions":"♙","Hubs":"⌘","Active Buyers":"♙","Active Suppliers":"▣","Rejected %":"⌁"}[t]||"•"}
+const operationalChartConfig={das:{title:"DAS Historical Performance",key:"das",label:"DAS",suffix:"%"},tonsTraded:{title:"Volume Historical Performance",key:"tonsTraded",label:"Volume"},tonsProcessed:{title:"Tons Processed Historical Performance",key:"tonsProcessed",label:"Tons Processed"},tonsAssessed:{title:"Tons Assessed Historical Performance",key:"tonsAssessed",label:"Tons Assessed"},farmerInteractions:{title:"Farmer Interactions Historical Performance",key:"farmerInteractions",label:"Farmer Interactions"},hubs:{title:"Hubs Historical Performance",key:"hubs",label:"Hubs"},activeBuyers:{title:"Transactions Historical Performance",key:"activeBuyers",label:"Transactions"},activeSuppliers:{title:"Active Suppliers Historical Performance",key:"activeSuppliers",label:"Active Suppliers"},rejectedPct:{title:"Rejected % Historical Performance",key:"rejectedPct",label:"Rejected %",suffix:"%"}}
+function getOperationalIcon(t){return {"Volume":"↗","Tons Processed":"⚙","Tons Assessed":"◈","Farmer Interactions":"♙","Hubs":"⌘","Transactions":"♙","Active Suppliers":"▣","Rejected %":"⌁"}[t]||"•"}
 function opCard(t,v,s,tone,key){return `<div class="kpi ${tone||""}"><button class="expand-btn" onclick="openOperationalChart('${key}')">+</button><div class="kpi-symbol">${getOperationalIcon(t)}</div><div class="kpi-title">${t}</div><div class="kpi-value">${v}</div><div class="kpi-sub">${s}</div></div>`}
 function fmtOpPct(v,dec=0){const n=Number(v||0);return isFinite(n)?`${n.toFixed(dec)}%`:"—"}
-function renderOperationalKPIs(){const r=recentOp();document.getElementById("opRecentQuarterPill").textContent=`Audited Quarter ${r.quarter} ${r.year}`;document.getElementById("dasHero").innerHTML=`<button class="expand-btn" onclick="openOperationalChart('das')">+</button><div class="das-label"><span class="ai-stars">✦</span>Digital Aggregation Share</div><div class="das-value">${fmtOpPct(r.das,0)}</div><div class="das-sub">AI-Assisted Aggregation Crop Flow</div><div class="das-ai-boxes"><span>AI</span><span>ML</span><span>CV</span></div>`;document.getElementById("opKpiGrid").innerHTML=[opCard("Tons Traded",fmt(r.tonsTraded),`${r.quarter} ${r.year}`,"blue","tonsTraded"),opCard("Tons Processed",fmt(r.tonsProcessed),`${r.quarter} ${r.year}`,"blue","tonsProcessed"),opCard("Tons Assessed",fmt(r.tonsAssessed),`${r.quarter} ${r.year}`,"blue","tonsAssessed"),opCard("Farmer Interactions",fmt(r.farmerInteractions),`${r.quarter} ${r.year}`,"good","farmerInteractions"),opCard("Hubs",fmt(r.hubs),`${r.quarter} ${r.year}`,"good","hubs"),opCard("Active Buyers",fmt(r.activeBuyers),`${r.quarter} ${r.year}`,"good","activeBuyers"),opCard("Active Suppliers",fmt(r.activeSuppliers),`${r.quarter} ${r.year}`,"good","activeSuppliers"),opCard("Rejected %",fmtOpPct(r.rejectedPct,1),`${r.quarter} ${r.year}`,"warn","rejectedPct")].join("")}
+function renderOperationalKPIs(){const r=recentOp();document.getElementById("opRecentQuarterPill").textContent=`Audited Quarter ${r.quarter} ${r.year}`;document.getElementById("dasHero").innerHTML=`<button class="expand-btn" onclick="openOperationalChart('das')">+</button><div class="das-label"><span class="ai-stars">✦</span>Digital Aggregation Share</div><div class="das-value">${fmtOpPct(r.das,0)}</div><div class="das-sub">AI-Assisted Aggregation Crop Flow</div><div class="das-ai-boxes"><span>AI</span><span>ML</span><span>CV</span></div>`;document.getElementById("opKpiGrid").innerHTML=[opCard("Volume",fmt(r.tonsTraded),`${r.quarter} ${r.year}`,"blue","tonsTraded"),opCard("Tons Processed",fmt(r.tonsProcessed),`${r.quarter} ${r.year}`,"blue","tonsProcessed"),opCard("Tons Assessed",fmt(r.tonsAssessed),`${r.quarter} ${r.year}`,"blue","tonsAssessed"),opCard("Farmer Interactions",fmt(r.farmerInteractions),`${r.quarter} ${r.year}`,"good","farmerInteractions"),opCard("Hubs",fmt(r.hubs),`${r.quarter} ${r.year}`,"good","hubs"),opCard("Transactions",fmt(r.activeBuyers),`${r.quarter} ${r.year}`,"good","activeBuyers"),opCard("Active Suppliers",fmt(r.activeSuppliers),`${r.quarter} ${r.year}`,"good","activeSuppliers"),opCard("Rejected %",fmtOpPct(r.rejectedPct,1),`${r.quarter} ${r.year}`,"warn","rejectedPct")].join("")}
 function openOperationalChart(key){const c=operationalChartConfig[key];document.getElementById("dasHero").style.display="none";document.getElementById("opKpiGrid").style.display="none";document.getElementById("opChart").classList.add("active");document.getElementById("opChartTitle").textContent=c.title;document.getElementById("opBarLegend").textContent=c.label;drawBarChart("opComboChart",operationalData,c)}
 function closeOperationalChart(){document.getElementById("opChart").classList.remove("active");document.getElementById("dasHero").style.display="block";document.getElementById("opKpiGrid").style.display="grid"}
 
@@ -4335,16 +4335,64 @@ const ATLAS_LABELS = {
 };
 
 const ATLAS_CENTERS = [
-  {name:"Dakahlia", lat:31.05, lng:31.38, w:1.25},
-  {name:"Kafr El Sheikh", lat:31.11, lng:30.94, w:1.05},
-  {name:"Beheira", lat:30.86, lng:30.34, w:1.10},
-  {name:"Gharbia", lat:30.88, lng:31.03, w:1.00},
-  {name:"Monufia", lat:30.52, lng:30.99, w:.90},
-  {name:"Sharkia", lat:30.73, lng:31.71, w:.95},
-  {name:"Qalyubia", lat:30.25, lng:31.23, w:.55},
-  {name:"Damietta", lat:31.42, lng:31.81, w:.35},
-  {name:"Alexandria/West Delta", lat:31.05, lng:30.03, w:.45}
+  {name:"Damanhur", lat:31.03, lng:30.47, w:1.12},
+  {name:"Etay El Barud", lat:30.89, lng:30.67, w:1.02},
+  {name:"Kafr El Dawwar Belt", lat:31.14, lng:30.13, w:0.96},
+  {name:"Kafr El Sheikh", lat:31.11, lng:30.94, w:1.00},
+  {name:"Desouk", lat:31.13, lng:30.65, w:1.02},
+  {name:"Tanta", lat:30.79, lng:31.00, w:1.12},
+  {name:"El Mahalla", lat:30.97, lng:31.17, w:1.08},
+  {name:"Shebin El Kom", lat:30.56, lng:31.01, w:1.22},
+  {name:"Menouf", lat:30.47, lng:30.93, w:1.02},
+  {name:"Ashmoun", lat:30.30, lng:30.98, w:0.94},
+  {name:"Benha", lat:30.47, lng:31.18, w:1.06},
+  {name:"Zagazig", lat:30.59, lng:31.50, w:1.10},
+  {name:"Minya Al Qamh", lat:30.42, lng:31.36, w:0.95},
+  {name:"Abu Hammad", lat:30.67, lng:31.54, w:0.92},
+  {name:"Faqous", lat:30.73, lng:31.80, w:0.88},
+  {name:"Mansoura", lat:31.04, lng:31.38, w:1.14},
+  {name:"Mit Ghamr", lat:30.72, lng:31.25, w:0.96},
+  {name:"Aga", lat:30.94, lng:31.29, w:0.88},
+  {name:"Kafr Saqr", lat:30.79, lng:31.62, w:0.86},
+  {name:"Quesna", lat:30.57, lng:31.15, w:1.08},
+  {name:"Banha Belt", lat:30.41, lng:31.11, w:0.84},
+  {name:"Gharbia Rural", lat:30.86, lng:30.88, w:1.02},
+  {name:"Beheira Rural", lat:30.83, lng:30.42, w:1.20},
+  {name:"Sharkia Rural", lat:30.71, lng:31.66, w:1.02}
 ];
+
+/* Soft inland delta envelope. Used only to keep points broadly in the agricultural delta. */
+const DELTA_POLYGON = [
+  [30.02,30.04],[30.18,29.98],[30.42,30.02],[30.72,30.14],[31.02,30.24],[31.18,30.42],
+  [31.16,30.72],[31.08,31.02],[31.12,31.36],[31.02,31.66],[30.84,31.92],[30.56,31.98],
+  [30.28,31.78],[30.10,31.42],[30.02,31.00],[29.98,30.56]
+];
+
+/* Inland agricultural keep-in zones (no sea, no lakes, no sharp rectangular clipping). */
+const SAFE_DELTA_ZONES = [
+  {lat:30.99, lng:30.28, rx:0.22, ry:0.16},
+  {lat:30.93, lng:30.50, rx:0.24, ry:0.18},
+  {lat:30.84, lng:30.70, rx:0.24, ry:0.18},
+  {lat:31.08, lng:30.88, rx:0.20, ry:0.14},
+  {lat:30.95, lng:30.96, rx:0.22, ry:0.16},
+  {lat:30.82, lng:31.06, rx:0.22, ry:0.16},
+  {lat:30.92, lng:31.18, rx:0.24, ry:0.18},
+  {lat:30.98, lng:31.42, rx:0.22, ry:0.16},
+  {lat:30.73, lng:31.50, rx:0.25, ry:0.18},
+  {lat:30.58, lng:31.18, rx:0.23, ry:0.16},
+  {lat:30.52, lng:31.00, rx:0.21, ry:0.15},
+  {lat:30.40, lng:30.94, rx:0.18, ry:0.13},
+  {lat:30.34, lng:31.12, rx:0.14, ry:0.10}
+];
+
+function isSafeDeltaLand(lat,lng){
+  if(!pointInPolygon(lat,lng,DELTA_POLYGON)) return false;
+  return SAFE_DELTA_ZONES.some(z => {
+    const dx = (lng - z.lng) / z.rx;
+    const dy = (lat - z.lat) / z.ry;
+    return dx*dx + dy*dy <= 1;
+  });
+}
 
 function seededRandom(seed){
   let x = seed >>> 0;
@@ -4354,16 +4402,46 @@ function seededRandom(seed){
   };
 }
 
+function gaussian(rand){
+  let u = 0, v = 0;
+  while(u === 0) u = rand();
+  while(v === 0) v = rand();
+  return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+}
+
+function pointInPolygon(lat,lng,poly){
+  let inside = false;
+  for(let i=0,j=poly.length-1;i<poly.length;j=i++){
+    const yi = poly[i][0], xi = poly[i][1];
+    const yj = poly[j][0], xj = poly[j][1];
+    const intersect = ((xi > lng) !== (xj > lng)) && (lat < (yj - yi) * (lng - xi) / ((xj - xi) || 1e-9) + yi);
+    if(intersect) inside = !inside;
+  }
+  return inside;
+}
+
+function randomDeltaPoint(rand){
+  for(let tries=0; tries<250; tries++){
+    const zone = SAFE_DELTA_ZONES[Math.floor(rand()*SAFE_DELTA_ZONES.length)];
+    const angle = rand() * Math.PI * 2;
+    const r = Math.sqrt(rand());
+    const lat = zone.lat + Math.sin(angle) * zone.ry * r;
+    const lng = zone.lng + Math.cos(angle) * zone.rx * r;
+    if(isSafeDeltaLand(lat,lng)) return {lat,lng,name:"Delta Network"};
+  }
+  return {lat:30.78, lng:31.05, name:"Delta Network"};
+}
+
 function pickAtlasCenter(rand, type){
   const boost = {
-    farmer: {"Dakahlia":1.35,"Kafr El Sheikh":1.25,"Beheira":1.25,"Gharbia":1.1},
-    intermediary: {"Gharbia":1.25,"Monufia":1.2,"Sharkia":1.1},
-    buyer: {"Alexandria/West Delta":1.6,"Qalyubia":1.35,"Sharkia":1.1},
-    scale: {"Dakahlia":1.25,"Beheira":1.15,"Sharkia":1.15},
-    processing: {"Gharbia":1.25,"Monufia":1.2,"Qalyubia":1.1},
-    storage: {"Beheira":1.25,"Gharbia":1.15,"Qalyubia":1.1},
-    vehicle: {"Qalyubia":1.25,"Gharbia":1.15,"Alexandria/West Delta":1.1},
-    lab: {"Qalyubia":1.6,"Dakahlia":1.15}
+    farmer: {"Damanhur":1.20,"Etay El Barud":1.16,"Kafr El Dawwar Belt":1.10,"Kafr El Sheikh":1.08,"Tanta":1.06,"El Mahalla":1.08,"Mansoura":1.10,"Zagazig":1.06,"Sharkia Rural":1.08,"Beheira Rural":1.24,"Shebin El Kom":1.12,"Menouf":1.14,"Ashmoun":1.10,"Quesna":1.10},
+    intermediary: {"Tanta":1.16,"Shebin El Kom":1.26,"Menouf":1.18,"Ashmoun":1.14,"Benha":1.10,"Zagazig":1.08,"Damanhur":1.10},
+    buyer: {"Benha":1.20,"Zagazig":1.18,"Mansoura":1.10,"Tanta":1.08,"Shebin El Kom":1.10,"Damanhur":1.10},
+    scale: {"El Mahalla":1.12,"Mansoura":1.10,"Damanhur":1.18,"Etay El Barud":1.12,"Shebin El Kom":1.14,"Quesna":1.10,"Zagazig":1.08},
+    processing: {"Tanta":1.12,"Shebin El Kom":1.18,"Quesna":1.14,"Menouf":1.12,"Benha":1.08,"Damanhur":1.08},
+    storage: {"Damanhur":1.22,"Etay El Barud":1.14,"Tanta":1.10,"Benha":1.08,"Mansoura":1.06,"Shebin El Kom":1.12,"Menouf":1.10},
+    vehicle: {"Benha":1.14,"Tanta":1.10,"Zagazig":1.08,"Shebin El Kom":1.12,"Damanhur":1.10},
+    lab: {"Benha":1.18,"Mansoura":1.14,"Zagazig":1.10,"Shebin El Kom":1.12,"Damanhur":1.10}
   }[type] || {};
   const weighted = ATLAS_CENTERS.map(c => ({...c, ww: c.w * (boost[c.name] || 1)}));
   const total = weighted.reduce((a,c)=>a+c.ww,0);
@@ -4375,23 +4453,56 @@ function pickAtlasCenter(rand, type){
   return weighted[0];
 }
 
-function clamp(v,min,max){ return Math.max(min, Math.min(max, v)); }
+function pickNearbyCenter(rand, center){
+  const pool = ATLAS_CENTERS.filter(c => {
+    const d = Math.hypot((c.lat-center.lat)*111, (c.lng-center.lng)*95);
+    return d > 0 && d < 55;
+  });
+  return pool.length ? pool[Math.floor(rand()*pool.length)] : center;
+}
+
+function organicPointAroundCenter(rand, center, type){
+  const base = type === "farmer" ? 0.085 : type === "intermediary" ? 0.060 : type === "scale" || type === "storage" ? 0.050 : 0.038;
+  const useBlend = rand() < (type === "farmer" ? 0.34 : 0.22);
+  let latCenter = center.lat, lngCenter = center.lng;
+  if(useBlend){
+    const other = pickNearbyCenter(rand, center);
+    const mix = 0.18 + rand()*0.64;
+    latCenter = center.lat*(1-mix) + other.lat*mix;
+    lngCenter = center.lng*(1-mix) + other.lng*mix;
+  }
+  const angle = rand() * Math.PI * 2;
+  const radius = Math.pow(rand(), 1.75) * base * (0.75 + rand()*0.9);
+  const anis = 0.72 + rand()*0.85;
+  let lat = latCenter + Math.sin(angle) * radius * anis + gaussian(rand) * base * 0.12;
+  let lng = lngCenter + Math.cos(angle) * radius * (1.25/anis) + gaussian(rand) * base * 0.12;
+  if(type === "farmer" && rand() < 0.22){
+    lat += gaussian(rand) * base * 0.32;
+    lng += gaussian(rand) * base * 0.32;
+  }
+  return {lat,lng};
+}
 
 function buildAtlasPoints(){
   const points = [];
-  const seedByType = {farmer:11, intermediary:22, buyer:33, scale:44, processing:55, storage:66, vehicle:77, lab:88};
+  const seedByType = {farmer:1107, intermediary:2219, buyer:3343, scale:4451, processing:5563, storage:6679, vehicle:7789, lab:8893};
   Object.entries(ATLAS_COUNTS).forEach(([type,count]) => {
     const rand = seededRandom(seedByType[type] || 99);
     for(let i=0;i<count;i++){
-      const c = pickAtlasCenter(rand, type);
-      const tight = type === "buyer" || type === "vehicle" || type === "lab" ? .045 : type === "farmer" ? .085 : .065;
-      const lat = clamp(c.lat + (rand() - .5) * tight * 2.1, 30.05, 31.55);
-      const lng = clamp(c.lng + (rand() - .5) * tight * 2.35, 29.75, 32.15);
+      let candidate = null;
+      let center = pickAtlasCenter(rand, type);
+      for(let tries=0; tries<140; tries++){
+        candidate = organicPointAroundCenter(rand, center, type);
+        if(isSafeDeltaLand(candidate.lat,candidate.lng)) break;
+        if(tries % 16 === 15) center = pickAtlasCenter(rand, type);
+        candidate = null;
+      }
+      if(!candidate) candidate = randomDeltaPoint(rand);
       points.push({
         type,
-        lat,
-        lng,
-        name: `${ATLAS_LABELS[type]} · ${c.name}`,
+        lat: candidate.lat,
+        lng: candidate.lng,
+        name: `${ATLAS_LABELS[type]} · ${center.name}`,
         meta: `${(i+1).toLocaleString()} of ${count.toLocaleString()} ${ATLAS_LABELS[type].toLowerCase()} points · Delta region`
       });
     }
@@ -4404,12 +4515,12 @@ let leafletMap=null, leafletMarkers=[], atlasCanvasRenderer=null;
 function markerStyle(type){
   const colors={farmer:"#0f8a5f",intermediary:"#d9a441",buyer:"#f97316",scale:"#0b2a66",processing:"#135ee8",storage:"#8b5cf6",vehicle:"#64748b",lab:"#14b8a6"};
   return {
-    radius: type === "farmer" ? 1.55 : type === "intermediary" ? 2.1 : 3.1,
+    radius: type === "farmer" ? 1.18 : type === "intermediary" ? 1.9 : 2.7,
     color: "#ffffff",
-    weight: type === "farmer" ? .45 : .7,
+    weight: type === "farmer" ? .30 : .55,
     fillColor: colors[type] || "#0b2a66",
-    fillOpacity: type === "farmer" ? .62 : .82,
-    opacity: .9
+    fillOpacity: type === "farmer" ? .42 : .76,
+    opacity: .82
   };
 }
 function renderMarketMap(){
@@ -4484,6 +4595,7 @@ function seedAccessLog(){
   const rows=getAccessLog();
   Object.keys(INVESTOR_USERS).forEach(email=>{
     const u=INVESTOR_USERS[email];
+    if(u.role === "admin") return;
     let row=rows.find(r=>r.email===email);
     if(!row){
       row={
@@ -4499,12 +4611,13 @@ function seedAccessLog(){
     else if((!row.lastAccess || row.lastAccess==="—") && u.seedDaysAgo) row.lastAccess=seededAccessDate(u.seedDaysAgo);
     if(u.seedTimes && Number(row.times || 0) < Number(u.seedTimes)) row.times=u.seedTimes;
   });
-  saveAccessLog(rows);
+  saveAccessLog(rows.filter(r=>INVESTOR_USERS[r.email]?.role !== "admin"));
 }
 function recordAccess(email){
+  const user=INVESTOR_USERS[email];
+  if(!user || user.role === "admin") return;
   seedAccessLog();
   const rows=getAccessLog();
-  const user=INVESTOR_USERS[email];
   let row=rows.find(r=>r.email===email);
   if(!row){row={email,memberSince:user.memberSince,lastAccess:"—",times:0};rows.push(row);}
   row.memberSince=user.memberSince;
@@ -4516,7 +4629,7 @@ function renderAccessLog(){
   const body=document.getElementById("accessLogBody");
   if(!body)return;
   seedAccessLog();
-  const rows=getAccessLog().sort((a,b)=>String(a.email).localeCompare(String(b.email)));
+  const rows=getAccessLog().filter(r=>INVESTOR_USERS[r.email]?.role !== "admin").sort((a,b)=>String(a.email).localeCompare(String(b.email)));
   body.innerHTML=rows.map(r=>`<tr><td>${escapeHtml(r.email)}</td><td>${escapeHtml(r.memberSince||"June 2024")}</td><td>${escapeHtml(r.lastAccess||"—")}</td><td>${Number(r.times)||0}</td></tr>`).join("");
 }
 function escapeHtml(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
