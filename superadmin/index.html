@@ -1,1 +1,3107 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Super Admin</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --navy:#082a59;
+      --navy-dark:#061f45;
+      --bg:#f4f6f8;
+      --white:#ffffff;
+      --text:#101828;
+      --muted:#667085;
+      --border:#e4e7ec;
+      --green:#067647;
+      --green-bg:#ecfdf3;
+      --red:#b42318;
+      --red-bg:#fef3f2;
+      --amber:#b54708;
+      --amber-bg:#fffaeb;
+      --blue:#175cd3;
+      --blue-bg:#eff8ff;
+      --purple:#5925dc;
+      --purple-bg:#f4f3ff;
+    }
+
+    * {
+      box-sizing:border-box;
+    }
+
+    body {
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    }
+
+    button,
+    input,
+    select {
+      font:inherit;
+    }
+
+    button {
+      cursor:pointer;
+    }
+
+    .hidden {
+      display:none !important;
+    }
+
+    /* LOGIN */
+
+    .login-screen {
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      padding:24px;
+      background:linear-gradient(145deg,var(--navy-dark),#0c3e7a);
+    }
+
+    .login-card {
+      width:min(430px,100%);
+      background:white;
+      padding:30px;
+      border-radius:22px;
+      box-shadow:0 30px 80px rgba(0,0,0,.28);
+    }
+
+    .eyebrow {
+      font-size:11px;
+      font-weight:900;
+      color:var(--muted);
+      letter-spacing:.15em;
+      text-transform:uppercase;
+    }
+
+    .login-card h1 {
+      margin:8px 0 7px;
+      font-size:30px;
+    }
+
+    .description {
+      margin:0 0 20px;
+      color:var(--muted);
+      line-height:1.5;
+      font-size:13px;
+    }
+
+    .field {
+      margin:14px 0;
+    }
+
+    label {
+      display:block;
+      margin-bottom:7px;
+      font-size:12px;
+      font-weight:800;
+    }
+
+    input,
+    select {
+      width:100%;
+      padding:11px 12px;
+      border:1px solid var(--border);
+      border-radius:10px;
+      background:white;
+      outline:none;
+    }
+
+    input:focus,
+    select:focus {
+      border-color:#98a2b3;
+      box-shadow:0 0 0 3px rgba(8,42,89,.07);
+    }
+
+    .primary {
+      width:100%;
+      border:0;
+      background:var(--navy);
+      color:white;
+      border-radius:10px;
+      padding:13px;
+      margin-top:8px;
+      font-weight:850;
+    }
+
+    .login-error {
+      margin-top:12px;
+      color:var(--red);
+      font-size:12px;
+      font-weight:800;
+    }
+
+    /* GLOBAL HORIZONTAL ALIGNMENT
+       Top title, KPI cards and tables all use the SAME 24px edge. */
+
+    .topbar {
+      height:68px;
+      background:white;
+      border-bottom:1px solid var(--border);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 24px;
+      position:sticky;
+      top:0;
+      z-index:20;
+    }
+
+    .brand {
+      color:var(--navy);
+      font-size:18px;
+      font-weight:950;
+      line-height:1.1;
+    }
+
+    .brand small {
+      display:block;
+      color:var(--muted);
+      font-size:11px;
+      margin-top:4px;
+      font-weight:700;
+    }
+
+    .top-actions,
+    .tools,
+    .tabs {
+      display:flex;
+      gap:8px;
+      align-items:center;
+    }
+
+    .btn {
+      border:1px solid var(--border);
+      background:white;
+      border-radius:9px;
+      padding:9px 11px;
+      font-size:12px;
+      font-weight:800;
+      white-space:nowrap;
+    }
+
+    .btn-dark {
+      background:var(--navy);
+      color:white;
+      border-color:var(--navy);
+    }
+
+    .btn-danger {
+      color:var(--red);
+      border-color:#fecdca;
+    }
+
+    .page {
+      width:100%;
+      max-width:none;
+      margin:0;
+      padding:22px 24px 30px;
+    }
+
+    /* KPI */
+
+    .stats {
+      display:grid;
+      grid-template-columns:repeat(5,minmax(0,1fr));
+      gap:12px;
+      margin-bottom:18px;
+    }
+
+    .stat {
+      background:white;
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:15px 16px;
+      min-width:0;
+    }
+
+    .stat-title {
+      color:var(--muted);
+      font-size:10px;
+      font-weight:850;
+      text-transform:uppercase;
+      letter-spacing:.07em;
+    }
+
+    .stat-value {
+      margin-top:4px;
+      font-size:28px;
+      font-weight:950;
+    }
+
+    /* TABS */
+
+    .tabs {
+      margin-bottom:13px;
+      flex-wrap:wrap;
+    }
+
+    .tab {
+      border:1px solid var(--border);
+      background:white;
+      border-radius:999px;
+      padding:9px 14px;
+      font-size:12px;
+      font-weight:850;
+    }
+
+    .tab.selected {
+      background:var(--navy);
+      color:white;
+      border-color:var(--navy);
+    }
+
+    /* PANELS */
+
+    .panel {
+      width:100%;
+      background:white;
+      border:1px solid var(--border);
+      border-radius:16px;
+      overflow:hidden;
+    }
+
+    .panel-head {
+      padding:16px 18px;
+      border-bottom:1px solid var(--border);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+    }
+
+    .panel-title {
+      font-size:16px;
+      font-weight:950;
+    }
+
+    .panel-subtitle {
+      margin-top:3px;
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .tools input {
+      width:240px;
+      padding:9px 10px;
+    }
+
+    .table-wrap {
+      width:100%;
+      overflow-x:auto;
+    }
+
+    table {
+      width:100%;
+      border-collapse:collapse;
+      min-width:1450px;
+    }
+
+    th,
+    td {
+      text-align:left;
+      padding:12px 12px;
+      border-bottom:1px solid var(--border);
+      vertical-align:middle;
+      font-size:12px;
+    }
+
+    th {
+      background:#f9fafb;
+      color:var(--muted);
+      font-size:10px;
+      font-weight:850;
+      letter-spacing:.055em;
+      text-transform:uppercase;
+      white-space:nowrap;
+    }
+
+    tr:last-child td {
+      border-bottom:0;
+    }
+
+    .employee-name {
+      font-weight:900;
+      white-space:nowrap;
+    }
+
+    .muted {
+      color:var(--muted);
+    }
+
+    .nowrap {
+      white-space:nowrap;
+    }
+
+    .id-code {
+      font-family:Consolas, "Courier New", monospace;
+      font-size:11px;
+      letter-spacing:.01em;
+    }
+
+    /* ACCESS STATES */
+
+    .access-cell {
+      min-width:88px;
+      text-align:center;
+    }
+
+    .access-state {
+      display:inline-flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      min-width:50px;
+      line-height:1;
+    }
+
+    .access-icon {
+      width:24px;
+      height:24px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      font-size:14px;
+      font-weight:950;
+    }
+
+    .access-icon.yes {
+      background:var(--green-bg);
+      color:var(--green);
+    }
+
+    .access-icon.no {
+      background:var(--red-bg);
+      color:var(--red);
+    }
+
+    .access-level {
+      margin-top:5px;
+      font-size:9px;
+      font-weight:900;
+      letter-spacing:.03em;
+      white-space:nowrap;
+    }
+
+    .access-level.editor {
+      color:var(--purple);
+    }
+
+    .access-level.viewer {
+      color:var(--blue);
+    }
+
+    /* STATUS */
+
+    .badge {
+      display:inline-flex;
+      padding:5px 8px;
+      border-radius:999px;
+      font-size:10px;
+      font-weight:900;
+      white-space:nowrap;
+    }
+
+    .badge-active {
+      background:var(--green-bg);
+      color:var(--green);
+    }
+
+    .badge-suspended {
+      background:var(--amber-bg);
+      color:var(--amber);
+    }
+
+    .badge-deleted {
+      background:var(--red-bg);
+      color:var(--red);
+    }
+
+    .badge-history {
+      background:#f2f4f7;
+      color:#475467;
+    }
+
+    .badge-super {
+      margin-top:5px;
+      background:#f2f4f7;
+      color:#344054;
+    }
+
+    /* ACTIONS - FORCED TO ONE LINE */
+
+    .actions {
+      display:flex;
+      gap:5px;
+      flex-wrap:nowrap;
+      align-items:center;
+      white-space:nowrap;
+    }
+
+    .mini {
+      flex:0 0 auto;
+      border:1px solid var(--border);
+      background:white;
+      border-radius:7px;
+      padding:6px 8px;
+      font-size:10px;
+      font-weight:850;
+      white-space:nowrap;
+    }
+
+    .mini-danger {
+      color:var(--red);
+      border-color:#fecdca;
+    }
+
+    .empty {
+      padding:42px !important;
+      text-align:center !important;
+      color:var(--muted);
+    }
+
+    /* MODALS */
+
+    .backdrop {
+      position:fixed;
+      inset:0;
+      z-index:50;
+      background:rgba(16,24,40,.46);
+      display:grid;
+      place-items:center;
+      padding:20px;
+    }
+
+    .modal {
+      width:min(700px,100%);
+      max-height:92vh;
+      overflow:auto;
+      background:white;
+      border-radius:18px;
+      padding:22px;
+      box-shadow:0 30px 80px rgba(0,0,0,.24);
+    }
+
+    .modal-wide {
+      width:min(1050px,100%);
+    }
+
+    .modal h2 {
+      margin:0 0 5px;
+    }
+
+    .modal > p {
+      margin:0 0 15px;
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .grid-2,
+    .access-grid {
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+    }
+
+    .access-title {
+      margin:20px 0 9px;
+      font-size:12px;
+      font-weight:900;
+      color:var(--navy);
+      text-transform:uppercase;
+      letter-spacing:.06em;
+    }
+
+    .access-card {
+      border:1px solid var(--border);
+      border-radius:13px;
+      padding:13px;
+      background:#fcfcfd;
+    }
+
+    .access-card-title {
+      font-size:13px;
+      font-weight:900;
+      margin-bottom:4px;
+    }
+
+    .access-card-note {
+      color:var(--muted);
+      font-size:10px;
+      margin-bottom:10px;
+    }
+
+    .fixed-option,
+    .radio-option {
+      display:flex;
+      align-items:center;
+      gap:8px;
+      margin:0;
+      padding:9px 10px;
+      border:1px solid var(--border);
+      border-radius:9px;
+      background:white;
+      font-size:11px;
+      font-weight:850;
+    }
+
+    .fixed-option input,
+    .radio-option input {
+      width:auto;
+      margin:0;
+    }
+
+    .radio-row {
+      display:flex;
+      gap:7px;
+      flex-wrap:wrap;
+    }
+
+    .modal-actions {
+      margin-top:20px;
+      display:flex;
+      justify-content:flex-end;
+      gap:8px;
+    }
+
+    .note {
+      margin-top:10px;
+      padding:10px;
+      background:#f9fafb;
+      border:1px solid var(--border);
+      border-radius:10px;
+      color:var(--muted);
+      font-size:11px;
+      line-height:1.5;
+    }
+
+    .password-wrap {
+      position:relative;
+    }
+
+    .password-wrap input {
+      padding-right:48px;
+    }
+
+    .password-eye {
+      position:absolute;
+      right:8px;
+      top:50%;
+      transform:translateY(-50%);
+      width:34px;
+      height:34px;
+      border:0;
+      background:transparent;
+      border-radius:8px;
+      display:grid;
+      place-items:center;
+      font-size:17px;
+    }
+
+    .password-eye:hover {
+      background:#f2f4f7;
+    }
+
+    .toast {
+      position:fixed;
+      right:20px;
+      bottom:20px;
+      z-index:100;
+      background:#101828;
+      color:white;
+      padding:11px 14px;
+      border-radius:10px;
+      font-size:12px;
+      font-weight:850;
+      box-shadow:0 10px 30px rgba(0,0,0,.2);
+    }
+
+    @media(max-width:1050px) {
+      .stats {
+        grid-template-columns:repeat(2,minmax(0,1fr));
+      }
+    }
+
+    @media(max-width:800px) {
+      .grid-2,
+      .access-grid {
+        grid-template-columns:1fr;
+      }
+
+      .page {
+        padding:14px;
+      }
+
+      .topbar {
+        padding:0 14px;
+      }
+
+      .panel-head {
+        align-items:flex-start;
+        flex-direction:column;
+      }
+
+      .stats {
+        grid-template-columns:1fr 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- LOGIN -->
+
+  <section id="loginScreen" class="login-screen">
+
+    <div class="login-card">
+
+      <div class="eyebrow">Restricted Access</div>
+
+      <h1>Super Admin</h1>
+
+      <p class="description">
+        Employee access control with permanent version history.
+      </p>
+
+      <div class="field">
+        <label>Super Admin Email</label>
+        <input id="adminEmail" type="password" autocomplete="off" spellcheck="false" />
+      </div>
+
+      <div class="field">
+        <label>Security Phone Number</label>
+        <input id="adminPhone" type="password" autocomplete="off" inputmode="numeric" />
+      </div>
+
+      <div class="field">
+        <label>Super Admin Password 1</label>
+        <input id="adminPassword1" type="password" autocomplete="off" />
+      </div>
+
+      <div class="field">
+        <label>Super Admin Password 2</label>
+        <input id="adminPassword2" type="password" autocomplete="off" />
+      </div>
+
+      <button id="loginButton" class="primary">
+        Enter Super Admin
+      </button>
+
+      <div id="loginError" class="login-error hidden"></div>
+
+    </div>
+
+  </section>
+
+
+  <!-- DASHBOARD -->
+
+  <section id="dashboard" class="hidden">
+
+    <header class="topbar">
+
+      <div class="brand">
+        Super Admin
+        <small>Employee Access Control</small>
+      </div>
+
+      <div class="top-actions">
+
+        <button id="refreshButton" class="btn">
+          Refresh
+        </button>
+
+        <button id="logoutButton" class="btn btn-danger">
+          Log out
+        </button>
+
+      </div>
+
+    </header>
+
+
+    <main class="page">
+
+      <!-- KPI -->
+
+      <section class="stats">
+
+        <div class="stat">
+          <div class="stat-title">Current Users</div>
+          <div id="totalUsers" class="stat-value">0</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-title">Active</div>
+          <div id="activeUsers" class="stat-value">0</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-title">Suspended</div>
+          <div id="suspendedUsers" class="stat-value">0</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-title">Deleted Users</div>
+          <div id="deletedUsersCount" class="stat-value">0</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-title">Admin Actions</div>
+          <div id="adminActions" class="stat-value">0</div>
+        </div>
+
+      </section>
+
+
+      <!-- TABS -->
+
+      <div class="tabs">
+
+        <button class="tab selected" data-tab="users">
+          Users & Access
+        </button>
+
+        <button class="tab" data-tab="deleted">
+          Deleted Users
+        </button>
+
+        <button class="tab" data-tab="logs">
+          Audit History
+        </button>
+
+      </div>
+
+
+      <!-- CURRENT USERS -->
+
+      <section id="usersPanel" class="panel">
+
+        <div class="panel-head">
+
+          <div>
+            <div class="panel-title">
+              Current Employees
+            </div>
+
+            <div class="panel-subtitle">
+              Edit creates a new access-version row. Previous versions remain unchanged.
+            </div>
+          </div>
+
+          <div class="tools">
+
+            <input
+              id="userSearch"
+              name="employee_filter_search"
+              type="search"
+              placeholder="Search employee"
+              autocomplete="off"
+              autocapitalize="off"
+              spellcheck="false"
+            />
+
+            <button
+              id="addUserButton"
+              class="btn btn-dark"
+            >
+              + Add Employee
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <div class="table-wrap">
+
+          <table>
+
+            <thead>
+              <tr>
+                <th>Employee</th>
+                <th>Employee Code</th>
+                <th>Supabase Auth ID</th>
+                <th>Login</th>
+                <th>Verification</th>
+                <th>Supply & Demand</th>
+                <th>Accounting</th>
+                <th>Operations</th>
+                <th>Procurement</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th>Updated</th>
+                <th>Last Login</th>
+                <th>Last Activity</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+
+            <tbody id="usersBody"></tbody>
+
+          </table>
+
+        </div>
+
+      </section>
+
+
+      <!-- DELETED USERS -->
+
+      <section id="deletedPanel" class="panel hidden">
+
+        <div class="panel-head">
+
+          <div>
+            <div class="panel-title">
+              Deleted Users
+            </div>
+
+            <div class="panel-subtitle">
+              Their database records remain. Their old phone/email is free to use again.
+            </div>
+          </div>
+
+          <div class="tools">
+            <input
+              id="deletedSearch"
+              name="deleted_employee_filter_search"
+              type="search"
+              placeholder="Search deleted user"
+              autocomplete="off"
+              autocapitalize="off"
+              spellcheck="false"
+            />
+          </div>
+
+        </div>
+
+
+        <div class="table-wrap">
+
+          <table>
+
+            <thead>
+              <tr>
+                <th>Employee</th>
+                <th>Employee Code</th>
+                <th>Supabase Auth ID</th>
+                <th>Former Login</th>
+                <th>Verification</th>
+                <th>Supply & Demand</th>
+                <th>Accounting</th>
+                <th>Operations</th>
+                <th>Procurement</th>
+                <th>Created</th>
+                <th>Deleted / Updated</th>
+                <th>History</th>
+              </tr>
+            </thead>
+
+            <tbody id="deletedBody"></tbody>
+
+          </table>
+
+        </div>
+
+      </section>
+
+
+      <!-- AUDIT -->
+
+      <section id="logsPanel" class="panel hidden">
+
+        <div class="panel-head">
+
+          <div>
+            <div class="panel-title">
+              Audit History
+            </div>
+
+            <div class="panel-subtitle">
+              Employee creation, access versions, passwords, suspension and deletion.
+            </div>
+          </div>
+
+          <div class="tools">
+            <input
+              id="logSearch"
+              name="audit_filter_search"
+              type="search"
+              placeholder="Search history"
+              autocomplete="off"
+              autocapitalize="off"
+              spellcheck="false"
+            />
+          </div>
+
+        </div>
+
+
+        <div class="table-wrap">
+
+          <table>
+
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Employee</th>
+                <th>Event</th>
+                <th>Result</th>
+              </tr>
+            </thead>
+
+            <tbody id="logsBody"></tbody>
+
+          </table>
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </section>
+
+
+  <!-- ADD / EDIT USER -->
+
+  <div id="userModal" class="backdrop hidden">
+
+    <div class="modal">
+
+      <h2 id="userModalTitle">
+        Add Employee
+      </h2>
+
+      <p id="userModalSubtitle">
+        Create an employee and assign access.
+      </p>
+
+
+      <div class="field">
+        <label>Employee Name</label>
+        <input id="employeeName" />
+      </div>
+
+
+      <div class="grid-2">
+
+        <div class="field">
+
+          <label>Login Type</label>
+
+          <select id="loginType">
+            <option value="phone">Phone Number</option>
+            <option value="email">Email</option>
+          </select>
+
+        </div>
+
+
+        <div class="field">
+
+          <label id="identifierLabel">
+            Phone Number
+          </label>
+
+          <input id="identifier" />
+
+        </div>
+
+      </div>
+
+
+      <div id="passwordCreateField" class="field">
+
+        <label>Initial Password</label>
+
+        <div class="password-wrap">
+
+          <input
+            id="employeePassword"
+            type="password"
+          />
+
+          <button
+            type="button"
+            class="password-eye"
+            onclick="togglePassword('employeePassword', this)"
+          >
+            👁
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <div class="access-title">
+        Access Permissions
+      </div>
+
+
+      <div class="access-grid">
+
+        <!-- VERIFICATION -->
+
+        <div class="access-card">
+
+          <div class="access-card-title">
+            Document Verification
+          </div>
+
+          <div class="access-card-note">
+            Choose Viewer or Editor.
+          </div>
+
+          <div class="radio-row">
+
+            <label class="radio-option">
+              <input
+                type="radio"
+                name="verificationAccess"
+                value="none"
+                checked
+              />
+              None
+            </label>
+
+            <label class="radio-option">
+              <input
+                type="radio"
+                name="verificationAccess"
+                value="viewer"
+              />
+              Viewer
+            </label>
+
+            <label class="radio-option">
+              <input
+                type="radio"
+                name="verificationAccess"
+                value="editor"
+              />
+              Editor
+            </label>
+
+          </div>
+
+        </div>
+
+
+        <!-- SUPPLY DEMAND -->
+
+        <div class="access-card">
+
+          <div class="access-card-title">
+            Supply & Demand
+          </div>
+
+          <div class="access-card-note">
+            Choose Viewer or Editor.
+          </div>
+
+          <div class="radio-row">
+
+            <label class="radio-option">
+              <input
+                type="radio"
+                name="supplyDemandAccess"
+                value="none"
+                checked
+              />
+              None
+            </label>
+
+            <label class="radio-option">
+              <input
+                type="radio"
+                name="supplyDemandAccess"
+                value="viewer"
+              />
+              Viewer
+            </label>
+
+            <label class="radio-option">
+              <input
+                type="radio"
+                name="supplyDemandAccess"
+                value="editor"
+              />
+              Editor
+            </label>
+
+          </div>
+
+        </div>
+
+
+        <!-- ACCOUNTING -->
+
+        <div class="access-card">
+
+          <div class="access-card-title">
+            Accounting
+          </div>
+
+          <div class="access-card-note">
+            Accounting can be Viewer or Editor.
+          </div>
+
+          <div class="radio-row">
+
+            <label class="radio-option">
+
+              <input
+                type="radio"
+                name="accountingAccess"
+                value="none"
+                checked
+              />
+
+              None
+
+            </label>
+
+            <label class="radio-option">
+
+              <input
+                type="radio"
+                name="accountingAccess"
+                value="viewer"
+              />
+
+              Viewer
+
+            </label>
+
+            <label class="radio-option">
+
+              <input
+                type="radio"
+                name="accountingAccess"
+                value="editor"
+              />
+
+              Editor
+
+            </label>
+
+          </div>
+
+        </div>
+
+
+        <!-- OPERATIONS -->
+
+        <div class="access-card">
+
+          <div class="access-card-title">
+            Operations
+          </div>
+
+          <div class="access-card-note">
+            Access is YES or NO. Access means Editor.
+          </div>
+
+          <label class="fixed-option">
+
+            <input
+              id="canOperations"
+              type="checkbox"
+            />
+
+            Allow Operations
+
+          </label>
+
+        </div>
+
+
+        <!-- PROCUREMENT -->
+
+        <div class="access-card">
+
+          <div class="access-card-title">
+            Procurement Team
+          </div>
+
+          <div class="access-card-note">
+            Access is YES or NO. Access means Editor.
+          </div>
+
+          <label class="fixed-option">
+
+            <input
+              id="canProcurementTeam"
+              type="checkbox"
+            />
+
+            Allow Procurement
+
+          </label>
+
+        </div>
+
+      </div>
+
+
+      <div id="editVersionNote" class="note hidden">
+        Saving this edit creates a <b>new row</b>. The old row stays with its old values and its status becomes <b>updated_access</b>. The new row keeps the original Created date and receives a new Updated date.
+      </div>
+
+
+      <div class="modal-actions">
+
+        <button id="cancelUserButton" class="btn">
+          Cancel
+        </button>
+
+        <button id="saveUserButton" class="btn btn-dark">
+          Create Employee
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- PASSWORD -->
+
+  <div id="passwordModal" class="backdrop hidden">
+
+    <div class="modal">
+
+      <h2>Employee Password</h2>
+
+      <p id="passwordEmployeeName"></p>
+
+
+      <div class="field">
+
+        <label>Current Password</label>
+
+        <div class="password-wrap">
+
+          <input
+            id="currentPassword"
+            type="password"
+            readonly
+          />
+
+          <button
+            type="button"
+            class="password-eye"
+            onclick="togglePassword('currentPassword', this)"
+          >
+            👁
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>Set New Password</label>
+
+        <div class="password-wrap">
+
+          <input
+            id="newPassword"
+            type="password"
+          />
+
+          <button
+            type="button"
+            class="password-eye"
+            onclick="togglePassword('newPassword', this)"
+          >
+            👁
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <div class="modal-actions">
+
+        <button id="cancelPasswordButton" class="btn">
+          Close
+        </button>
+
+        <button id="savePasswordButton" class="btn btn-dark">
+          Set New Password
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- VERSION HISTORY -->
+
+  <div id="historyModal" class="backdrop hidden">
+
+    <div class="modal modal-wide">
+
+      <h2 id="historyTitle">
+        Access History
+      </h2>
+
+      <p>
+        Every access edit is kept as its own database row.
+      </p>
+
+
+      <div class="table-wrap">
+
+        <table>
+
+          <thead>
+            <tr>
+              <th>Status</th>
+              <th>Verification</th>
+              <th>Supply & Demand</th>
+              <th>Accounting</th>
+              <th>Operations</th>
+              <th>Procurement</th>
+              <th>Created</th>
+              <th>Updated</th>
+            </tr>
+          </thead>
+
+          <tbody id="historyBody"></tbody>
+
+        </table>
+
+      </div>
+
+
+      <div class="modal-actions">
+
+        <button id="closeHistoryButton" class="btn btn-dark">
+          Close
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div id="toast" class="toast hidden"></div>
+
+
+<script>
+
+  const SUPABASE_URL =
+    "https://orhwaveyqlkogkmbkuku.supabase.co";
+
+  const FUNCTION_URL =
+    SUPABASE_URL +
+    "/functions/v1/super-admin-gateway";
+
+
+  const state = {
+    adminEmail: "",
+    adminPhone: "",
+    adminPassword1: "",
+    adminPassword2: "",
+    users: [],
+    deletedUsers: [],
+    logs: [],
+    editingUserId: null,
+    passwordUserId: null,
+  };
+
+
+  const $ = id =>
+    document.getElementById(id);
+
+
+  function escapeHtml(value) {
+    return String(value ?? "")
+      .replace(
+        /[&<>"']/g,
+        character => ({
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#039;",
+        })[character]
+      );
+  }
+
+
+  function formatDate(value) {
+    if (!value) {
+      return "—";
+    }
+
+    const date =
+      new Date(value);
+
+    if (
+      Number.isNaN(
+        date.getTime()
+      )
+    ) {
+      return String(value);
+    }
+
+    return date.toLocaleString();
+  }
+
+
+  function showToast(message) {
+    $("toast").textContent =
+      message;
+
+    $("toast")
+      .classList
+      .remove("hidden");
+
+    clearTimeout(
+      window.toastTimer
+    );
+
+    window.toastTimer =
+      setTimeout(
+        () => {
+          $("toast")
+            .classList
+            .add("hidden");
+        },
+        2200
+      );
+  }
+
+
+  function togglePassword(
+    inputId,
+    button
+  ) {
+    const input =
+      $(inputId);
+
+    const showing =
+      input.type === "text";
+
+    input.type =
+      showing
+        ? "password"
+        : "text";
+
+    button.textContent =
+      showing
+        ? "👁"
+        : "🙈";
+  }
+
+
+  function getRadioValue(name) {
+    return (
+      document.querySelector(
+        `input[name="${name}"]:checked`
+      )?.value ||
+      "none"
+    );
+  }
+
+
+  function setRadioValue(
+    name,
+    value
+  ) {
+    const input =
+      document.querySelector(
+        `input[name="${name}"][value="${value}"]`
+      );
+
+    if (input) {
+      input.checked = true;
+    }
+  }
+
+
+  function getAccountingAccess() {
+    return getRadioValue(
+      "accountingAccess"
+    );
+  }
+
+
+  function setAccountingAccess(value) {
+    setRadioValue(
+      "accountingAccess",
+      value
+    );
+  }
+
+
+  function binaryAccess(
+    allowed,
+    fixedLevel = ""
+  ) {
+    if (!allowed) {
+      return `
+        <div class="access-state">
+          <span class="access-icon no">✕</span>
+        </div>
+      `;
+    }
+
+    return `
+      <div class="access-state">
+        <span class="access-icon yes">✓</span>
+
+        ${
+          fixedLevel
+            ? `
+              <span class="access-level editor">
+                ${escapeHtml(fixedLevel)}
+              </span>
+            `
+            : ""
+        }
+      </div>
+    `;
+  }
+
+
+  function leveledAccess(value) {
+    if (
+      value !== "viewer" &&
+      value !== "editor"
+    ) {
+      return `
+        <div class="access-state">
+          <span class="access-icon no">✕</span>
+        </div>
+      `;
+    }
+
+    return `
+      <div class="access-state">
+        <span class="access-icon yes">✓</span>
+
+        <span
+          class="
+            access-level
+            ${value === "editor" ? "editor" : "viewer"}
+          "
+        >
+          ${value === "editor" ? "Editor" : "Viewer"}
+        </span>
+      </div>
+    `;
+  }
+
+
+  function statusBadge(
+    active,
+    recordStatus = "active"
+  ) {
+    if (recordStatus === "deleted") {
+      return `
+        <span class="badge badge-deleted">
+          Deleted
+        </span>
+      `;
+    }
+
+    if (recordStatus === "updated_access") {
+      return `
+        <span class="badge badge-history">
+          Updated Access
+        </span>
+      `;
+    }
+
+    if (active) {
+      return `
+        <span class="badge badge-active">
+          Active
+        </span>
+      `;
+    }
+
+    return `
+      <span class="badge badge-suspended">
+        Suspended
+      </span>
+    `;
+  }
+
+
+  async function callFunction(
+    action,
+    data = {}
+  ) {
+    const response =
+      await fetch(
+        FUNCTION_URL,
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type":
+              "application/json",
+          },
+
+          body: JSON.stringify({
+            action,
+
+            adminEmail:
+              state.adminEmail,
+
+            adminPhone:
+              state.adminPhone,
+
+            adminPassword1:
+              state.adminPassword1,
+
+            adminPassword2:
+              state.adminPassword2,
+
+            ...data,
+          }),
+        }
+      );
+
+    const text =
+      await response.text();
+
+    let result = {};
+
+    try {
+      result =
+        text
+          ? JSON.parse(text)
+          : {};
+    } catch {
+      result = {
+        error: text,
+      };
+    }
+
+    if (!response.ok) {
+      throw new Error(
+        result.error ||
+        "Request failed"
+      );
+    }
+
+    return result;
+  }
+
+
+  function clearAllSearchFilters() {
+    $("userSearch").value = "";
+    $("deletedSearch").value = "";
+    $("logSearch").value = "";
+  }
+
+
+  async function login() {
+    $("loginError")
+      .classList
+      .add("hidden");
+
+    state.adminEmail =
+      $("adminEmail").value.trim();
+
+    state.adminPhone =
+      $("adminPhone").value.trim();
+
+    state.adminPassword1 =
+      $("adminPassword1").value;
+
+    state.adminPassword2 =
+      $("adminPassword2").value;
+
+    try {
+      await callFunction(
+        "login"
+      );
+
+      $("loginScreen")
+        .classList
+        .add("hidden");
+
+      $("dashboard")
+        .classList
+        .remove("hidden");
+
+      clearAllSearchFilters();
+
+      await refresh();
+
+    } catch (error) {
+      state.adminEmail =
+        "";
+
+      state.adminPhone =
+        "";
+
+      state.adminPassword1 =
+        "";
+
+      state.adminPassword2 =
+        "";
+
+      $("loginError")
+        .textContent =
+        error.message;
+
+      $("loginError")
+        .classList
+        .remove("hidden");
+    }
+  }
+
+
+  function logout() {
+    state.adminEmail =
+      "";
+
+    state.adminPhone =
+      "";
+
+    state.adminPassword1 =
+      "";
+
+    state.adminPassword2 =
+      "";
+
+    $("adminEmail").value =
+      "";
+
+    $("adminPhone").value =
+      "";
+
+    $("adminPassword1").value =
+      "";
+
+    $("adminPassword2").value =
+      "";
+
+    clearAllSearchFilters();
+
+    $("dashboard")
+      .classList
+      .add("hidden");
+
+    $("loginScreen")
+      .classList
+      .remove("hidden");
+  }
+
+
+  async function refresh() {
+    try {
+      const [
+        usersResponse,
+        deletedResponse,
+        logsResponse,
+      ] =
+        await Promise.all([
+          callFunction(
+            "list_users"
+          ),
+
+          callFunction(
+            "list_deleted_users"
+          ),
+
+          callFunction(
+            "list_logs"
+          ),
+        ]);
+
+      state.users =
+        usersResponse.users || [];
+
+      state.deletedUsers =
+        deletedResponse.users || [];
+
+      state.logs =
+        logsResponse.logs || [];
+
+      render();
+
+    } catch (error) {
+      alert(error.message);
+    }
+  }
+
+
+  function render() {
+    renderUsers();
+    renderDeletedUsers();
+    renderLogs();
+
+    $("totalUsers")
+      .textContent =
+      state.users.length;
+
+    $("activeUsers")
+      .textContent =
+      state.users.filter(
+        user =>
+          user.active === true
+      ).length;
+
+    $("suspendedUsers")
+      .textContent =
+      state.users.filter(
+        user =>
+          user.active === false
+      ).length;
+
+    $("deletedUsersCount")
+      .textContent =
+      state.deletedUsers.length;
+
+    $("adminActions")
+      .textContent =
+      state.logs.length;
+  }
+
+
+  function renderUsers() {
+    const search =
+      $("userSearch")
+        .value
+        .trim()
+        .toLowerCase();
+
+    const users =
+      state.users.filter(
+        user => {
+          const value = `
+            ${user.name || ""}
+            ${user.employee_code || ""}
+            ${user.auth_user_id || ""}
+            ${user.email || ""}
+            ${user.phone || ""}
+            ${user.role || ""}
+          `.toLowerCase();
+
+          return (
+            !search ||
+            value.includes(search)
+          );
+        }
+      );
+
+    if (!users.length) {
+      $("usersBody").innerHTML = `
+        <tr>
+          <td
+            colspan="15"
+            class="empty"
+          >
+            No current employees.
+          </td>
+        </tr>
+      `;
+
+      return;
+    }
+
+    $("usersBody").innerHTML =
+      users.map(
+        user => {
+          const isSuper =
+            user.role ===
+            "super_admin";
+
+          const login =
+            user.email ||
+            user.phone ||
+            user.auth_email ||
+            user.auth_phone ||
+            "—";
+
+          return `
+            <tr>
+
+              <td>
+                <div class="employee-name">
+                  ${escapeHtml(user.name || "—")}
+                </div>
+
+                <div class="muted">
+                  ${escapeHtml(user.role || "")}
+                </div>
+              </td>
+
+
+              <td class="nowrap id-code">
+                <strong>
+                  ${escapeHtml(user.employee_code || "—")}
+                </strong>
+              </td>
+
+
+              <td class="nowrap id-code">
+                <span
+                  class="muted"
+                  title="${escapeHtml(user.auth_user_id || "")}"
+                >
+                  ${escapeHtml(user.auth_user_id || "—")}
+                </span>
+              </td>
+
+
+              <td class="nowrap">
+                ${escapeHtml(login)}
+              </td>
+
+
+              <td class="access-cell">
+                ${leveledAccess(
+                  user.verification_access
+                )}
+              </td>
+
+
+              <td class="access-cell">
+                ${leveledAccess(
+                  user.supply_demand_access
+                )}
+              </td>
+
+
+              <td class="access-cell">
+                ${leveledAccess(
+                  user.accounting_access
+                )}
+              </td>
+
+
+              <td class="access-cell">
+                ${binaryAccess(
+                  user.can_operations,
+                  user.can_operations
+                    ? "Editor"
+                    : ""
+                )}
+              </td>
+
+
+              <td class="access-cell">
+                ${binaryAccess(
+                  user.can_procurement_team,
+                  user.can_procurement_team
+                    ? "Editor"
+                    : ""
+                )}
+              </td>
+
+
+              <td>
+                ${statusBadge(
+                  user.active,
+                  user.record_status
+                )}
+
+                ${
+                  isSuper
+                    ? `
+                      <br>
+                      <span class="badge badge-super">
+                        Super Admin
+                      </span>
+                    `
+                    : ""
+                }
+              </td>
+
+
+              <td class="nowrap">
+                ${escapeHtml(
+                  formatDate(
+                    user.created_at
+                  )
+                )}
+              </td>
+
+
+              <td class="nowrap">
+                ${escapeHtml(
+                  formatDate(
+                    user.updated_at
+                  )
+                )}
+              </td>
+
+
+              <td class="nowrap">
+                ${escapeHtml(
+                  formatDate(
+                    user.last_login_at
+                  )
+                )}
+              </td>
+
+
+              <td class="nowrap">
+                ${escapeHtml(
+                  formatDate(
+                    user.last_activity_at
+                  )
+                )}
+              </td>
+
+
+              <td>
+                ${
+                  isSuper
+                    ? `
+                      <span class="muted nowrap">
+                        Protected
+                      </span>
+                    `
+                    : `
+                      <div class="actions">
+
+                        <button
+                          class="mini"
+                          onclick="editUser('${user.id}')"
+                        >
+                          Edit
+                        </button>
+
+                        <button
+                          class="mini"
+                          onclick="openHistory('${user.employee_id}','${escapeHtml((user.employee_code || "") + " · " + (user.name || ""))}')"
+                        >
+                          History
+                        </button>
+
+                        <button
+                          class="mini"
+                          onclick="openPassword('${user.id}')"
+                        >
+                          👁 Password
+                        </button>
+
+                        <button
+                          class="mini"
+                          onclick="changeStatus('${user.id}',${!user.active})"
+                        >
+                          ${
+                            user.active
+                              ? "Suspend"
+                              : "Reactivate"
+                          }
+                        </button>
+
+                        <button
+                          class="mini mini-danger"
+                          onclick="deleteUser('${user.id}')"
+                        >
+                          Delete
+                        </button>
+
+                      </div>
+                    `
+                }
+              </td>
+
+            </tr>
+          `;
+        }
+      )
+      .join("");
+  }
+
+
+  function renderDeletedUsers() {
+    const search =
+      $("deletedSearch")
+        .value
+        .trim()
+        .toLowerCase();
+
+    const users =
+      state.deletedUsers.filter(
+        user => {
+          const value = `
+            ${user.name || ""}
+            ${user.employee_code || ""}
+            ${user.auth_user_id || ""}
+            ${user.email || ""}
+            ${user.phone || ""}
+          `.toLowerCase();
+
+          return (
+            !search ||
+            value.includes(search)
+          );
+        }
+      );
+
+    if (!users.length) {
+      $("deletedBody").innerHTML = `
+        <tr>
+          <td
+            colspan="12"
+            class="empty"
+          >
+            No deleted users.
+          </td>
+        </tr>
+      `;
+
+      return;
+    }
+
+    $("deletedBody").innerHTML =
+      users.map(
+        user => `
+          <tr>
+
+            <td>
+              <div class="employee-name">
+                ${escapeHtml(user.name || "—")}
+              </div>
+
+              <div class="muted">
+                Deleted record
+              </div>
+            </td>
+
+
+            <td class="nowrap id-code">
+              <strong>
+                ${escapeHtml(user.employee_code || "—")}
+              </strong>
+            </td>
+
+
+            <td class="nowrap id-code">
+              <span
+                class="muted"
+                title="${escapeHtml(user.auth_user_id || "")}"
+              >
+                ${escapeHtml(user.auth_user_id || "Released")}
+              </span>
+            </td>
+
+
+            <td class="nowrap">
+              ${escapeHtml(
+                user.email ||
+                user.phone ||
+                "—"
+              )}
+            </td>
+
+
+            <td class="access-cell">
+              ${leveledAccess(
+                user.verification_access
+              )}
+            </td>
+
+
+            <td class="access-cell">
+              ${leveledAccess(
+                user.supply_demand_access
+              )}
+            </td>
+
+
+            <td class="access-cell">
+              ${leveledAccess(
+                user.accounting_access
+              )}
+            </td>
+
+
+            <td class="access-cell">
+              ${binaryAccess(
+                user.can_operations,
+                user.can_operations
+                  ? "Editor"
+                  : ""
+              )}
+            </td>
+
+
+            <td class="access-cell">
+              ${binaryAccess(
+                user.can_procurement_team,
+                user.can_procurement_team
+                  ? "Editor"
+                  : ""
+              )}
+            </td>
+
+
+            <td class="nowrap">
+              ${escapeHtml(
+                formatDate(
+                  user.created_at
+                )
+              )}
+            </td>
+
+
+            <td class="nowrap">
+              ${escapeHtml(
+                formatDate(
+                  user.updated_at
+                )
+              )}
+            </td>
+
+
+            <td>
+              <button
+                class="mini"
+                onclick="openHistory('${user.employee_id}','${escapeHtml((user.employee_code || "") + " · " + (user.name || ""))}')"
+              >
+                History
+              </button>
+            </td>
+
+          </tr>
+        `
+      )
+      .join("");
+  }
+
+
+  function renderLogs() {
+    const search =
+      $("logSearch")
+        .value
+        .trim()
+        .toLowerCase();
+
+    const logs =
+      state.logs.filter(
+        log => {
+          const value = `
+            ${log.user_name || ""}
+            ${log.email || ""}
+            ${log.phone || ""}
+            ${log.event_type || ""}
+          `.toLowerCase();
+
+          return (
+            !search ||
+            value.includes(search)
+          );
+        }
+      );
+
+    if (!logs.length) {
+      $("logsBody").innerHTML = `
+        <tr>
+          <td
+            colspan="4"
+            class="empty"
+          >
+            No audit history.
+          </td>
+        </tr>
+      `;
+
+      return;
+    }
+
+    $("logsBody").innerHTML =
+      logs.map(
+        log => `
+          <tr>
+
+            <td class="nowrap">
+              ${escapeHtml(
+                formatDate(
+                  log.created_at
+                )
+              )}
+            </td>
+
+            <td>
+              <div class="employee-name">
+                ${escapeHtml(
+                  log.user_name ||
+                  "—"
+                )}
+              </div>
+
+              <div class="muted">
+                ${escapeHtml(
+                  log.email ||
+                  log.phone ||
+                  ""
+                )}
+              </div>
+            </td>
+
+            <td class="nowrap">
+              ${escapeHtml(
+                (
+                  log.event_type ||
+                  "—"
+                ).replaceAll(
+                  "_",
+                  " "
+                )
+              )}
+            </td>
+
+            <td class="nowrap">
+              ${
+                log.success
+                  ? "SUCCESS"
+                  : "FAILED"
+              }
+            </td>
+
+          </tr>
+        `
+      )
+      .join("");
+  }
+
+
+  function updateIdentifierLabel() {
+    const email =
+      $("loginType").value ===
+      "email";
+
+    $("identifierLabel")
+      .textContent =
+      email
+        ? "Email Address"
+        : "Phone Number";
+
+    $("identifier").type =
+      email
+        ? "email"
+        : "tel";
+
+    $("identifier").placeholder =
+      email
+        ? "employee@company.com"
+        : "01012345678 or +201012345678";
+  }
+
+
+  function openAddUser() {
+    state.editingUserId =
+      null;
+
+    $("userModalTitle")
+      .textContent =
+      "Add Employee";
+
+    $("userModalSubtitle")
+      .textContent =
+      "Create an employee and assign access.";
+
+    $("saveUserButton")
+      .textContent =
+      "Create Employee";
+
+    $("employeeName").value =
+      "";
+
+    $("loginType").value =
+      "phone";
+
+    $("loginType").disabled =
+      false;
+
+    $("identifier").value =
+      "";
+
+    $("employeePassword").value =
+      "";
+
+    $("employeePassword").type =
+      "password";
+
+    $("passwordCreateField")
+      .classList
+      .remove("hidden");
+
+    setRadioValue(
+      "verificationAccess",
+      "none"
+    );
+
+    setRadioValue(
+      "supplyDemandAccess",
+      "none"
+    );
+
+    $("canOperations").checked =
+      false;
+
+    $("canProcurementTeam").checked =
+      false;
+
+    setAccountingAccess(
+      "none"
+    );
+
+    $("editVersionNote")
+      .classList
+      .add("hidden");
+
+    updateIdentifierLabel();
+
+    $("userModal")
+      .classList
+      .remove("hidden");
+  }
+
+
+  function editUser(id) {
+    const user =
+      state.users.find(
+        item =>
+          item.id === id
+      );
+
+    if (!user) {
+      return;
+    }
+
+    state.editingUserId =
+      id;
+
+    $("userModalTitle")
+      .textContent =
+      "Edit Employee";
+
+    $("userModalSubtitle")
+      .textContent =
+      "Saving creates a new database version row.";
+
+    $("saveUserButton")
+      .textContent =
+      "Save New Version";
+
+    $("employeeName").value =
+      user.name ||
+      "";
+
+    $("loginType").value =
+      (
+        user.email ||
+        user.auth_email
+      )
+        ? "email"
+        : "phone";
+
+    $("loginType").disabled =
+      true;
+
+    $("identifier").value =
+      user.email ||
+      user.phone ||
+      user.auth_email ||
+      user.auth_phone ||
+      "";
+
+    $("passwordCreateField")
+      .classList
+      .add("hidden");
+
+    setRadioValue(
+      "verificationAccess",
+      user.verification_access ||
+      "none"
+    );
+
+    setRadioValue(
+      "supplyDemandAccess",
+      user.supply_demand_access ||
+      "none"
+    );
+
+    $("canOperations").checked =
+      Boolean(
+        user.can_operations
+      );
+
+    $("canProcurementTeam").checked =
+      Boolean(
+        user.can_procurement_team
+      );
+
+    setAccountingAccess(
+      user.accounting_access ||
+      "none"
+    );
+
+    $("editVersionNote")
+      .classList
+      .remove("hidden");
+
+    updateIdentifierLabel();
+
+    $("userModal")
+      .classList
+      .remove("hidden");
+  }
+
+
+  async function saveUser() {
+    const data = {
+      name:
+        $("employeeName")
+          .value
+          .trim(),
+
+      loginType:
+        $("loginType")
+          .value,
+
+      identifier:
+        $("identifier")
+          .value
+          .trim(),
+
+      verificationAccess:
+        getRadioValue(
+          "verificationAccess"
+        ),
+
+      supplyDemandAccess:
+        getRadioValue(
+          "supplyDemandAccess"
+        ),
+
+      accountingAccess:
+        getAccountingAccess(),
+
+      canOperations:
+        $("canOperations")
+          .checked,
+
+      canProcurementTeam:
+        $("canProcurementTeam")
+          .checked,
+    };
+
+    try {
+      if (
+        state.editingUserId
+      ) {
+        await callFunction(
+          "update_user",
+          {
+            id:
+              state.editingUserId,
+
+            ...data,
+          }
+        );
+
+        showToast(
+          "New access version created"
+        );
+
+      } else {
+        await callFunction(
+          "create_user",
+          {
+            ...data,
+
+            password:
+              $("employeePassword")
+                .value,
+          }
+        );
+
+        showToast(
+          "Employee created"
+        );
+      }
+
+      $("userModal")
+        .classList
+        .add("hidden");
+
+      await refresh();
+
+    } catch (error) {
+      alert(error.message);
+    }
+  }
+
+
+  async function changeStatus(
+    id,
+    makeActive
+  ) {
+    const message =
+      makeActive
+        ? "Reactivate this employee?"
+        : "Suspend this employee?";
+
+    if (!confirm(message)) {
+      return;
+    }
+
+    try {
+      await callFunction(
+        "set_status",
+        {
+          id,
+          active:
+            makeActive,
+        }
+      );
+
+      showToast(
+        makeActive
+          ? "Employee reactivated"
+          : "Employee suspended"
+      );
+
+      await refresh();
+
+    } catch (error) {
+      alert(error.message);
+    }
+  }
+
+
+  async function openPassword(id) {
+    const user =
+      state.users.find(
+        item =>
+          item.id === id
+      );
+
+    if (!user) {
+      return;
+    }
+
+    state.passwordUserId =
+      id;
+
+    $("passwordEmployeeName")
+      .textContent =
+      `${user.name} · ${
+        user.email ||
+        user.phone ||
+        ""
+      }`;
+
+    $("currentPassword").value =
+      "";
+
+    $("currentPassword").type =
+      "password";
+
+    $("currentPassword").placeholder =
+      "Loading...";
+
+    $("newPassword").value =
+      "";
+
+    $("newPassword").type =
+      "password";
+
+    $("passwordModal")
+      .classList
+      .remove("hidden");
+
+    try {
+      const result =
+        await callFunction(
+          "view_password",
+          {
+            id,
+          }
+        );
+
+      $("currentPassword").value =
+        result.password ||
+        "";
+
+      $("currentPassword").placeholder =
+        "";
+
+    } catch (error) {
+      $("currentPassword").value =
+        "";
+
+      $("currentPassword").placeholder =
+        "Not available";
+
+      alert(error.message);
+    }
+  }
+
+
+  async function savePassword() {
+    try {
+      await callFunction(
+        "set_password",
+        {
+          id:
+            state.passwordUserId,
+
+          password:
+            $("newPassword")
+              .value,
+        }
+      );
+
+      $("passwordModal")
+        .classList
+        .add("hidden");
+
+      showToast(
+        "Password changed"
+      );
+
+      await refresh();
+
+    } catch (error) {
+      alert(error.message);
+    }
+  }
+
+
+  async function openHistory(
+    employeeId,
+    name
+  ) {
+    $("historyTitle")
+      .textContent =
+      `${name || "Employee"} · Access History`;
+
+    $("historyBody")
+      .innerHTML = `
+        <tr>
+          <td colspan="8" class="empty">
+            Loading history...
+          </td>
+        </tr>
+      `;
+
+    $("historyModal")
+      .classList
+      .remove("hidden");
+
+    try {
+      const result =
+        await callFunction(
+          "list_user_history",
+          {
+            employeeId,
+          }
+        );
+
+      const history =
+        result.history ||
+        [];
+
+      if (!history.length) {
+        $("historyBody")
+          .innerHTML = `
+            <tr>
+              <td colspan="8" class="empty">
+                No history found.
+              </td>
+            </tr>
+          `;
+
+        return;
+      }
+
+      $("historyBody")
+        .innerHTML =
+        history.map(
+          row => `
+            <tr>
+
+              <td>
+                ${statusBadge(
+                  row.active,
+                  row.record_status
+                )}
+              </td>
+
+              <td class="access-cell">
+                ${leveledAccess(
+                  row.verification_access
+                )}
+              </td>
+
+              <td class="access-cell">
+                ${leveledAccess(
+                  row.supply_demand_access
+                )}
+              </td>
+
+              <td class="access-cell">
+                ${leveledAccess(
+                  row.accounting_access
+                )}
+              </td>
+
+              <td class="access-cell">
+                ${binaryAccess(
+                  row.can_operations,
+                  row.can_operations
+                    ? "Editor"
+                    : ""
+                )}
+              </td>
+
+              <td class="access-cell">
+                ${binaryAccess(
+                  row.can_procurement_team,
+                  row.can_procurement_team
+                    ? "Editor"
+                    : ""
+                )}
+              </td>
+
+              <td class="nowrap">
+                ${escapeHtml(
+                  formatDate(
+                    row.created_at
+                  )
+                )}
+              </td>
+
+              <td class="nowrap">
+                ${escapeHtml(
+                  formatDate(
+                    row.updated_at
+                  )
+                )}
+              </td>
+
+            </tr>
+          `
+        )
+        .join("");
+
+    } catch (error) {
+      $("historyBody")
+        .innerHTML = `
+          <tr>
+            <td colspan="8" class="empty">
+              ${escapeHtml(error.message)}
+            </td>
+          </tr>
+        `;
+    }
+  }
+
+
+  async function deleteUser(id) {
+    const user =
+      state.users.find(
+        item =>
+          item.id === id
+      );
+
+    if (
+      !confirm(
+        `Delete ${
+          user?.name ||
+          "this employee"
+        }?\n\nTheir database history stays. Their phone/email becomes free to use again.`
+      )
+    ) {
+      return;
+    }
+
+    try {
+      await callFunction(
+        "delete_user",
+        {
+          id,
+        }
+      );
+
+      showToast(
+        "Employee deleted; login released"
+      );
+
+      await refresh();
+
+    } catch (error) {
+      alert(error.message);
+    }
+  }
+
+
+  $("loginButton").onclick =
+    login;
+
+  $("logoutButton").onclick =
+    logout;
+
+  $("refreshButton").onclick =
+    refresh;
+
+  $("addUserButton").onclick =
+    openAddUser;
+
+  $("loginType").onchange =
+    updateIdentifierLabel;
+
+  $("saveUserButton").onclick =
+    saveUser;
+
+  $("cancelUserButton").onclick =
+    () => {
+      $("userModal")
+        .classList
+        .add("hidden");
+    };
+
+  $("savePasswordButton").onclick =
+    savePassword;
+
+  $("cancelPasswordButton").onclick =
+    () => {
+      $("passwordModal")
+        .classList
+        .add("hidden");
+    };
+
+  $("closeHistoryButton").onclick =
+    () => {
+      $("historyModal")
+        .classList
+        .add("hidden");
+    };
+
+  $("userSearch").oninput =
+    renderUsers;
+
+  $("deletedSearch").oninput =
+    renderDeletedUsers;
+
+  $("logSearch").oninput =
+    renderLogs;
+
+
+  $("adminPassword1")
+    .addEventListener(
+      "keydown",
+      event => {
+        if (
+          event.key ===
+          "Enter"
+        ) {
+          login();
+        }
+      }
+    );
+
+
+  $("adminPassword2")
+    .addEventListener(
+      "keydown",
+      event => {
+        if (
+          event.key ===
+          "Enter"
+        ) {
+          login();
+        }
+      }
+    );
+
+
+  document
+    .querySelectorAll(
+      ".tab"
+    )
+    .forEach(
+      button => {
+        button.onclick =
+          () => {
+            document
+              .querySelectorAll(
+                ".tab"
+              )
+              .forEach(
+                tab =>
+                  tab
+                    .classList
+                    .remove(
+                      "selected"
+                    )
+              );
+
+            button
+              .classList
+              .add(
+                "selected"
+              );
+
+            const selected =
+              button.dataset.tab;
+
+            $("usersPanel")
+              .classList
+              .toggle(
+                "hidden",
+                selected !==
+                "users"
+              );
+
+            $("deletedPanel")
+              .classList
+              .toggle(
+                "hidden",
+                selected !==
+                "deleted"
+              );
+
+            $("logsPanel")
+              .classList
+              .toggle(
+                "hidden",
+                selected !==
+                "logs"
+              );
+          };
+      }
+    );
+
+</script>
+
+</body>
+</html>
